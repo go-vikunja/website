@@ -1,27 +1,66 @@
 ---
 interface Props {
 	title: string;
+	type: 'text' | 'website';
+	image?: string;
+	description?: string;
 }
 
-const { title } = Astro.props;
+const {title, type, description, image} = Astro.props
+
+const pageTitle = (title ? `${title} | ` : '') + 'Vikunja'
+
+const imageUrl = image
+	? image
+	: new URL('/images/vikunja.jpg', Astro.url)
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<head>
+    <title>{pageTitle}</title>
+
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="generator" content={Astro.generator}/>
+
+    <link rel="me" href="https://social.linux.pizza/@vikunja"/>
+
+    <meta property="og:title" content={pageTitle}/>
+    <meta name="twitter:title" content={pageTitle}/>
+    <meta itemprop="name" content={pageTitle}/>
+    <meta name="application-name" content={pageTitle}/>
+
+    <!-- Description -->
+	{description &&
+            <meta name="description" content={description}/>
+            <meta itemprop="description" content={description}/>
+            <meta property="og:description" content={description}/>
+            <meta name="twitter:description" content={description}/>
+	}
+
+    <!-- Links -->
+    <base href={Astro.url}/>
+    <link rel="canonical" href={Astro.url} itemprop="url"/>
+    <meta name="url" content={Astro.url}/>
+    <meta name="twitter:url" content={Astro.url}/>
+    <meta property="og:url" content={Astro.url}/>
+
+    <!-- Images -->
+    <meta itemprop="image" content={imageUrl}/>
+    <meta property="og:image" content={imageUrl}/>
+    <meta name="twitter:image" content={imageUrl}/>
+    <meta name="twitter:image:src" content={imageUrl}/>
+
+    <meta property="og:type" content={type}/>
+</head>
+<body>
+<slot/>
+</body>
 </html>
 <style is:global>
-	html {
-		font-family: system-ui, sans-serif;
-	}
+    html {
+        font-family: system-ui, sans-serif;
+    }
 </style>
