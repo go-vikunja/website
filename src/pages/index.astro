@@ -1,13 +1,230 @@
 ---
-import Layout from '../layouts/Layout.astro';
----
+import {Picture} from 'astro:assets'
 
+import Layout from '../layouts/Layout.astro'
+import LinkCard from '../components/LinkCard.astro'
+
+import VikunjaTaskOverview from '../assets/images/vikunja/01-task-overview.png'
+import VikunjaTaskList from '../assets/images/vikunja/02-task-list.png'
+import VikunjaTaskGantt from '../assets/images/vikunja/03-task-gantt.png'
+import VikunjaTaskTable from '../assets/images/vikunja/04-task-table.png'
+import VikunjaTaskKanban from '../assets/images/vikunja/05-task-kanban.png'
+import VikunjaTaskDetail from '../assets/images/vikunja/06-task-detail.png'
+import VikunjaQuickAdd from '../assets/images/vikunja/07-quick-add.png'
+import VikunjaTaskKanbanBackground from '../assets/images/vikunja/08-task-kanban-background.png'
+import VikunjaTaskDetailDark from '../assets/images/vikunja/09-task-detail-dark.png'
+
+import HeroLlama1 from '../assets/images/hero-llamas-small.jpg'
+import HeroLlama2 from '../assets/images/hero-llamas-2-small.jpg'
+import HeroLlama3 from '../assets/images/hero-llamas-3-small.jpg'
+
+const carouselImages = [
+	{src: VikunjaTaskOverview, alt: ''},
+    {src: VikunjaTaskList, alt: ''},
+    {src: VikunjaTaskGantt, alt: ''},
+    {src: VikunjaTaskTable, alt: ''},
+    {src: VikunjaTaskKanban, alt: ''},
+    {src: VikunjaTaskDetail, alt: ''},
+    {src: VikunjaQuickAdd, alt: ''},
+    {src: VikunjaTaskKanbanBackground, alt: ''},
+    {src: VikunjaTaskDetailDark, alt: ''},
+]
+---
 <Layout title="The open-source, self-hostable to-do app">
-	<main>
-		Plan your projects with the elegance of a sloth on a sunny day
-	</main>
+    <main>
+        Plan your projects with the elegance of a sloth on a sunny day
+
+
+        <section
+                class="flex min-h-screen w-full flex-col items-center justify-center px-4 pb-8 text-center text-gray-700 md:px-0"
+        >
+            <div class="mt-16 mb-8 font-title">
+                <h2 class="mb-4 text-4xl">
+                    The open-source,
+                    <a href="https://vikunja.io/docs/installing/" class="underline"
+                    >self-hostable</a
+                    >
+                    to-do app.
+                </h2>
+                <h3 class="mb-6 text-3xl">Organize everything, on all platforms.</h3>
+                <h3 class="mx-auto max-w-xl text-xl">
+                    Also one of the two wild South American camelids which live in the high alpine
+                    areas of the Andes and a
+                    <a
+                            rel="nofollow"
+                            target="_blank"
+                            class="underline"
+                            href="https://en.wikipedia.org/wiki/Vicu%C3%B1a"
+                    >relative of the llama</a
+                    >.
+                </h3>
+
+                <div class="flex justify-center space-x-2 py-4">
+                    <a
+                            href="https://try.vikunja.io"
+                            class="cursor-pointer rounded-md border border-transparent bg-primary px-4 py-2 text-xl font-medium text-white shadow hover:bg-primary-darker"
+                    >
+                        Try it
+                    </a>
+                    <a
+                            href="/features"
+                            class="cursor-pointer rounded-md border border-transparent bg-primary px-4 py-2 text-xl font-medium text-white shadow hover:bg-primary-darker"
+                    >
+                        Features
+                    </a>
+                </div>
+            </div>
+
+            <div class="w-full max-w-6xl">
+                <div class="slider aspect-w-16 aspect-h-9 relative mt-8">
+					{carouselImages.map(({src, alt}) => (
+                            <Picture
+                                    src={src}
+                                    formats={['avif', 'webp']}
+                                    class=""
+                                    alt={alt}
+                            />
+					))}
+                </div>
+
+                <div class="mt-48 mb-4 text-left md:flex">
+                    <div class="mt-4 md:mr-4 md:w-1/3">
+                        <h2 class="flex items-center font-title text-2xl">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="mr-2 h-6 w-6 text-gray-500"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                            >
+                                <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                            Stay organized
+                        </h2>
+                        <p class="pt-4">
+                            Organize all of your tasks in projects.
+                            Create subprojects organize everything hierarchical and keep related stuff grouped together.
+                        </p>
+                    </div>
+                    <div class="mt-4 md:mr-4 md:w-1/3">
+                        <h2 class="flex items-center font-title text-2xl">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="mr-2 h-6 w-6 text-gray-500"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                            >
+                                <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                                />
+                            </svg>
+                            Collaborate with peers
+                        </h2>
+                        <p class="pt-4">
+                            Vikunja lets you easily share a project with another user or
+                            a whole team! You can also assign tasks to people so everybody knows
+                            who's working on what.
+                        </p>
+                    </div>
+                    <div class="mt-4 md:w-1/3">
+                        <h2 class="flex items-center font-title text-2xl">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="mr-2 h-6 w-6 text-gray-500"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                            >
+                                <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                                />
+                            </svg>
+                            Use it how you need it
+                        </h2>
+                        <p class="pt-4">
+                            You can show your tasks in the classic list view - each task underneath
+                            each other. Or you can use the Gantt view to get a time overview. Or
+                            Table view to show all details you need. Or Kanban if you want that
+                            birds-eye view of the status of all current tasks.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mx-auto mb-16 flex w-full max-w-6xl flex-col px-4 gap-4 text-left md:flex-row md:px-0">
+            <LinkCard
+                href="/docs/installing"
+                image={HeroLlama1}
+            >
+                Installation
+            </LinkCard>
+            <LinkCard
+                href="/features"
+                image={HeroLlama2}
+            >
+                Features
+            </LinkCard>
+            <LinkCard
+                href="https://vikunja.cloud/?utm_source=io&utm_medium=io&utm_campaign=menu"
+                image={HeroLlama3}
+            >
+                Get it Hosted
+            </LinkCard>
+        </section>
+
+        <script>
+			document.addEventListener('DOMContentLoaded', () => {
+				const sliders = document.getElementsByClassName('slider')
+
+				if (sliders) {
+					for (const slider of sliders) {
+						let current = 0
+						const children = Array.from(slider.children)
+						const sliderDuration = 5000
+
+						const slide = () => {
+							children.forEach((img, key) => {
+								if (current !== key) {
+									img.classList.remove('opacity-100')
+									img.classList.add('opacity-0')
+								} else {
+									img.classList.add('opacity-100')
+									img.classList.remove('opacity-0')
+								}
+							})
+
+							current++
+							if (current >= children.length) {
+								current = 0
+							}
+						}
+
+						// Loop through the images
+						slide()
+						setInterval(slide, sliderDuration)
+					}
+				}
+			})
+        </script>
+
+    </main>
 </Layout>
 
 <style>
-
+.slider picture {
+    @apply absolute left-0 top-0 right-0 w-full object-contain object-top shadow-lg transition-all duration-300 ease-in-out;
+}
 </style>
