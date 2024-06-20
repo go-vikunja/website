@@ -13,7 +13,7 @@ export default {
 				},
 			},
 			fontFamily: {
-				title: ['Quicksand', ...defaultTheme.fontFamily.sans],
+				display: ['Quicksand', ...defaultTheme.fontFamily.sans],
 				sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
 			},
 			backgroundImage: {
