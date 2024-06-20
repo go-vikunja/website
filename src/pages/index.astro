@@ -17,61 +17,62 @@ import VikunjaTaskDetailDark from '../assets/images/vikunja/09-task-detail-dark.
 import HeroLlama1 from '../assets/images/hero-llamas-small.jpg'
 import HeroLlama2 from '../assets/images/hero-llamas-2-small.jpg'
 import HeroLlama3 from '../assets/images/hero-llamas-3-small.jpg'
+import Button from '../components/Button.astro'
 
 const carouselImages = [
 	{src: VikunjaTaskOverview, alt: ''},
-    {src: VikunjaTaskList, alt: ''},
-    {src: VikunjaTaskGantt, alt: ''},
-    {src: VikunjaTaskTable, alt: ''},
-    {src: VikunjaTaskKanban, alt: ''},
-    {src: VikunjaTaskDetail, alt: ''},
-    {src: VikunjaQuickAdd, alt: ''},
-    {src: VikunjaTaskKanbanBackground, alt: ''},
-    {src: VikunjaTaskDetailDark, alt: ''},
+	{src: VikunjaTaskList, alt: ''},
+	{src: VikunjaTaskGantt, alt: ''},
+	{src: VikunjaTaskTable, alt: ''},
+	{src: VikunjaTaskKanban, alt: ''},
+	{src: VikunjaTaskDetail, alt: ''},
+	{src: VikunjaQuickAdd, alt: ''},
+	{src: VikunjaTaskKanbanBackground, alt: ''},
+	{src: VikunjaTaskDetailDark, alt: ''},
 ]
 ---
 <Layout title="The open-source, self-hostable to-do app">
     <main>
-        Plan your projects with the elegance of a sloth on a sunny day
-
-
         <section
-                class="flex min-h-screen w-full flex-col items-center justify-center px-4 pb-8 text-center text-gray-700 md:px-0"
-        >
-            <div class="mt-16 mb-8 font-title">
-                <h2 class="mb-4 text-4xl">
-                    The open-source,
-                    <a href="https://vikunja.io/docs/installing/" class="underline"
-                    >self-hostable</a
-                    >
+                class="flex min-h-screen w-full flex-col items-center justify-center px-4 pb-8 text-center text-gray-700 md:px-0">
+            <div class="mt-40 mb-20 font-title">
+                <h1 class="mb-4 text-5xl">
+                    Plan your projects with the elegance<br/>
+                    <span class="text-primary">of a sloth on a sunny day.</span>
+                </h1>
+                <h2 class="mx-auto max-w-2xl text-2xl">
+                    Vikunja, the fluffy, open-source,
+                    <a href="/docs/installing/" class="underline">self-hostable</a>
                     to-do app.
                 </h2>
-                <h3 class="mb-6 text-3xl">Organize everything, on all platforms.</h3>
-                <h3 class="mx-auto max-w-xl text-xl">
-                    Also one of the two wild South American camelids which live in the high alpine
-                    areas of the Andes and a
-                    <a
-                            rel="nofollow"
-                            target="_blank"
-                            class="underline"
-                            href="https://en.wikipedia.org/wiki/Vicu%C3%B1a"
-                    >relative of the llama</a
-                    >.
-                </h3>
+                <p class="mt-4 text-xl">
+                    Made and hosted in the EU.
+                </p>
+            </div>
 
-                <div class="flex justify-center space-x-2 py-4">
-                    <a
-                            href="https://try.vikunja.io"
-                            class="cursor-pointer rounded-md border border-transparent bg-primary px-4 py-2 text-xl font-medium text-white shadow hover:bg-primary-darker"
-                    >
-                        Try it
-                    </a>
-                    <a
-                            href="/features"
-                            class="cursor-pointer rounded-md border border-transparent bg-primary px-4 py-2 text-xl font-medium text-white shadow hover:bg-primary-darker"
-                    >
-                        Features
-                    </a>
+            <div class="flex items-center justify-center gap-8 mb-28">
+                <div class="w-1/3">
+                    <p>
+                        Use the open-source version on your own server
+                    </p>
+
+                    <Button href="/docs/installing" class="!mt-4">
+                        Get Started
+                    </Button>
+                </div>
+
+                <div class="border-2 border-gray-300 text-gray-500 rounded-full p-2 text-sm">
+                    OR
+                </div>
+
+                <div class="w-1/3">
+                    <p>
+                        Don't have a server or don't want to deal with it?
+                    </p>
+
+                    <Button href="https://vikunja.cloud" class="!mt-4">
+                        Meet Vikunja Cloud
+                    </Button>
                 </div>
             </div>
 
@@ -87,7 +88,7 @@ const carouselImages = [
 					))}
                 </div>
 
-                <div class="mt-48 mb-4 text-left md:flex">
+                <div class="mt-36 mb-4 text-left md:flex">
                     <div class="mt-4 md:mr-4 md:w-1/3">
                         <h2 class="flex items-center font-title text-2xl">
                             <svg
@@ -166,20 +167,20 @@ const carouselImages = [
 
         <section class="mx-auto mb-16 flex w-full max-w-6xl flex-col px-4 gap-4 text-left md:flex-row md:px-0">
             <LinkCard
-                href="/docs/installing"
-                image={HeroLlama1}
+                    href="/docs/installing"
+                    image={HeroLlama1}
             >
                 Installation
             </LinkCard>
             <LinkCard
-                href="/features"
-                image={HeroLlama2}
+                    href="/features"
+                    image={HeroLlama2}
             >
                 Features
             </LinkCard>
             <LinkCard
-                href="https://vikunja.cloud/?utm_source=io&utm_medium=io&utm_campaign=menu"
-                image={HeroLlama3}
+                    href="https://vikunja.cloud/?utm_source=io&utm_medium=io&utm_campaign=menu"
+                    image={HeroLlama3}
             >
                 Get it Hosted
             </LinkCard>
@@ -224,7 +225,7 @@ const carouselImages = [
 </Layout>
 
 <style>
-.slider picture {
-    @apply absolute left-0 top-0 right-0 w-full object-contain object-top shadow-lg transition-all duration-300 ease-in-out;
-}
+    .slider picture {
+        @apply absolute left-0 top-0 right-0 w-full object-contain object-top shadow-lg transition-all duration-300 ease-in-out;
+    }
 </style>
