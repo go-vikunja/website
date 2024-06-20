@@ -1,4 +1,6 @@
 ---
+import Footer from '../components/Footer.astro'
+import Header from '../components/Header.astro'
 interface Props {
 	title: string;
 	type: 'text' | 'website';
@@ -55,8 +57,14 @@ const imageUrl = image
 
     <meta property="og:type" content={type}/>
 </head>
-<body>
+<body class="bg-gray-50 font-sans text-gray-900 antialiased">
+
+<Header/>
+
 <slot/>
+
+<Footer/>
+
 </body>
 </html>
 <style is:global>
