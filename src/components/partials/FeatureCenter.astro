@@ -1,0 +1,16 @@
+---
+interface Props {
+	heading: string
+}
+
+const {heading} = Astro.props
+---
+<div class="mt-32">
+    <h2 class="font-display text-3xl flex items-center justify-center">
+		<slot name="header-icon"/>
+		{heading}
+    </h2>
+    <p class="pt-4">
+		<slot/>
+    </p>
+</div>
