@@ -14,6 +14,12 @@ importers:
       '@astrojs/tailwind':
         specifier: ^5.1.0
         version: 5.1.0(astro@4.10.3(typescript@5.4.5))(tailwindcss@3.4.4)
+      '@fontsource/open-sans':
+        specifier: ^5.0.28
+        version: 5.0.28
+      '@fontsource/quicksand':
+        specifier: ^5.0.18
+        version: 5.0.18
       '@tailwindcss/aspect-ratio':
         specifier: ^0.4.2
         version: 0.4.2(tailwindcss@3.4.4)
@@ -352,6 +358,12 @@ packages:
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource/open-sans@5.0.28':
+    resolution: {integrity: sha512-hBvJHY76pJT/JynGUB5EXWhnzjYfLdcMn655J5p1v9lTT9HdQSy+keq2KPVXO2Htlg998BBa3p6u/jlrZ6w0kg==}
+
+  '@fontsource/quicksand@5.0.18':
+    resolution: {integrity: sha512-Dvv89zZG0vjZzmYwkUJTbFNV/uhNikqB9Qgl4KMtFw/gTaS5nA7vLIOjfEz/gjWlKPsYnuSIvVArLR0/xptxlA==}
 
   '@img/sharp-darwin-arm64@0.33.4':
     resolution: {integrity: sha512-p0suNqXufJs9t3RqLBO6vvrgr5OhgbWp76s5gTRvdmxmuv9E1rcaqGUsl3l4mKVmXPkTkTErXediAui4x+8PSA==}
@@ -2495,6 +2507,10 @@ snapshots:
 
   '@esbuild/win32-x64@0.21.5':
     optional: true
+
+  '@fontsource/open-sans@5.0.28': {}
+
+  '@fontsource/quicksand@5.0.18': {}
 
   '@img/sharp-darwin-arm64@0.33.4':
     optionalDependencies:
