@@ -1,13 +1,6 @@
 ---
-title: "Cron Tasks"
-date: 2021-07-13T23:21:52+02:00
-draft: false
-menu:
-  sidebar:
-    parent: "development"
+title: "How to add a cron job task"
 ---
-
-# How to add a cron job task
 
 Cron jobs are tasks which run on a predefined schedule.
 Vikunja uses these through a light wrapper package around the excellent [github.com/robfig/cron](https://github.com/robfig/cron) package.

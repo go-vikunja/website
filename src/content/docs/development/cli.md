@@ -1,14 +1,6 @@
 ---
-date: "2019-03-31:00:00+01:00"
-title: "Cli Commands"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "development"
+title: "Adding new cli commands"
 ---
-
-# Adding new cli commands
 
 All cli-related functions are located in `pkg/cmd`.
 Each cli command usually calls a function in another package.

@@ -1,14 +1,6 @@
 ---
-title: "Filters"
-date: 2024-03-09T19:51:32+02:00
-draft: false
-type: doc
-menu:
-  sidebar:
-    parent: "usage"
+title: "Filter Syntax"
 ---
-
-# Filter Syntax
 
 To filter tasks via the api, you can use a query syntax similar to SQL. 
 

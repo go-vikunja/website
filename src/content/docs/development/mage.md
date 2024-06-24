@@ -1,14 +1,6 @@
 ---
-date: "2019-02-12:00:00+02:00"
 title: "Magefile"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "development"
 ---
-
-# Mage
 
 Vikunja uses [Mage](https://magefile.org/) to script common development tasks and even releasing.
 Mage is a pure go solution which allows for greater flexibility and things like better parallelization.

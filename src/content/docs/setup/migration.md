@@ -1,15 +1,6 @@
 ---
-date: "2023-03-09:00:00+02:00"
 title: "Migration from third-party services"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "setup"
-    weight: 5
 ---
-
-# Migration from third-party services
 
 There are several importers available for third-party services like Trello, Microsoft To Do or Todoist.
 All available migration options can be found [here](https://kolaente.dev/vikunja/vikunja/src/branch/main/config.yml.sample#L218).

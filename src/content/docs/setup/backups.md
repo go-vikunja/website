@@ -1,18 +1,8 @@
 ---
-date: "2019-02-12:00:00+02:00"
 title: "What to backup"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "setup"
 ---
 
-# What to backup
-
 There are two parts you need to back up: The database and attachment files.
-
-{{< table_of_contents >}}
 
 ## Files
 

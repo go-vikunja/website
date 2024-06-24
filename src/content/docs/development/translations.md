@@ -1,13 +1,6 @@
 ---
 title: "Translations"
-date: 2021-06-23T22:52:06+02:00
-draft: false
-menu:
-  sidebar:
-    parent: "development"
 ---
-
-# Translations
 
 This document provides documentation about how to translate Vikunja.
 

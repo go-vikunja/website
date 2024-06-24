@@ -1,14 +1,6 @@
 ---
 title: "Hosting Vikunja with k8s"
-date: 2022-08-12T13:41:48+02:00
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "setup"
 ---
-
-# Hosting Vikunja with k8s
 
 We have an official Helm Chart for Vikunja.
 

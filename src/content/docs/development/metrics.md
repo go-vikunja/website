@@ -1,14 +1,6 @@
 ---
-date: "2019-02-12:00:00+02:00"
 title: "Metrics"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "development"
 ---
-
-# Metrics
 
 Metrics work by exposing a `/metrics` endpoint which can then be accessed by prometheus.
 

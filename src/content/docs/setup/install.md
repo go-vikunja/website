@@ -1,15 +1,6 @@
 ---
-date: "2019-02-12:00:00+02:00"
 title: "Installing"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "setup"
-    weight: 10
 ---
-
-# Installing
 
 Architecturally, Vikunja is made up of two parts: [API](https://code.vikunja.io/api) and [frontend](https://code.vikunja.io/api/frontend).
 

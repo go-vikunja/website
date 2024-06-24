@@ -1,14 +1,6 @@
 ---
-date: "2019-02-12:00:00+02:00"
 title: "Modifying Swagger API Docs"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "development"
 ---
-
-# Modifying swagger api docs
 
 The api documentation is generated using [swaggo](https://github.com/swaggo/swag) from comments.
 

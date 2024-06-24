@@ -1,14 +1,6 @@
 ---
-date: "2019-02-12:00:00+02:00"
 title: "Errors"
-draft: false
-type: "doc"
-menu:
-sidebar:
-parent: "usage"
 ---
-
-# Errors
 
 This document describes the different errors Vikunja can return.
 

@@ -1,10 +1,6 @@
 ---
 title: "German Translation Instructions"
-date: 2021-06-23T23:47:34+02:00
-draft: false
 ---
-
-# German Translation Instructions
 
 <div class="notification is-warning">
 <b>NOTE:</b> This document contains translation instructions specific to the german translation of Vikunja.

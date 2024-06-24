@@ -1,14 +1,6 @@
 ---
-date: "2020-01-19:16:00+02:00"
-title: "Migrations"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "development"
+title: "Writing a migrator for Vikunja"
 ---
-
-# Writing a migrator for Vikunja
 
 It is possible to migrate data from other to-do services to Vikunja.
 To make this easier, we have put together a few helpers which are documented on this page.

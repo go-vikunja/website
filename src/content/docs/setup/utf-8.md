@@ -1,14 +1,6 @@
 ---
-date: "2020-07-06:00:00+02:00"
 title: "UTF-8 Settings"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "setup"
 ---
-
-# UTF-8 Settings
 
 Vikunja itself is always fully capable of handling utf-8 characters.
 However, your database might be not. Vikunja itself will work just fine until you want to use non-latin characters in your tasks/projects/etc.

@@ -1,14 +1,6 @@
 ---
-date: 2021-02-07T19:26:34+02:00
 title: "Notifications"
-toc: true
-draft: false
-menu:
-  sidebar:
-    parent: "development"
 ---
-
-# Notifications
 
 Vikunja provides a simple abstraction to send notifications per mail and in the database.
 

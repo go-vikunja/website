@@ -1,14 +1,6 @@
 ---
-date: "2019-02-12:00:00+02:00"
-title: "Rights"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "usage"
+title: "Project rights for teams and users"
 ---
-
-# Project rights for teams and users
 
 Whenever you share a project with a user or team, you can specify a `rights` parameter.
 This parameter controls the rights that team or user is going to have (or has, if you request the current sharing status).

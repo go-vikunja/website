@@ -1,13 +1,6 @@
 ---
 title: "Releasing a new Vikunja version"
-date: 2022-10-28T13:06:05+02:00
-draft: false
-menu:
-  sidebar:
-    parent: "development"
 ---
-
-# Releasing a new Vikunja version
 
 This checklist is a collection of all steps usually involved when releasing a new version of Vikunja.
 Not all steps are necessary for every release.
