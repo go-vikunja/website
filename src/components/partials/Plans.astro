@@ -1,0 +1,175 @@
+---
+import Button from '../Button.astro'
+
+interface Props {
+	showTitle: boolean
+}
+
+const {showTitle = true} = Astro.props
+
+interface Plan {
+	title: string
+	priceMonthly: number
+	priceYearly: number
+	priceDifferencePercent: number
+	description: string
+	isOrg: boolean
+	features: string[]
+}
+
+const plans: Plan[] = [
+	{
+		title: 'Personal',
+		priceMonthly: 4,
+		priceYearly: 40,
+		priceDifferencePercent: 20,
+		description: 'Your own account, completely managed by us.',
+		isOrg: false,
+		features: [
+			'Unlimited lists',
+			'Unlimited tasks',
+			'Unlimited reminders',
+			'Unlimited share links',
+			'Unlimited relations',
+			'Unlimited filters',
+			'10GB attachment storage',
+			'Support an awesome open-source project',
+			'Email & <a class="underline" href="https://community.vikunja.io/" target="_blank" rel="noopener">Community support</a>',
+		],
+	},
+	{
+		title: 'Organization',
+		priceMonthly: 5,
+		priceYearly: 50,
+		priceDifferencePercent: 20,
+		description: 'A plan for all users in your organization.',
+		isOrg: true,
+		features: [
+			'Everything in Personal',
+			'Unlimited Teams',
+			'50GB attachment storage',
+			'Priority Support via Email',
+			'Centralized Team Billing',
+		],
+	},
+]
+---
+<section class="mt-12">
+	{showTitle ? <h2 class="font-display text-4xl mb-4" id="pricing">Pricing</h2> : ''}
+
+    <div class="flex flex-col md:flex-row my-0 mx-auto md:space-x-4">
+		{plans.map((p: Plan) => (
+                <article class="border rounded p-8 w-full md:w-1/3 bg-white text-left mt-4 flex flex-col">
+                    <div class="h-48 shrink-0 flex flex-col justify-between">
+                        <div>
+                            <div class="font-display text-xl mb-2">
+								{p.title}
+                            </div>
+                            <div class="font-display mb-2">
+                                <span class="text-3xl">{p.priceMonthly}€</span>
+                                /&nbsp;month
+								{p.isOrg ? 'per user' : ''}
+                            </div>
+                            <p class="text-sm mb-4 text-gray-500">
+								{p.priceYearly} when billed yearly (-{p.priceDifferencePercent}%)
+                            </p>
+                        </div>
+
+                        <p class="text-gray-700 pb-4">
+							{p.description}
+                        </p>
+                    </div>
+
+                    <hr class="mb-4"/>
+
+                    <div class="flex flex-col justify-between h-full">
+
+                        <ul class="list-disc list-checkmark pl-4 mb-6 text-gray-700">
+							{p.features.map(f => (
+                                    <li><Fragment set:html={f}/></li>
+							))}
+                        </ul>
+
+                        <div>
+                            <Button href="https://vikunja.cloud">
+                                Buy
+                            </Button>
+                            <p class="text-sm text-gray-500 block mt-2">
+                                Free 14 day trial. Cancel anytime.
+                            </p>
+                        </div>
+                    </div>
+                </article>))}
+
+        <article class="border rounded p-8 w-full md:w-1/3 bg-white text-left mt-4 flex flex-col">
+            <div class="h-48 shrink-0 flex flex-col justify-between">
+                <div>
+                    <div class="font-display text-xl mb-2">
+                        Enterprise
+                    </div>
+                    <div class="font-display mb-4 text-3xl">
+                        Custom Pricing
+                    </div>
+                </div>
+
+                <p class="text-gray-700 pb-4">
+                    Your Enterprise-ready instance of Vikunja.
+                </p>
+            </div>
+
+            <hr class="mb-4"/>
+
+            <div class="flex flex-col justify-between h-full">
+
+                <ul class="list-disc list-checkmark pl-4 mb-6 text-gray-700">
+                    <li>Everything in Organization</li>
+                    <li>Unlimited attachment storage</li>
+                    <li>Your own private instance</li>
+                    <li>Team billing</li>
+                    <li>Admin interface to manage users</li>
+                    <li>Bring your own server (optional)</li>
+                    <li>Agreement for contract data processing (GDPR)</li>
+                    <li>Priority email support</li>
+                    <li>Team training</li>
+                </ul>
+
+                <div>
+                    <Button href="https://vikunja.cloud/managed">
+                        More details
+                    </Button>
+                    <p class="text-sm text-gray-500 block mt-2">&nbsp;</p>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <p class="pt-8 text-gray-600">
+        Vikunja is and always will be <a href="https://vikunja.io/" class="underline" target="_blank" rel="noopener">Open-Source</a>
+        and freely available.<br/>
+        The hosted version supports the development and ensures Vikunja will be around for some time.
+    </p>
+
+    <section class="max-w-xl mx-auto text-left">
+        <h2 class="font-display mt-12 mb-4 text-xl">Why is there no free version?</h2>
+        <p>
+            Building and maintaining software costs money and time. There's no way around it.
+            That money has to come from <em>somewhere</em>.
+            Most free products either have limited functionality to nag you to buy a premium version that is actually
+            usable or just sell your data to advertising companies. In those cases, your not the user, you're the
+            product.
+        </p>
+        <p class="mt-2">
+            I don't do any of this.<br/>
+            I believe you, the user, should be front and center of the software you're using.
+            You're always free to host Vikunja yourself, no strings attached. Keep in mind that also means you will
+            need to take care of all server maintenance, updates and backups yourself. If that's your jam, great!
+            But if you just want to use it, consider buying a subscription to support the ongoing development.
+        </p>
+        <p class="mt-2">
+            If you're not sure Vikunja is useful to you, just try it risk-free with a 14-day trial.
+            Feel free to <a class="underline" href="mailto:{{ config('mail.contact_address') }}">reach out</a> if you
+            have
+            any questions.
+        </p>
+    </section>
+</section>

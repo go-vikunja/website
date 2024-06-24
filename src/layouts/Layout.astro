@@ -74,3 +74,13 @@ const imageUrl = image
 
 </body>
 </html>
+
+<style is:global>
+    ul.list-checkmark {
+        list-style-type: '✓';
+
+        li::marker {
+            @apply text-blue-700 pr-2;
+        }
+    }
+</style>
