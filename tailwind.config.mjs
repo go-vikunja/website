@@ -22,6 +22,27 @@ export default {
 				'hero-llama-2-small': "url('/images/hero-llamas-2-small.jpg')",
 				'hero-llama-3-small': "url('/images/hero-llamas-3-small.jpg')",
 			},
+			typography: ({ theme }) => ({
+				DEFAULT: {
+					css: {
+						code: {
+							backgroundColor: theme('colors.gray.100'),
+							borderRadius: theme('borderRadius.sm'),
+							paddingTop: theme('padding[0.5]'),
+							paddingRight: theme('padding[1]'),
+							paddingBottom: theme('padding[0.5]'),
+							paddingLeft: theme('padding[1]'),
+						},
+						'code::before': {
+							content: 'normal',
+						},
+						'code::after': {
+							content: 'normal',
+						},
+					},
+				},
+			}),
+
 		},
 	},
 	plugins: [

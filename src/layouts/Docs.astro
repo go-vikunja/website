@@ -1,0 +1,58 @@
+---
+import Layout from './Layout.astro'
+import Prose from '../components/Prose.astro'
+import {MarkdownHeading} from 'astro'
+import TableOfContentsHeading from '../components/TableOfContentsHeading.astro'
+
+interface Props {
+	title: string
+	headings: MarkdownHeading[]
+}
+
+const {title, headings} = Astro.props
+
+// Taken from https://kld.dev/building-table-of-contents/
+function buildToc(headings: MarkdownHeading[]) {
+	const toc = []
+	const parentHeadings = new Map()
+	headings.forEach((h) => {
+		const heading = {...h, subheadings: []}
+		parentHeadings.set(heading.depth, heading)
+		if (heading.depth === 2) {
+			toc.push(heading)
+		} else {
+			parentHeadings.get(heading.depth - 1).subheadings.push(heading)
+		}
+	})
+	return toc
+}
+
+const toc = buildToc(headings)
+
+---
+
+<Layout title={title}>
+    <div class="mx-auto flex max-w-screen-2xl flex-col lg:flex-row lg:pt-8">
+        <aside class="w-full lg:w-1/5">
+            <nav>
+                Navigation goes here
+            </nav>
+        </aside>
+        <main class="w-full lg:w-3/5 p-4 pt-6 lg:pt-2">
+            <Prose>
+                <slot/>
+            </Prose>
+        </main>
+        <div class="w-full lg:w-1/5">
+            <div class="font-display uppercase">
+                Table of contents
+            </div>
+            <nav>
+                <ul>
+                    {toc.map((heading) => <TableOfContentsHeading heading={heading} />)}
+                </ul>
+            </nav>
+			{headings}
+        </div>
+    </div>
+</Layout>
