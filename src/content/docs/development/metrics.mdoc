@@ -7,8 +7,6 @@ Metrics work by exposing a `/metrics` endpoint which can then be accessed by pro
 To keep the load on the database minimal, metrics are stored and updated in redis.
 The `metrics` package provides several functions to create and update metrics.
 
-{{< table_of_contents >}}
-
 ## Exposing New Metrics
 
 First, define a `const` with the metric key in redis. This is done in `pkg/metrics/metrics.go`.
