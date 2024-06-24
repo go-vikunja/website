@@ -92,6 +92,7 @@ const sidebarEntries = await getSidebarNavigation()
             </Prose>
         </main>
         <div class="w-full lg:w-1/5">
+            {toc.length > 0 &&
             <div class="sticky top-2">
                 <div class="font-display font-bold">
                     On this page
@@ -103,6 +104,7 @@ const sidebarEntries = await getSidebarNavigation()
                     </ul>
                 </nav>
             </div>
+            }
         </div>
     </div>
 </Layout>
