@@ -11,7 +11,8 @@ interface Props {
 	headings: MarkdownHeading[]
 }
 
-const {title, headings} = Astro.props
+const {title: originalTitle, headings} = Astro.props
+const title = originalTitle ?? Astro.props.frontmatter?.title
 
 // Taken from https://kld.dev/building-table-of-contents/
 function buildToc(headings: MarkdownHeading[]) {
