@@ -1,0 +1,31 @@
+---
+interface Props {
+	type: 'warning' | 'info'
+}
+
+const {type} = Astro.props
+
+function getClasses(): string {
+	let suffix = ''
+	switch (type) {
+		case 'info':
+			suffix = 'bg-primary-lighter'
+			break
+		case 'warning':
+			suffix = 'bg-yellow-200'
+			break
+	}
+
+	return 'callout rounded px-4 py-3 ' + suffix
+}
+---
+
+<div class={getClasses()}>
+	<slot/>
+</div>
+
+<style>
+	.callout :global(> p) {
+		@apply m-0;
+	}
+</style>
