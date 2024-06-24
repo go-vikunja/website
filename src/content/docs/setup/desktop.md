@@ -1,14 +1,6 @@
 ---
 title: "Desktop Packages"
-date: 2024-02-11T15:58:18+01:00
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "setup"
 ---
-
-# Desktop Packages
 
 Vikunja is available as an electron-based desktop application for Linux and Windows.
 

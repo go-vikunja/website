@@ -1,14 +1,6 @@
 ---
 title: "Webhooks"
-date: 2023-10-17T19:51:32+02:00
-draft: false
-type: doc
-menu:
-  sidebar:
-    parent: "usage"
 ---
-
-# Webhooks
 
 Starting with version 0.22.0, Vikunja allows you to define webhooks to notify other services of events happening within Vikunja.
 

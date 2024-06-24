@@ -1,14 +1,6 @@
 ---
-date: "2019-02-12:00:00+02:00"
 title: "Database"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "development"
 ---
-
-# Database
 
 Vikunja uses [xorm](https://xorm.io/) as an abstraction layer to handle the database connection.
 Please refer to [their](https://xorm.io/docs/) documentation on how to exactly use it.

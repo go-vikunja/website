@@ -21,7 +21,7 @@ function buildToc(headings: MarkdownHeading[]) {
 	headings.forEach((h) => {
 		const heading = {...h, subheadings: []}
 		parentHeadings.set(heading.depth, heading)
-		if (heading.depth === 1) {
+		if (heading.depth === 2) {
 			toc.push(heading)
 		} else {
 			parentHeadings.get(heading.depth - 1).subheadings.push(heading)
@@ -75,7 +75,7 @@ const sidebarEntries = await getSidebarNavigation()
                                     <li>
                                         <a
                                                 href={item.url}
-                                                class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 hover:text-gray-900 transition ' + (Astro.url.pathname.startsWith(item.url) && ' bg-primary text-white')}
+                                                class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 transition ' + (Astro.url.pathname.startsWith(item.url) && ' !bg-primary text-white')}
                                         >
 											{item.title}
                                         </a>
@@ -87,6 +87,7 @@ const sidebarEntries = await getSidebarNavigation()
         </aside>
         <main class="w-full lg:w-3/5 p-4 pt-6 lg:pt-2" id="main-content">
             <Prose>
+                <h1>{title}</h1>
                 <slot/>
             </Prose>
         </main>

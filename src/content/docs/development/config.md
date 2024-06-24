@@ -1,14 +1,6 @@
 ---
-date: "2019-02-12:00:00+02:00"
 title: "Configuration Options"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "development"
 ---
-
-# Configuration options
 
 All configuration variables are declared in the `config` package.
 It uses [viper](https://github.com/spf13/viper) under the hood to handle setting defaults and parsing config files.

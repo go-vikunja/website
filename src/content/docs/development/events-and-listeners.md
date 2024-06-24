@@ -1,13 +1,6 @@
 ---
-date: 2018-10-13T19:26:34+02:00
 title: "Events and Listeners"
-draft: false
-menu:
-  sidebar:
-    parent: "development"
 ---
-
-# Events and Listeners
 
 Vikunja provides a simple observer pattern mechanism through events and listeners.
 The basic principle of events is always the same: Something happens (=An event is fired) and something reacts to it (=A listener is called).

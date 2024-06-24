@@ -1,14 +1,6 @@
 ---
-date: "2019-03-29:00:00+02:00"
 title: "Database Migrations"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "development"
 ---
-
-# Database Migrations
 
 Vikunja runs all database migrations automatically on each start if needed.
 Additionally, they can also be run directly by using the `migrate` command.

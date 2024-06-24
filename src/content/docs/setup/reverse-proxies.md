@@ -1,14 +1,6 @@
 ---
-date: "2019-02-12:00:00+02:00"
-title: "Reverse Proxy"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "setup"
+title: "Setup behind a reverse proxy"
 ---
-
-# Setup behind a reverse proxy
 
 These examples assume you have an instance of Vikunja running on your server listening on port `3456`.
 If you've changed this setting, you need to update the server configurations accordingly.

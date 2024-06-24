@@ -1,14 +1,6 @@
 ---
-date: "2020-05-24:00:00+02:00"
 title: "Docker Walkthrough"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "setup"
 ---
-
-# Setup with docker from start to finish
 
 This tutorial assumes basic knowledge of docker.
 It is aimed at beginners and should get you up and running quickly.

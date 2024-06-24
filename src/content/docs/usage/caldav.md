@@ -1,14 +1,6 @@
 ---
-date: "2019-05-12:00:00+01:00"
 title: "CalDAV"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "usage"
 ---
-
-# CalDAV
 
 > **Warning:** The CalDAV integration is in an early alpha stage and has bugs.
 > It works well with some clients while having issues with others.

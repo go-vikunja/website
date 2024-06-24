@@ -1,13 +1,6 @@
 ---
-title: "Typesense"
-date: 2023-09-29T12:23:55+02:00
-draft: false
-menu:
-  sidebar:
-    parent: "setup"
+title: "Using Typesense for enhanced search capabilities"
 ---
-
-# Use Typesense for enhanced search capabilities
 
 Vikunja supports using [Typesense](https://typesense.org/) for a better search experience.
 Typesense allows fast fulltext search including fuzzy matching support. 

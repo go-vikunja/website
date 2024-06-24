@@ -1,16 +1,6 @@
 ---
-date: "2019-02-12:00:00+02:00"
 title: "Testing"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "development"
 ---
-
-# Testing
-
-{{< table_of_contents >}}
 
 ## API Tests
 

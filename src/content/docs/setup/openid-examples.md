@@ -1,14 +1,6 @@
 ---
-date: "2022-08-09:00:00+02:00"
 title: "OpenID example configurations"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "setup"
 ---
-
-# OpenID example configurations
 
 On this page you will find examples about how to set up Vikunja with a third-party OAuth 2.0 provider using OpenID Connect.
 To add another example, please [edit this document](https://kolaente.dev/vikunja/vikunja/src/branch/main/docs/content/doc/setup/openid-examples.md) and send a PR.

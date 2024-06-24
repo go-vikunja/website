@@ -1,14 +1,6 @@
 ---
-date: "2019-09-25:00:00+02:00"
-title: "Task Relation kinds"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "usage"
+title: "Available task relation kinds"
 ---
-
-# Available task relation kinds
 
 | Code | Description | Opposite of |
 |------|-------------|-------------|

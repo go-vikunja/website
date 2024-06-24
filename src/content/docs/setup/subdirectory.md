@@ -1,13 +1,6 @@
 ---
 title: "Running Vikunja in a subdirectory"
-date: 2022-09-23T12:15:04+02:00
-draft: false
-menu:
-  sidebar:
-    parent: "setup"
 ---
-
-# Running Vikunja in a subdirectory
 
 Running Vikunja in a subdirectory is not supported out of the box.
 However, you can still run it in a subdirectory but need to build the frontend yourself.

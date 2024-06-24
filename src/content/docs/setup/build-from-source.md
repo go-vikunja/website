@@ -1,14 +1,6 @@
 ---
-date: "2022-09-21:00:00+02:00"
-title: "Build from sources"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "setup"
+title: "Build Vikunja from sources"
 ---
-
-# Build Vikunja from source
 
 To fully build Vikunja from source files, you need to build the api and frontend.
 

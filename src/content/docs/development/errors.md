@@ -1,14 +1,6 @@
 ---
-date: "2019-02-12:00:00+02:00"
 title: "Custom Errors"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "development"
 ---
-
-# Custom Errors
 
 All custom errors are defined in `pkg/models/errors.go`.
 You should add new ones in this file.

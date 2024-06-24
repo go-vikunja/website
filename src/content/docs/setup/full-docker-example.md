@@ -1,14 +1,6 @@
 ---
-date: "2019-02-12:00:00+02:00"
 title: "Full docker example"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "setup"
 ---
-
-# Full docker example
 
 This docker compose configuration will run Vikunja with a mariadb database.
 It uses a proxy configuration to make it available under a domain.

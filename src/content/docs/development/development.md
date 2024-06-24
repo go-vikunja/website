@@ -1,18 +1,6 @@
 ---
-date: "2022-09-21:00:00+02:00"
 title: "Development"
-toc: true
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "development"
-    name: "Development"
 ---
-
-# Development
-
-{{< table_of_contents >}}
 
 ## General
 

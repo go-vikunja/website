@@ -1,14 +1,6 @@
 ---
-date: "2019-03-31:00:00+01:00"
-title: "CLI"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "usage"
+title: "Command line interface"
 ---
-
-# Command line interface
 
 You can interact with Vikunja using its `cli` interface.
 

@@ -1,14 +1,6 @@
 ---
-date: "2022-07-07:00:00+02:00"
-title: "Versions"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "setup"
+title: "Vikunja Versions"
 ---
-
-# Vikunja Versions
 
 Vikunja api is available in two different release flavors.
 

@@ -1,14 +1,6 @@
 ---
-date: "2022-08-09:00:00+02:00"
 title: "OpenID"
-draft: false
-type: "doc"
-menu:
-  sidebar:
-    parent: "setup"
 ---
-
-# OpenID
 
 Vikunja allows for authentication with an external identity source such as Authentik, Keycloak or similar via the
 [OpenID Connect](https://openid.net/developers/specs/) standard.
