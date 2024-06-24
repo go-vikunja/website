@@ -1,7 +1,9 @@
 ---
+import {MarkdownHeading} from 'astro'
+import {getCollection} from 'astro:content'
+
 import Layout from './Layout.astro'
 import Prose from '../components/Prose.astro'
-import {MarkdownHeading} from 'astro'
 import TableOfContentsHeading from '../components/TableOfContentsHeading.astro'
 
 interface Props {
@@ -28,13 +30,58 @@ function buildToc(headings: MarkdownHeading[]) {
 }
 
 const toc = buildToc(headings)
----
 
+async function getSidebarNavigation() {
+    const docs = await getCollection('docs')
+    const entries = {}
+
+    docs.forEach(d => {
+        const groupKey = d.id.split('/')[0]
+        if (!entries[groupKey]) {
+            entries[groupKey] = []
+        }
+        entries[groupKey].push({
+            url: '/docs/' + d.slug,
+            title: d.data.title,
+        })
+    })
+
+    const order = ['setup', 'usage', 'development']
+
+    const sortedData = order.reduce((obj, key) => {
+        if (entries[key]) {
+            obj[key] = entries[key].sort((a, b) => a.title.localeCompare(b.title))
+        }
+        return obj
+    }, {})
+
+    return Object.entries(sortedData)
+}
+
+
+const sidebarEntries = await getSidebarNavigation()
+---
 <Layout title={title}>
     <div class="mx-auto flex max-w-screen-2xl flex-col lg:flex-row lg:pt-8">
-        <aside class="w-full lg:w-1/5">
+        <aside class="w-full lg:w-1/5 hidden px-2 text-gray-600 lg:block" id="docsMenu">
             <nav>
-                Navigation goes here
+				{sidebarEntries.map(([key, entries]) => (
+                        <p class="pb-2 pt-4 font-title text-sm uppercase text-gray-500">
+							{key}
+                        </p>
+                        <ul>
+							{entries.map(item => (
+                                    <li>
+                                        <a
+                                                href={item.url}
+                                                class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 hover:text-gray-900 transition ' + (Astro.url.pathname.startsWith(item.url) && ' bg-primary text-white')}
+                                        >
+											{item.title}
+                                        </a>
+                                    </li>
+							))}
+                        </ul>
+				))}
             </nav>
         </aside>
         <main class="w-full lg:w-3/5 p-4 pt-6 lg:pt-2" id="main-content">
@@ -47,7 +94,7 @@ const toc = buildToc(headings)
                 <div class="font-display font-bold">
                     On this page
                 </div>
-                <nav class="text-gray-600 pt-2" id="toc">
+                <nav class="text-gray-600 pt-2 max-h-[calc(100vh-2rem)] overflow-y-auto overflow-x-hidden" id="toc">
                     <ul>
 						{toc.map((heading) =>
                                 <TableOfContentsHeading heading={heading}/>)}
