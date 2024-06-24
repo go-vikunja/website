@@ -1,12 +1,13 @@
 ---
-
 interface Props {
 	href: string
 }
 
 const {href} = Astro.props
 
-const isCurrentPage = Astro.url.pathname === href || Astro.url.pathname === `${href}/`
+const isCurrentPage = href === '/'
+	? Astro.url.pathname === href
+	: Astro.url.pathname.startsWith(href)
 ---
 <li>
 	<a class={(isCurrentPage ? 'text-primary' : '') + ' py-2 px-4 rounded-md hover:bg-gray-700/5 hover:text-gray-950 block transition'} href={href}><slot/></a>
