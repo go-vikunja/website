@@ -18,7 +18,7 @@ function buildToc(headings: MarkdownHeading[]) {
 	headings.forEach((h) => {
 		const heading = {...h, subheadings: []}
 		parentHeadings.set(heading.depth, heading)
-		if (heading.depth === 2) {
+		if (heading.depth === 1) {
 			toc.push(heading)
 		} else {
 			parentHeadings.get(heading.depth - 1).subheadings.push(heading)
@@ -28,7 +28,6 @@ function buildToc(headings: MarkdownHeading[]) {
 }
 
 const toc = buildToc(headings)
-
 ---
 
 <Layout title={title}>
@@ -38,21 +37,47 @@ const toc = buildToc(headings)
                 Navigation goes here
             </nav>
         </aside>
-        <main class="w-full lg:w-3/5 p-4 pt-6 lg:pt-2">
+        <main class="w-full lg:w-3/5 p-4 pt-6 lg:pt-2" id="main-content">
             <Prose>
                 <slot/>
             </Prose>
         </main>
         <div class="w-full lg:w-1/5">
-            <div class="font-display uppercase">
-                Table of contents
+            <div class="sticky top-2">
+                <div class="font-display font-bold">
+                    On this page
+                </div>
+                <nav class="text-gray-600 pt-2" id="toc">
+                    <ul>
+						{toc.map((heading) =>
+                                <TableOfContentsHeading heading={heading}/>)}
+                    </ul>
+                </nav>
             </div>
-            <nav>
-                <ul>
-                    {toc.map((heading) => <TableOfContentsHeading heading={heading} />)}
-                </ul>
-            </nav>
-			{headings}
         </div>
     </div>
 </Layout>
+
+<script>
+	// Adjusted from https://stackoverflow.com/a/73255559
+
+	const anchors = document.querySelectorAll('#main-content h2, #main-content h3, #main-content h4, #main-content h5, #main-content h6')
+	window.addEventListener('scroll', function () {
+		let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+
+		// highlight the last scrolled-to: set everything inactive first
+		anchors.forEach(anchor => {
+			const link = document.querySelector(`nav#toc ul li a[href="#${anchor.id}"]`)
+			if (link) link.classList.remove('text-primary')
+		})
+
+		// then iterate backwards, on the first match highlight it and break
+		for (let i = anchors.length - 1; i >= 0; i--) {
+			if (scrollTop > anchors[i].offsetTop - 75) {
+				const link = document.querySelector(`nav ul li a[href="#${anchors[i].id}"]`)
+				if (link) link.classList.add('text-primary')
+				break
+			}
+		}
+	})
+</script>

@@ -4,12 +4,12 @@ const { heading } = Astro.props;
 ---
 
 <li>
-    <a href={'#' + heading.slug}>
+    <a href={'#' + heading.slug} class="transition hover:text-primary">
 		{heading.text}
     </a>
 	{
 		heading.subheadings.length > 0 && (
-                    <ul>
+                    <ul class="pl-6">
 						{heading.subheadings.map((subheading) => (
                                 <Astro.self heading={subheading} />
 						))}
