@@ -1,10 +1,22 @@
 ---
+import {Picture} from 'astro:assets'
+
 import Layout from '../layouts/Layout.astro'
-import FeatureCenter from '../components/partials/FeatureCenter.astro'
+import FeatureCenter from '../components/features/FeatureCenter.astro'
+import FeatureImageSide from '../components/features/FeatureImageSide.astro'
+
+import VikunjaTaskOverview from '../assets/images/vikunja/01-task-overview.png'
+import VikunjaFeatureTask from '../assets/images/vikunja/features/task.png'
+import VikunjaFeatureList from '../assets/images/vikunja/features/list.png'
+import VikunjaFeatureGantt from '../assets/images/vikunja/features/gantt.png'
+import VikunjaFeatureKanban from '../assets/images/vikunja/features/kanban.png'
+import VikunjaFeatureTable from '../assets/images/vikunja/features/table.png'
+import FeatureSmall from '../components/features/FeatureSmall.astro'
+import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
 ---
 
-<Layout>
-    <main class="max-w-screen-xl mx-auto px-4 md:px-0">
+<Layout title="Features">
+    <main class="max-w-screen-xl mx-auto px-4 md:px-0 text-center">
         <div class="pt-32 pb-8">
             <h1 class="text-3xl font-display">
                 Think of Vikunja like the notebook you have with all your things to keep track of.
@@ -60,7 +72,7 @@ import FeatureCenter from '../components/partials/FeatureCenter.astro'
             </div>
         </div>
 
-        <FeatureCenter class="mb-16" heading="Open Source">
+        <FeatureCenter heading="Open Source">
             Vikunja is openly licensed under the
             <a href="http://code.vikunja.io/api/src/branch/main/LICENSE" class="underline" target="_blank"
                rel="noopener">AGPLv3</a>.
@@ -72,19 +84,16 @@ import FeatureCenter from '../components/partials/FeatureCenter.astro'
             And if you are a developer and know your way around Go or Vue.js, any help is appreciated.
         </FeatureCenter>
 
-        <FeatureCenter class="mb-16" heading="We will never look at your tasks.">
-            We will never sell your grocery list or metadata.
-            Because privacy matters.<br/>
-            Don't take our word for it,
-            <a href="https://code.vikunja.io" class="underline" target="_blank" rel="noopener">check it</a>!
-            Vikunja is openly licensed under the AGPLv3.
-        </FeatureCenter>
-
-        <div class="shadow-lg rounded mt-8">
-            <x-image image="vikunja/01-task-overview"/>
+        <div class="shadow-lg rounded mb-16">
+            <Picture
+                src={VikunjaTaskOverview}
+                formats={['avif', 'webp']}
+                class="object-contain object-top w-full"
+                alt="Vikunja Task Overview"
+            />
         </div>
 
-        <FeatureCenter class="mb-32" heading="Built for speed.">
+        <FeatureCenter heading="Built for speed.">
             <svg slot="header-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500" fill="none"
                  viewBox="0 0 24 24"
                  stroke="currentColor">
@@ -95,7 +104,7 @@ import FeatureCenter from '../components/partials/FeatureCenter.astro'
             ecause a productive tool should not get in your way.
         </FeatureCenter>
 
-        <x-feature-image-side orientation="left" image="vikunja/features/task">
+        <FeatureImageSide orientation="left" image={VikunjaFeatureTask}>
             <h2 class="font-display text-2xl mt-4 md:mt-0 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500" fill="none"
                      viewBox="0 0 24 24" stroke="currentColor">
@@ -116,9 +125,9 @@ import FeatureCenter from '../components/partials/FeatureCenter.astro'
                 Vikunja also lets you split a task in multiple subtasks for easy progress tracking and more
                 satisfaction when crossing them off the list!
             </p>
-        </x-feature-image-side>
+        </FeatureImageSide>
 
-        <FeatureCenter class="mb-32" heading="Quick Add Magic">
+        <FeatureCenter heading="Quick Add Magic">
             <svg slot="header-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500" fill="none"
                  viewBox="0 0 24 24"
                  stroke="currentColor">
@@ -139,7 +148,7 @@ import FeatureCenter from '../components/partials/FeatureCenter.astro'
             Vikunja allows you to view tasks in four different views - use whatever works best for you.
         </p>
 
-        <x-feature-image-side image="vikunja/features/list">
+        <FeatureImageSide image={VikunjaFeatureList}>
             <h2 class="font-display text-2xl flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500" fill="none"
                      viewBox="0 0 24 24"
@@ -154,9 +163,9 @@ import FeatureCenter from '../components/partials/FeatureCenter.astro'
                 has
                 to offer.
             </p>
-        </x-feature-image-side>
+        </FeatureImageSide>
 
-        <x-feature-image-side image="vikunja/features/gantt" orientation="left">
+        <FeatureImageSide orientation="left" image={VikunjaFeatureGantt}>
             <h2 class="font-display text-2xl flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500" fill="none"
                      viewBox="0 0 24 24" stroke="currentColor">
@@ -169,9 +178,9 @@ import FeatureCenter from '../components/partials/FeatureCenter.astro'
                 The Gantt Chart is perfect to get a timely overview of all tasks currently in-progress in a project.
                 It allows for easy planning of deadlines and due dates.
             </p>
-        </x-feature-image-side>
+        </FeatureImageSide>
 
-        <x-feature-image-side image="vikunja/features/kanban">
+        <FeatureImageSide image={VikunjaFeatureKanban}>
             <h2 class="font-display text-2xl flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500" fill="none"
                      viewBox="0 0 24 24" stroke="currentColor">
@@ -190,9 +199,9 @@ import FeatureCenter from '../components/partials/FeatureCenter.astro'
                 All tasks can be added through the usual ways and will then show up in the kanban board where
                 they can be easily rearranged and reordered.
             </p>
-        </x-feature-image-side>
+        </FeatureImageSide>
 
-        <x-feature-image-side image="vikunja/features/table" orientation="left">
+        <FeatureImageSide orientation="left" image={VikunjaFeatureTable}>
             <h2 class="font-display text-2xl flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500" fill="none"
                      viewBox="0 0 24 24"
@@ -206,9 +215,9 @@ import FeatureCenter from '../components/partials/FeatureCenter.astro'
                 With the table view, you can see all task details of all your tasks.
                 And you can even change what task attributes should be visible!
             </p>
-        </x-feature-image-side>
+        </FeatureImageSide>
 
-        <FeatureCenter class="Import your tasks from Todoist, Trello or Microsoft To-Do">
+        <FeatureCenter heading="Import your tasks from Todoist, Trello or Microsoft To-Do">
             Because work does not happen in one tool only.
         </FeatureCenter>
 
@@ -217,65 +226,61 @@ import FeatureCenter from '../components/partials/FeatureCenter.astro'
                 <h2 class="font-display text-2xl mt-8">Other Features</h2>
             </div>
             <div class="w-full md:w-1/4 md:mr-8">
-                <x-feature-small title="Labels" icon="label">
+                <FeatureSmall title="Labels" icon="label">
                     Effortlessly mark tasks with a colorful label to find and group relevant tasks
                     with a click!
-                </x-feature-small>
-                <x-feature-small title="Saved Filters" icon="filter">
+                </FeatureSmall>
+                <FeatureSmall title="Saved Filters" icon="filter">
                     Create a filter with only the tasks you care about. Save it once, use it always.
-                </x-feature-small>
-                <x-feature-small title="Priorities" icon="priority">
+                </FeatureSmall>
+                <FeatureSmall title="Priorities" icon="priority">
                     Know that feeling when you have a dozen things to do but can't decide on what
                     to work next? Vikunja lets you quickly prioritize your tasks, so you'll always
                     know on what to work next.
-                </x-feature-small>
-                <x-feature-small title="Delegation" icon="delegation">
+                </FeatureSmall>
+                <FeatureSmall title="Delegation" icon="delegation">
                     Assign tasks to other users or yourself so everyone always knows who is responsible for
                     which task.
-                </x-feature-small>
-                <x-feature-small title="Attachments" icon="attachment">
+                </FeatureSmall>
+                <FeatureSmall title="Attachments" icon="attachment">
                     Attach files to tasks, so you can always have all related files for a task in one place!
-                </x-feature-small>
+                </FeatureSmall>
             </div>
             <div class="w-full md:w-1/4">
-                <x-feature-small title="Relations" icon="relation">
+                <FeatureSmall title="Relations" icon="relation">
                     Relate different tasks together - even if they're not in the same project! A relation can be
                     multiple things, for example a subtask or blocking task.
-                </x-feature-small>
-                <x-feature-small title="Due dates" icon="date">
+                </FeatureSmall>
+                <FeatureSmall title="Due dates" icon="date">
                     Remember these tasks with a deadline coming up? Set a due date for a task and see all tasks
                     with upcoming deadlines at once!
-                </x-feature-small>
-                <x-feature-small title="Share links" icon="share">
+                </FeatureSmall>
+                <FeatureSmall title="Share links" icon="share">
                     You can share a project with a link so that others can directly see or edit all tasks in a project
                     but don't need to create an account. Share links have all the same rights management as
                     sharing with users or teams.
-                </x-feature-small>
-                <x-feature-small title="CalDAV" icon="caldav">
+                </FeatureSmall>
+                <FeatureSmall title="CalDAV" icon="caldav">
                     Vikunja comes with a calDAV-integration which lets you use the tools you already use and
                     love.
-                </x-feature-small>
+                </FeatureSmall>
             </div>
         </div>
 
-        <!-- Roadmap -->
+        <FeatureCenter heading="We will never look at your tasks.">
+            We will never sell your grocery list or metadata.
+            Because privacy matters.<br/>
+            Don't take our word for it,
+            <a href="https://code.vikunja.io" class="underline" target="_blank" rel="noopener">check it</a>!
+            Vikunja is openly licensed under the AGPLv3.
+        </FeatureCenter>
+
+        <!-- TODO Roadmap -->
+
 
         <div class="py-20 flex items-center justify-center flex-col">
-            @if(request()->input('from') === 'io')
-            <h2 class="font-display text-2xl mb-4">Get Started</h2>
-            <x-button href="https://vikunja.io/docs/installing/">Check out the docs</x-button>
-            @else
-            <h2 class="font-display text-2xl mb-4">Questions?</h2>
-            <x-button href="mailto:{{ config('mail.contact_address') }}">Ask us!</x-button>
-            @endif
-        </div>
-
-        <div class="py-12">
-            <div
-                    class="bg-hero-llamas bg-cover bg-no-repeat bg-center py-44 flex items-center justify-center flex-col shadow rounded">
-                <h2 class="font-display text-3xl mb-4">Excited?</h2>
-                <x-login-or-waitlist/>
-            </div>
+            <h2 class="font-display text-3xl mb-8">Get Started</h2>
+            <CloudOrSelfHosted/>
         </div>
     </main>
 </Layout>
