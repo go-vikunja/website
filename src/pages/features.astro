@@ -13,6 +13,7 @@ import VikunjaFeatureKanban from '../assets/images/vikunja/features/kanban.png'
 import VikunjaFeatureTable from '../assets/images/vikunja/features/table.png'
 import FeatureSmall from '../components/features/FeatureSmall.astro'
 import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
+import Plans from '../components/partials/Plans.astro'
 ---
 
 <Layout title="Features">
@@ -277,10 +278,11 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
 
         <!-- TODO Roadmap -->
 
-
         <div class="py-20 flex items-center justify-center flex-col">
             <h2 class="font-display text-3xl mb-8">Get Started</h2>
             <CloudOrSelfHosted/>
         </div>
+
+        <Plans/>
     </main>
 </Layout>
