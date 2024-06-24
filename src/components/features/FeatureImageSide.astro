@@ -1,0 +1,35 @@
+---
+import {Picture} from 'astro:assets'
+
+interface Props {
+	image: any,
+	orientation?: 'right' | 'left'
+}
+
+const {image, orientation: origOrientation} = Astro.props
+
+const orientation = origOrientation ?? 'right'
+---
+<div class="md:flex items-center text-left mb-8 md:mb-32 my-8 gap-8">
+	{orientation === 'left' ?
+            <div class="w-full md:w-1/2 mt-4 md:mt-0">
+                <Picture
+                    src={image}
+                    formats={['avif', 'webp']}
+                    class="object-contain object-top w-full"
+                    alt=""
+                />
+            </div> : ''}
+    <div class="w-full md:w-1/2">
+        <slot/>
+    </div>
+	{orientation === 'right' ?
+            <div class="w-full md:w-1/2 mt-4 md:mt-0">
+                <Picture
+                    src={image}
+                    formats={['avif', 'webp']}
+                    class="object-contain object-top w-full"
+                    alt=""
+                />
+            </div> : ''}
+</div>
