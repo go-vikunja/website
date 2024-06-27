@@ -67,10 +67,16 @@ const sidebarEntries = await getSidebarNavigation()
 ---
 <Layout title={title}>
     <div class="mx-auto flex max-w-screen-2xl flex-col lg:flex-row lg:pt-8">
-        <aside class="w-full lg:w-1/5 hidden px-2 text-gray-600 dark:text-gray-300 lg:block" id="docsMenu">
+        <button
+            class="navbar-burger m-2 mt-6 block lg:hidden rounded-sm bg-gray-200 py-2 px-1 text-center"
+            data-target="docsMenu"
+        >
+            Show Menu
+        </button>
+        <aside class="w-full lg:w-1/5 hidden lg:block order-1 px-2 text-gray-600 dark:text-gray-300" id="docsMenu">
             <nav>
 				{sidebarEntries.map(([key, entries]) => (
-                        <p class="pb-2 pt-4 font-title text-sm uppercase text-gray-500 dark:text-gray-400 dark:text-gray-400">
+                        <p class="pb-2 pt-4 font-title text-sm uppercase text-gray-500 dark:text-gray-400">
 							{key}
                         </p>
                         <ul>
@@ -88,13 +94,13 @@ const sidebarEntries = await getSidebarNavigation()
 				))}
             </nav>
         </aside>
-        <main class="w-full lg:w-3/5 p-4 pt-6 lg:pt-2" id="main-content">
+        <main class="w-full lg:w-3/5 p-4 pt-6 lg:pt-2 order-3 lg:order-2" id="main-content">
             <Prose>
                 <h1>{title}</h1>
                 <slot/>
             </Prose>
         </main>
-        <div class="w-full lg:w-1/5">
+        <div class="w-full lg:w-1/5 pl-4 order-2 lg:order-3">
             {toc.length > 0 &&
             <div class="sticky top-2">
                 <div class="font-display font-bold">
