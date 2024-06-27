@@ -1,5 +1,13 @@
 ---
-// TableOfContentsHeading.astro
+interface Heading {
+    slug: string
+    text: string
+    subheadings: Heading[]
+}
+
+interface Props {
+    heading: Heading
+}
 const { heading } = Astro.props;
 ---
 

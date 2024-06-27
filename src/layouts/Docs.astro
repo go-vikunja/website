@@ -1,5 +1,5 @@
 ---
-import {MarkdownHeading} from 'astro'
+import {type MarkdownHeading} from 'astro'
 import {getCollection} from 'astro:content'
 
 import Layout from './Layout.astro'
@@ -11,12 +11,17 @@ interface Props {
 	headings: MarkdownHeading[]
 }
 
+interface MarkdownWithSubheadings extends MarkdownHeading {
+	subheadings: MarkdownWithSubheadings[]
+}
+
 const {title: originalTitle, headings} = Astro.props
+// @ts-ignore: Property exists
 const title = originalTitle ?? Astro.props.frontmatter?.title
 
 // Taken from https://kld.dev/building-table-of-contents/
 function buildToc(headings: MarkdownHeading[]) {
-	const toc = []
+	const toc: MarkdownWithSubheadings[] = []
 	const parentHeadings = new Map()
 	headings.forEach((h) => {
 		const heading = {...h, subheadings: []}
@@ -32,44 +37,51 @@ function buildToc(headings: MarkdownHeading[]) {
 
 const toc = buildToc(headings)
 
-async function getSidebarNavigation() {
-    const docs = await getCollection('docs')
-    const entries = {}
 
-    docs.forEach(d => {
-        const groupKey = d.id.split('/')[0]
-        if (!entries[groupKey]) {
-            entries[groupKey] = []
-        }
-        if (d.data.hideInMenu) {
-            return
-        }
-        entries[groupKey].push({
-            url: '/docs/' + d.slug,
-            title: d.data.title,
-        })
-    })
-
-    const order = ['setup', 'usage', 'development']
-
-    const sortedData = order.reduce((obj, key) => {
-        if (entries[key]) {
-            obj[key] = entries[key].sort((a, b) => a.title.localeCompare(b.title))
-        }
-        return obj
-    }, {})
-
-    return Object.entries(sortedData)
+interface SectionItem {
+	url: string;
+	title: string;
 }
 
+type DocumentationArray = [string, SectionItem[]][];
+
+async function getSidebarNavigation(): Promise<DocumentationArray> {
+	const docs = await getCollection('docs')
+	const entries: { [key: string]: SectionItem[] } = {}
+
+	docs.forEach(d => {
+		const groupKey = d.id.split('/')[0]
+		if (!entries[groupKey]) {
+			entries[groupKey] = []
+		}
+		if (d.data.hideInMenu) {
+			return
+		}
+		entries[groupKey].push({
+			url: '/docs/' + d.slug,
+			title: d.data.title,
+		})
+	})
+
+	const order = ['setup', 'usage', 'development']
+
+	const sortedData = order.reduce((obj: { [key: string]: SectionItem[] }, key) => {
+		if (entries[key]) {
+			obj[key] = entries[key].sort((a: SectionItem, b: SectionItem) => a.title.localeCompare(b.title))
+		}
+		return obj
+	}, {})
+
+	return Object.entries(sortedData)
+}
 
 const sidebarEntries = await getSidebarNavigation()
 ---
 <Layout title={title}>
     <div class="mx-auto flex max-w-screen-2xl flex-col lg:flex-row lg:pt-8">
         <button
-            class="navbar-burger m-2 mt-6 block lg:hidden rounded-sm bg-gray-200 py-2 px-1 text-center"
-            data-target="docsMenu"
+                class="navbar-burger m-2 mt-6 block lg:hidden rounded-sm bg-gray-200 py-2 px-1 text-center"
+                data-target="docsMenu"
         >
             Show Menu
         </button>
@@ -101,19 +113,20 @@ const sidebarEntries = await getSidebarNavigation()
             </Prose>
         </main>
         <div class="w-full lg:w-1/5 pl-4 order-2 lg:order-3">
-            {toc.length > 0 &&
-            <div class="sticky top-2">
-                <div class="font-display font-bold">
-                    On this page
-                </div>
-                <nav class="text-gray-600 dark:text-gray-300 pt-2 max-h-[calc(100vh-2rem)] overflow-y-auto overflow-x-hidden" id="toc">
-                    <ul>
-						{toc.map((heading) =>
-                                <TableOfContentsHeading heading={heading}/>)}
-                    </ul>
-                </nav>
-            </div>
-            }
+			{toc.length > 0 &&
+                    <div class="sticky top-2">
+                        <div class="font-display font-bold">
+                            On this page
+                        </div>
+                        <nav class="text-gray-600 dark:text-gray-300 pt-2 max-h-[calc(100vh-2rem)] overflow-y-auto overflow-x-hidden"
+                             id="toc">
+                            <ul>
+								{toc.map((heading) =>
+                                        <TableOfContentsHeading heading={heading}/>)}
+                            </ul>
+                        </nav>
+                    </div>
+			}
         </div>
     </div>
 </Layout>
@@ -133,6 +146,7 @@ const sidebarEntries = await getSidebarNavigation()
 
 		// then iterate backwards, on the first match highlight it and break
 		for (let i = anchors.length - 1; i >= 0; i--) {
+            // @ts-ignore
 			if (scrollTop > anchors[i].offsetTop - 75) {
 				const link = document.querySelector(`nav ul li a[href="#${anchors[i].id}"]`)
 				if (link) link.classList.add('text-primary')
