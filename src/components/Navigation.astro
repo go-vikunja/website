@@ -1,20 +1,38 @@
 ---
 import NavItem from './NavItem.astro'
 ---
-<div class="lg:size-fit lg:m-auto">
-    <div class="relative p-2 bg-gray-700/5 dark:bg-gray-200/5 backdrop-blur-2xl rounded-lg">
+<button
+    id="navbar-burger"
+    class="block lg:hidden fixed top-2 right-2 cursor-pointer p-3 pr-4"
+    data-target="navbar-menu"
+    aria-label="Open Menu"
+>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8">
+        <path fill-rule="evenodd"
+              d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z"
+              clip-rule="evenodd"/>
+    </svg>
+</button>
+
+<div class="hidden lg:block fixed lg:static top-0 bottom-0 left-0 right-16 lg:size-fit lg:m-auto z-50" id="navbar-menu">
+    <div class="relative p-2 bg-gray-700/5 dark:bg-gray-200/5 backdrop-blur-2xl lg:rounded-lg h-full box-border">
         <div class="relative w-full text-gray-600 dark:text-gray-300">
-            <ul class="flex flex-col gap-6 tracking-wide lg:flex-row lg:gap-0 lg:text-sm">
+            <ul class="flex flex-col gap-2 tracking-wide lg:flex-row lg:gap-0 lg:text-sm">
                 <NavItem href="/">Home</NavItem>
                 <NavItem href="/features">Features</NavItem>
                 <NavItem href="/docs">Docs</NavItem>
                 <NavItem href="/features#pricing">Pricing</NavItem>
                 <NavItem href="/changelog">Changelog</NavItem>
                 <li>
-                    <a class="h-9 rounded-md hover:bg-gray-700/5 dark:hover:bg-gray-300/5 hover:text-gray-950 dark:hover:text-gray-50 block transition group overflow-hidden"
+                    <a class="lg:h-9 rounded-md hover:bg-gray-700/5 dark:hover:bg-gray-300/5 hover:text-gray-950 dark:hover:text-gray-50 block transition lg:group overflow-hidden"
                        href="https://try.vikunja.io">
-                        <div class="py-2 px-4 group-hover:py-0 transition-all">
-                            Demo
+                        <div class="py-2 px-4 group-hover:py-0 transition-all flex items-center">
+                            <span>
+                                Demo
+                            </span>
+                            <span class="lg:hidden text-xs text-primary-lighter pl-2">
+                                No sign-up required
+                            </span>
                         </div>
                         <div class="text-xs text-primary text-center text-nowrap h-0 group-hover:h-auto transition-all">
                             No sign-up
@@ -25,3 +43,15 @@ import NavItem from './NavItem.astro'
         </div>
     </div>
 </div>
+
+<script>
+    const navbar = document.getElementById('navbar-menu')
+    document.getElementById('navbar-burger').addEventListener('click', () => toggleMenu(navbar))
+    navbar.addEventListener('click', () => toggleMenu(navbar))
+
+    function toggleMenu($target) {
+        $target.classList.toggle('hidden');
+        const expanded = $target.getAttribute('aria-expanded');
+        $target.setAttribute('aria-expanded', expanded === 'false' ? 'true' : 'false');
+    }
+</script>
