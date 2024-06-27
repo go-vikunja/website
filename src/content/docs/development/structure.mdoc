@@ -7,7 +7,7 @@ This document explains what each package does.
 
 ## Root level
 
-The root directory is where [the config file]({{< ref "../setup/config.md">}}), [Magefile]({{< ref "mage.md">}}), license, drone config, 
+The root directory is where [the config file](/docs/config-options), [Magefile](/docs/magefile), license, drone config, 
 application entry point (`main.go`) and so on are located.
 
 ## pkg
@@ -22,9 +22,9 @@ This folder holds a simple caldav implementation which is responsible for the ca
 
 This package contains all cli-related files and functions.
 
-To learn more about how to add a new command, see [the cli docs]({{< ref "cli.md">}}).
+To learn more about how to add a new command, see [the cli docs](/docs/cli-commands).
 
-To learn more about how to use this cli, see [the cli usage docs]({{< ref "../usage/cli.md">}}).
+To learn more about how to use this cli, see [the cli usage docs](/docs/cli).
 
 ### config
 
@@ -32,11 +32,11 @@ This package configures handling of Vikunja's runtime configuration.
 It sets default values and sets up viper and tells it where to look for config files, how to interpret which env variables 
 for config etc.
 
-See also the [docs about adding a new configuration parameter]({{< ref "config.md" >}}).
+See also the [docs about adding a new configuration parameter](/docs/config-options).
 
 ### cron
 
-See [how to add a cron task]({{< ref "cron.md" >}}).
+See [how to add a cron task](/docs/cron-tasks).
 
 ### db
 
@@ -51,7 +51,7 @@ This means it handles saving and retrieving files from the db and the underlying
 ### integration
 
 All integration tests live here.
-See [integration tests]({{< ref "test.md" >}}#integration-tests) for more details.
+See [integration tests](/docs/testing#integration-tests) for more details.
 
 ### log
 
@@ -60,19 +60,19 @@ This init is called in `main.go` after the config init is done.
 
 ### mail
 
-This package handles all mail sending. To learn how to send a mail, see [notifications]({{< ref "notifications.md" >}}).
+This package handles all mail sending. To learn how to send a mail, see [notifications](/docs/notifications).
 
 ### metrics
 
 This package handles all metrics which are exposed to the prometheus endpoint.
-To learn how it works and how to add new metrics, take a look at [how metrics work]({{< ref "metrics.md">}}).
+To learn how it works and how to add new metrics, take a look at [how metrics work](/docs/metrics).
 
 ### migration
 
 This package handles all migrations.
 All migrations are stored and executed in this package.
 
-To learn more, take a look at the [migrations docs]({{< ref "../development/db-migrations.md">}}).
+To learn more, take a look at the [migrations docs](/docs/database-migrations).
 
 ### models
 
@@ -81,8 +81,8 @@ When adding new features or upgrading existing ones, that most likely happens he
 
 Because this package is pretty huge, there are several documents and how-to's about it:
 
-* [Adding a feature]({{< ref "feature.md">}})
-* [Making calls to the database]({{< ref "database.md">}})
+* [Adding a feature](/docs/new-api-endpoints)
+* [Making calls to the database](/docs/database)
 
 ### modules
 
@@ -112,7 +112,7 @@ Can be used to cache values.
 
 #### migration
 
-See [writing a migrator]({{< ref "migration.md" >}}).
+See [writing a migrator](/docs/migrations).
 
 ### red (redis)
 
@@ -130,7 +130,7 @@ In most cases, using the `keyvalue` package is a better fit.
 ### routes
 
 This package defines all routes which are available for Vikunja clients to use.
-To add a new route, see [adding a new route]({{< ref "feature.md">}}).
+To add a new route, see [adding a new route](/docs/new-api-endpoints).
 
 #### api/v1
 
@@ -139,7 +139,7 @@ Every handler function which does not use the standard web handler should live h
 
 ### swagger
 
-This is where the [generated]({{< ref "mage.md#generate-swagger-definitions-from-code-comments">}}) [api docs]({{< ref "../usage/api.md">}}) live. 
+This is where the [generated](/docs/magefile#generate-swagger-definitions-from-code-comments) [api docs](/docs/api-documentation) live. 
 You usually don't need to touch this package.
 
 ### user
