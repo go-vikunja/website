@@ -67,10 +67,10 @@ const sidebarEntries = await getSidebarNavigation()
 ---
 <Layout title={title}>
     <div class="mx-auto flex max-w-screen-2xl flex-col lg:flex-row lg:pt-8">
-        <aside class="w-full lg:w-1/5 hidden px-2 text-gray-600 lg:block" id="docsMenu">
+        <aside class="w-full lg:w-1/5 hidden px-2 text-gray-600 dark:text-gray-300 lg:block" id="docsMenu">
             <nav>
 				{sidebarEntries.map(([key, entries]) => (
-                        <p class="pb-2 pt-4 font-title text-sm uppercase text-gray-500">
+                        <p class="pb-2 pt-4 font-title text-sm uppercase text-gray-500 dark:text-gray-400 dark:text-gray-400">
 							{key}
                         </p>
                         <ul>
@@ -78,7 +78,7 @@ const sidebarEntries = await getSidebarNavigation()
                                     <li>
                                         <a
                                                 href={item.url}
-                                                class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 transition ' + ((Astro.url.pathname === item.url || Astro.url.pathname === item.url + '/') && ' !bg-primary text-white')}
+                                                class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition ' + ((Astro.url.pathname === item.url || Astro.url.pathname === item.url + '/') && ' !bg-primary text-white')}
                                         >
 											{item.title}
                                         </a>
@@ -100,7 +100,7 @@ const sidebarEntries = await getSidebarNavigation()
                 <div class="font-display font-bold">
                     On this page
                 </div>
-                <nav class="text-gray-600 pt-2 max-h-[calc(100vh-2rem)] overflow-y-auto overflow-x-hidden" id="toc">
+                <nav class="text-gray-600 dark:text-gray-300 pt-2 max-h-[calc(100vh-2rem)] overflow-y-auto overflow-x-hidden" id="toc">
                     <ul>
 						{toc.map((heading) =>
                                 <TableOfContentsHeading heading={heading}/>)}
