@@ -2,8 +2,8 @@
 import NavItem from './NavItem.astro'
 ---
 <div class="lg:size-fit lg:m-auto">
-    <div class="relative p-2 bg-gray-700/5 backdrop-blur-2xl rounded-lg">
-        <div class="relative w-full text-gray-600">
+    <div class="relative p-2 bg-gray-700/5 dark:bg-gray-200/5 backdrop-blur-2xl rounded-lg">
+        <div class="relative w-full text-gray-600 dark:text-gray-300">
             <ul class="flex flex-col gap-6 tracking-wide lg:flex-row lg:gap-0 lg:text-sm">
                 <NavItem href="/">Home</NavItem>
                 <NavItem href="/features">Features</NavItem>
@@ -11,7 +11,7 @@ import NavItem from './NavItem.astro'
                 <NavItem href="/features#pricing">Pricing</NavItem>
                 <NavItem href="/changelog">Changelog</NavItem>
                 <li>
-                    <a class="h-9 rounded-md hover:bg-gray-700/5 hover:text-gray-950 block transition group overflow-hidden"
+                    <a class="h-9 rounded-md hover:bg-gray-700/5 dark:hover:bg-gray-300/5 hover:text-gray-950 dark:hover:text-gray-50 block transition group overflow-hidden"
                        href="https://try.vikunja.io">
                         <div class="py-2 px-4 group-hover:py-0 transition-all">
                             Demo

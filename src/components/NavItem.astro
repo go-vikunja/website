@@ -10,5 +10,5 @@ const isCurrentPage = href === '/'
 	: Astro.url.pathname.startsWith(href)
 ---
 <li>
-	<a class={(isCurrentPage ? 'text-primary' : '') + ' py-2 px-4 rounded-md hover:bg-gray-700/5 hover:text-gray-950 block transition'} href={href}><slot/></a>
+	<a class={(isCurrentPage ? 'text-primary' : '') + ' py-2 px-4 rounded-md hover:bg-gray-700/5 dark:hover:bg-gray-300/5 hover:text-gray-950 dark:hover:text-gray-50 block transition'} href={href}><slot/></a>
 </li>

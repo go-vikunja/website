@@ -2,16 +2,19 @@
 import LogoFull from './LogoFull.astro'
 import Navigation from './Navigation.astro'
 import Button from './Button.astro'
+import DarkModeSwitch from './partials/DarkModeSwitch.astro'
 ---
 <header class="flex mx-auto max-w-screen-xl pt-8 pb-4 px-2 items-center justify-between">
     <LogoFull class="h-12 w-40"/>
 
 	<Navigation/>
 
-	<div class="flex items-center gap-2">
-		<a href="https://app.vikunja.cloud/?redirectToProvider=true" class="text-gray-800 underline hover:no-underline leading-tight">Vikunja Cloud</a>
+	<DarkModeSwitch/>
 
-		<Button href="#">
+	<div class="flex items-center gap-2">
+		<a href="https://app.vikunja.cloud/?redirectToProvider=true" class="text-gray-800 dark:text-gray-200 underline hover:no-underline leading-tight">Vikunja Cloud</a>
+
+		<Button href="/docs/installing">
 			Get started
 		</Button>
     </div>
