@@ -1,12 +1,9 @@
+import type {APIContext} from 'astro'
 import {TURNSTILE_SECRET} from 'astro:env/server'
 
 const LIST_ID = 'f0bc9ec2-56a4-48c8-baad-7a31b137484e'
 
-interface FullRequestInput {
-	request: Request
-}
-
-export async function POST({request}: FullRequestInput) {
+export async function POST({request}: APIContext) {
 	const body = await request.formData()
 
 	// Turnstile injects a token in "cf-turnstile-response".
