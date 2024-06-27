@@ -41,6 +41,9 @@ async function getSidebarNavigation() {
         if (!entries[groupKey]) {
             entries[groupKey] = []
         }
+        if (d.data.hideInMenu) {
+            return
+        }
         entries[groupKey].push({
             url: '/docs/' + d.slug,
             title: d.data.title,
@@ -75,7 +78,7 @@ const sidebarEntries = await getSidebarNavigation()
                                     <li>
                                         <a
                                                 href={item.url}
-                                                class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 transition ' + (Astro.url.pathname.startsWith(item.url) && ' !bg-primary text-white')}
+                                                class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 transition ' + ((Astro.url.pathname === item.url || Astro.url.pathname === item.url + '/') && ' !bg-primary text-white')}
                                         >
 											{item.title}
                                         </a>
