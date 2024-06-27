@@ -21,20 +21,20 @@ Vikunja can be installed in various ways.
 This document provides an overview and instructions for the different methods:
 
 * [Installing from binary (manual)](#install-from-binary)
-* [Build from source]({{< ref "build-from-source.md">}})
+* [Build from source](/docs/build-from-sources)
 * [Docker](#docker)
 * [Debian](#debian-packages)
 * [RPM](#rpm)
 * [FreeBSD](#freebsd--freenas)
-* [Kubernetes]({{< ref "k8s.md" >}})
+* [Kubernetes](/docs/hosting-vikunja-with-k8s)
 
 And after you installed Vikunja, you may want to check out these other resources:
 
-* [Configuration]({{< ref "config.md">}})
-* [UTF-8 Settings]({{< ref "utf-8.md">}})
-* [Reverse proxies]({{< ref "reverse-proxies.md">}})
-* [Full docker example]({{< ref "full-docker-example.md">}})
-* [Backups]({{< ref "backups.md">}})
+* [Configuration](/docs/config-options)
+* [UTF-8 Settings](/docs/utf-8-settings)
+* [Reverse proxies](/docs/reverse-proxy)
+* [Full docker example](/docs/full-docker-example)
+* [Backups](/docs/what-to-backup)
 
 ## Install from binary
 
@@ -114,11 +114,11 @@ sudo systemctl start vikunja
 
 ### Build from source
 
-To build vikunja from source, see [building from source]({{< ref "build-from-source.md">}}).
+To build vikunja from source, see [building from source](/docs/build-from-sources).
 
 ### Updating
 
-[Make a backup first]({{< ref "backups.md" >}}).
+[Make a backup first](/docs/what-to-backup).
 
 Simply replace the binary with the new version, then restart Vikunja.
 It will automatically run all necessary database migrations.
@@ -151,9 +151,9 @@ docker run -p 3456:3456 -v /path/to/config/on/host.yml:/app/vikunja/config.yml:r
 ```
 
 Though it is recommended to use environment variables or `.env` files to configure Vikunja in docker.
-See [config]({{< ref "config.md">}}) for a list of available configuration options.
+See [config](/docs/config-options) for a list of available configuration options.
 
-Check out the [docker examples]({{<ref "full-docker-example.md">}}) for more advanced configuration using mysql / postgres and a reverse proxy.
+Check out the [docker examples](/docs/full-docker-example) for more advanced configuration using mysql / postgres and a reverse proxy.
 
 ### Files volume
 
@@ -162,7 +162,7 @@ You should mount the volume somewhere to the host to permanently store the files
 
 ### Docker compose
 
-Check out the [docker examples]({{<ref "full-docker-example.md">}}) for more advanced configuration using docker compose.
+Check out the [docker examples](/docs/full-docker-example) for more advanced configuration using docker compose.
 
 ## Debian packages
 
@@ -221,7 +221,7 @@ cd vikunja
 ```
 
 **Note:** Check out the version you want to build with `git checkout VERSION` - replace `VERSION` with the version want to use.
-If you don't do this, you'll build the [latest unstable build]({{< ref "versions.md">}}), which might contain bugs.
+If you don't do this, you'll build the [latest unstable build](/docs/versions), which might contain bugs.
 
 ### Compile binaries
 
@@ -301,7 +301,7 @@ Vikunja is now available through IP:
 
 ## Configuration
 
-See [available configuration options]({{< ref "config.md">}}).
+See [available configuration options](/docs/config-options).
 
 ## Default Password
 

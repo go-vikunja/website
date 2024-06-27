@@ -62,7 +62,7 @@ This defines two services, each with their own container:
 * A Vikunja service which runs the vikunja api and hosts its frontend.
 * A database container which will store all projects, tasks, etc. We're using mariadb here, but you're free to use mysql or postgres if you want.
 
-If you already have a proxy on your host, you may want to check out the [reverse proxy examples]({{< ref "reverse-proxies.md" >}}) to use that.
+If you already have a proxy on your host, you may want to check out the [reverse proxy examples](/docs/reverse-proxy) to use that.
 By default, Vikunja will be exposed on port 3456 on the host.
 
 To change to something different, you'll need to change the `ports` section in the service definition.

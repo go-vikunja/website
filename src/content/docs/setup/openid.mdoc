@@ -44,7 +44,7 @@ If one of the claims `email`, `name` or `preferred_username` is missing from the
 ## Configuring OIDC Authentication
 
 To achieve authentication via an external provider, it is required to (a) configure a confidential Client on your OAuth 2.0 provider and (b) configure Vikunja to authenticate against this provider. 
-[Example configurations]({{< ref "openid-examples.md">}}) are provided for various different identity providers, below you can find generic guides though.
+[Example configurations](/docs/openid-example-configurations) are provided for various different identity providers, below you can find generic guides though.
 
 OpenID Connect defines various flow types indicating how exactly the interaction between the involved parties work, Vikunja makes use of the standard **Authorization Code Flow**.
 
@@ -58,7 +58,7 @@ In general, this involves the following steps at a minimum:
 - Make sure the required scopes (`openid profile email` are the default scopes used by Vikunja) are supported
 - Optional: configure an additional scope for automatic team assignment, see below for details
 
-More detailed instructions for various different identity providers can be [found here]({{< ref "openid-examples.md">}})
+More detailed instructions for various different identity providers can be [found here](/docs/openid-example-configurations)
 
 ### Step 2: Configure Vikunja
 
@@ -146,11 +146,11 @@ If you've successfully implemented this with another identity provider, please l
 
 ### Setup in Authentik
 
-To configure automatic team management through Authentik, we assume you have already [set up Authentik]({{< ref "openid-examples.md">}}#authentik) as an OIDC provider for authentication with Vikunja.
+To configure automatic team management through Authentik, we assume you have already [set up Authentik](/docs/openid-example-configurations#authentik) as an OIDC provider for authentication with Vikunja.
 
 To use Authentik's group assignment feature, follow these steps:
 
-1. Edit [your config]({{< ref "config.md">}}) to include the following scopes: `openid profile email vikunja_scope`
+1. Edit [your config](/docs/config-options) to include the following scopes: `openid profile email vikunja_scope`
 2. Open `<your authentik url>/if/admin/#/core/property-mappings`
 3. Create a new property mapping called `vikunja_scope` as scope mapping. There is a field `expression` to enter python expressions that will be delivered with the oidc token.
 4. Write a small script like the following to add group information to `vikunja_scope`:
