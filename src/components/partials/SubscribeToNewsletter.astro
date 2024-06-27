@@ -1,0 +1,95 @@
+---
+import Button from '../Button.astro'
+---
+
+<p class="font-display text-base font-bold">Subscribe to our newsletter</p>
+<p class="mt-2">
+    We'll email you about releases and news about Vikunja. Low traffic. Unsubscribe any
+    time.
+</p>
+
+<form method="post" action="" class="!mt-4 w-ful" id="newsletter-form">
+    <p>
+        <label for="newsletter-email" class="sr-only">E-mail</label>
+        <input
+            name="email"
+            required
+            type="email"
+            placeholder="Your E-mail address"
+            id="newsletter-email"
+            class="inline-flex relative justify-start items-center py-2 px-3 m-0 w-full max-w-full h-10 font-sans text-base leading-normal align-top bg-white rounded border border-solid appearance-none cursor-text border-gray-400 text-neutral-700"
+        />
+    </p>
+
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAAABNSP6TBlZ-SPeg" data-theme="light"></div>
+
+    <p id="newsletter-error-message" class="hidden text-red-500"></p>
+
+    <Button
+            class="!mt-2 w-full"
+            type="submit"
+    >
+        Subscribe to our newsletter
+    </Button>
+</form>
+
+<p class="text-green-500 hidden pt-2" id="newsletter-sign-up-success-message">
+    Success! We've sent you a message to confirm your sign up.
+</p>
+
+<style>
+    .cf-turnstile {
+        @apply w-full mt-2
+    }
+</style>
+
+<script>
+	const emailInput = document.getElementById('newsletter-email')
+	let scriptLoaded = false
+
+	emailInput.addEventListener('focus', function () {
+		if (!scriptLoaded) {
+			const script = document.createElement('script')
+			script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
+			script.async = true
+			document.head.appendChild(script)
+			scriptLoaded = true
+		}
+	})
+
+	const form = document.getElementById('newsletter-form')
+	const errorMessage = document.getElementById('newsletter-error-message')
+	const successMessage = document.getElementById('newsletter-sign-up-success-message')
+
+	function showError(error) {
+		errorMessage.textContent = 'An error occurred. ' + error + ' Please try again.'
+		errorMessage.classList.remove('hidden')
+		console.error('Error during newsletter sign up:', error)
+	}
+
+	form.addEventListener('submit', function (e) {
+		e.preventDefault()
+
+		const formData = new FormData(form)
+
+		fetch('/api/newsletter-signup', {
+			method: 'POST',
+			body: formData,
+		})
+			.then(response => {
+				if (!response.ok) {
+					return response.json().then(error => {
+						throw new Error(error)
+					})
+				}
+				return response.json()
+			})
+			.then(data => {
+				errorMessage.classList.add('hidden')
+				successMessage.classList.toggle('hidden')
+				form.classList.add('hidden')
+			})
+			.catch(error => showError(error.message))
+	})
+
+</script>
