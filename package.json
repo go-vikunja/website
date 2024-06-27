@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
+    "@astrojs/cloudflare": "^11.0.1",
     "@astrojs/markdoc": "^0.11.0",
     "@astrojs/tailwind": "^5.1.0",
     "@fontsource/open-sans": "^5.0.28",
