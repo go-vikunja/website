@@ -10,4 +10,8 @@ in {
       package = unstable.pnpm;
     };
   };
+
+  packages = [
+    pkgs.nodePackages.wrangler
+  ];
 }
