@@ -1,6 +1,12 @@
+import {TURNSTILE_SECRET} from 'astro:env/server'
+
 const LIST_ID = 'f0bc9ec2-56a4-48c8-baad-7a31b137484e'
 
-export async function POST({request}) {
+interface FullRequestInput {
+	request: Request
+}
+
+export async function POST({request}: FullRequestInput) {
 	const body = await request.formData()
 
 	// Turnstile injects a token in "cf-turnstile-response".
@@ -9,8 +15,10 @@ export async function POST({request}) {
 
 	// Validate the token by calling the "/siteverify" API.
 	let formData = new FormData()
-	formData.append('secret', env.TURNSTILE_SECRET)
+	formData.append('secret', TURNSTILE_SECRET)
+	// @ts-ignore
 	formData.append('response', token)
+	// @ts-ignore
 	formData.append('remoteip', ip)
 
 	const result = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
@@ -24,6 +32,7 @@ export async function POST({request}) {
 	}
 
 	const subscribeData = new FormData()
+	// @ts-ignore
 	subscribeData.append('email', body.get('email'))
 	subscribeData.append('l', LIST_ID)
 

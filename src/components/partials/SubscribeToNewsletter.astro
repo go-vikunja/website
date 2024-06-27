@@ -12,12 +12,12 @@ import Button from '../Button.astro'
     <p>
         <label for="newsletter-email" class="sr-only">E-mail</label>
         <input
-            name="email"
-            required
-            type="email"
-            placeholder="Your E-mail address"
-            id="newsletter-email"
-            class="inline-flex relative justify-start items-center py-2 px-3 m-0 w-full max-w-full h-10 font-sans text-base leading-normal align-top bg-white rounded border border-solid appearance-none cursor-text border-gray-400 text-neutral-700"
+                name="email"
+                required
+                type="email"
+                placeholder="Your E-mail address"
+                id="newsletter-email"
+                class="inline-flex relative justify-start items-center py-2 px-3 m-0 w-full max-w-full h-10 font-sans text-base leading-normal align-top bg-white rounded border border-solid appearance-none cursor-text border-gray-400 text-neutral-700"
         />
     </p>
 
@@ -47,7 +47,7 @@ import Button from '../Button.astro'
 	const emailInput = document.getElementById('newsletter-email')
 	let scriptLoaded = false
 
-	emailInput.addEventListener('focus', function () {
+	emailInput?.addEventListener('focus', function () {
 		if (!scriptLoaded) {
 			const script = document.createElement('script')
 			script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
@@ -61,35 +61,36 @@ import Button from '../Button.astro'
 	const errorMessage = document.getElementById('newsletter-error-message')
 	const successMessage = document.getElementById('newsletter-sign-up-success-message')
 
-	function showError(error) {
-		errorMessage.textContent = 'An error occurred. ' + error + ' Please try again.'
-		errorMessage.classList.remove('hidden')
-		console.error('Error during newsletter sign up:', error)
-	}
+	if (form && errorMessage && successMessage) {
+		function showError(error: string) {
+            if (errorMessage) {
+                errorMessage.textContent = 'An error occurred. ' + error + ' Please try again.'
+                errorMessage.classList.remove('hidden')
+            }
+			console.error('Error during newsletter sign up:', error)
+		}
 
-	form.addEventListener('submit', function (e) {
-		e.preventDefault()
+		form.addEventListener('submit', function (e) {
+			e.preventDefault()
 
-		const formData = new FormData(form)
+			const formData = new FormData(form as HTMLFormElement)
 
-		fetch('/api/newsletter-signup', {
-			method: 'POST',
-			body: formData,
+			fetch('/api/newsletter-signup', {
+				method: 'POST',
+				body: formData,
+			})
+				.then(response => {
+					if (!response.ok) {
+						return response.json().then(error => {
+							throw new Error(error)
+						})
+					}
+
+					errorMessage.classList.add('hidden')
+					successMessage.classList.toggle('hidden')
+					form.classList.add('hidden')
+				})
+				.catch(error => showError(error.message))
 		})
-			.then(response => {
-				if (!response.ok) {
-					return response.json().then(error => {
-						throw new Error(error)
-					})
-				}
-				return response.json()
-			})
-			.then(data => {
-				errorMessage.classList.add('hidden')
-				successMessage.classList.toggle('hidden')
-				form.classList.add('hidden')
-			})
-			.catch(error => showError(error.message))
-	})
-
+	}
 </script>

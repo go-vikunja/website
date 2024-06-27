@@ -2,10 +2,10 @@
 import NavItem from './NavItem.astro'
 ---
 <button
-    id="navbar-burger"
-    class="block lg:hidden fixed top-2 right-2 cursor-pointer p-3 pr-4"
-    data-target="navbar-menu"
-    aria-label="Open Menu"
+        id="navbar-burger"
+        class="block lg:hidden fixed top-2 right-2 cursor-pointer p-3 pr-4"
+        data-target="navbar-menu"
+        aria-label="Open Menu"
 >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8">
         <path fill-rule="evenodd"
@@ -45,13 +45,15 @@ import NavItem from './NavItem.astro'
 </div>
 
 <script>
-    const navbar = document.getElementById('navbar-menu')
-    document.getElementById('navbar-burger').addEventListener('click', () => toggleMenu(navbar))
-    navbar.addEventListener('click', () => toggleMenu(navbar))
+	const navbar = document.getElementById('navbar-menu')
+	if (navbar) {
+		document.getElementById('navbar-burger')?.addEventListener('click', () => toggleMenu(navbar))
+		navbar?.addEventListener('click', () => toggleMenu(navbar))
+	}
 
-    function toggleMenu($target) {
-        $target.classList.toggle('hidden');
-        const expanded = $target.getAttribute('aria-expanded');
-        $target.setAttribute('aria-expanded', expanded === 'false' ? 'true' : 'false');
-    }
+	function toggleMenu($target: HTMLElement) {
+		$target.classList.toggle('hidden')
+		const expanded = $target.getAttribute('aria-expanded')
+		$target.setAttribute('aria-expanded', expanded === 'false' ? 'true' : 'false')
+	}
 </script>

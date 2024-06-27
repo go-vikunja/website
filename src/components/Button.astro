@@ -2,13 +2,14 @@
 interface Props {
 	href?: string
     class?: string
+    type?: 'submit' | 'button' | 'reset'
 }
 
-const {href, class: className} = Astro.props
+const {href, class: className, type} = Astro.props
 ---
 {href
 	? <a href={href} class={className}><slot/></a>
-	: <button type="button" class={className}><slot/></button>
+	: <button type="button" class={className} type={type || 'button'}><slot/></button>
 }
 
 <style>

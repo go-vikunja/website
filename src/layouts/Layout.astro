@@ -10,7 +10,7 @@ import Footer from '../components/Footer.astro'
 import Header from '../components/Header.astro'
 interface Props {
 	title: string;
-	type: 'text' | 'website';
+	type?: 'text' | 'website';
 	image?: string;
 	description?: string;
 }
@@ -50,11 +50,11 @@ const imageUrl = image
 	}
 
     <!-- Links -->
-    <base href={Astro.url}/>
-    <link rel="canonical" href={Astro.url} itemprop="url"/>
-    <meta name="url" content={Astro.url}/>
-    <meta name="twitter:url" content={Astro.url}/>
-    <meta property="og:url" content={Astro.url}/>
+    <base href={Astro.url.toString()}/>
+    <link rel="canonical" href={Astro.url.toString()} itemprop="url"/>
+    <meta name="url" content={Astro.url.toString()}/>
+    <meta name="twitter:url" content={Astro.url.toString()}/>
+    <meta property="og:url" content={Astro.url.toString()}/>
 
     <!-- Images -->
     <meta itemprop="image" content={imageUrl}/>
@@ -62,7 +62,7 @@ const imageUrl = image
     <meta name="twitter:image" content={imageUrl}/>
     <meta name="twitter:image:src" content={imageUrl}/>
 
-    <meta property="og:type" content={type}/>
+    <meta property="og:type" content={type || 'website'}/>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-100 antialiased">
 

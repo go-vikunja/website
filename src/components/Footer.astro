@@ -1,7 +1,5 @@
 ---
 import LogoFull from './LogoFull.astro'
-import Button from './Button.astro'
-import DarkModeSwitch from './partials/DarkModeSwitch.astro'
 import SubscribeToNewsletter from './partials/SubscribeToNewsletter.astro'
 
 const nowYear = (new Date()).getFullYear()
@@ -212,7 +210,7 @@ const nowYear = (new Date()).getFullYear()
 </footer>
 
 <script>
-	function toggleMenu($target) {
+	function toggleMenu($target: HTMLElement) {
 		$target.classList.toggle('hidden')
 		const expanded = $target.getAttribute('aria-expanded')
 		$target.setAttribute('aria-expanded', expanded === 'false' ? 'true' : 'false')
@@ -224,15 +222,21 @@ const nowYear = (new Date()).getFullYear()
 			0,
 		)
 		if ($navbarBurgers.length > 0) {
-			$navbarBurgers.forEach(function ($el) {
+			$navbarBurgers.forEach(function ($el: HTMLElement) {
 				const target = $el.dataset.target
+                if(!target) {
+                    return
+                }
 				const $target = document.getElementById(target)
-				$el.addEventListener('click', function () {
+                if (!$target) {
+                    return
+                }
+				$target?.addEventListener('click', () => {
 					toggleMenu($target)
 				})
-				$target.addEventListener('click', (el) => {
-					toggleMenu($target)
-				})
+                $el?.addEventListener('click', () => {
+                    toggleMenu($target)
+                })
 			})
 		}
 	})
