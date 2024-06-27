@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "astro check --root ./src",
+    "serve-dist": "node ./dist/server/entry.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
@@ -23,5 +25,8 @@
     "astro": "^4.10.3",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.4"
   }
 }
