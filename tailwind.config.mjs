@@ -39,6 +39,9 @@ export default {
 						'code::after': {
 							content: 'normal',
 						},
+						th: {
+							textAlign: 'left',
+						},
 					},
 				},
 			}),
