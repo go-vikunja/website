@@ -12,7 +12,7 @@ const isCurrentPage = href === '/'
 <li>
 	<a class={(isCurrentPage ? '!text-primary font-bold' : '') + ' py-2 px-4 rounded-md hover:bg-gray-700/5 dark:hover:bg-gray-300/5 hover:text-gray-950 dark:hover:text-gray-50 block transition relative'}
        href={href}>
-		<span class="absolute left-0 right-0 text-center">
+		<span class="absolute left-0 right-0 sm:text-center pl-4 sm:pl-0">
 			<slot/>
 		</span>
 		<span class="opacity-0 font-bold">
