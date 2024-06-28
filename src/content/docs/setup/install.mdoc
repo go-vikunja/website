@@ -59,7 +59,7 @@ gpg --verify vikunja-<vikunja version>-linux-amd64-full.zip.asc vikunja-<vikunja
 
 Once you've verified the signature, you need to unzip and make it executable.
 You'll also need to create a symlink to the binary, so that you can execute Vikunja by typing `vikunja` on your system.
-We'll install vikunja to `/opt/vikunja`, change the path where needed if you want to install it elsewhere.
+We'll install Vikunja to `/opt/vikunja`, change the path where needed if you want to install it elsewhere.
 
 Run these commands to install it:
 
@@ -114,7 +114,7 @@ sudo systemctl start vikunja
 
 ### Build from source
 
-To build vikunja from source, see [building from source](/docs/build-from-sources).
+To build Vikunja from source, see [building from source](/docs/build-from-sources).
 
 ### Updating
 
@@ -136,7 +136,7 @@ chown 1000 $PWD/files $PWD/db
 docker run -p 3456:3456 -v $PWD/files:/app/vikunja/files -v $PWD/db:/db vikunja/vikunja
 ```
 
-This will expose vikunja on port `3456` on the host running the container and use sqlite as database backend.
+This will expose Vikunja on port `3456` on the host running the container and use sqlite as database backend.
 
 **Note**: The container runs as the user `1000` and no group by default. 
 You can use Docker's [`--user`](https://docs.docker.com/engine/reference/run/#user) flag to change that.
@@ -157,7 +157,7 @@ Check out the [docker examples](/docs/full-docker-example) for more advanced con
 
 ### Files volume
 
-By default, the container stores all files uploaded and used through vikunja inside of `/app/vikunja/files` which is created as a docker volume.
+By default, the container stores all files uploaded and used through Vikunja inside of `/app/vikunja/files` which is created as a docker volume.
 You should mount the volume somewhere to the host to permanently store the files and don't lose them if the container restarts.
 
 ### Docker compose
@@ -192,7 +192,7 @@ To configure Vikunja, use the config file in `/etc/vikunja/config.yml`.
 ## FreeBSD / FreeNAS
 
 Unfortunately, we currently can't provide pre-built binaries for FreeBSD.
-As a workaround, it is possible to compile vikunja for FreeBSD directly on a FreeBSD machine, a guide is available below:
+As a workaround, it is possible to compile Vikunja for FreeBSD directly on a FreeBSD machine, a guide is available below:
 
 *Thanks to HungrySkeleton who originally created this guide [in the forum](https://community.vikunja.io/t/freebsd-support/69/11).*
 
@@ -211,7 +211,7 @@ pkg install nano git go gmake
 go install github.com/magefile/mage
 ```
 
-### Clone vikunja repo
+### Clone Vikunja repo
 
 ```sh
 mkdir /mnt/GO/code.vikunja.io
@@ -242,7 +242,7 @@ cd /mnt/vikunja
 chmod +x /mnt/vikunja
 ```
 
-### Set vikunja to boot on startup
+### Set Vikunja to boot on startup
 
 ```sh
 nano /etc/rc.d/vikunja
@@ -277,7 +277,7 @@ Then add line to bottom of file:
 vikunja_enable="YES"
 ```
 
-Test vikunja now works with
+Test if Vikunja now works with
 
 ```sh
 service vikunja start

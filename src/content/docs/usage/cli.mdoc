@@ -15,20 +15,20 @@ When running Vikunja in docker, you'll need to execute all commands in the `viku
 Instead of running the `vikunja` binary directly, run it like this:
 
 ```sh
-docker exec <name of the vikunja container> /app/vikunja/vikunja <subcommand>
+docker exec <name of the Vikunja container> /app/vikunja/vikunja <subcommand>
 ```
 
 If you need to run a bunch of Vikunja commands, you can also create a shell alias for it:
 
 ```sh
-alias vikunja-docker='docker exec <name of the vikunja container> /app/vikunja/vikunja'
+alias vikunja-docker='docker exec <name of the Vikunja container> /app/vikunja/vikunja'
 ```
 
 Then use it as `vikunja-docker <subcommand>`.
 
 ## `dump`
 
-Creates a zip file with all vikunja-related files.
+Creates a zip file with all Vikunja-related files.
 This includes config, version, all files and the full database.
 
 Usage:

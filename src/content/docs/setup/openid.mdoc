@@ -167,7 +167,7 @@ return groupsDict
 Now when you log into Vikunja via Authentik it will show you a list of scopes you are claiming.
 You should see the description you entered on the OIDC provider's admin area.
 
-Proceed to vikunja and open the teams page in the sidebar menu.
+Proceed to Vikunja and open the teams page in the sidebar menu.
 You should see "(OIDC)" written next to each team you were assigned through OIDC.
 
 ### Setup in Keycloak
@@ -181,13 +181,13 @@ All examples assume one team called "Team 1" to be configured within your provid
 * *Token delivers team.name +team.oidcID and Vikunja team does not exist:* \
 New team will be created called "Team 1" with attribute oidcID: "33929"
 
-2. *In Vikunja Team with name "team 1" already exists in vikunja, but has no oidcID set:* \
+2. *In Vikunja Team with name "team 1" already exists, but has no oidcID set:* \
 new team will be created called "team 1" with attribute oidcID: "33929"
 
-3. *In Vikunja Team with name "team 1" already exists in vikunja, but has different oidcID set:* \
+3. *In Vikunja Team with name "team 1" already exists, but has different oidcID set:* \
 new team will be created called "team 1" with attribute oidcID: "33929"
 
-4. *In Vikunja Team with oidcID "33929" already exists in vikunja, but has different name than "team1":* \
+4. *In Vikunja Team with oidcID "33929" already exists, but has different name than "team1":* \
 new team will be created called "team 1" with attribute oidcID: "33929"
 
 5. *Scope vikunja_scope is not set:* \
