@@ -3,12 +3,12 @@ import LogoFull from './LogoFull.astro'
 import Navigation from './Navigation.astro'
 import HeaderGetStarted from './partials/HeaderGetStarted.astro'
 ---
-<header class="flex mx-auto max-w-screen-xl pt-8 pb-4 px-8 items-center justify-center lg:justify-between">
-    <LogoFull class="block w-full h-full mx-20 sm:mx-0 sm:w-96 md:w-80 lg:h-12 lg:w-40"/>
+<header class="flex mx-auto max-w-screen-xl pt-8 pb-4 px-8 items-center flex-col lg:flex-row justify-center lg:justify-between gap-4 lg:gap-1">
+    <LogoFull class="block w-full h-full mx-20 sm:mx-0 sm:w-80 lg:h-12 lg:w-40"/>
 
     <Navigation/>
 
-    <div class="hidden lg:flex items-center gap-4">
+    <div class="hidden sm:flex items-center gap-4">
         <HeaderGetStarted/>
     </div>
 </header>

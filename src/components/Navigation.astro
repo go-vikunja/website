@@ -3,7 +3,7 @@ import NavItem from './NavItem.astro'
 ---
 <button
         id="navbar-burger"
-        class="block lg:hidden fixed top-2 right-2 cursor-pointer p-3 pr-4"
+        class="block sm:hidden fixed top-2 right-2 cursor-pointer p-3 pr-4"
         data-target="navbar-menu"
         aria-label="Open Menu"
 >
@@ -14,23 +14,23 @@ import NavItem from './NavItem.astro'
     </svg>
 </button>
 
-<div class="hidden lg:block fixed lg:static top-0 bottom-0 left-0 right-16 lg:size-fit lg:m-auto z-50" id="navbar-menu">
-    <div class="relative p-2 bg-gray-700/5 dark:bg-gray-200/5 backdrop-blur-2xl lg:rounded-lg h-full box-border">
+<div class="hidden sm:block fixed sm:static top-0 bottom-0 left-0 right-16 sm:size-fit sm:m-auto z-50" id="navbar-menu">
+    <div class="relative p-2 bg-gray-700/5 dark:bg-gray-200/5 backdrop-blur-2xl sm:rounded-lg h-full box-border">
         <div class="relative w-full text-gray-600 dark:text-gray-300">
-            <ul class="flex flex-col gap-2 tracking-wide lg:flex-row lg:gap-0 lg:text-sm">
+            <ul class="flex flex-col gap-2 tracking-wide sm:flex-row sm:gap-0 sm:text-sm">
                 <NavItem href="/">Home</NavItem>
                 <NavItem href="/features">Features</NavItem>
                 <NavItem href="/docs">Docs</NavItem>
                 <NavItem href="/features#pricing">Pricing</NavItem>
                 <NavItem href="/changelog">Changelog</NavItem>
                 <li>
-                    <a class="lg:h-9 rounded-md hover:bg-gray-700/5 dark:hover:bg-gray-300/5 hover:text-gray-950 dark:hover:text-gray-50 block transition group overflow-hidden"
+                    <a class="sm:h-9 rounded-md hover:bg-gray-700/5 dark:hover:bg-gray-300/5 hover:text-gray-950 dark:hover:text-gray-50 block transition group overflow-hidden"
                        href="https://try.vikunja.io/demo-account-create/">
                         <div class="py-2 px-4 group-hover:py-0 transition-all flex items-center">
                             <span>
                                 Demo
                             </span>
-                            <span class="lg:hidden text-xs text-primary-lighter pl-2">
+                            <span class="sm:hidden text-xs text-primary-lighter pl-2">
                                 No sign-up required
                             </span>
                         </div>
