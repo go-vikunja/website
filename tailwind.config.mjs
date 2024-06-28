@@ -27,7 +27,6 @@ export default {
 				DEFAULT: {
 					css: {
 						code: {
-							backgroundColor: theme('colors.gray.100'),
 							borderRadius: theme('borderRadius.sm'),
 							paddingTop: theme('padding[0.5]'),
 							paddingRight: theme('padding[1]'),
