@@ -5,7 +5,7 @@ import SubscribeToNewsletter from './partials/SubscribeToNewsletter.astro'
 const nowYear = (new Date()).getFullYear()
 ---
 <footer
-        class="mx-auto mt-20 max-w-screen-xl border-t-2 border-gray-200 dark:border-gray-800 py-8 px-4 text-left text-sm text-gray-800 dark:text-gray-200 md:flex md:px-2"
+        class="mx-auto mt-20 max-w-screen-xl border-t-2 border-gray-200 dark:border-gray-800 py-8 px-4 text-left text-sm text-gray-800 dark:text-gray-200 sm:flex sm:flex-wrap md:flex-nowrap"
 >
     <div class="flex w-full flex-col md:w-2/5">
         <LogoFull class="h-8 w-28"/>
@@ -22,7 +22,8 @@ const nowYear = (new Date()).getFullYear()
 
         <SubscribeToNewsletter/>
     </div>
-    <div class="mt-4 flex w-full flex-col md:mt-0 md:w-1/5">
+    <div class="md:hidden basis-full h-0"></div>
+    <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5">
         <h3 class="mb-4 font-display text-base font-bold md:mb-6">Support the Project</h3>
         <a
                 href="https://www.buymeacoffee.com/kolaente"
@@ -127,7 +128,7 @@ const nowYear = (new Date()).getFullYear()
             Buy Stickers
         </a>
     </div>
-    <div class="mt-4 flex w-full flex-col md:mt-0 md:w-1/5">
+    <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5">
         <h3 class="mb-4 font-display text-base font-bold md:mb-6">Product</h3>
         <a href="/features" class="py-2 hover:underline md:pt-0">Features</a>
         <a
@@ -147,7 +148,8 @@ const nowYear = (new Date()).getFullYear()
         >Stickers</a
         >
     </div>
-    <div class="mt-4 flex w-full flex-col md:mt-0 md:w-1/5">
+    <div class="md:hidden basis-full h-0"></div>
+    <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5">
         <h3 class="mb-4 font-display text-base font-bold md:mb-6">Social</h3>
         <a
                 href="https://matrix.to/#/#vikunja:matrix.org"
@@ -190,7 +192,7 @@ const nowYear = (new Date()).getFullYear()
             LinkedIn
         </a>
     </div>
-    <div class="mt-4 flex w-full flex-col md:mt-0 md:w-1/5">
+    <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5">
         <h3 class="mb-4 font-display text-base font-bold md:mb-6">About</h3>
         <a href="/" class="py-2 hover:underline md:pt-0">Home</a>
         <a href="/docs" class="py-2 hover:underline md:pt-0">Docs</a>
