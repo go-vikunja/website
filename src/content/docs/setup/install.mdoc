@@ -40,7 +40,7 @@ And after you installed Vikunja, you may want to check out these other resources
 
 Download a copy of Vikunja from the [download page](https://dl.vikunja.io/vikunja) for your architecture.
 
-```
+```sh
 wget <download-url>
 ```
 
@@ -63,7 +63,7 @@ We'll install vikunja to `/opt/vikunja`, change the path where needed if you wan
 
 Run these commands to install it:
 
-```
+```sh
 mkdir -p /opt/vikunja
 unzip <vikunja-zip-file> -d /opt/vikunja
 chmod +x /opt/vikunja
@@ -107,7 +107,7 @@ If you've installed Vikunja to a directory other than `/opt/vikunja`, you need t
 
 After you made all necessary modifications, it's time to start the service:
 
-```
+```sh
 sudo systemctl enable vikunja
 sudo systemctl start vikunja
 ```
@@ -130,7 +130,7 @@ It will automatically run all necessary database migrations.
 
 To get up and running quickly, use this command:
 
-```
+```sh
 mkdir $PWD/files $PWD/db
 chown 1000 $PWD/files $PWD/db
 docker run -p 3456:3456 -v $PWD/files:/app/vikunja/files -v $PWD/db:/db vikunja/vikunja
@@ -144,7 +144,7 @@ Make sure the new user has required permissions on the `db` and `files` folder.
 
 You can mount a local configuration like so:
 
-```
+```sh
 mkdir $PWD/files $PWD/db
 chown 1000 $PWD/files $PWD/db
 docker run -p 3456:3456 -v /path/to/config/on/host.yml:/app/vikunja/config.yml:ro -v $PWD/files:/app/vikunja/files -v $PWD/db:/db vikunja/vikunja
@@ -170,7 +170,7 @@ Vikunja is available as deb package for installation on debian-like systems.
 
 To install these, grab a `.deb` file from [the download page](https://dl.vikunja.io/vikunja) and run
 
-```
+```sh
 dpkg -i vikunja.deb
 ```
 
@@ -183,7 +183,7 @@ Vikunja is available as rpm package for installation on Fedora, CentOS and other
 
 To install these, grab a `.rpm` file from [the download page](https://dl.vikunja.io/vikunja) and run
 
-```
+```sh
 rpm -i vikunja.rpm
 ```
 
@@ -205,7 +205,7 @@ As a workaround, it is possible to compile vikunja for FreeBSD directly on a Fre
 
 ### Installing packages
 
-```
+```sh
 pkg update && pkg upgrade -y
 pkg install nano git go gmake
 go install github.com/magefile/mage
@@ -213,7 +213,7 @@ go install github.com/magefile/mage
 
 ### Clone vikunja repo
 
-```
+```sh
 mkdir /mnt/GO/code.vikunja.io
 cd /mnt/GO/code.vikunja.io
 git clone https://code.vikunja.io/vikunja
@@ -225,7 +225,7 @@ If you don't do this, you'll build the [latest unstable build](/docs/versions), 
 
 ### Compile binaries
 
-```
+```sh
 cd frontend
 pnpm install
 pnpm run build
@@ -235,7 +235,7 @@ mage build
 
 ### Create folder to install Vikunja into
 
-```
+```sh
 mkdir /mnt/vikunja
 cp /mnt/GO/code.vikunja.io/api/vikunja /mnt/vikunja
 cd /mnt/vikunja
@@ -244,13 +244,13 @@ chmod +x /mnt/vikunja
 
 ### Set vikunja to boot on startup
 
-```
+```sh
 nano /etc/rc.d/vikunja
 ```
 
 Then paste into the file:
 
-```
+```sh
 #!/bin/sh
 
 . /etc/rc.subr
@@ -264,22 +264,22 @@ load_rc_config $name
 run_rc_command "$1"
 ```
 
-Save and exit.  Then execute:
+Save and exit. Then execute:
 
-```
+```sh
 chmod +x /etc/rc.d/vikunja
 nano /etc/rc.conf
 ```
 
 Then add line to bottom of file:
 
-```
+```conf
 vikunja_enable="YES"
 ```
 
 Test vikunja now works with
 
-```
+```sh
 service vikunja start
 ```
 

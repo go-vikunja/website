@@ -24,7 +24,7 @@ You can use Docker's [`--user`](https://docs.docker.com/engine/reference/run/#us
 You must ensure Vikunja is able to write into the `files` directory.
 To do this, create the folder and chown it before starting the stack:
 
-```
+```sh
 mkdir $PWD/files
 chown 1000 $PWD/files
 ```
@@ -86,7 +86,7 @@ You can also remove the db section.
 
 To run the container, you need to create the directories first and make sure they have all required permissions:
 
-```
+```sh
 mkdir $PWD/files $PWD/db
 chown 1000 $PWD/files $PWD/db
 ```

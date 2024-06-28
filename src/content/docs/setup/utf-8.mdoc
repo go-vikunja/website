@@ -18,8 +18,7 @@ Postgresql and SQLite should handle utf-8 just fine - If you discover any issues
 MySQL is not able to handle utf-8 by default.
 To fix this, follow the steps below.
 
-To find out if your db supports utf-8, run the following in a shell or similar, assuming the database 
-you're using for vikunja is called `vikunja`:
+To find out if your db supports utf-8, run the following in a shell or similar, assuming the database you're using for vikunja is called `vikunja`:
 
 ```sql
 SELECT default_character_set_name FROM information_schema.SCHEMATA WHERE schema_name = 'vikunja';
@@ -64,7 +63,7 @@ FROM `COLUMNS` where table_schema like 'vikunja' and data_type in ('text','tinyt
 
 Running this will create the actual migration script for your particular database structure and save it in a file called `alterTables.sql`:
 
-```
+```sh
 mysql -uroot < preAlterTables.sql | egrep '^ALTER' > alterTables.sql
 ```
 
@@ -72,7 +71,7 @@ mysql -uroot < preAlterTables.sql | egrep '^ALTER' > alterTables.sql
 
 At this point converting is just a matter of executing the previously generated sql script:
 
-```
+```sh
 mysql -uroot < alterTables.sql
 ```
 
