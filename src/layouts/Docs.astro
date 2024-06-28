@@ -86,7 +86,7 @@ const sidebarEntries = await getSidebarNavigation()
             Show Menu
         </button>
         <aside class="w-full lg:w-1/5 hidden lg:block order-1 px-2 text-gray-600 dark:text-gray-300" id="docsMenu">
-            <nav>
+            <nav class="sticky top-0 max-h-screen overflow-y-auto overflow-x-hidden pb-4">
 				{sidebarEntries.map(([key, entries]) => (
                         <p class="pb-2 pt-4 font-title text-sm uppercase text-gray-500 dark:text-gray-400">
 							{key}
@@ -96,7 +96,7 @@ const sidebarEntries = await getSidebarNavigation()
                                     <li>
                                         <a
                                                 href={item.url}
-                                                class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition ' + ((Astro.url.pathname === item.url || Astro.url.pathname === item.url + '/') && ' !bg-primary text-white')}
+                                                class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-800 transition ' + ((Astro.url.pathname === item.url || Astro.url.pathname === item.url + '/') && ' !bg-primary text-white')}
                                         >
 											{item.title}
                                         </a>
