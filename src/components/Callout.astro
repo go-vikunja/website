@@ -12,11 +12,11 @@ function getClasses(): string {
 			suffix = 'bg-primary-lighter'
 			break
 		case 'warning':
-			suffix = 'bg-yellow-200'
+			suffix = 'bg-yellow-200 dark:bg-yellow-300'
 			break
 	}
 
-	return 'callout rounded px-4 py-3 ' + suffix
+	return 'callout rounded px-4 py-3 dark:text-gray-800 ' + suffix
 }
 ---
 
