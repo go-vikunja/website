@@ -8,7 +8,7 @@ It is aimed at beginners and should get you up and running quickly.
 
 We'll use [docker compose](https://docs.docker.com/compose/) to make handling the bunch of containers easier.
 
-> If you have any issues setting up vikunja, please don't hesitate to reach out to us via [matrix](https://riot.im/app/#/room/!dCRiCiLaCCFVNlDnYs:matrix.org?via=matrix.org), the [community forum](https://community.vikunja.io/) or even [email](mailto:hello@vikunja.io).
+> If you have any issues setting up Vikunja, please don't hesitate to reach out to us via [matrix](https://riot.im/app/#/room/!dCRiCiLaCCFVNlDnYs:matrix.org?via=matrix.org), the [community forum](https://community.vikunja.io/) or even [email](mailto:hello@vikunja.io).
 
 ## Preparations (optional)
 
@@ -25,7 +25,7 @@ services:
     vikunja:
         image: vikunja/vikunja
         environment:
-            VIKUNJA_SERVICE_PUBLICURL: http://<the public url where vikunja is reachable>
+            VIKUNJA_SERVICE_PUBLICURL: http://<the public url where Vikunja is reachable>
             VIKUNJA_DATABASE_HOST: db
             VIKUNJA_DATABASE_PASSWORD: changeme
             VIKUNJA_DATABASE_TYPE: mysql
@@ -59,14 +59,14 @@ services:
 
 This defines two services, each with their own container:
 
-* A Vikunja service which runs the vikunja api and hosts its frontend.
+* A Vikunja service which runs the Vikunja api and hosts its frontend.
 * A database container which will store all projects, tasks, etc. We're using mariadb here, but you're free to use mysql or postgres if you want.
 
 If you already have a proxy on your host, you may want to check out the [reverse proxy examples](/docs/reverse-proxy) to use that.
 By default, Vikunja will be exposed on port 3456 on the host.
 
 To change to something different, you'll need to change the `ports` section in the service definition.
-The number before the colon is the host port - This is where you can reach vikunja from the outside once all is up and running.
+The number before the colon is the host port - This is where you can reach Vikunja from the outside once all is up and running.
 
 You'll need to change the value of the `VIKUNJA_SERVICE_PUBLICURL` environment variable to the public port or hostname where Vikunja is reachable.
 

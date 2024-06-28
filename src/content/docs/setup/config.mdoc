@@ -3,7 +3,7 @@ title: "Configuration options"
 slug: config-options
 ---
 
-You can either use a `config.yml` file in the root directory of vikunja or set almost all config option with environment variables. If you have both, the value set in the config file is used.
+You can either use a `config.yml` file in the root directory of Vikunja or set almost all config option with environment variables. If you have both, the value set in the config file is used.
 Right now it is not possible to configure openid authentication via environment variables.
 
 Variables are nested in the `config.yml`, these nested variables become `VIKUNJA_FIRST_CHILD` when configuring via
@@ -62,8 +62,8 @@ to better grasp how the nesting looks like.
 ### JWTSecret
 
 This token is used to verify issued JWT tokens.
-Default is a random token which will be generated at each startup of vikunja.
-(This means all already issued tokens will be invalid once you restart vikunja)
+Default is a random token which will be generated at each startup of Vikunja.
+(This means all already issued tokens will be invalid once you restart Vikunja)
 
 Default: `<jwt-secret>`
 
@@ -269,7 +269,7 @@ Environment path: `VIKUNJA_SERVICE_TESTINGTOKEN`
 
 ### enableemailreminders
 
-If enabled, vikunja will send an email to everyone who is either assigned to a task or created it when a task reminder
+If enabled, Vikunja will send an email to everyone who is either assigned to a task or created it when a task reminder
 is due.
 
 Default: `true`
@@ -816,7 +816,7 @@ Environment path: `VIKUNJA_MAILER_QUEUETIMEOUT`
 
 ### forcessl
 
-By default, vikunja will try to connect with starttls, use this option to force it to use ssl.
+By default, Vikunja will try to connect with starttls, use this option to force it to use ssl.
 
 Default: `false`
 
@@ -1215,7 +1215,7 @@ OpenID configuration will allow users to authenticate through a third-party Open
 The provider needs to support the `openid`, `profile` and `email` scopes.<br/>
 **Note:** Some openid providers (like Gitlab) only make the email of the user available through OpenID if they have set it to be publicly visible.
 If the email is not public in those cases, authenticating will fail.
-+**Note 2:** The frontend expects the third party to redirect the user <frontend-url>/auth/openid/<auth key> after authentication. Please make sure to configure the redirect url in your third party auth service accordingly if you're using the default vikunja frontend.    
++**Note 2:** The frontend expects the third party to redirect the user <frontend-url>/auth/openid/<auth key> after authentication. Please make sure to configure the redirect url in your third party auth service accordingly if you're using the default Vikunja frontend.    
 The frontend will automatically provide the API with the redirect url, composed from the current url where it's hosted.
 If you want to use the desktop client with OpenID, make sure to allow redirects to `127.0.0.1`.
 Take a look at the [default config file](https://kolaente.dev/vikunja/vikunja/src/branch/main/config.yml.sample) for more information about how to configure openid authentication.

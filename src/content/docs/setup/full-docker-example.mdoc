@@ -116,7 +116,7 @@ services:
   vikunja:
     image: vikunja/vikunja
     environment:
-      VIKUNJA_SERVICE_PUBLICURL: http://<the public ip or host where vikunja is reachable>
+      VIKUNJA_SERVICE_PUBLICURL: http://<the public ip or host where Vikunja is reachable>
       VIKUNJA_DATABASE_HOST: db
       VIKUNJA_DATABASE_PASSWORD: changeme
       VIKUNJA_DATABASE_TYPE: mysql
@@ -155,7 +155,7 @@ This example assumes [traefik](https://traefik.io) version 2 installed and confi
 We also make a few assumptions here which you'll most likely need to adjust for your traefik setup:
 
 * Your domain is `vikunja.example.com`
-* The entrypoint you want to make vikunja available from is called `https`
+* The entrypoint you want to make Vikunja available from is called `https`
 * The tls cert resolver is called `acme`
 
 {% callout type="warning" %}
@@ -170,7 +170,7 @@ services:
   vikunja:
     image: vikunja/vikunja
     environment:
-      VIKUNJA_SERVICE_PUBLICURL: http://<the public url where vikunja is reachable>
+      VIKUNJA_SERVICE_PUBLICURL: http://<the public url where Vikunja is reachable>
       VIKUNJA_DATABASE_HOST: db
       VIKUNJA_DATABASE_PASSWORD: changeme
       VIKUNJA_DATABASE_TYPE: mysql
@@ -240,7 +240,7 @@ services:
   vikunja:
     image: vikunja/vikunja
     environment:
-      VIKUNJA_SERVICE_PUBLICURL: http://<the public url where vikunja is reachable>
+      VIKUNJA_SERVICE_PUBLICURL: http://<the public url where Vikunja is reachable>
       VIKUNJA_DATABASE_HOST: db
       VIKUNJA_DATABASE_PASSWORD: changeme
       VIKUNJA_DATABASE_TYPE: mysql
@@ -290,7 +290,7 @@ you need to prepare a proxy rule the Vikunja Service.
 
 ![Synology Proxy Settings](/docs/synology-proxy-1.png)
 
-You should also add 2 empty folders for mariadb and vikunja inside Synology's
+You should also add 2 empty folders for MariaDB and Vikunja inside Synology's
 docker main folders:
 
 * Docker
