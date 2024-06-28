@@ -32,8 +32,9 @@ Creates a zip file with all vikunja-related files.
 This includes config, version, all files and the full database.
 
 Usage:
-```
-$ vikunja dump
+
+```sh
+vikunja dump
 ```
 
 ## `index`
@@ -43,11 +44,13 @@ Perform a full reindex of all tasks into Typesense. This will clear all tasks al
 The command will only work if Typesense is enabled.
 
 Flags:
+
 * `-p`, `--partial`: If provided, Vikunja will only index tasks which are not present in the index yet.
 
 Usage:
-```
-$ vikunja index [flags]
+
+```sh
+vikunja index [flags]
 ```
 
 ## `help`
@@ -56,8 +59,8 @@ Shows more detailed help about any command.
 
 Usage:
 
-```
-$ vikunja help [command]
+```sh
+vikunja help [command]
 ```
 
 ## `migrate`
@@ -65,9 +68,10 @@ $ vikunja help [command]
 Run all database migrations which didn't already run.
 
 Usage:
-```
-$ vikunja migrate [flags]
-$ vikunja migrate [command]
+
+```sh
+vikunja migrate [flags]
+vikunja migrate [command]
 ```
 
 ### `migrate list`
@@ -75,8 +79,9 @@ $ vikunja migrate [command]
 Shows a list with all database migrations.
 
 Usage:
-```
-$ vikunja migrate list
+
+```sh
+vikunja migrate list
 ```
 
 ### `migrate rollback`
@@ -84,11 +89,13 @@ $ vikunja migrate list
 Roll migrations back until a certain point.
 
 Usage:
-```
-$ vikunja migrate rollback [flags]
+
+```sh
+vikunja migrate rollback [flags]
 ```
 
 Flags:
+
 * `-n`, `--name` string: The id of the migration you want to roll back until.
 
 ## `restore`
@@ -96,8 +103,9 @@ Flags:
 Restores a previously created dump from a zip file, see `dump`.
 
 Usage:
-```
-$ vikunja restore [path to dump zip file]
+
+```sh
+vikunja restore [path to dump zip file]
 ```
 
 ## `testmail`
@@ -105,8 +113,9 @@ $ vikunja restore [path to dump zip file]
 Sends a test mail using the configured smtp connection.
 
 Usage:
-```
-$ vikunja testmail [email to send the test mail to]
+
+```sh
+vikunja testmail [email to send the test mail to]
 ```
 
 ## `user`
@@ -118,11 +127,13 @@ Bundles a few commands to manage users.
 Enable or disable a user. Will toggle the current status if no flag (`--enable` or `--disable`) is provided.
 
 Usage:
-```
-$ vikunja user change-status [user id] [flags]
+
+```sh
+vikunja user change-status [user id] [flags]
 ```
 
 Flags:
+
 * `-d`, `--disable`: Disable the user.
 * `-e`, `--enable`: Enable the user.
 
@@ -131,11 +142,13 @@ Flags:
 Create a new user.
 
 Usage:
-```
-$ vikunja user create <flags>
+
+```sh
+vikunja user create <flags>
 ```
 
 Flags:
+
 * `-a`, `--avatar-provider`: The avatar provider of the new user. Optional.
 * `-e`, `--email`: The email address of the new user.
 * `-p`, `--password`: The password of the new user. You will be asked to enter it if not provided through the flag.
@@ -149,11 +162,12 @@ With the flag the user is deleted **immediately**.
 
 **USE WITH CAUTION.**
 
-```
-$ vikunja user delete [id] [flags]
+```sh
+vikunja user delete [id] [flags]
 ```
 
 Flags:
+
 * `-n`, `--now` If provided, deletes the user immediately instead of emailing them first.
 
 ### `user list`
@@ -161,8 +175,9 @@ Flags:
 Shows a list of all users.
 
 Usage:
-```
-$ vikunja user list
+
+```sh
+vikunja user list
 ```
 
 ### `user reset-password`
@@ -170,11 +185,13 @@ $ vikunja user list
 Reset a users password, either through mailing them a reset link or directly.
 
 Usage:
-```
-$ vikunja user reset-password [flags]
+
+```sh
+vikunja user reset-password [flags]
 ```
 
 Flags:
+
 * `-d`, `--direct`: If provided, reset the password directly instead of sending the user a reset mail.
 * `-p`, `--password`: The new password of the user. Only used in combination with --direct. You will be asked to enter it if not provided through the flag.
 
@@ -183,11 +200,13 @@ Flags:
 Update an existing user.
 
 Usage:
-```
-$ vikunja user update [user id]
+
+```sh
+vikunja user update [user id]
 ```
 
 Flags:
+
 * `-a`, `--avatar-provider`: The new avatar provider of the new user.
 * `-e`, `--email`: The new email address of the user.
 * `-u`, `--username`: The new username of the user.
@@ -198,8 +217,9 @@ Prints the version of Vikunja.
 This is either the semantic version (something like `0.24.0`) or version + git commit hash.
 
 Usage:
-```
-$ vikunja version
+
+```sh
+vikunja version
 ```
 
 ## `web`
@@ -207,6 +227,7 @@ $ vikunja version
 Starts Vikunja's web server, serving the api and frontend.
 
 Usage:
-```
-$ vikunja web
+
+```sh
+vikunja web
 ```

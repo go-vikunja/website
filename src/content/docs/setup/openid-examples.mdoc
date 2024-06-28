@@ -61,6 +61,7 @@ Note that there currently seems to be no way to stop creation of new users, even
 ## Keycloak
 
 Vikunja Config:
+
 ```yaml
 openid:
     enabled: true
@@ -72,7 +73,9 @@ openid:
         clientid: <vikunja-id>
         clientsecret: <vikunja secret>
 ```
+
 Keycloak Config:
+
 - Navigate to the keycloak instance
 - Create a new client with the type `OpenID Connect` and a unique ID.
 - Set `Client authentication` to On
