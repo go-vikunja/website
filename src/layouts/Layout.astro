@@ -24,9 +24,10 @@ const imageUrl = image
 	? image
 	: new URL('/images/vikunja.jpg', Astro.url)
 
-const canonical = Astro.url.toString().endsWith('/')
-    ? Astro.url.toString().substring(0, Astro.url.toString().length - 1)
-    : Astro.url.toString()
+const base = (new URL(Astro.url.pathname, Astro.site)).toString()
+const canonical = base.endsWith('/')
+    ? base.substring(0, Astro.url.toString().length - 1)
+    : base
 ---
 
 <!doctype html>
