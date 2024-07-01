@@ -1,0 +1,19 @@
+---
+title: "Vikunja frontend v0.20.5 and API v0.20.4 was released"
+date: 2023-03-12T10:25:18+01:00
+draft: false
+---
+
+<div class="bg-amber-400 p-4 rounded mt-4">
+There has been a <a href="{{< ref "./release-0.21.0.md">}}" class="!underline">new release</a> with additional fixes and improvements.
+Updating is highly encouraged.
+</div>
+
+This is a patch release which fixes a problem with the last release's docker images. 
+A bug prevented running the frontend container on some systems and the api container with some different group ids than the default.
+
+As usual, you can find the full changelogs in the [frontend](https://kolaente.dev/vikunja/frontend/src/branch/main/CHANGELOG.md#0-20-5-2023-03-12) and [api](https://kolaente.dev/vikunja/api/src/branch/main/CHANGELOG.md#0-20-4-2023-03-12) repos.
+
+To get the upgrade, simply replace the frontend files or api binary or pull the latest docker image.
+You can also check out the update docs for the [frontend](https://vikunja.io/docs/install-frontend/#updating) or [api](https://vikunja.io/docs/install-backend/#updating) updating process.
+

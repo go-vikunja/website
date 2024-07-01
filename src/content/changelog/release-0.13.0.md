@@ -1,0 +1,56 @@
+---
+title: "Vikunja 0.13.0 is released"
+date: 2020-05-12T12:00:00+00:00
+---
+
+This is a big release!
+
+There were a total of 84 api related and 114 frontend related merged features and improvements since the last release.
+
+Thanks to [Furai](https://kolaente.dev/Furai), [jonastheis](https://kolaente.dev/jonastheis) and [funkythings](https://kolaente.dev/funkythings) for contributing to this release.
+
+## Breaking
+
+All api field names are now `snake_case`. The frontend already reflects that.
+
+## Highlights
+
+This release has a few highlights:
+
+### Kanban
+
+<video autoplay="autoplay" loop="true" controls>
+  <source src="https://vikunja.io/features/kanban.webm" type="video/webm;codecs=vp8,vorbis">
+  ![](upload://ob2FFeVFOM1W0XecOiyG58HmtV2.png)
+</video>
+
+You can now organize and prioritize your tasks in a kanban board - each card on a board represents a task.
+All tasks can be added through the usual ways and will then show up in the kanban board where they can be easily rearranged and reordered.
+
+### 2fa
+
+It is now possible to additionally secure a user account with two-factor authentication.
+
+### Configurable api url in frontend
+
+You can now [tell the frontend](https://vikunja.io/docs/install-frontend/#api-url-configuration) where it can find the backend - this makes deployment and management of frontend installations easier.
+
+### Vuex
+
+Under the hood, the frontend now uses vuex for centralized state management. This enables some features like displaying the list titles in the task overview pages.
+
+## Other Changes
+
+Other notable changes include:
+
+* Move tasks between lists
+* User settings to change email, password and 2fa
+* Properly highlight the current list in the menu
+* Show parent lists and namespaces for related tasks
+* Fix not all labels being shown in labels overview
+* Fixes for team managment
+* Prevent link share creation with admin rights from a link share without admin rights
+
+### All changes
+
+The full list of changes is available in the release notes from the [api](https://kolaente.dev/vikunja/api/releases/tag/v0.13) and [frontend](https://kolaente.dev/vikunja/frontend/releases/tag/v0.13) repos.

@@ -1,0 +1,169 @@
+---
+title: "What's new in Vikunja 0.19.0"
+date: 2022-08-03T20:37:08+02:00
+draft: false
+---
+
+<div class="bg-primary p-4 text-white rounded">
+If Vikunja is useful to you, please consider <a href="https://www.buymeacoffee.com/kolaente" target="_blank" class="!text-white !underline">buying me a coffe</a>, 
+<a href="https://github.com/sponsors/kolaente" target="_blank" class="!text-white !underline">sponsoring me on github</a> or <a href="https://vikunja.cloud/stickers" class="!text-white !underline">buying a sticker pack</a>.<br/>
+I'm also offering <a href="https://vikunja.cloud/?utm_source=vikunja.io&utm_medium=blog&utm_campaign=release_0.18.0" class="!text-white !underline">a hosted version of Vikunja</a> if you want a hassle-free solution for yourself or your team.
+</div>
+
+<div class="bg-amber-400 p-4 rounded mt-4">
+There has been a <a href="{{< ref "./release-0.19.1.md">}}" class="!underline">patch release</a> with additional fixes.
+Updating is highly encouraged.
+</div>
+
+I'm proud to announce Vikunja 0.19.0!
+
+This release contains a whopping 2060 new changes in the frontend and 333 in the api.
+511 of these commits were bug fixes.
+
+## Getting the new version
+
+As usual, just grab a new release from the [downloads page](https://dl.vikunja.io) or pull the latest docker container.
+
+## New to Vikunja?
+
+Vikunja is the open-source, self-hostable to-do app.
+It lets you organize all kinds of things, from your shopping list to a multi-month project with multiple team members.
+Different ways to view, filter and share your tasks make this a breeze.
+
+Check out [the features page](https://vikunja.io/features) to learn more about all of its features.
+
+## Vikunja Cloud is now available for teams
+
+[Vikunja Cloud](https://vikunja.cloud) now finally makes it easy to sign up your the whole team and centrally manage billing.
+Check it out if you want an easy-to-use solution for Vikunja.
+
+Now, without any further ads, on to this release's highlights!
+
+## Highlights
+
+### Vue 3
+
+The frontend is now uses vue 3.
+Even though you may not even notice it, this was by far the largest change and one reason why this release took so long compared to the last one.
+The migration makes the frontend more stable overall and future-proof for more changes.
+
+A huge thanks to **@dpschen** for helping with the migration!
+It probably would still use vue 2 if not for you.
+
+### Mobile app
+
+A bit of progress has been made with [the mobile app](https://github.com/go-vikunja/app).
+Most notably, it can now send you reminders as push notification.
+
+Huge shoutout to **@Benimautner** for stepping in and continuing to develop this.
+
+Go over to the repo, grab [a release](https://github.com/go-vikunja/app/releases) and take it for a spin!
+
+### Dark mode
+
+Finally, dark mode!
+Now all of you night owls won't feel like a sun blaring in your face at night.
+
+![Vikunja in dark mode](/blog/images/0.19.0-dark-mode.png)
+
+Big thanks to **@adrinux** for helping with this!
+
+### New login and register pages
+
+The login and register pages have been reworked to look better and be more accessible.
+They also now allow you to configure which api server to connect to more easily.
+
+![New login page](/blog/images/0.19.0-login-page.png)
+
+### Task reminders and overdue tasks overview now use the correct time zone
+
+In the user settings, you can now configure the time zone you are currently in.
+This is different from the [`service.timezone`](https://vikunja.io/docs/config-options/#timezone) configuration option for the server.
+
+Once configured, Vikunja will use this setting to send you email reminders at the time you set them up in your time zone.
+With this addition, email reminders now works a lot more intuitive than before.
+
+### CalDAV tokens
+
+You can now generate a CalDAV token which can be used instead of a password (in combination with your username).
+
+For users authenticating with a third-party login, this is the only way to use CalDAV.
+
+![CalDAV token settings](/blog/images/0.19.0-caldav-tokens.png)
+
+### Sentry integration for the frontend
+
+The frontend can now automatically send all errors to sentry.
+The exact endpoint can be specified and is disabled by default.
+
+### Checklist indicators
+
+Every time you add a checklist in the task description, it will now show a summary of it in the task overview and the task itself:
+
+![Checklist indicators in list view](/blog/images/0.19.0-checklist-indicators.png)
+
+A checklist looks like this:
+
+```
+* [ ] This is a checklist item
+* [ ] This is another checklist item
+* [x] This is a done checklist item
+```
+
+### Move lists across namespaces
+
+You can now drag and drop a list across namespaces!
+(As long as you're allowed to create lists in the other namespace, that is)
+
+This makes it very easy to change the namespace a list belongs to.
+
+### Date math for filters
+
+In the "Upcoming" view and all filter settings you can now use a special syntax to dynamically calculate a date.
+This allows for dynamic saved filters like "All tasks with a due date this week" without having to manually update them every week.
+
+The expressions are similar to the ones provided by [Grafana](https://grafana.com/docs/grafana/latest/dashboards/time-range-controls/) and [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#date-math).
+They consist of special tokens for Day, Week, Month, etc. and let you add or subtract amounts relative each other.
+
+For example:
+
+* `now+24h`: In 24 hours
+* `now+30d`: In 30 days
+* `now/w+1w`: The end of this week
+
+Check out the examples and explanations in Vikunja and play with it!
+
+![Date range filter in the Upcoming view](/blog/images/0.19.0-date-range.png)
+
+### Changes to quick add magic
+
+There are now two modes for the quick add magic feature: *Vikunja* and *Todoist*.
+The shortcuts and special keywords are different for the two, be sure to check out the docs.
+
+The *Vikunja* mode is the default and now always enabled.
+
+### New interface languages
+
+Since the last release the frontend is now also available in czech, italian, dutch, polish, portuguese and vietnamese.
+
+A big thank you to everyone who contributed translations!
+
+[Check out the docs](https://vikunja.io/docs/translations/) to learn how to help with the translation and add your language.
+
+## Other notable changes
+
+* Marble avatars: A new avatar type with a unique blurry red-orange picture for every user.
+* Rate limits for unauthenticated routes: Routes which do not require authentication are now also covered by the rate limit, [if enabled and configured](https://vikunja.io/docs/config-options/#ratelimit).
+* BlurHash for list backgrounds: When list backgrounds are loaded, they will first show a blurry preview of it, to bridge the time until the real background is fully loaded.
+* Data export: Users using a third-party auth provider can now properly use the data export. Previously they were required to enter a password which will not work with these types of accounts.
+* Scope in quick actions search: You can now use quick search magic keywords to filter the search results in quick actions.
+
+## Full change lists
+
+As usual, you can find the full changelogs in the respective [frontend](https://kolaente.dev/vikunja/frontend/releases/tag/v0.18.0) and [api](https://kolaente.dev/vikunja/api/releases/tag/v0.18.0) repos.
+
+## Closing words
+
+This release has been a long ride, partly due to the vue 3 migration but also because I've been busy with other projects.
+It's great having you as a user, so please tell me what you think of this release, either [in the community forum](https://community.vikunja.io), [Twitter](https://twitter.com/vikunja.io) or [email](mailto:hello@vikunja.io).
+

@@ -1,0 +1,14 @@
+---
+title: "Vikunja 0.18.2 is released"
+date: 2021-11-23T20:18:54+01:00
+draft: false
+---
+
+This is a quick patch release fixing bugs with renaming a saved filter and correctly setting the api url via env url in the docker image.
+There are releases for the frontend and desktop parts of Vikunja.
+
+As usual, you can find the full changelogs in the respective [frontend](https://kolaente.dev/vikunja/frontend/releases/tag/v0.18.2) repo.
+
+To get the upgrade, simply replace the frontend files or pull the latest docker image.
+You can also check out the update docs for the [frontend](https://vikunja.io/docs/install-frontend/#updating) updating process.
+

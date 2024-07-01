@@ -1,0 +1,9 @@
+---
+date: 2021-06-09T22:30:00+02:00
+title: "[API] Vikunja 0.17.1 is released"
+draft: false
+---
+
+This is a small patch release which fixes parsing openid config when using a json config file.
+
+As always, you can grab a release from [the downloads page](https://dl.vikunja.io/api/0.17.1) or [docker hub](https://hub.docker.com/r/vikunja/api).

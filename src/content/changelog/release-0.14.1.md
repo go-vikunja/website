@@ -1,0 +1,19 @@
+---
+title: "Vikunja 0.14.1 is released"
+date: 2020-07-07T12:00:00+00:00
+---
+
+This is a smaller bugfix release with some improvements for the api.
+
+As always, you can grab a release from [the downloads page](https://dl.vikunja.io/api/0.14.1) or [docker hub](https://hub.docker.com/repository/docker/vikunja/api).
+
+### Fixed
+
+* Fix creating lists with non ascii characters (#607)
+* Fix decoding active users from redis
+* Fix parsing todoist reminder dates
+* Make sure the metrics map accesses only happen explicitly
+
+### Changed
+
+* Update docs theme

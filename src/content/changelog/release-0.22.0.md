@@ -1,0 +1,85 @@
+---
+title: "What's new in Vikunja 0.22.0"
+date: 2023-12-19T16:24:51+01:00
+draft: false
+---
+
+<div class="bg-primary p-4 text-white rounded">
+If Vikunja is useful to you, please consider <a href="https://www.buymeacoffee.com/kolaente" target="_blank" class="!text-white !underline">buying me a coffee</a>, 
+<a href="https://github.com/sponsors/kolaente" target="_blank" class="!text-white !underline">sponsoring me on github</a> or <a href="https://vikunja.cloud/stickers" class="!text-white !underline">buying a sticker pack</a>.<br/>
+I'm also offering <a href="https://vikunja.cloud/?utm_source=vikunja.io&utm_medium=blog&utm_campaign=release_0.18.0" class="!text-white !underline">a hosted version of Vikunja</a> if you want a hassle-free solution for yourself or your team.
+</div>
+
+<div class="bg-amber-400 p-4 rounded mt-4">
+There has been a <a href="{{< ref "./release-0.22.1.md">}}" class="!underline">new release</a> with additional fixes and improvements.
+Updating is highly encouraged.
+</div>
+
+I'm proud to announce Vikunja 0.22.0!
+
+This release contains 415 changes in the frontend and 241 in the api.
+Most changes are improvements and fixes with one breaking change.
+
+## Getting the new version
+
+As usual, just grab a new release from the [downloads page](https://dl.vikunja.io) or pull the latest docker container.
+
+## New to Vikunja?
+
+Vikunja is the open-source, self-hostable to-do app.
+It lets you organize all kinds of things, from your shopping list to a multi-month project with multiple team members.
+Different ways to view, filter and share your tasks make this a breeze.
+
+Check out [the features page](https://vikunja.io/features) to learn more about all of its features.
+
+## Highlights
+
+Among plenty of bug fixes and little improvements, this release is all about integrations with third-party tools.
+
+### API Tokens
+
+It is now possible to create scoped API tokens in lieu of login credentials.
+This really enables creating integrations with other tools where before, it wasn't really possible to use the api in other places than the UI as it always required login.
+
+### Webhooks
+
+Going in a similar direction as API Tokens, Vikunja now supports webhooks, allowing you to notify other services of changes in a project or task.
+Each webhook belongs to one project and will be fired for the events you specified.
+
+Check it out in the project settings!
+
+### n8n
+
+Speaking of integrations, there is now a [n8n](https://n8n.io) community node for Vikunja, making integrations with a whole bunch of other tools easily possible.
+It supports webhooks as trigger as well as all features the api itself supports.
+
+[Check out the docs article](https://vikunja.io/docs/n8n/) for information on how to set it up and use it.
+
+### New editor
+
+The editor was completely rebuilt from the ground up, improving performance and reliability. 
+It now has more shortcuts and a better UI.
+
+It's now WYSIWYG but still has support for markdown shortcuts to allow for a good balance between power-users and people only used to directly seeing what they typed.
+
+![New Editor](/blog/images/0.22.0-new-editor.png)
+
+Many thanks to [@dpschen](https://kolaente.dev/dpschen) for laying the groundwork!
+
+### Improved search with Typesense support
+
+To improve Vikunja's search capabilities there now is support for [Typesense](https://typesense.org/) as a search backend.
+Once configured, Vikunja will index all tasks and projects in Typesense and use it when you search for them, resulting in blazing fast results and fuzzy matching of search queries.
+
+[Check out the docs](https://vikunja.io/docs/typesense/) to learn how to set it up.
+
+### Other notable changes
+
+* **Metrics:** The prometheus endpoing now returns information about the number of files, attachments and active link shares.
+* **Subtasks in calDAV:** The [calDAV](https://vikunja.io/docs/caldav/) integration now has support for subtasks. Thanks to [@zewaren](https://kolaente.dev/zewaren) and [@mayanez](https://kolaente.dev/mayanez) for contributing this feature!
+* **Default bucket:** It is now possible to set the default kanban bucket per project instead of Vikunja always using the leftmost one.
+* **Changed API endpoint for new tasks (BREAKING):** The API endpoint to create a new task is now `/projects/{id}/tasks` instead of `/projects/{id}`.
+
+## Closing
+
+Please tell me what you think of this release, either [in the community forum](https://community.vikunja.io), [Twitter / X](https://twitter.com/vikunja.io) or [email](mailto:hello@vikunja.io).

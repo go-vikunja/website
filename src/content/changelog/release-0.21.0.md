@@ -1,0 +1,91 @@
+---
+title: "What's new in Vikunja 0.21.0"
+date: 2023-07-07T16:11:10+02:00
+draft: false
+---
+
+<div class="bg-primary p-4 text-white rounded">
+If Vikunja is useful to you, please consider <a href="https://www.buymeacoffee.com/kolaente" target="_blank" class="!text-white !underline">buying me a coffee</a>, 
+<a href="https://github.com/sponsors/kolaente" target="_blank" class="!text-white !underline">sponsoring me on github</a> or <a href="https://vikunja.cloud/stickers" class="!text-white !underline">buying a sticker pack</a>.<br/>
+I'm also offering <a href="https://vikunja.cloud/?utm_source=vikunja.io&utm_medium=blog&utm_campaign=release_0.18.0" class="!text-white !underline">a hosted version of Vikunja</a> if you want a hassle-free solution for yourself or your team.
+</div>
+
+<div class="bg-amber-400 p-4 rounded mt-4">
+There has been a new <a href="{{< ref "./release-0.22.0.md">}}" class="!underline">release</a> with additional new features and improvments.
+Updating is highly encouraged.
+</div>
+
+I'm proud to announce Vikunja 0.21.0!
+
+This release contains 756 changes in the frontend and 250 in the api.
+Most changes are improvements and fixes with one big breaking change.
+
+## Getting the new version
+
+As usual, just grab a new release from the [downloads page](https://dl.vikunja.io) or pull the latest docker container.
+
+## New to Vikunja?
+
+Vikunja is the open-source, self-hostable to-do app.
+It lets you organize all kinds of things, from your shopping list to a multi-month project with multiple team members.
+Different ways to view, filter and share your tasks make this a breeze.
+
+Check out [the features page](https://vikunja.io/features) to learn more about all of its features.
+
+## Highlights
+
+### Lists and Namespaces are now Projects
+
+Since the beginning of Vikunja, it always had the concept of lists which hold a bunch of tasks and namespaces, which contain multiple lists.
+Originally, lists were just that: A simple list of multiple tasks.
+
+Since then, lists have evolved significantly with support for gantt, kanban and more, representing no longer simple to-do lists but more and more complex projects.
+At the same time, namespaces felt like a big, bulky thing, a word used nowhere else than in programming contexts.
+
+With this release, we rename lists to projects to make represent what they are actually used for and remove the concept of a namespace altogether.
+Organizing multiple projects hierarchically was an important feature though - that's why projects are nestable for as many levels as you want, allowing for "subprojects" for the first time.
+
+All of your existing namespaces will be converted to top-level projects containing the lists they previously contained.
+
+Please note that importing a previous dump or export is not supported - please do a new dump instead of importing the old one.
+
+### Relative Reminders
+
+![Relative Reminders](/blog/images/0.21.0-relative-reminders.png)
+
+It is now possible to set reminders relative to a due, start or end date.
+These reminders will update automatically if you change any of the dates they are relative to.
+
+This now works similar to the way relative reminders are implemented in CalDAV.
+
+Thanks to [@ce72](https://kolaente.dev/ce72) for [contributing this feature](https://kolaente.dev/vikunja/api/pulls/1427)!
+
+### Assignee Search
+
+![Assignee Search](/blog/images/0.21.0-assignees.png)
+
+Searching for users to assign them to tasks was improved.
+You'll now see a list of everyone with access to the project directly.
+Additionally, you can search freely within this list of people for their username.
+Previously, it was only possible to add people by their full username if they did not enable search for email or name in their settings.
+
+### Frontend Settings
+
+All settings which only affect the frontend (like dark mode or start of the week) are now saved with your user account and loaded when you log in again.
+This caused confusion previously as these settings were only saved in the browser, removing them when switching browsers or logging out.
+
+### Helm Chart
+
+We now have an official Helm Chart for deploying Vikunja in Kubernetes!
+[Check the repo](https://kolaente.dev/vikunja/helm-chart/packages) for instructions on how to use it.
+
+Big thanks to [Yurii Vlasov](https://kolaente.dev/vlasov-y) for doing the heavy lifting on this.
+
+## Closing
+
+This release does not really contain a lot of new features, but one long awaited breaking change and multiple improvements.
+
+If all goes according to plan (you know how well estimates work in software development) the next release will be the even longer awaited 1.0!
+
+Please tell me what you think of this release, either [in the community forum](https://community.vikunja.io), [Twitter](https://twitter.com/vikunja.io) or [email](mailto:hello@vikunja.io).
+

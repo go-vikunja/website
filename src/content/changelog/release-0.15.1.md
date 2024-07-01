@@ -1,0 +1,8 @@
+---
+title: "[API] Vikunja 0.15.1 is released"
+date: 2020-10-20T12:00:00+00:00
+---
+
+This is a quick fix for a bug which prevented creating new tasks when metrics were enabled.
+
+As always, you can grab a release from [the downloads page ](https://dl.vikunja.io/api/0.15.1) or [docker hub ](https://hub.docker.com/r/vikunja/api).
