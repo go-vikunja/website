@@ -1,0 +1,5 @@
+Contact: mailto:security@vikunja.io
+Encryption: https://vikunja.io/contact/security.pub
+Preferred-Languages: en, de
+
+See https://vikunja.io/security for more information.
