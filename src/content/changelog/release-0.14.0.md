@@ -1,0 +1,58 @@
+---
+title: "Vikunja 0.14.0 is released"
+date: 2020-07-01T12:00:00+00:00
+---
+
+**Update:** There is a [new bugfix release]({{< ref "./release-0.14.1.md">}}).
+
+This is (again?) a rather big release!
+
+A total of **111** api related and **99** frontend related changes have been merged and pushed since the last release.
+
+Thanks to [leggettc18](https://kolaente.dev/leggettc18) for improving the docs about running Vikunja with Caddy.
+
+## Highlights
+
+### List Backgrounds
+
+You can now set beautiful list backgrounds directly from unsplash ([requires configuration](https://vikunja.io/docs/config-options/)) or upload a custom one!
+With unsplash backgrounds, we've gone great lengths to make sure your privacy is preserved, all requests to the unsplash api go through the Vikunja api and are stripped of any useful information.
+
+![List Backgrounds](/blog/images/0.14.0-list-backgrounds.jpg)
+
+### Migrate tasks from todoist
+
+Vikunja now lets you import tasks directly from todoist - this works pretty much the same as with the wunderlist migrator.
+
+### Task Filters
+
+You can now hide done tasks and filter tasks with a due date (more filters coming in future releases)
+By default, only tasks which are not done will be shown.
+
+![Task Filter](/blog/images/0.14.0-task-filters.png)
+
+### Namespaces & Lists Page
+
+Quickly get an overview about all your lists and namespaces on a dedicated page!
+As you can see in the screenshot this will also show all backgrounds you may have set on a list.
+In the same go, the menu has been cleaned up a bit to only show visible lists and namespaces.
+
+![Namespaces and Lists page](/blog/images/0.14.0-namespace-list-page.png)
+
+### Dump and restore commands
+
+With the `dump` and `restore` commands you can now make a full backup of a Vikunja installation - this includes all database data and even files which makes it perfect for a full backup of your installation.
+
+###  Changes to repeating tasks
+
+Whenever you mark a repeating task as done, it now makes sure to the new dates are always in the future. This is very useful if you have a task which repeats every week but haven't done it all in a while: Before this change, you'd need to mark it as done a few times until the new due date was in the future - Vikunja now saves you the hassle and does that for you.
+
+## Other changes
+
+* Duplicate lists: You can now create a full copy of a list with all its tasks, backgrounds, settings, shares, files etc.
+* The Docker images now let you set the [uid and gid](https://vikunja.io/docs/install-frontend/#setting-user-and-group-id-of-the-user-running-vikunja) as environment variables, preventing permission problems.
+* Docker arm images are now available for both the frontend and api containers
+
+### All changes
+
+The full list of changes is available in the release notes from the [api ](https://kolaente.dev/vikunja/api/releases/tag/v0.14.0) and [frontend ](https://kolaente.dev/vikunja/frontend/releases/tag/v0.14.0) repos.

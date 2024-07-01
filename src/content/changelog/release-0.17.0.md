@@ -1,0 +1,60 @@
+---
+title: "Vikunja 0.17.0 is released"
+date: 2021-05-11T21:00:00+02:00
+draft: false
+---
+
+<div class="notification is-link">
+If Vikunja is useful to you, please consider <a href="https://www.buymeacoffee.com/kolaente" target="_blank">buying me a coffe</a> or <a href="https://github.com/sponsors/kolaente" target="_blank">sponsoring me on github</a>.<br/>
+I'm also offering <a href="https://vikunja.cloud/?utm_source=vikunja.io&utm_medium=blog&utm_campaign=release_0.17.0">a hosted version of Vikunja</a> if you want a hassle-free solution for yourself or your team.
+</div>
+
+I'm proud to announce Vikunja 0.17.0!
+It has been a while...
+
+This release contains a whopping 251 new changes in the frontend and 164 in the api.
+
+## Getting the new version
+
+As usual, just grab a new release from the [downloads page](https://dl.vikunja.io) or pull the latest docker container.
+
+## Highlights
+
+### Frontend
+
+The frontend was tweaked quite a lot for more consistency across all pages and a better "overall" look and feel to it.
+This also meant reordering some of the settings menu and the way some things were organized.
+
+![The all new shiny frontend](/blog/images/0.17.0-frontend.png)
+
+### Notifications
+
+It is now possible to subscribe to a namespace, list or task.
+Once subscribed, you will receive emails about actions someone does on a task etc.
+These subscriptions bubble down so if you're subscribed to a namespace you will automatically receive notifications for all tasks on lists in that namespace.
+
+![Notifications overview](/blog/images/0.17.0-notifications.png)
+
+### Names and passwords for link shares
+
+Whenever you create a new link share you can now optionally set a name and a password for it.
+If a password is set users will be required to enter it, providing an additional layer of security for shares.
+If the link share has a name set, all actions done by that link share (like creating comments or new tasks) will show up with that name attached to it.
+This is very useful for use cases where you want to give other people access to lists and let them comment but don't want to create an account for them.
+
+Both can be used independently from each other.
+
+## Other notable changes
+
+* **Email Reminders**: For tasks with reminders you can now choose to get reminders per mail.
+* **Repeat monthly**: Tasks now have an option to repeat each month. This enables things like "Repeat each 1st of the month".
+* **Pagination Kanban**: The kanban board now does not load all tasks at once but only 20 at once. Endless scrolling ensures you get to see all of your tasks
+* **Filters for Kanban**: Related to the pagination - you can now apply all the usual filters to the tasks on a kanban board.
+* **Removing list backgrounds**: You can now remove a previously set list background. It does not matter if it was set through unsplash or uploaded.
+
+## Full change lists
+
+As usual, you can find the full changelists in the respective [frontend](https://kolaente.dev/vikunja/frontend/releases/tag/v0.17.0) and [api](https://kolaente.dev/vikunja/api/releases/tag/v0.17.0) repos.
+
+And that's all folks!
+Be sure to check out [the community forum](https://community.vikunja.io) and let me know what you think.

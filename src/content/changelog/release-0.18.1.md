@@ -1,0 +1,13 @@
+---
+title: "Vikunja 0.18.1 is released"
+date: 2021-09-08T19:50:26+02:00
+draft: false
+---
+
+This is a quick patch release fixing bugs with the user data export, the kanban board and saving repeating tasks attributes.
+There are releases for the api, frontend and desktop parts of Vikunja.
+
+As usual, you can find the full changelogs in the respective [frontend](https://kolaente.dev/vikunja/frontend/releases/tag/v0.18.1) and [api](https://kolaente.dev/vikunja/api/releases/tag/v0.18.1) repos.
+
+To get the upgrade, simply replace the binary or frontend files or pull the latest docker images.
+You can also check out the docs [for the api](https://vikunja.io/docs/install-backend/#updating) or [frontend](https://vikunja.io/docs/install-frontend/#updating) updating process.

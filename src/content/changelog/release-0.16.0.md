@@ -1,0 +1,59 @@
+---
+title: "Vikunja 0.16.0 is released"
+date: 2021-01-10T12:00:00+00:00
+---
+
+**Update**: There has been [a security patch release]({{< ref "./release-0.16.1.md">}}). Upgrading is highly encouraged.
+
+New year, new Vikunja version (I know I know, I'm two weeks late).
+
+This release is not so feature-heavy as previous ones but it contains some smaller improvements and quite a lot of bugfixes.
+
+## Getting the upgrade
+
+As usual, just grab a new release from the [downloads page ](https://dl.vikunja.io) or pull the latest docker container.
+
+## Contributions
+
+Thanks to [profi248](https://kolaente.dev/profi248), [branchmispredictor](https://kolaente.dev/branchmispredictor), [azymondrian](https://kolaente.dev/azymondrian) and [freaktechnik](https://kolaente.dev/freaktechnik) for contributions!
+
+## Highlights
+
+### Desktop
+
+Vikunja is now available as a standalone desktop app! I've repackaged the frontend in an electron shell so you can run it on a multitude of OSes without the need to host the frontend.
+
+[Check it out](https://dl.vikunja.io/desktop)
+
+### More filter options
+
+![More filter options](/blog/images/0.16.0-more-filters.png)
+
+Building on the filters from the last release, this release features new task filters for assignees, labels, lists and namespaces (in saved filters) and reminders. You can use all of them in saved filters and the usual task views.
+
+You can now also apply all these filters in the kanban view.
+
+### Migration options for Microsoft To-Do and Trello
+
+![Migration options](/blog/images/0.16.0-migration-microsoft-to-do-trello.png)
+
+This release adds new migration options for Microsoft To-Do and Trello.
+Import your tasks and cards from these  services with the easy one-click import method.
+
+Since [todoist now also has a kanban board](https://todoist.com/kanban-board), I figured it would make a great addition to the importer - now you can import your tasks with all boards from todoist.
+
+### Task Reminders per email
+
+If you add a reminder to a task, Vikunja can now send you an email when its due to, well, remind you of it.
+
+### License change
+
+The api and frontend code is now licensed under the `GNU Affero General Public License`. This is only a light change from the `GNU General Public License` from before.
+
+## Other notable changes
+
+**OpenId Connect**: Vikunja now supports authenticating via a third party openid auth provider.
+
+## Full change lists
+
+As usual, you can find the full changelists in the respective [frontend](https://kolaente.dev/vikunja/frontend/releases/tag/v0.16.0) and [api](https://kolaente.dev/vikunja/api/releases/tag/v0.16.0) repos.

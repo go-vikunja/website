@@ -1,0 +1,47 @@
+---
+title: "Vikunja frontend and API v0.22.1 was released"
+date: 2024-01-28T19:53:14+01:00
+draft: false
+---
+
+<div class="bg-primary p-4 text-white rounded">
+If Vikunja is useful to you, please consider <a href="https://www.buymeacoffee.com/kolaente" target="_blank" class="!text-white !underline">buying me a coffee</a>, 
+<a href="https://github.com/sponsors/kolaente" target="_blank" class="!text-white !underline">sponsoring me on github</a> or <a href="https://vikunja.cloud/stickers" class="!text-white !underline">buying a sticker pack</a>.<br/>
+I'm also offering <a href="https://vikunja.cloud/?utm_source=vikunja.io&utm_medium=blog&utm_campaign=release_0.18.0" class="!text-white !underline">a hosted version of Vikunja</a> if you want a hassle-free solution for yourself or your team.
+</div>
+
+<div class="bg-amber-400 p-4 rounded mt-4">
+There has been a <a href="{{< ref "./release-0.22.0.md">}}" class="!underline">new release</a> with additional fixes and improvements.
+Updating is highly encouraged.
+</div>
+
+This is a patch release with many small bug fixes and improvements.
+We have brought some new features onboard, fixed some existing issues, and have made various improvements in performance as well as dependencies.
+Let's take a look at all the updates we made.
+
+## Features
+
+* The datepicker now uses the user locale to display weekdays ([#3878](https://kolaente.dev/vikunja/frontend/pulls/3878)). Thanks to [PeterX](https://kolaente.dev/PterX) for contributing this feature!
+* Task reminders, are now shown with other notifications in the notifications bar.
+
+## Fixes & Improvements
+
+Among a bunch of smaller fixes, these are the most significant ones:
+
+* Revised user permissions, adjusting visibility and editing options for assignees and task details.
+* Implemented necessary validation and adjustments in the filter title field after loading it for editing.
+* Fixed focusing, image rendering, and propagation of changes in the editor.
+* In kanban, text and icon colors now exclusively rely on the card background color, disregarding the color scheme.
+* Notifications now left-align text and accurately display read indicators.
+* Multiple changes to the task detail view, including playing the pop sound on some browsers, and triggering related tasks. Also styling adjustments with regards to spacing.
+* Explicitly subscribe assignees when they are assigned, eliminating double notifications.
+* When using openid authentication, the redirect url is now derived from the current frontend url. This fixes issues when trying to authenticate with the desktop app.
+* Webhooks now include full task details. This sometimes prevented some webhooks from being sent at all.
+* Multiple third-party dependencies were updated.
+
+As usual, you can find the full changelogs in the [frontend](https://kolaente.dev/vikunja/frontend/src/branch/main/CHANGELOG.md#0-22-1-2024-01-28) and [api](https://kolaente.dev/vikunja/api/src/branch/main/CHANGELOG.md#0-22-1-2024-01-28) repos.
+
+To get the upgrade, simply replace the frontend files or api binary or pull the latest docker image.
+You can also check out the update docs for the [frontend](https://vikunja.io/docs/install-frontend/#updating) or [api](https://vikunja.io/docs/install-backend/#updating) updating process.
+
+

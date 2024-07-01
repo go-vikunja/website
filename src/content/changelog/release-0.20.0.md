@@ -1,0 +1,98 @@
+---
+title: "What's new in Vikunja 0.20.0"
+date: 2022-10-28T12:28:44+02:00
+draft: false
+---
+
+<div class="bg-primary p-4 text-white rounded">
+If Vikunja is useful to you, please consider <a href="https://www.buymeacoffee.com/kolaente" target="_blank" class="!text-white !underline">buying me a coffee</a>, 
+<a href="https://github.com/sponsors/kolaente" target="_blank" class="!text-white !underline">sponsoring me on github</a> or <a href="https://vikunja.cloud/stickers" class="!text-white !underline">buying a sticker pack</a>.<br/>
+I'm also offering <a href="https://vikunja.cloud/?utm_source=vikunja.io&utm_medium=blog&utm_campaign=release_0.18.0" class="!text-white !underline">a hosted version of Vikunja</a> if you want a hassle-free solution for yourself or your team.
+</div>
+
+<div class="bg-amber-400 p-4 rounded mt-4">
+There has been a <a href="{{< ref "./release-0.20.1.md">}}" class="!underline">patch release</a> with additional fixes.
+Updating is highly encouraged.
+</div>
+
+I'm proud to announce Vikunja 0.20.0!
+
+This release contains 558 changes in the frontend and 96 in the api.
+A lot of the frontend changes were refactoring and continuing the move to vue 3.
+
+## Getting the new version
+
+As usual, just grab a new release from the [downloads page](https://dl.vikunja.io) or pull the latest docker container.
+
+## New to Vikunja?
+
+Vikunja is the open-source, self-hostable to-do app.
+It lets you organize all kinds of things, from your shopping list to a multi-month project with multiple team members.
+Different ways to view, filter and share your tasks make this a breeze.
+
+Check out [the features page](https://vikunja.io/features) to learn more about all of its features.
+
+## Highlights
+
+### Gantt chart
+
+The gantt chart got a major overhaul.
+It looks almost exactly like the old one but should work a lot more reliably.
+Most of the issues people reported over and over again are solved now.
+Expect more refactoring and improvements to the gantt chart in the future!
+
+![The overhauled gantt chart](/blog/images/0.20.0-gantt.png)
+
+### Link shares can do more now
+
+It is now possible to set a default view when opening the share and hiding the logo with the `logoVisible` query parameter.
+To set the default view you can select one in the share dialog when creating a link share for a list.
+To hide the logo, simply append the query parameter to the final link, like so: `?logoVisible=false`.
+
+This feature was sponsored by Relm.
+
+### Subtasks on indention
+
+When creating multiple tasks at once through the multiline input in the list view you can now use indention to indicate subtasks.
+For example, inputting a text like this:
+
+```
+task
+  subtask
+  second subtask
+  third subtask
+    sub sub task
+```
+
+will create 5 new tasks, with "subtask", "second subtask" and "third subtask" being subtasks of "task" and "sub sub task" being a subtask of "third subtask".
+
+This works in combination with quick add magic on every task.
+
+### Task cover images
+
+You can now promote an attachment to task cover image!
+Cover images will show up on the kanban board and make it easy to recognize a particular task.
+
+![Cover images for tasks](/blog/images/0.20.0-cover-image.png)
+
+This feature was sponsored by Relm.
+
+### TickTick import
+
+You can now import task data from a csv TickTick export.
+The option is available without any configuration on the migration page.
+
+### Default settings for new users
+
+It is now possible to change the default setting for new users via the config file.
+This is especially useful when using Vikunja with an external openid auth provider.
+
+[Check out the docs about this feature](https://vikunja.io/docs/config-options/#defaultsettings).
+
+## Closing thoughts
+
+This release is smaller than the last one and does not have a lot of new, big features but more general improvements to the codebase.
+I hope to improve the rate of new releases a little so that there will be smaller releases more often.
+
+Please tell me what you think of this release, either [in the community forum](https://community.vikunja.io), [Twitter](https://twitter.com/vikunja.io) or [email](mailto:hello@vikunja.io).
+

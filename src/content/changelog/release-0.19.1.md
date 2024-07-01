@@ -1,0 +1,30 @@
+---
+title: "Vikunja 0.19.1 is released"
+date: 2022-08-17T10:23:07+02:00
+draft: false
+---
+
+<div class="bg-amber-400 p-4 rounded mt-4">
+<strong>This release introuced a critical bug which will break your saved filters!</strong>
+<br/>
+Please upgrade the api directly to <a href="{{< ref "./release-0.19.2.md">}}" class="!underline">0.19.2</a>.
+</div>
+
+This is a patch release with fixes in the frontend and api.
+
+Code blocks and button styles in dark mode now work better and moving a list into another namespace if it was moved to the first position was fixed.
+Searching for assignees by username now works as expected.
+It also provides docker images for arm 32 (raspbery pi) and fixes a problem generating blur hashes for list backgrounds in certain formats.
+
+This release also contains **one breaking change**:
+When filtering tasks for assignees the api now requires the username instead of the user id.
+This was nessecary to be able show the users with their name when re-opening a saved filter.
+
+All saved filters with assignees are automatically migrated.
+As a user, you shouldn't notice anything.
+
+As usual, you can find the full changelogs in the respective [frontend](https://kolaente.dev/vikunja/frontend/releases/tag/v0.19.1) and [api](https://kolaente.dev/vikunja/api/releases/tag/v0.19.1) repos.
+
+To get the upgrade, simply replace the frontend files and replace the api binary or pull the latest docker image.
+You can also check out the update docs for the [frontend](https://vikunja.io/docs/install-frontend/#updating) updating process.
+

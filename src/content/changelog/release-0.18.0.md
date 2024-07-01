@@ -1,0 +1,101 @@
+---
+title: "What's new in Vikunja 0.18.0"
+date: 2021-09-05T16:37:58+02:00
+draft: false
+---
+
+<div class="bg-primary p-4 text-white rounded">
+If Vikunja is useful to you, please consider <a href="https://www.buymeacoffee.com/kolaente" target="_blank" class="!text-white !underline">buying me a coffe</a>, 
+<a href="https://github.com/sponsors/kolaente" target="_blank" class="!text-white !underline">sponsoring me on github</a> or <a href="https://vikunja.cloud/stickers" class="!text-white !underline">buying a sticker pack</a>.<br/>
+I'm also offering <a href="https://vikunja.cloud/?utm_source=vikunja.io&utm_medium=blog&utm_campaign=release_0.18.0" class="!text-white !underline">a hosted version of Vikunja</a> if you want a hassle-free solution for yourself or your team.
+</div>
+
+I'm proud to announce Vikunja 0.18.0!
+
+This release contains a whopping 303 new changes in the frontend and 146 in the api.
+
+## Getting the new version
+
+As usual, just grab a new release from the [downloads page](https://dl.vikunja.io) or pull the latest docker container.
+
+## Feedback survey
+
+I've prepared a short survey to allow me better understand the needs of you, the users.
+Please fill it out [here](https://vikunja.io/survey) to help me prioritize the next steps of Vikunja's development.
+
+<a href="https://vikunja.io/survey">Take the survey</a>
+
+## Highlights
+
+### Quick Add Magic
+
+When creating a task, you can now directly add task attributes without having to edit the task again after creating it.
+You can set labels, a priority, assignees, a due date and the list where the task should be created.
+It even supports natural dates like "tomorrow" or "next monday" to set a due date!
+
+Check out the information in Vikunja about how exactly this works.
+
+### Quick Actions and global search
+
+Vikunja now supports something I call "Quick Actions".
+It is an input field which allows you to create new tasks, lists, namespaces or search them.
+You can open it with the new search icon in the top left corner or with the `ctrl-k` keyboard shortcut.
+
+It also supports Quick Add Magic to set task attributes.
+
+![The new improved home page](/blog/images/0.18.0-quick-add.png)
+
+### Creating tasks directly from the home page
+
+You can now create a new task directly from the home page without being on a list!
+To specify the list where the task will be created, you'll need to set a default list in the settings or use 
+Quick Add Magic (see below).
+
+![The new improved home page](/blog/images/0.18.0-overview.png)
+
+### More languages
+
+The interface is now available in more languages than just english.
+Right now, the other supported languages are German, French, Russian and Schwitzertütsch (don't ask about the last one).
+
+[Check out the docs](https://vikunja.io/docs/translations/) to learn how to help with the translation and add your language.
+
+### Reordering Tasks, Lists and Kanban Buckets
+
+You can now rearrange tasks in the list view, Lists in the menu (within a namespace) and Kanban Buckets in a list.
+
+### User Data Export and Import
+
+In the user settings, Vikunja now lets you export all of your Vikunja data as a zip archive. This includes everything 
+you have access to, including shared lists.
+
+Via a new migration, you can then import a previously made export again. This makes it perfect for migrating between 
+Vikunja instances, for example from [a hosted offering](https://vikunja.cloud) to self-hosted and vice-versa.
+
+### Security improvements
+
+Vikunja now does a few more things to help with account security:
+
+* After three failed login attempts, Vikunja will email you to notify that someone may try to break into your account.
+* When someone entered the correct credentials for your account but failed to provide a valid TOTP code, Vikunja will notify you.
+* After 10 failed login attempts, Vikunja will automatically reset your password and email you about it.
+
+### Versioning of the `:latest` docker images
+
+Starting with this release, the `latest` tag of all docker images contains the last released version instead of the 
+last build from the `main` branch. Additionally, there is now a new `unstable` tag which contains that version.
+
+## Other notable changes
+
+* **Unix Socket:** The Vikunja API is now able to listen to a unix socket instead of binding to an IP address. Thanks to [andreymal](https://kolaente.dev/vikunja/api/pulls/912) for implementing this!
+* **Task Mentions:** Whenever you mention someone with their username in a task or comment, they will get an email about it.
+* **Account Deletion:** You can now delete your account. This will remove all namespaces, lists, tasks and everything else associated with it. Use with caution!
+
+## Full change lists
+
+As usual, you can find the full changelogs in the respective [frontend](https://kolaente.dev/vikunja/frontend/releases/tag/v0.18.0) and [api](https://kolaente.dev/vikunja/api/releases/tag/v0.18.0) repos.
+
+And that's all folks!
+Be sure to check out [the community forum](https://community.vikunja.io) and let me know what you think.
+
+Oh and [buy a sticker pack](https://vikunja.cloud/stickers) to support the project!

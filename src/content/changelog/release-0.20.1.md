@@ -1,0 +1,27 @@
+---
+title: "Vikunja 0.20.1 was released"
+date: 2022-11-11T12:05:34+01:00
+draft: false
+---
+
+<div class="bg-amber-400 p-4 rounded mt-4">
+There has been a <a href="{{< ref "./release-0.20.2.md">}}" class="!underline">patch release for the frontend</a> with additional fixes.
+Updating is highly encouraged.
+</div>
+
+This is a patch release with important fixes and refactorings in the frontend and api.
+
+Noteworthy changes:
+
+* The last release broke connecting to postgres databases via a UNIX socket. This is now fixed.
+* Filtering for date fields now supports dates in other formats than ISO dates. This fixes compatibility with Safari Browsers.
+* If a label, assignee or list looked like a date expression the Quick Add Magic feature previously parsed it as a date.
+* When opening a task from the gantt chart an error about "too much recursion" was shown while making the task popup unusable. This is now fixed.
+* Sorting tasks alphabetically now works as intended.
+* More components and intenals habe been migrated to the new VueJS script setup syntax.
+
+As usual, you can find the full changelogs in the respective [frontend](https://kolaente.dev/vikunja/frontend/releases/tag/v0.20.1) and [api](https://kolaente.dev/vikunja/api/releases/tag/v0.20.1) repos.
+
+To get the upgrade, simply replace the frontend files and replace the api binary or pull the latest docker image.
+You can also check out the update docs for the [frontend](https://vikunja.io/docs/install-frontend/#updating) updating process.
+

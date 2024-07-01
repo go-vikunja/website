@@ -1,0 +1,28 @@
+---
+title: "Vikunja Frontend 0.20.2 was released"
+date: 2022-12-18T12:11:35+01:00
+draft: false
+---
+
+<div class="bg-amber-400 p-4 rounded mt-4">
+There has been a <a href="{{< ref "./release-0.20.3.md">}}" class="!underline">patch release for the frontend and api</a> with additional fixes.
+Updating is highly encouraged.
+</div>
+
+This is a patch release with important fixes and improvements in the frontend.
+
+Noteworthy changes:
+
+* The error causing the message "Error: Assignment to constant variable" when editing tasks is now fixed
+* When the same new label is used in multiple tasks created via quick add magic it is now created only once
+* A list specified via quick add magic is now passed down to all subtasks created via indention
+* A task is now correctly removed from its bucket when it is in the first kanban bucket
+* Fullscreen side-by-side editing is now disabled as there was no way of getting out of this editing mode
+* Only automatically redirect to provider if the url contains ?redirectToProvider=true and it's the only one
+* Variable fonts with subsetting are now used
+
+As usual, you can find the full changelogs in the [frontend repo](https://kolaente.dev/vikunja/frontend/src/branch/main/CHANGELOG.md#0-20-2-2022-12-18).
+
+To get the upgrade, simply replace the frontend files or pull the latest docker image.
+You can also check out the update docs for the [frontend](https://vikunja.io/docs/install-frontend/#updating) updating process.
+
