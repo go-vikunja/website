@@ -88,7 +88,7 @@ const sidebarEntries = await getSidebarNavigation()
         <aside class="w-full lg:w-1/5 hidden lg:block order-1 px-2 text-gray-600 dark:text-gray-300" id="docsMenu">
             <nav class="sticky top-0 max-h-screen overflow-y-auto overflow-x-hidden pb-4">
 				{sidebarEntries.map(([key, entries]) => (
-                        <p class="pb-2 pt-4 font-title text-sm uppercase text-gray-500 dark:text-gray-400">
+                        <p class="pb-2 pt-4 pl-2 font-display uppercase font-bold text-gray-500 dark:text-gray-400">
 							{key}
                         </p>
                         <ul>
