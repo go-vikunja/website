@@ -8,6 +8,7 @@ import '@fontsource/quicksand/700.css';
 
 import Footer from '../components/Footer.astro'
 import Header from '../components/Header.astro'
+import {Astro} from 'astro/env'
 interface Props {
 	title: string;
 	type?: 'text' | 'website';
@@ -22,6 +23,10 @@ const pageTitle = (title ? `${title} | ` : '') + 'Vikunja'
 const imageUrl = image
 	? image
 	: new URL('/images/vikunja.jpg', Astro.url)
+
+const canonical = Astro.url.toString().endsWith('/')
+    ? Astro.url.toString().substring(0, Astro.url.toString().length - 1)
+    : Astro.url.toString()
 ---
 
 <!doctype html>
@@ -50,10 +55,10 @@ const imageUrl = image
 	}
 
     <!-- Links -->
-    <link rel="canonical" href={Astro.url.toString()} itemprop="url"/>
-    <meta name="url" content={Astro.url.toString()}/>
-    <meta name="twitter:url" content={Astro.url.toString()}/>
-    <meta property="og:url" content={Astro.url.toString()}/>
+    <link rel="canonical" href={canonical} itemprop="url"/>
+    <meta name="url" content={canonical}/>
+    <meta name="twitter:url" content={canonical}/>
+    <meta property="og:url" content={canonical}/>
 
     <!-- Images -->
     <meta itemprop="image" content={imageUrl}/>
