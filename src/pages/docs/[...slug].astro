@@ -1,15 +1,15 @@
 ---
 import {type CollectionEntry, getCollection} from 'astro:content'
-import Docs from '../layouts/Docs.astro'
+import Docs from '../../layouts/Docs.astro'
 
 export async function getStaticPaths() {
-	const docs = await getCollection('docs')
-	return docs.map((entry) => ({
-		params: {
-			slug: `/docs/${entry.slug}`,
-		},
-		props: entry,
-	}))
+    const docs = await getCollection('docs')
+    return docs.map((entry) => ({
+        params: {
+            slug: entry.slug,
+        },
+        props: entry,
+    }))
 }
 type Props = CollectionEntry<'docs'>
 

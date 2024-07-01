@@ -8,6 +8,15 @@ const docsCollection = defineCollection({
 	}),
 })
 
+const changelogCollection = defineCollection({
+	type: 'content',
+	schema: z.object({
+		title: z.string(),
+		date: z.date().optional(),
+	}),
+})
+
 export const collections = {
 	'docs': docsCollection,
+	'changelog': changelogCollection,
 }
