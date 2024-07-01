@@ -5,12 +5,12 @@ interface Props {
 
 const {heading} = Astro.props
 ---
-<div class="mt-32 mb-20">
-    <h2 class="font-display text-3xl flex items-center justify-center">
+<div class="mt-32 mb-20 mx-auto max-w-screen-md">
+    <h2 class="font-display text-3xl flex items-center justify-center text-balance">
 		<slot name="header-icon"/>
 		{heading}
     </h2>
-    <p class="pt-4">
+    <p class="pt-4 px-4 text-balance">
 		<slot/>
     </p>
 </div>

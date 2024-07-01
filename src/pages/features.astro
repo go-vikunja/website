@@ -18,7 +18,7 @@ import Plans from '../components/partials/Plans.astro'
 
 <Layout title="Features">
     <main class="max-w-screen-xl mx-auto px-4 md:px-0 text-center">
-        <div class="pt-32 pb-8">
+        <div class="pt-32 pb-8 px-4">
             <h1 class="text-3xl font-display">
                 Think of Vikunja like the notebook you have with all your things to keep track of.
             </h1>
@@ -27,8 +27,8 @@ import Plans from '../components/partials/Plans.astro'
             </h3>
         </div>
 
-        <div class="md:flex text-left mt-16">
-            <div class="md:w-1/3 md:mr-4 mt-4">
+        <div class="flex flex-col md:flex-row text-left mt-16 gap-4 mx-4">
+            <div class="md:w-1/3">
                 <h2 class="text-2xl font-display flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
                          viewBox="0 0 24 24" stroke="currentColor">
@@ -42,7 +42,7 @@ import Plans from '../components/partials/Plans.astro'
                     related stuff grouped together.
                 </p>
             </div>
-            <div class="md:w-1/3 md:mr-4 mt-4">
+            <div class="md:w-1/3">
                 <h2 class="text-2xl font-display flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
                          viewBox="0 0 24 24" stroke="currentColor">
@@ -56,7 +56,7 @@ import Plans from '../components/partials/Plans.astro'
                     Assignments show who's working on what.
                 </p>
             </div>
-            <div class="md:w-1/3 mt-4">
+            <div class="md:w-1/3">
                 <h2 class="text-2xl font-display flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
                          viewBox="0 0 24 24" stroke="currentColor">
@@ -77,11 +77,8 @@ import Plans from '../components/partials/Plans.astro'
             Vikunja is openly licensed under the
             <a href="http://code.vikunja.io/api/src/branch/main/LICENSE" class="underline" target="_blank"
                rel="noopener">AGPLv3</a>.
-            <br/>
             You can contribute in multiple ways, even if you're not a developer!
-            <br/>
             It already helps a lot when you use Vikunja and report features you'd like or bugs you find.
-            <br/>
             And if you are a developer and know your way around Go or Vue.js, any help is appreciated.
         </FeatureCenter>
 
@@ -102,7 +99,7 @@ import Plans from '../components/partials/Plans.astro'
             </svg>
             We built Vikunja with speed in mind - every interaction takes less than 100ms.
             No more loading spinners.<br/>
-            ecause a productive tool should not get in your way.
+            Because a productive tool should not get in your way.
         </FeatureCenter>
 
         <FeatureImageSide orientation="left" image={VikunjaFeatureTask}>
@@ -141,11 +138,11 @@ import Plans from '../components/partials/Plans.astro'
             Or use one of the special keywords to automatically add labels, assignees and more.
         </FeatureCenter>
 
-        <h2 class="font-display text-3xl text-left mt-32 mb-8">
+        <h2 class="font-display text-3xl text-left mt-32 mb-8 px-4">
             View your tasks in whatever way you like
         </h2>
 
-        <p class="text-left mb-8">
+        <p class="text-left mb-8 px-4">
             Vikunja allows you to view tasks in four different views - use whatever works best for you.
         </p>
 
@@ -222,11 +219,11 @@ import Plans from '../components/partials/Plans.astro'
             Because work does not happen in one tool only.
         </FeatureCenter>
 
-        <div class="md:flex text-left mt-32 mb-4">
+        <div class="md:flex text-left mt-32 mb-4 gap-8">
             <div class="w-full md:w-1/3">
-                <h2 class="font-display text-2xl mt-8">Other Features</h2>
+                <h2 class="font-display text-2xl mt-8 pl-8 text-right">Other Features</h2>
             </div>
-            <div class="w-full md:w-1/4 md:mr-8">
+            <div class="w-full md:w-1/4">
                 <FeatureSmall title="Labels" icon="label">
                     Effortlessly mark tasks with a colorful label to find and group relevant tasks
                     with a click!

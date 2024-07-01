@@ -20,7 +20,7 @@ const orientation = origOrientation ?? 'right'
                     alt=""
                 />
             </div> : ''}
-    <div class="w-full md:w-1/2">
+    <div class={'w-full md:w-1/2 ' + (orientation === 'left' ? 'pr-4' : 'pl-4')}>
         <slot/>
     </div>
 	{orientation === 'right' ?
