@@ -3,6 +3,8 @@ import {TURNSTILE_SECRET} from 'astro:env/server'
 
 const LIST_ID = 'f0bc9ec2-56a4-48c8-baad-7a31b137484e'
 
+export const prerender = false
+
 export async function POST({request}: APIContext) {
 	const body = await request.formData()
 
