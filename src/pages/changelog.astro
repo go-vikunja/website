@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro'
+import {getCollection} from 'astro:content'
+import {generateSnippet} from '../helpers/snippet'
+
+
+async function getChangelogEntries() {
+	const changelogs = await getCollection('changelog')
+	return changelogs
+		.sort((a, b) => a.data.date > b.data.date ? -1 : 1)
+		.map(c => ({
+			title: c.data.title,
+			slug: '/changelog' + c.slug,
+			date: c.data.date,
+			snippet: generateSnippet(c.body),
+		}))
+}
+
+const entries = await getChangelogEntries()
+---
+
+<Layout title="Changelog">
+    <div class="max-w-screen-md mx-auto mt-10">
+        <h1 class="text-4xl font-display font-bold mb-6">Changelog</h1>
+        <p class="mb-8">Looking for the latest news about Vikunja's product development? You've come to the right place!</p>
+		{entries.map(e => (
+                <section class="mb-8">
+                    <a class="font-display text-2xl font-bold" href={e.slug}>{e.title}</a>
+                    <p class="text-gray-400 dark:text-gray-500">{e.date}</p>
+                    <p class="pt-4 text-gray-600 dark:text-gray-400">{e.snippet}</p>
+                    <a
+                            href={e.slug}
+                            class="mt-4 inline-flex items-center rounded-md border border-gray-300 dark:border-gray-800 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 px-2 py-2 text-sm font-medium text-gray-500 dark:text-gray-300 transition"
+                    >
+                        <span class="mr-1">Read more</span>
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                        >
+                            <path
+                                    fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd"
+                            />
+                        </svg>
+                    </a>
+                </section>))}
+    </div>
+</Layout>
+
