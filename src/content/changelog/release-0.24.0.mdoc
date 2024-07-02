@@ -1,0 +1,82 @@
+---
+title: "What's new in Vikunja 0.24.0"
+date: 2024-07-02T18:00:00+02:00
+slug: /whats-new-in-vikunja-0.24.0
+---
+
+Long time no see!
+
+This release features a whopping 925 commits in almost 5 months. We have many new features and improvements, let's dive
+right in!
+
+## New Views Functionality
+
+Vikunja let you view your tasks in list, gantt, table and kanban views for a while now.
+With this release, views became way more flexible!
+
+The new views system allows you to customize how you see your tasks in each project. You can now create multiple views
+per project, each with its own layout (like list, table, gantt or kanban) and filters. This means you can 
+have different perspectives on the same set of tasks, tailored to different workflows or team members' needs.
+
+And you can now have a kanban board on a saved filter, independent of the other configuration.
+
+![](../../assets/images/changelog/0.24.0-views.png)
+
+## Improved Filters
+
+The filter system got a major upgrade with a new query-based approach. You can now create more complex and precise
+filters using a simple query language.
+Thanks to autocomplete, you can easily construct these queries, suggesting project names, labels, and usernames as you type.
+
+![](../../assets/images/changelog/0.24.0-filters.png)
+
+[Check out the docs](/docs/filters) to learn all about this new syntax.
+
+## Emoji Reactions
+
+You can now react to tasks and comments with emojis, similar to many modern communication platforms. This provides a
+quick and fun way to acknowledge or respond to information without needing to write a full comment. 
+
+![A fire emoji reaction to a comment](../../assets/images/changelog/0.24.0-reactions.png)
+
+## Automatically create teams from openid claims
+
+The OpenID integration now supports assigning users to teams based on claims provided by the identity provider. This
+means you can automatically place users into the correct teams based on their roles or attributes in your
+organization's identity system, saving time on manual user management.
+
+Thanks to [viehlieb](https://kolaente.dev/viehlieb) and [waza-ari](https://kolaente.dev/waza-ari) for building and improving this feature!
+
+## New UI languages
+
+The Vikunja web UI is now available in Portuguese Brazilian, Croatian and Ukrainian languages.
+Thanks to [lelemm](https://crowdin.com/profile/lelemm), [Blooshie](https://crowdin.com/profile/Blooshie) and [it.n](https://crowdin.com/profile/it.n) for starting the effort.
+
+Want to add your language as well? [Check out the translation docs](/docs/translations) to learn more!
+
+## Breaking changes
+
+Due to the way the views were changed, we had to do a few breaking changes:
+
+* Kanban buckets now belong to a project view instead of directly to a project.
+* New endpoint to change a task's position in a view. The position now depends on the context (the view) of the task. As a result, the `position` and `kanban_position` task attributes are no longer available.
+* New endpoint to move a task between buckets. Passing a `bucket_id` when updating the task will not have an effect anymore, you'll need to use the new dedicated endpoint for that.
+* The docker image now uses the `scratch` image as base image, which greatly reduces the attack surface of third-party libraries in the container. It also means there is no shell in the container, keep that in mind when debugging.
+
+## Fixes & Improvements
+
+* Lots of bug fixes across filters, views, tasks, and more
+* All usable api routes behind authentication can now be used with an api token.
+* Performance improvements for fetching projects and subscriptions
+* The migration from Todoist and Trello was improved quite a bit
+* Better error handling and logging
+* Tons of small tweaks to make things work smoother
+
+## New website
+
+You may have noticed it by now, but the website you're on right now got an overhaul as well.
+We've slightly updated the design, brought the features page back and improved the structure.
+
+## Closing
+
+If you have any questions about this release, please reach out either [in the community forum](https://community.vikunja.io), [Twitter / X](https://twitter.com/vikunja.io), [Mastodon](https://social.linux.pizza/@vikunja) or [via email](mailto:hello@vikunja.io).
