@@ -2,11 +2,7 @@
 import Layout from '../layouts/Layout.astro'
 import {getCollection} from 'astro:content'
 import {generateSnippet} from '../helpers/snippet'
-
-function formatDate(date: Date): string {
-    const month = ('0' + (date.getMonth() + 1)).slice(-2)
-    return date.getFullYear() + '-' + month + '-' + date.getDate()
-}
+import {formatDate} from '../helpers/formatDate'
 
 async function getChangelogEntries() {
 	const changelogs = await getCollection('changelog')
@@ -24,7 +20,7 @@ const entries = await getChangelogEntries()
 ---
 
 <Layout title="Changelog">
-    <div class="max-w-screen-md mx-auto mt-10">
+    <div class="max-w-screen-md mx-auto mt-6">
         <h1 class="text-4xl font-display font-bold mb-6">Changelog</h1>
         <p class="mb-8">Looking for the latest news about Vikunja's product development? You've come to the right place!</p>
 		{entries.map(e => (

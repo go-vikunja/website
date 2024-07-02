@@ -1,21 +1,72 @@
 ---
 import {type CollectionEntry, getCollection} from 'astro:content'
 import Layout from '../../layouts/Layout.astro'
+import Prose from '../../components/Prose.astro'
+import {formatDate} from '../../helpers/formatDate'
+import Callout from '../../components/Callout.astro'
 
 export async function getStaticPaths() {
-    const changelog = await getCollection('changelog')
-    return changelog.map((entry) => ({
-        params: {
-            slug: entry.slug,
-        },
-        props: entry,
-    }))
+	const changelog = await getCollection('changelog')
+	return changelog.map((entry) => ({
+		params: {
+			slug: entry.slug,
+		},
+		props: entry,
+	}))
 }
-type Props = CollectionEntry<'docs'>
+type Props = CollectionEntry<'changelog'>
 
 const post = Astro.props
+
+async function getNewestEntry() {
+	const changelog = await getCollection('changelog')
+
+	return changelog.reduce((newest, current) => {
+		return new Date(current.data.date) > new Date(newest.data.date) ? current : newest
+	})
+}
+
+const newestRelease = await getNewestEntry()
+
 const {Content, headings} = await post.render()
 ---
 <Layout headings={headings} {...post.data}>
-    <Content/>
+    <div class="flex max-w-screen-lg mx-auto mt-6">
+        <div class="w-full lg:w-1/5">
+            <a href="/changelog" class="underline hover:text-primary flex items-center text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="size-4 mr-1">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+                </svg>
+                <span>
+                    Back to all
+                </span>
+            </a>
+        </div>
+        <main class="w-full lg:w-4/5 p-4 pt-6 lg:pt-2 order-3 lg:order-2" id="main-content">
+            <h1 class="font-display text-4xl font-bold">{post.data.title}</h1>
+            <p class="text-gray-500">{formatDate(post.data.date)}</p>
+
+			{newestRelease.id !== post.id &&
+                    <Callout type="warning" class="mt-6">
+                        There has been a <a href={'/changelog'+newestRelease.slug} class="!underline">new release</a> with additional fixes and
+                        improvements.
+                        Updating is highly encouraged.
+                    </Callout>
+			}
+
+            <Callout type="info" class="mt-6">
+                If Vikunja is useful to you, please consider
+                <a href="https://www.buymeacoffee.com/kolaente" target="_blank" class="!text-white !underline">buying me a coffee</a>,
+                <a href="https://github.com/sponsors/kolaente" target="_blank" class="!text-white !underline">sponsoring me on GitHub</a>
+                or <a href="https://vikunja.cloud/stickers" class="!text-white !underline">buying a sticker pack</a>.
+                I'm also offering <a href="https://vikunja.cloud" class="!text-white !underline">a hosted version of
+                Vikunja</a> if you want a hassle-free solution for yourself or your team.
+            </Callout>
+
+            <Prose>
+                <Content/>
+            </Prose>
+        </main>
+    </div>
 </Layout>
