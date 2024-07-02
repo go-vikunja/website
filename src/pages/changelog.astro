@@ -3,6 +3,10 @@ import Layout from '../layouts/Layout.astro'
 import {getCollection} from 'astro:content'
 import {generateSnippet} from '../helpers/snippet'
 
+function formatDate(date: Date): string {
+    const month = ('0' + (date.getMonth() + 1)).slice(-2)
+    return date.getFullYear() + '-' + month + '-' + date.getDate()
+}
 
 async function getChangelogEntries() {
 	const changelogs = await getCollection('changelog')
@@ -26,7 +30,7 @@ const entries = await getChangelogEntries()
 		{entries.map(e => (
                 <section class="mb-8">
                     <a class="font-display text-2xl font-bold" href={e.slug}>{e.title}</a>
-                    <p class="text-gray-400 dark:text-gray-500">{e.date}</p>
+                    <p class="text-gray-400 dark:text-gray-500">{formatDate(e.date)}</p>
                     <p class="pt-4 text-gray-600 dark:text-gray-400">{e.snippet}</p>
                     <a
                             href={e.slug}
