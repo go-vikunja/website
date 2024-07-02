@@ -26,6 +26,7 @@ export async function POST({request}: APIContext) {
 	})
 
 	const outcome = await result.json()
+	console.log('turnstile result', {result, outcome})
 	if (!outcome.success) {
 		return new Response(JSON.stringify({message: 'The provided captcha was not valid!'}), {status: 400})
 	}
@@ -35,10 +36,12 @@ export async function POST({request}: APIContext) {
 	subscribeData.append('email', body.get('email'))
 	subscribeData.append('l', LIST_ID)
 
-	await fetch('https://newsletter.kolaente.de/subscription/form', {
+	const subscription = await fetch('https://newsletter.kolaente.de/subscription/form', {
 		body: subscribeData,
 		method: 'POST',
 	})
+	const sr = await subscription.text()
+	console.log({sr})
 
 	return new Response(JSON.stringify({
 			message: 'success',
