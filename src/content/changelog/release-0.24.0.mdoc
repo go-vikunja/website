@@ -62,6 +62,7 @@ Due to the way the views were changed, we had to do a few breaking changes:
 * New endpoint to change a task's position in a view. The position now depends on the context (the view) of the task. As a result, the `position` and `kanban_position` task attributes are no longer available.
 * New endpoint to move a task between buckets. Passing a `bucket_id` when updating the task will not have an effect anymore, you'll need to use the new dedicated endpoint for that.
 * The docker image now uses the `scratch` image as base image, which greatly reduces the attack surface of third-party libraries in the container. It also means there is no shell in the container, keep that in mind when debugging.
+* If you shared a project via a link share and specified a view with the link, you'll need to update the link to point to the view. 
 
 ## Fixes & Improvements
 
