@@ -62,14 +62,12 @@ import Button from '../Button.astro'
 	const successMessage = document.getElementById('newsletter-sign-up-success-message')
 
 	if (form && errorMessage && successMessage) {
-		function showError(error: string | {message: string}) {
-            const str = error?.message ?? error
-
+		function showError(error: string) {
             if (errorMessage) {
-                errorMessage.textContent = 'An error occurred: ' + str + ' Please try again.'
+                errorMessage.textContent = 'An error occurred: ' + error + ' Please try again.'
                 errorMessage.classList.remove('hidden')
             }
-			console.error('Error during newsletter sign up:', str)
+			console.error('Error during newsletter sign up:', error)
 		}
 
 		form.addEventListener('submit', function (e) {
