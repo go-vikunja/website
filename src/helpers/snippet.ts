@@ -3,7 +3,7 @@ function markdownToPlainText(markdown: string): string {
 	return markdown.replace(/<\/?[^>]+(>|$)/g, '')
 		// Remove markdown formatting characters
 		.replace(/!\[.*?\]\(.*?\)/g, '')   // Images
-		.replace(/\[.*?\]\(.*?\)/g, '')    // Links
+		.replace(/\[(.*?)\]\(.*?\)/g, '$1') // Links, keep the link text
 		.replace(/`{1,3}.*?`{1,3}/g, '')   // Inline and block code
 		.replace(/```.*?```/gs, '')        // Multiline code blocks
 		.replace(/\*\*?(.*?)\*\*?/g, '$1') // Bold and italic
