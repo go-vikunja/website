@@ -37,6 +37,7 @@ steps:
     image: plugins/docker
     pull: true
     depends_on:
+      - lint
       - build
     settings:
       username:
