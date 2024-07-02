@@ -26,7 +26,6 @@ export async function POST({request}: APIContext) {
 	})
 
 	const outcome = await result.json()
-	console.log('turnstile result', {result, outcome})
 	if (!outcome.success) {
 		return new Response(JSON.stringify({message: 'The provided captcha was not valid!'}), {status: 400})
 	}
@@ -41,7 +40,6 @@ export async function POST({request}: APIContext) {
 		method: 'POST',
 	})
 	const sr = await subscription.text()
-	console.log({sr})
 
 	return new Response(JSON.stringify({
 			message: 'success',
