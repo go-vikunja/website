@@ -9,7 +9,7 @@ const {href, class: className, type} = Astro.props
 ---
 {href
 	? <a href={href} class={className}><slot/></a>
-	: <button type="button" class={className} type={type || 'button'}><slot/></button>
+	: <button class={className} type={type || 'button'}><slot/></button>
 }
 
 <style>
