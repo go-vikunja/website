@@ -28,9 +28,9 @@ async function getNewestEntry() {
 
 const newestRelease = await getNewestEntry()
 
-const {Content, headings} = await post.render()
+const {Content} = await post.render()
 ---
-<Layout headings={headings} {...post.data}>
+<Layout title={post.data.title}>
     <div class="flex max-w-screen-lg mx-auto mt-6">
         <div class="w-full lg:w-1/5">
             <a href="/changelog" class="underline hover:text-primary flex items-center text-sm">
