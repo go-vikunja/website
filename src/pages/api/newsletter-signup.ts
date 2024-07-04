@@ -39,7 +39,7 @@ export async function POST({request}: APIContext) {
 		body: subscribeData,
 		method: 'POST',
 	})
-	const sr = await subscription.text()
+	await subscription.text()
 
 	return new Response(JSON.stringify({
 			message: 'success',
