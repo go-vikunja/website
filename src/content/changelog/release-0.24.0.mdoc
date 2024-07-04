@@ -54,6 +54,16 @@ Thanks to [lelemm](https://crowdin.com/profile/lelemm), [Blooshie](https://crowd
 
 Want to add your language as well? [Check out the translation docs](/docs/translations) to learn more!
 
+## Docker image now uses `scratch` as base
+
+The docker image now uses the `scratch` image as base image, which greatly reduces the attack surface of third-party libraries in the container. 
+It also means there is no shell in the container, keep that in mind when debugging.
+
+Due to the lack of a shell in the container, we no longer support changing the uid and gid Vikunja runs as via `PUID` and `PGID` environment variables.
+The container runs as the user 1000 and no group by default.
+You can use Docker's [--user](https://docs.docker.com/engine/reference/run/#user) flag to change the user Vikunja runs as.
+If you've changed this via environment variables in the past, you need to adjust your config accordingly.
+
 ## Breaking changes
 
 Due to the way the views were changed, we had to do a few breaking changes:
@@ -61,7 +71,6 @@ Due to the way the views were changed, we had to do a few breaking changes:
 * Kanban buckets now belong to a project view instead of directly to a project.
 * New endpoint to change a task's position in a view. The position now depends on the context (the view) of the task. As a result, the `position` and `kanban_position` task attributes are no longer available.
 * New endpoint to move a task between buckets. Passing a `bucket_id` when updating the task will not have an effect anymore, you'll need to use the new dedicated endpoint for that.
-* The docker image now uses the `scratch` image as base image, which greatly reduces the attack surface of third-party libraries in the container. It also means there is no shell in the container, keep that in mind when debugging.
 * If you shared a project via a link share and specified a view with the link, you'll need to update the link to point to the view. 
 
 ## Fixes & Improvements
