@@ -1,7 +1,8 @@
 import {defineConfig, envField} from 'astro/config'
 import tailwind from '@astrojs/tailwind'
 import markdoc from '@astrojs/markdoc'
-
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import node from '@astrojs/node'
 
 // https://astro.build/config
@@ -12,6 +13,25 @@ export default defineConfig({
 	adapter: node({
 		mode: 'standalone',
 	}),
+	markdown: {
+		rehypePlugins: [
+			rehypeSlug,
+			[
+				// When changing content here, also change in Heading component for mdoc files
+				rehypeAutolinkHeadings,
+				{
+					behavior: 'append',
+					content: {
+						type: 'text',
+						value: '#',
+					},
+					properties: {
+						className: ['anchor-link ml-1'],
+					},
+				},
+			],
+		],
+	},
 	experimental: {
 		env: {
 			schema: {

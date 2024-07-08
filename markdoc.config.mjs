@@ -1,4 +1,4 @@
-import {defineMarkdocConfig, component} from '@astrojs/markdoc/config'
+import {defineMarkdocConfig, nodes, component} from '@astrojs/markdoc/config'
 import shiki from '@astrojs/markdoc/shiki'
 
 export default defineMarkdocConfig({
@@ -22,6 +22,12 @@ export default defineMarkdocConfig({
 			attributes: {
 				type: {type: String},
 			},
+		},
+	},
+	nodes: {
+		heading: {
+			...nodes.heading,
+			render: component('./src/components/Heading.astro'),
 		},
 	},
 })
