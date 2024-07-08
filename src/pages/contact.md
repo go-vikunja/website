@@ -7,26 +7,26 @@ layout: '../layouts/Content.astro'
 
 We have public issue trackers in the different [code repos](https://code.vikunja.io).
 
-#### Chat
+## Chat
 
 You can chat with us on [matrix](https://riot.im/app/#/room/!dCRiCiLaCCFVNlDnYs:matrix.org?via=matrix.org).
 
-#### Forum
+## Forum
 
 A community forum is available on [community.vikunja.io](https://community.vikunja.io).
 
-#### General
+## General
 
 [hello@vikunja.io](mailto:hello@vikunja.io)
 
 General inqueries and requests.
 
-#### Maintainers
+## Maintainers
 
 [maintainers@vikunja.io](mailto:maintainers@vikunja.io)
 
 Say hello to our maintainers.
 
-#### Security 
+## Security 
 
 See [our dedicated Security page](https://vikunja.io/security).
