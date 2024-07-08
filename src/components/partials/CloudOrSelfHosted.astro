@@ -1,5 +1,6 @@
 ---
 import Button from '../Button.astro'
+import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
 ---
 <div class="flex flex-col lg:flex-row items-center justify-center gap-8 mb-28">
     <div class="lg:w-1/3">
@@ -21,7 +22,7 @@ import Button from '../Button.astro'
             Don't have a server or don't want to deal with it?
         </p>
 
-        <Button href="https://vikunja.cloud" class="!mt-4">
+        <Button href={VIKUNJA_CLOUD_LINK} class="!mt-4">
             Meet Vikunja Cloud
         </Button>
     </div>
