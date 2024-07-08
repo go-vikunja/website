@@ -1,0 +1,16 @@
+---
+interface Props {
+	level: number
+	id: string
+}
+
+const {level, id} = Astro.props
+const HeadingTag = `h${level}`
+
+// When changing content here, also change in astro.config.mjs for md files
+---
+
+<HeadingTag id={id}>
+	<slot/>
+	<a href={'#'+id}>#</a>
+</HeadingTag>
