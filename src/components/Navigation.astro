@@ -1,5 +1,8 @@
 ---
 import NavItem from './NavItem.astro'
+import {VIKUNJA_CLOUD_LINK} from '../helpers/vikunjaCloudLink'
+import ButtonGetStarted from './partials/ButtonGetStarted.astro'
+import DarkModeSwitch from './partials/DarkModeSwitch.astro'
 ---
 <button
         id="navbar-burger"
@@ -39,7 +42,12 @@ import NavItem from './NavItem.astro'
                         </div>
                     </a>
                 </li>
+                <NavItem class="sm:hidden" href={VIKUNJA_CLOUD_LINK}>Vikunja Cloud</NavItem>
             </ul>
+        </div>
+        <div class="flex sm:hidden flex-col p-4 gap-6">
+            <DarkModeSwitch showText={true}/>
+            <ButtonGetStarted/>
         </div>
     </div>
 </div>
