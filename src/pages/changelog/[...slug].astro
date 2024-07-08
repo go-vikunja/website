@@ -31,8 +31,8 @@ const newestRelease = await getNewestEntry()
 const {Content} = await post.render()
 ---
 <Layout title={post.data.title}>
-    <div class="flex max-w-screen-lg mx-auto mt-6">
-        <div class="w-full lg:w-1/5">
+    <div class="flex flex-col lg:flex-row max-w-screen-lg mx-auto mt-6">
+        <div class="w-full lg:w-1/5 pl-4 lg:pl-0 lg:pt-4">
             <a href="/changelog" class="underline hover:text-primary flex items-center text-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                      stroke="currentColor" class="size-4 mr-1">
