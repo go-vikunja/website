@@ -1,16 +1,17 @@
 ---
+type Heading = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 interface Props {
 	level: number
 	id: string
 }
 
 const {level, id} = Astro.props
-const HeadingTag = `h${level}`
+const HeadingTag = (level > 0 ? `h${level}` : 'div') as Heading
 
 // When changing content here, also change in astro.config.mjs for md files
 ---
 
 <HeadingTag id={id}>
-	<slot/>
-	<a href={'#'+id}>#</a>
+    <slot/>
+    <a href={'#' + id}>#</a>
 </HeadingTag>
