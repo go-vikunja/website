@@ -126,7 +126,7 @@ It will automatically run all necessary database migrations.
 
 ## Docker
 
-(Note: this assumes some familiarity with docker)
+This assumes some familiarity with docker.
 
 To get up and running quickly, use this command:
 
@@ -142,6 +142,10 @@ This will expose Vikunja on port `3456` on the host running the container and us
 You can use Docker's [`--user`](https://docs.docker.com/engine/reference/run/#user) flag to change that.
 Make sure the new user has required permissions on the `db` and `files` folder.
 
+Check out the [docker examples](/docs/full-docker-example) for more advanced configuration using mysql / postgres and a reverse proxy.
+
+### Using a configuration file with docker
+
 You can mount a local configuration like so:
 
 ```sh
@@ -152,8 +156,6 @@ docker run -p 3456:3456 -v /path/to/config/on/host.yml:/app/vikunja/config.yml:r
 
 Though it is recommended to use environment variables or `.env` files to configure Vikunja in docker.
 See [config](/docs/config-options) for a list of available configuration options.
-
-Check out the [docker examples](/docs/full-docker-example) for more advanced configuration using mysql / postgres and a reverse proxy.
 
 ### Files volume
 
