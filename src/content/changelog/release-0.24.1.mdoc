@@ -1,0 +1,50 @@
+---
+title: "Vikunja v0.24.1 was released"
+date: 2024-07-18T17:00:00+01:00
+slug: /vikunja-v0.24.1-was-released
+---
+
+Following the release of 0.24.0 almost two weeks ago, this is a patch release with many small bug fixes and
+improvements.
+
+We have brought some new features onboard, fixed some existing issues, and have made various improvements in performance
+as well as dependencies.
+Let's take a look at all the updates we made:
+
+1. Filters now work better: they now handle special characters properly, work regardless of letter case, show clearer
+   error messages, and update tasks in filter buckets automatically when you create or modify them.
+
+2. The Kanban view has received a lot of attention: tasks now move between buckets more intelligently, repeating tasks
+   stay where they should, and the board stays in sync with other views when you mark tasks as done.
+
+3. We've added a helpful error message when you try to create an API token without selecting any permissions, and we've
+   made some improvements to the two-factor authentication.
+
+4. When you duplicate a project, it won't create buckets in the old project anymore. We also made sure the tasks were
+   correctly inserted into the new buckets.
+
+5. Task creation and searching have been improved: the quick add feature will create a new task if you only use magic
+   keywords, and we've fine-tuned the indexing process when using the search with Typesense.
+
+6. We've made several user interface improvements, like fixing the overflow of select menus on mobile and adjusting
+   various buttons and dropdowns for better usability.
+
+7. The database migration now logs more information to help you troubleshoot issues. Previously, it looked like Vikunja
+   hanged for a while with no progress being made during long migrations.
+
+8. [@dpschen](https://kolaente.dev/dpschen) has done a bunch of code cleanups and improvements of Vue components under
+   the hood. Many thanks!
+
+9. As always, we've fixed a bunch of small bugs, improved error handling in various places, updated a bunch of
+   dependencies, and made numerous small
+   tweaks to make the app run more smoothly overall.
+
+As usual, you can find the full changelogs in
+the [code repo](https://kolaente.dev/vikunja/vikunja/src/branch/main/CHANGELOG.md#0-24-1-2024-07-18).
+
+To get the upgrade, simply replace the Vikunja binary or pull the latest docker image.
+You can also check out [the update docs](/docs/installing#updating) for more information about the process.
+
+If you have any questions about this release, please reach out
+either [in the community forum](https://community.vikunja.io), [Twitter / X](https://twitter.com/vikunja.io), [Mastodon](https://social.linux.pizza/@vikunja)
+or [via email](mailto:hello@vikunja.io).
