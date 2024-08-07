@@ -52,12 +52,12 @@ db:
     interval: 2s
 ```
 
-You'll also need to change the `VIKUNJA_DATABASE_TYPE` to `postgres` on the api container declaration.
+You'll also need to change the `VIKUNJA_DATABASE_TYPE` to `postgres` on the vikunja container declaration.
 
 ## Sqlite
 
 Vikunja supports postgres, mysql and sqlite as a database backend. The examples on this page use mysql with a mariadb container.
-To use sqlite as a database backend, change the `api` section of the examples to this:
+To use sqlite as a database backend, change the `vikunja` section of the examples to this:
 
 ```yaml
 vikunja:
@@ -219,7 +219,7 @@ You will need the following `Caddyfile` on your host (or elsewhere, but then you
 
 ```conf
 vikunja.example.com {
-    reverse_proxy api:3456
+    reverse_proxy vikunja:3456
 }
 ```
 
@@ -277,8 +277,7 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
-      - api
-      - frontend
+      - vikunja 
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
 ```
