@@ -1,0 +1,42 @@
+---
+title: "Vikunja v0.24.2 was released"
+date: 2024-08-12T20:00:00+01:00
+slug: /vikunja-v0.24.2-was-released
+---
+
+Following the recent release of Vikunja 0.24.1, we're happy to announce the release of Vikunja 0.24.2, a patch update
+that brings several improvements and bug fixes. This release focuses on stability and user interface refinements.
+
+### Bug Fixes
+
+We've addressed several issues to ensure a smoother Vikunja experience:
+
+- **Tasks**:
+    - Fixed an issue that prevented moving tasks between projects correctly.
+    - Fixed an issue which [placed tasks into the wrong kanban bucket when moved between projects](https://github.com/go-vikunja/vikunja/issues/290).
+- **Views**: Resolved an issue where unnecessary task bucket and position entries were created when duplicating a
+  project.
+- **Migration**:
+    - Fixed a problem where [tasks were not associated correctly to views and buckets](https://community.vikunja.io/t/migration-from-vikunja-export-duplicated-boards-local-to-oidc/2690).
+    - Fixed a problem where project backgrounds were not exported and imported correctly.
+- **Internationalization**: Corrected the casing of the Ukrainian language in the language selector.
+- **Kanban Boards**: Cover images now display at full width.
+
+### Performance Improvements
+
+We've made several under-the-hood improvements to enhance Vikunja's performance:
+
+- Optimized the projects and label stores for more efficient data management.
+- Removed unnecessary dependencies to streamline the application.
+
+## Conclusion
+
+As usual, you can find the full changelogs in
+the [code repo](https://kolaente.dev/vikunja/vikunja/src/branch/main/CHANGELOG.md#0242---2024-08-12).
+
+To get the upgrade, simply replace the Vikunja binary or pull the latest docker image.
+You can also check out [the update docs](/docs/installing#updating) for more information about the process.
+
+If you have any questions about this release, please reach out
+either [in the community forum](https://community.vikunja.io), [Twitter / X](https://twitter.com/vikunja.io), [Mastodon](https://social.linux.pizza/@vikunja)
+or [via email](mailto:hello@vikunja.io).
