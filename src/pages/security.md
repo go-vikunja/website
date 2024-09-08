@@ -6,7 +6,7 @@ layout: '../layouts/Content.astro'
 # Security
 
 <span class="text-gray-500">
-Based on <a class="underline" href="https://supabase.com/.well-known/security.txt">https://supabase.com/.well-known/security.txt</a>.
+Based on <a class="!underline !text-gray-500" href="https://supabase.com/.well-known/security.txt">https://supabase.com/.well-known/security.txt</a>.
 </span>
 
 At Vikunja, we consider the security of the product and our systems a top priority. But no matter how much effort we put into system security, there can still be vulnerabilities present.
