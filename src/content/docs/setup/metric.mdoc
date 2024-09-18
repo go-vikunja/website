@@ -1,0 +1,24 @@
+---
+title: "Metrics"
+slug: metrics-setup
+---
+
+This page describes how to set up metrics for Vikunja using Grafana and Prometheus.
+
+## Scraping Vikunja's Metrics using Prometheus
+
+Here is a sample prometheus configuration to scrape the metrics:
+
+```yaml
+scrape_configs:
+  - job_name: 'vikunja'
+    scrape_interval: 5s
+    metrics_path: '/api/v1/metrics'
+    static_configs:
+      - targets:
+        - your-vikunja-host-url:3456
+```
+
+## Setting up Grafana
+
+In Grafana, import [this dashboard](https://grafana.com/grafana/dashboards/21928) using the dashboard ID `21928`.
