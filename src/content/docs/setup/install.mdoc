@@ -3,7 +3,8 @@ title: "Installing"
 slug: installing
 ---
 
-Architecturally, Vikunja is made up of two parts: [API](https://code.vikunja.io/vikunja) and [frontend](https://code.vikunja.io/vikunja/src/branch/main/frontend).
+Architecturally, Vikunja is made up of two parts: [API](https://code.vikunja.io/vikunja)
+and [frontend](https://code.vikunja.io/vikunja/src/branch/main/frontend).
 
 Both are bundled into one single deployable binary (or docker container).
 That means you only need to install one thing to be able to use Vikunja.
@@ -14,7 +15,8 @@ You can also:
 * Use the mobile app only, but as of right now it only supports the very basic features of Vikunja
 
 {% callout type="warning" %}
-If you intend to run Vikunja with mysql and/or to use non-latin characters [make sure your db is utf-8 compatible](/docs/utf-8-settings).
+If you intend to run Vikunja with mysql and/or to use non-latin
+characters [make sure your db is utf-8 compatible](/docs/utf-8-settings).
 {% /callout %}
 
 Vikunja can be installed in various ways.
@@ -27,6 +29,7 @@ This document provides an overview and instructions for the different methods:
 * [RPM](#rpm)
 * [FreeBSD](#freebsd--freenas)
 * [Kubernetes](/docs/hosting-vikunja-with-k8s)
+* [Ansible](#ansible)
 
 And after you installed Vikunja, you may want to check out these other resources:
 
@@ -72,7 +75,8 @@ sudo ln -s /opt/vikunja/vikunja /usr/bin/vikunja
 
 ### Systemd service
 
-To automatically start Vikunja when your system boots and to ensure all dependent services are met, you want to use an init system like systemd.
+To automatically start Vikunja when your system boots and to ensure all dependent services are met, you want to use an
+init system like systemd.
 
 Save the following service file to `/etc/systemd/system/vikunja.service` and adapt it to your needs:
 
@@ -138,11 +142,12 @@ docker run -p 3456:3456 -v $PWD/files:/app/vikunja/files -v $PWD/db:/db vikunja/
 
 This will expose Vikunja on port `3456` on the host running the container and use sqlite as database backend.
 
-**Note**: The container runs as the user `1000` and no group by default. 
+**Note**: The container runs as the user `1000` and no group by default.
 You can use Docker's [`--user`](https://docs.docker.com/engine/reference/run/#user) flag to change that.
 Make sure the new user has required permissions on the `db` and `files` folder.
 
-Check out the [docker examples](/docs/full-docker-example) for more advanced configuration using mysql / postgres and a reverse proxy.
+Check out the [docker examples](/docs/full-docker-example) for more advanced configuration using mysql / postgres and a
+reverse proxy.
 
 ### Using a configuration file with docker
 
@@ -159,8 +164,9 @@ See [config](/docs/config-options) for a list of available configuration options
 
 ### Files volume
 
-By default, the container stores all files uploaded and used through Vikunja inside of `/app/vikunja/files` which is created as a docker volume.
-You should mount the volume somewhere to the host to permanently store the files and don't lose them if the container restarts.
+By default, the container stores all files uploaded and used through Vikunja inside of `/app/vikunja/files` which is
+created as a docker volume. You should mount the volume somewhere to the host to permanently store the files and
+don't lose them if the container restarts.
 
 ### Docker compose
 
@@ -193,10 +199,11 @@ To configure Vikunja, use the config file in `/etc/vikunja/config.yml`.
 
 ## FreeBSD / FreeNAS
 
-Unfortunately, we currently can't provide pre-built binaries for FreeBSD.
-As a workaround, it is possible to compile Vikunja for FreeBSD directly on a FreeBSD machine, a guide is available below:
+Unfortunately, we currently can't provide pre-built binaries for FreeBSD. As a workaround, it is possible to compile 
+Vikunja for FreeBSD directly on a FreeBSD machine, a guide is available below:
 
-*Thanks to HungrySkeleton who originally created this guide [in the forum](https://community.vikunja.io/t/freebsd-support/69/11).*
+*Thanks to HungrySkeleton who originally created this
+guide [in the forum](https://community.vikunja.io/t/freebsd-support/69/11).*
 
 ### Jail Setup
 
@@ -222,8 +229,8 @@ git clone https://code.vikunja.io/vikunja
 cd vikunja
 ```
 
-**Note:** Check out the version you want to build with `git checkout VERSION` - replace `VERSION` with the version want to use.
-If you don't do this, you'll build the [latest unstable build](/docs/versions), which might contain bugs.
+**Note:** Check out the version you want to build with `git checkout VERSION` - replace `VERSION` with the version want
+to use. If you don't do this, you'll build the [latest unstable build](/docs/versions), which might contain bugs.
 
 ### Compile binaries
 
@@ -290,6 +297,14 @@ Vikunja is now available through IP:
 ```
 192.168.1.XXX:3456
 ```
+
+## Ansible
+
+There is an Ansible
+Playbook [made available by Bitwarden Labs](https://github.com/bitwarden-labs/bws-ansible-examples/blob/main/certbot-nginx-vikunja/README-certbot-nginx-vikunja.md)
+which you can deploy directly or use as a starting point for your own deployment.
+The playbook deploys Vikunja behind a nginx reverse proxy for TLS termination and using their secrets manager to provide
+credentials for smtp and database.
 
 ## Other installation resources
 
