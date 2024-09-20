@@ -9,7 +9,6 @@ Due to this being a point-release, there are no new features in this release (bu
 
 Let's take a look at the changes:
 
-
 - **Auth**: The maximum password length is now 72 bytes. This was always already the case in Vikunja, since it is a limitation imposed by the bcrypt hashing algorithm, but the limit was not checked during the registration, leading to longer passwords being silently cut off.
 - **CalDAV**: Task colors are now correctly saved and returned.
 - **Filters**:
