@@ -1,0 +1,35 @@
+---
+title: "Vikunja v0.24.3 was released"
+date: 2024-09-20T20:00:00+01:00
+slug: /vikunja-v0.24.3-was-released
+---
+
+I'm excited to announce the release of Vikunja 0.24.3! This update brings a whole bunch of fixes and improvements to Vikunja.
+Due to this being a point-release, there are no new features in this release (but some small ones are already lurking in the latest unstable builds).
+
+Let's take a look at the changes:
+
+
+- **Auth**: The maximum password length is now 72 bytes. This was always already the case in Vikunja, since it is a limitation imposed by the bcrypt hashing algorithm, but the limit was not checked during the registration, leading to longer passwords being silently cut off.
+- **CalDAV**: Task colors are now correctly saved and returned.
+- **Filters**:
+  - Fixed a problem where changes to a filter query were not saved.
+  - Fixed issues with labels keyword replacement and task positioning in date filters.
+  - When a filter is set to be used on the home page, tasks are now correctly fetched using the filter.
+- **Kanban**: Made several improvements including saving updated positions, making the task creation spinner visible, and fixing full width display on mobile.
+- **Projects**: Ensured the 6th project is not hidden on the overview.
+- **Reminders**: Subscribed users are now notified as well. This led to the discovery and fixing of the logic for fetching subscribers for a given task.
+- **Task**: Made numerous improvements including setting done date when moving to done bucket, correct task index when creating multiple tasks at once via quick add magic, and aligning the task title on mobile popup.
+- **Typesense**: Fixed task indexing and ensured task positions are recreated properly.
+- **Miscellaneous**:
+  - Returned a 404 response in the api when using a token and the route does not exist.
+  - Multiple translation improvements.
+  - Fix modal scrolling on mobile and iOS Safari.
+  - And more! Check out the [full changelog](https://kolaente.dev/vikunja/vikunja/src/branch/main/CHANGELOG.md#0243---2024-09-20) for more details.
+
+As usual, you can find the full changelogs in the [code repo](https://kolaente.dev/vikunja/vikunja/src/branch/main/CHANGELOG.md#0243---2024-09-20).
+
+To get the upgrade, simply replace the Vikunja binary or pull the latest docker image.
+You can also check out [the update docs](/docs/installing#updating) for more information about the process.
+
+If you have any questions about this release, please reach out either [in the community forum](https://community.vikunja.io), [Twitter / X](https://twitter.com/vikunja.io), [Mastodon](https://social.linux.pizza/@vikunja) or [via email](mailto:hello@vikunja.io).
