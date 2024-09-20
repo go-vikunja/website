@@ -12,7 +12,9 @@ Not all steps are necessary for every release.
 * Generate changelogs (with git-cliff)
 * Tag a new version: Include the changelog for that version as the tag message
 	* Once built: Prune the cloudflare cache so that the new versions show up at [dl.vikunja.io](https://dl.vikunja.io/)
-    * Update the [Flathub desktop package](https://github.com/flathub/io.vikunja.Vikunja)
+* Update external packages:
+	* [Flathub desktop package](https://github.com/flathub/io.vikunja.Vikunja)
+	* Nixos
 * Release Highlights Blogpost
 	* Include a section about Vikunja in general (totally fine to copy one from the earlier blog posts)
 	* New Features & Improvements: Mention bigger features, potentially with screenshots. Things like refactoring are sometimes also worth mentioning.
