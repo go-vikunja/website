@@ -67,7 +67,7 @@ They also now allow you to configure which api server to connect to more easily.
 ### Task reminders and overdue tasks overview now use the correct time zone
 
 In the user settings, you can now configure the time zone you are currently in.
-This is different from the [`service.timezone`](https://vikunja.io/docs/config-options/#timezone) configuration option for the server.
+This is different from the [`service.timezone`](https://vikunja.io/docs/config-options#1-service-timezone) configuration option for the server.
 
 Once configured, Vikunja will use this setting to send you email reminders at the time you set them up in your time zone.
 With this addition, email reminders now works a lot more intuitive than before.
@@ -142,7 +142,7 @@ A big thank you to everyone who contributed translations!
 ## Other notable changes
 
 * Marble avatars: A new avatar type with a unique blurry red-orange picture for every user.
-* Rate limits for unauthenticated routes: Routes which do not require authentication are now also covered by the rate limit, [if enabled and configured](https://vikunja.io/docs/config-options/#ratelimit).
+* Rate limits for unauthenticated routes: Routes which do not require authentication are now also covered by the rate limit, [if enabled and configured](https://vikunja.io/docs/config-options#0--ratelimit).
 * BlurHash for list backgrounds: When list backgrounds are loaded, they will first show a blurry preview of it, to bridge the time until the real background is fully loaded.
 * Data export: Users using a third-party auth provider can now properly use the data export. Previously they were required to enter a password which will not work with these types of accounts.
 * Scope in quick actions search: You can now use quick search magic keywords to filter the search results in quick actions.

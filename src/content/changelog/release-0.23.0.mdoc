@@ -65,11 +65,11 @@ Some configuration options for the API and frontend have changed with this relea
 
 * All configuration is now done via the config file or environment variables. No split between API and frontend options.
 * The `staticpath` option has been removed, since the frontend is now bundled with the API.
-* Configuration for Sentry has been changed. [Check out the config docs](https://vikunja.io/docs/config-options/#sentry) for more information.
-* A new option [`publicurl`](https://vikunja.io/docs/config-options/#publicurl) has been introduced. This option replaces the old `frontendurl` option and is also the default API URL for the frontend.
-* CORS is now disabled by default. If you relied on it previously, you need to [enable it again](https://vikunja.io/docs/config-options/#cors). This includes if you want to use your Vikunja instance with the desktop client.
+* Configuration for Sentry has been changed. [Check out the config docs](https://vikunja.io/docs/config-options#0--sentry) for more information.
+* A new option [`publicurl`](https://vikunja.io/docs/config-options#1-service-publicurl) has been introduced. This option replaces the old `frontendurl` option and is also the default API URL for the frontend.
+* CORS is now disabled by default. If you relied on it previously, you need to [enable it again](https://vikunja.io/docs/config-options#0--cors). This includes if you want to use your Vikunja instance with the desktop client.
 * Infinite nesting of tasks is now always enabled, the old frontend config option was removed.
-* The frontend options to allow icon changes or set a custom logo have been moved to the general config. [Check out the docs](https://vikunja.io/docs/config-options/#allowiconchanges) if you were using them before.
+* The frontend options to allow icon changes or set a custom logo have been moved to the general config. [Check out the docs](https://vikunja.io/docs/config-options#1-service-allowiconchanges) if you were using them before.
 
 ## Closing
 
