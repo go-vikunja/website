@@ -8,7 +8,7 @@ It uses a proxy configuration to make it available under a domain.
 
 For all available configuration options, see [configuration](/docs/config-options).
 
-After registering all your users, you might also want to [disable the user registration](/docs/config-options#enableregistration).
+After registering all your users, you might also want to [disable the user registration](/docs/config-options#1-service-enableregistration).
 
 {% callout type="warning" %}
 If you intend to run Vikunja with mysql and/or to use non-latin characters
@@ -101,7 +101,7 @@ This example lets you host Vikunja without any reverse proxy in front of it.
 This is the absolute minimum configuration you need to get something up and running. 
 If you want to make Vikunja available on a domain or need tls termination, check out one of the other examples.
 
-Note that you need to change the [`VIKUNJA_SERVICE_PUBLICURL`](/docs/config-options#publicurl) environment variable to the public ip or hostname including the port (the docker host you're running this on) is reachable at, prefixed with `http://`.
+Note that you need to change the [`VIKUNJA_SERVICE_PUBLICURL`](/docs/config-options#1-service-publicurl) environment variable to the public ip or hostname including the port (the docker host you're running this on) is reachable at, prefixed with `http://`.
 Because the browser you'll use to access the Vikunja frontend uses that url to make the requests, it has to be able to reach it from the outside. 
 
 {% callout type="warning" %}
@@ -223,7 +223,7 @@ vikunja.example.com {
 }
 ```
 
-Note that you need to change the [`VIKUNJA_SERVICE_PUBLICURL`](/docs/config-options#publicurl) environment variable to the ip (the docker host you're running this on) is reachable at.
+Note that you need to change the [`VIKUNJA_SERVICE_PUBLICURL`](/docs/config-options#1-service-publicurl) environment variable to the ip (the docker host you're running this on) is reachable at.
 Because the browser you'll use to access the Vikunja frontend uses that url to make the requests, it has to be able to reach that ip + port from the outside.
 
 {% callout type="warning" %}
@@ -313,7 +313,7 @@ The docker-compose file we're going to use is exactly the same from the [example
 
 You may want to change the volumes to match the rest of your setup.
 
-After registering all your users, you might also want to [disable the user registration](/docs/config-options#enableregistration).
+After registering all your users, you might also want to [disable the user registration](/docs/config-options#1-service-enableregistration).
 
 {% callout type="warning" %}
 You must ensure Vikunja has write permissions on the `files` directory before starting the stack.
