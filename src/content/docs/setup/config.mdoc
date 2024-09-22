@@ -36,6 +36,18 @@ Vikunja will search on various places for a config file:
 * In `/etc/vikunja`
 * In `~/.config/vikunja`
 
+### Using a config file with Docker Compose
+
+In case you are using Docker Compose you need to edit the `docker-compose.yml` to load `config.yml`.
+Mount the `config.yml` file into the Vikunja container, by adding this line to the volumes of the Vikunja container and replacing the `./path/to/config.yml` with the relative path from the `docker-compose.yml` to your `config.yml`:
+
+```yaml
+volumes:
+  - ./path/to/config.yml:/etc/vikunja/config.yml
+```
+
+After all the setup is done, start Vikunja as shown in the [Docker Compose setup](/docs/full-docker-example).
+
 ## Default configuration with explanations
 
 The following explains all possible config variables and their defaults.
