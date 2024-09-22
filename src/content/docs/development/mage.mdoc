@@ -146,6 +146,24 @@ Will ask for the name of the struct you want to create a migration for.
 
 See also [migration docs](/docs/magefile).
 
+## Generate documentation
+
+### Swagger docs
+
+```sh
+mage generate:swagger-docs
+```
+
+Generates swagger definitions from the comment annotations in the code.
+
+### config.yml sample file
+
+```sh
+mage generate:config-yaml
+```
+
+This generates a `config.yml.sample` file from the content in `config-raw.json` file. This happens automatically when building packages and only really needs to happen at that time.
+
 ## Misc
 
 ### Format the code
@@ -155,11 +173,3 @@ mage fmt
 ```
 
 Formats all source code using `go fmt`.
-
-### Generate swagger definitions from code comments
-
-```sh
-mage do-the-swag
-```
-
-Generates swagger definitions from the comment annotations in the code.
