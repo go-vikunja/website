@@ -25,10 +25,10 @@ importers:
         version: 5.1.1(astro@4.15.8(@types/node@20.14.9)(rollup@4.22.4)(typescript@5.4.5))(tailwindcss@3.4.4)
       '@fontsource/open-sans':
         specifier: ^5.0.28
-        version: 5.0.28
+        version: 5.1.0
       '@fontsource/quicksand':
         specifier: ^5.0.18
-        version: 5.0.18
+        version: 5.1.0
       '@tailwindcss/aspect-ratio':
         specifier: ^0.4.2
         version: 0.4.2(tailwindcss@3.4.4)
@@ -715,11 +715,11 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
-  '@fontsource/open-sans@5.0.28':
-    resolution: {integrity: sha512-hBvJHY76pJT/JynGUB5EXWhnzjYfLdcMn655J5p1v9lTT9HdQSy+keq2KPVXO2Htlg998BBa3p6u/jlrZ6w0kg==}
+  '@fontsource/open-sans@5.1.0':
+    resolution: {integrity: sha512-g+mjF8gWUDwck9DrRCkhmFeEj7fskjtKZJKAQguVzSg93lc6ThakTHMRgs0dZfe5qBbktrV839tDrb4bIDyZSA==}
 
-  '@fontsource/quicksand@5.0.18':
-    resolution: {integrity: sha512-Dvv89zZG0vjZzmYwkUJTbFNV/uhNikqB9Qgl4KMtFw/gTaS5nA7vLIOjfEz/gjWlKPsYnuSIvVArLR0/xptxlA==}
+  '@fontsource/quicksand@5.1.0':
+    resolution: {integrity: sha512-TLi2qjOY3bdqK5e19TxUdCbfD+wHiITzM0RgnXXNcS2sJzd1rSXHFFW7pdD51wCVnO/2CaQXHUT2F4n05iclBg==}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -3378,9 +3378,9 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@fontsource/open-sans@5.0.28': {}
+  '@fontsource/open-sans@5.1.0': {}
 
-  '@fontsource/quicksand@5.0.18': {}
+  '@fontsource/quicksand@5.1.0': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
