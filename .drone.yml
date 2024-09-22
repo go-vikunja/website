@@ -1,6 +1,15 @@
 kind: pipeline
 name: build
 
+trigger:
+  branch:
+    include:
+      - main
+  event:
+    include:
+      - push
+      - pull_request
+
 steps:
   - name: dependencies
     image: node:20-alpine
