@@ -29,6 +29,7 @@
     "typescript": "^5.4.5"
   },
   "devDependencies": {
+    "marked": "^14.1.2",
     "sharp": "^0.33.4"
   }
 }
