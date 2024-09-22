@@ -2,5 +2,21 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "packageRules": [
+    {
+      "groupName": "astro",
+      "matchPackagePrefixes": [
+        "@astrojs/",
+        "astro"
+      ]
+    },
+    {
+      "groupName": "tailwindcss",
+      "matchPackagePrefixes": [
+        "@tailwindcss/",
+        "tailwindcss"
+      ]
+    }
   ]
 }
