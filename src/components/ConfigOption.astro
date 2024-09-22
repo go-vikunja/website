@@ -1,6 +1,14 @@
 ---
+// @ts-nocheck
 import {marked} from 'marked'
-import {generateConfigHeadingId} from '../helpers/configHeadingLink'
+import {type ConfigItem, generateConfigHeadingId} from '../helpers/config'
+
+interface Props {
+	item: ConfigItem
+	parent: string | undefined
+	level: number
+}
+
 const {item, parent = '', level = 0} = Astro.props
 
 const fullPath = parent ? `${parent.replace('undefined', '0')}.${item.key}` : item.key

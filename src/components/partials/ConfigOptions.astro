@@ -1,8 +1,10 @@
 ---
+// @ts-nocheck
 import ConfigOption from '../ConfigOption.astro'
+import {type ConfigItem} from '../../helpers/config'
+
 const response = await fetch('https://kolaente.dev/vikunja/vikunja/raw/branch/main/config-raw.json')
-const data = await response.json()
+const data: ConfigItem = await response.json()
 ---
 
-<hr/>
-{data.children.map(c => (<ConfigOption item={c}/><hr/>))}
+{data.children?.map(c => (<ConfigOption item={c}/><hr/>))}
