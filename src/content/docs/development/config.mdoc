@@ -16,7 +16,7 @@ To add a new config option, you should add a new key const to `pkg/config/config
 Default values should always enable the feature to work or turn it off completely if it always needs
 additional configuration.
 
-Make sure to also add the new config option to the default config file (`config.yml.sample` at the root of the repository) 
+Make sure to also add the new config option to the `config-raw.json` file at the root of the repository 
 with an explanatory comment to make sure it is well documented.
 Then run `mage generate-docs` to generate the configuration docs from the sample file.
 
