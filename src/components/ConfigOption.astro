@@ -1,0 +1,29 @@
+---
+import {marked} from 'marked'
+import {generateConfigHeadingId} from '../helpers/configHeadingLink'
+const {item, parent = '', level = 0} = Astro.props
+
+const fullPath = parent ? `${parent.replace('undefined', '0')}.${item.key}` : item.key
+const envPath = `VIKUNJA_${(fullPath ?? '').toUpperCase().replace(/\./g, '_')}`
+const HeadingTag = 'h' + (level + 2)
+const headingKey = generateConfigHeadingId(level, parent, item.key)
+---
+
+{item.key &&
+<HeadingTag id={headingKey}>{item.key}&nbsp;<a href={'#' + headingKey}>#</a></HeadingTag>}
+{item.comment &&
+<Fragment set:html={marked.parse(item.comment)}/>}
+
+{item.default_value !== undefined && (
+<p>Default: <code>{item.default_value === '' ? '<empty>' : item.default_value.toString()}</code></p>)}
+{item.key && fullPath !== item.key && (
+<p>Full path: <code>{fullPath}</code></p>
+	)}
+{item.key && fullPath !== item.key && parent !== 'auth.openid.providers.undefined' && (<p>Environment path:
+    <code>{envPath}</code>
+</p>)}
+
+{item.children && (
+	item.children.map(child => (
+    <Astro.self item={child} parent={fullPath} level={level + 1}/>))
+	)}

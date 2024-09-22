@@ -1,6 +1,7 @@
 ---
 import {type CollectionEntry, getCollection} from 'astro:content'
 import Docs from '../../layouts/Docs.astro'
+import {generateConfigHeadings} from '../../helpers/configHeadingLink'
 
 export async function getStaticPaths() {
     const docs = await getCollection('docs')
@@ -15,6 +16,11 @@ type Props = CollectionEntry<'docs'>
 
 const post = Astro.props
 const {Content, headings} = await post.render()
+if (post.slug === 'config-options') {
+    const response = await fetch('https://kolaente.dev/vikunja/vikunja/raw/branch/main/config-raw.json')
+    const data = await response.json()
+    data.children.forEach(c => headings.push(...generateConfigHeadings(c)))
+}
 ---
 <Docs headings={headings} {...post.data}>
     <Content/>

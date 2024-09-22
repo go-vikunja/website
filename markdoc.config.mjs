@@ -23,6 +23,9 @@ export default defineMarkdocConfig({
 				type: {type: String},
 			},
 		},
+		configOptions: {
+			render: component('./src/components/partials/ConfigOptions.astro'),
+		}
 	},
 	nodes: {
 		heading: {
