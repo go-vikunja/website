@@ -1,4 +1,4 @@
-export function generateConfigHeadingId(level: number, parent: string, key: string): string {
+export function generateConfigHeadingId(level: number, parent: string, key: string | undefined): string {
 	return [
 		level,
 		parent,
@@ -6,21 +6,22 @@ export function generateConfigHeadingId(level: number, parent: string, key: stri
 	].join('-')
 }
 
-interface ConfigItem {
-	key?: string;
-	value?: string;
-	comment?: string;
-	children?: ConfigItem[];
+export interface ConfigItem {
+	key?: string
+	value?: string
+	comment?: string
+	default_value?: string
+	children?: ConfigItem[]
 }
 
-interface ConfigHeadingEntr {
-	slug: string;
-	depth: number;
-	text: string;
+interface ConfigHeadingEntry {
+	slug: string
+	depth: number
+	text: string
 }
 
-export function generateConfigHeadings(data: ConfigItem, parentSlug: string = '', depth: number = 0): ConfigHeadingEntr[] {
-	let result: ConfigHeadingEntr[] = []
+export function generateConfigHeadings(data: ConfigItem, parentSlug: string = '', depth: number = 0): ConfigHeadingEntry[] {
+	let result: ConfigHeadingEntry[] = []
 
 	if (data.key) {
 		const slug = generateConfigHeadingId(depth, parentSlug, data.key)
