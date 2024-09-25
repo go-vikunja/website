@@ -11,7 +11,8 @@ To add another example, please [edit this document](https://kolaente.dev/vikunja
 Vikunja Config:
 
 ```yaml
-openid:
+auth:
+  openid:
     enabled: true
     redirecturl: https://vikunja.mydomain.com/auth/openid/  <---- slash at the end is important
     providers:
@@ -40,7 +41,8 @@ scopes:
 Vikunja Config:
 
 ```yaml
-openid:
+auth:
+  openid:
     enabled: true
     redirecturl: https://vikunja.mydomain.com/auth/openid/  <---- slash at the end is important
     providers:
@@ -63,7 +65,8 @@ Note that there currently seems to be no way to stop creation of new users, even
 Vikunja Config:
 
 ```yaml
-openid:
+auth:
+  openid:
     enabled: true
     redirecturl: https://vikunja.mydomain.com/auth/openid/  <---- slash at the end is important
     providers:
@@ -115,7 +118,8 @@ Typically, this URL can be found in the metadata section within your identity pr
 Vikunja Config:
 
 ```yaml
-openid:
+auth:
+  openid:
     enabled: true
     redirecturl: https://vikunja.mydomain.com/auth/openid/  # <---- slash at the end is important
     providers:
