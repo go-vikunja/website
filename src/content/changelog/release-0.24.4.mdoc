@@ -1,0 +1,45 @@
+---
+title: "Vikunja 0.24.4 Release: Enhancing Stability and User Experience"
+date: 2024-09-29T20:00:00+01:00
+slug: /vikunja-v0.24.4-was-released
+---
+
+I'm excited to announce the release of Vikunja 0.24.4, the latest patch update focused on improving stability, fixing
+bugs, and enhancing the overall user experience. This release addresses several key issues and introduces minor
+improvements to make your task management smoother and more efficient.
+
+While this update doesn't introduce major new features, it addresses several key issues that users have
+reported, making your day-to-day task management more smooth and reliable:
+
+- **Task Management Improvements**
+    - Task comments are now paginated. Previously, if there were more than 50 comments on a task they would not be
+      shown. This but has existed since almost 5 years and nobody ever noticed!
+    - The task delete modal has been improved for mobile users, ensuring a better experience on smaller screens.
+    - The close button does not show up anymore when tasks are not opened via a modal. It did not do anything, this
+      resolves confusion about the button.
+    - The task delete modal has been refined for mobile users, ensuring better usability on smaller screens.
+
+- **Attachment Handling**: I've reverted a recent change in attachment handling to resolve unexpected behavior.
+
+- **Filter Functionality**: For users with PostgreSQL databases, Vikunja now uses PostgreSQL's json search functionality
+  to look for filters with dates. A fix introduced in the last release caused this problem.
+
+- **File Management**: The file system now correctly uses absolute paths when specified.
+
+- **Checkbox Rendering**: Previously, the checkboxes used in various places would not work in some older browsers,
+  notably Firefox ESR. This is now fixed.
+
+- **iOS Reminders App Compatibility**: A partial fix to allow list tasks to be displayed in the iOS Reminders app and
+  Thunderbird. Thanks to [@jd for contributing this fix](https://kolaente.dev/vikunja/vikunja/pulls/2717)!
+
+As usual, you can find the full changelogs in
+the [code repo](https://kolaente.dev/vikunja/vikunja/src/branch/main/CHANGELOG.md#0244---2024-09-29).
+
+To get the upgrade, simply replace the Vikunja binary or pull the latest docker image.
+You can also check out [the update docs](/docs/installing#updating) for more information about the process.
+
+If you have any questions about this release, please reach out
+either [in the community forum](https://community.vikunja.io), [Twitter / X](https://twitter.com/vikunja.io), [Mastodon](https://social.linux.pizza/@vikunja)
+or [via email](mailto:hello@vikunja.io).
+
+Thank you for using Vikunja, and I look forward to bringing you more enhancements in future updates!
