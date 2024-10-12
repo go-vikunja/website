@@ -4,9 +4,10 @@ import {Picture} from 'astro:assets'
 interface Props {
 	image: any,
 	orientation?: 'right' | 'left'
+    alt: string
 }
 
-const {image, orientation: origOrientation} = Astro.props
+const {image, orientation: origOrientation, alt} = Astro.props
 
 const orientation = origOrientation ?? 'right'
 ---
@@ -17,7 +18,7 @@ const orientation = origOrientation ?? 'right'
                     src={image}
                     formats={['avif', 'webp']}
                     class="object-contain object-top w-full"
-                    alt=""
+                    alt={alt}
                 />
             </div> : ''}
     <div class={'w-full md:w-1/2 ' + (orientation === 'left' ? 'pr-4' : 'pl-4')}>
@@ -29,7 +30,7 @@ const orientation = origOrientation ?? 'right'
                     src={image}
                     formats={['avif', 'webp']}
                     class="object-contain object-top w-full"
-                    alt=""
+                    alt={alt}
                 />
             </div> : ''}
 </div>
