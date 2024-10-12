@@ -4,12 +4,13 @@ import markdoc from '@astrojs/markdoc'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import node from '@astrojs/node'
+import sitemap from '@astrojs/sitemap'
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://vikunja.io',
 	output: 'hybrid',
-	integrations: [tailwind(), markdoc()],
+	integrations: [tailwind(), markdoc(), sitemap()],
 	adapter: node({
 		mode: 'standalone',
 	}),
