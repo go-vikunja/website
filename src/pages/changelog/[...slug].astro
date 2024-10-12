@@ -29,8 +29,10 @@ async function getNewestEntry() {
 const newestRelease = await getNewestEntry()
 
 const {Content} = await post.render()
+// @ts-ignore: Property exists
+const description = post.data.description || Astro.props?.frontmatter?.description || Astro.props.description
 ---
-<Layout title={post.data.title}>
+<Layout title={post.data.title} description={description}>
     <div class="flex flex-col lg:flex-row max-w-screen-lg mx-auto mt-6">
         <div class="w-full lg:w-1/5 pl-4 lg:pl-0 lg:pt-4">
             <a href="/changelog" class="underline hover:text-primary flex items-center text-sm">

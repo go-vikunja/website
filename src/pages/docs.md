@@ -1,6 +1,7 @@
 ---
 title: "Documentation"
 layout: '../layouts/Docs.astro'
+description: Explore Vikunja's comprehensive documentation. Learn about its features, installation process, configuration options, and how to contribute to development.
 ---
 
 Welcome to the Vikunja documentation!

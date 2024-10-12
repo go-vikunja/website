@@ -1,6 +1,7 @@
 ---
 title: "Contact"
 layout: '../layouts/Content.astro'
+description: Find various ways to contact Vikunja, including issue trackers, chat, forum, and email addresses for general inquiries, maintainers, and security concerns.
 ---
 
 # Contact

@@ -1,6 +1,7 @@
 ---
 title: "Security"
 layout: '../layouts/Content.astro'
+description: Discover Vikunja's security practices for task and project management. Learn about our commitment to data protection, cloud hosting, and how to report vulnerabilities responsibly.
 ---
 
 # Security
