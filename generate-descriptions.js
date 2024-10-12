@@ -80,6 +80,10 @@ Provide your meta description inside <meta_description> tags. Do not include the
 }
 
 async function processDirectory(directory) {
+	if(!process.env.ANTHROPIC_API_KEY) {
+		throw new Error('Please provide an api key for Anthropic using the ANTHROPIC_API_KEY env variable.')
+	}
+
 	try {
 		const files = await fs.readdir(directory)
 		for (const file of files) {
