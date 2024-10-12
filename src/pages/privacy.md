@@ -1,6 +1,7 @@
 ---
 title: "Privacy Policy"
 layout: '../layouts/Content.astro'
+description: Learn about vikunja.io's privacy policy, GDPR compliance, data protection rights, and how we handle visitor information online.
 ---
 
 # Privacy Policy for vikunja.io
