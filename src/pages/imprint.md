@@ -1,6 +1,7 @@
 ---
 title: "Imprint"
 layout: '../layouts/Content.astro'
+description: Discover our imprint page for essential legal information, publication details, and contact information for our organization.
 ---
 
 # Imprint

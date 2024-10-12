@@ -53,7 +53,7 @@ ${documentContent}
 
 Carefully read and analyze the provided content. Identify the main topic, key points, and any relevant keywords. Based on your analysis, write a concise meta description that effectively summarizes the content and entices users to click through to the page.
 
-Your meta description should be between 150-160 characters long, including spaces. This length is optimal for display in search engine results pages.
+Your meta description should be between 110 characters long, including spaces. This length is optimal for display in search engine results pages.
 
 Provide your meta description inside <meta_description> tags. Do not include the character count or any other text outside these tags.
 
