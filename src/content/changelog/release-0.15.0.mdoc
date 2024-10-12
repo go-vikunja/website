@@ -6,42 +6,42 @@ slug: /vikunja-0.15.0-is-released
 
 Long time no release! This is again a rather big release (I feel like I'm writing that way too often).
 
-# Getting the Upgrade
+## Getting the Upgrade
 
 As usual, just grab a new release from the [downloads page](https://dl.vikunja.io) or pull the latest docker container.
 
-# Highlights
+## Highlights
 
-## Favorite Lists & Tasks
+### Favorite Lists & Tasks
 
 ![Favorite lists and tasks](../../assets/images/changelog/0.15.0-favorites.png)
 
 You can now mark tasks and lists as favorite which lets them show up in special namespaces and lists for easier access! No more "Where was that important task I wanted to do later today?"
 
-## Saved Filters
+### Saved Filters
 
 ![Saved filters](../../assets/images/changelog/0.15.0-saved-filters.png)
 
 You can now save a specific set of filters to create a new pseudo list which will dynamically contain all tasks matching the filter! This lets you easily see important (as per your definition) tasks in one go.
 
-## Mange users through cli
+### Mange users through cli
 
 After popular request, you can now manage users through the cli. [The new commands](https://vikunja.io/docs/cli/#user) let you create, edit, delete or change a user's password.
 
-## Keyboard Shortcuts and quick actions
+### Keyboard Shortcuts and quick actions
 
 The frontend now supports quick actions like `ctrl-click` on a task in the kanban board to mark a task as done or adding a label to a task by including text prefixed with `~` in the task title. Keyboard shortcuts let you quickly achieve what you're trying to do. Click the link in the user menu for a list of all available shortcuts.
 
-## Vikunja Desktop
+### Vikunja Desktop
 
 Starting with this release, you can run the frontend as a [standalone desktop installation](/docs/desktop-packages)! This opens up the possibility to run only the api on a server and to use the desktop app as the only frontend.
 
-# Other notable changes
+## Other notable changes
 
 * Lots of improvements and fixes to [Caldav](https://vikunja.io/docs/caldav/) - thanks to [freaktechnik](https://kolaente.dev/freaktechnik) for the PRs!
 * More avatar Providers - You can now upload an avatar, only show the initials or use a gravatar one (based on your email address)
 * Rights are now reflected in the UI - This means if you only have read access to a list Vikunja won't show you the edit buttons. It already wasn't possible to use these edit buttons, now they're just hidden to avoid confusion.
 
-## All changes
+### All changes
 
 As usual, the full list of changes is available in the release notes from the [api ](https://kolaente.dev/vikunja/api/releases/tag/v0.15.0) and [frontend ](https://kolaente.dev/vikunja/frontend/releases/tag/v0.15.0) repos.
