@@ -4,15 +4,16 @@ import {Picture} from 'astro:assets'
 interface Props {
 	href: string
 	image: any
+    alt: string
 }
 
-const {href, image} = Astro.props
+const {href, image, alt} = Astro.props
 ---
 <a
         href={href}
         class="mt-4 h-40 w-full rounded overflow-hidden text-center font-display text-2xl font-bold text-white shadow relative"
 >
-    <Picture src={image} alt=""/>
+    <Picture src={image} alt={alt}/>
     <span class="py-16 px-8 z-10 absolute left-0 right-0">
         <slot/>
     </span>
