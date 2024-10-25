@@ -40,6 +40,11 @@ Usage:
 vikunja dump
 ```
 
+Flags:
+
+* `-p`, `--path`: The folder path where the dump file should be saved. Vikunja will use the configured root path or the binary location if the flag is not provided.
+* `-f`, `--filename`: The filename of the dump file. If it does not end in '.zip', it will be added as a file extension. Defaults to 'vikunja-dump_YYYY-MM-DD_HH-II-SS.zip'.
+
 ## `index`
 
 Perform a full reindex of all tasks into Typesense. This will clear all tasks already present in the index unless the `--partial` flag is provided, see below.
