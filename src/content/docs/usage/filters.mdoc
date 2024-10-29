@@ -39,16 +39,17 @@ All strings must be either single-word or enclosed in `"` or `'`. This extends t
 
 The available operators for filtering include:
 
-|        |                                                       |
-|--------|-------------------------------------------------------|
-| `!=`   | Not equal to                                          |
-| `=`    | Equal to                                              |
-| `>`    | Greater than                                          |
-| `>=`   | Greater than or equal to                              |
-| `<`    | Less than                                             |
-| `<=`   | Less than or equal to                                 |
-| `like` | Matches a pattern (using wildcard `%`)                |
-| `in`   | Matches any value in a comma-separated list of values |
+|          |                                                                                                                                                                                                                  |
+|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `!=`     | Not equal to                                                                                                                                                                                                     |
+| `=`      | Equal to                                                                                                                                                                                                         |
+| `>`      | Greater than                                                                                                                                                                                                     |
+| `>=`     | Greater than or equal to                                                                                                                                                                                         |
+| `<`      | Less than                                                                                                                                                                                                        |
+| `<=`     | Less than or equal to                                                                                                                                                                                            |
+| `like`   | Matches a pattern (using wildcard `%`)                                                                                                                                                                           |
+| `in`     | Matches any value in a comma-separated list of values                                                                                                                                                            |
+| `not in` | Matches any value not in a comma-separated list of values. Please note this syntax does not work with Typesense, [due to limitations in the query language](https://github.com/typesense/typesense/issues/2038). |
 
 To combine multiple conditions, you can use the following logical operators:
 
