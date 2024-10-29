@@ -12,7 +12,7 @@ trigger:
 
 steps:
   - name: dependencies
-    image: node:20-alpine
+    image: node:22-alpine
     pull: always
     environment:
       PNPM_CACHE_FOLDER: .cache/pnpm
@@ -21,7 +21,7 @@ steps:
       - pnpm install --frozen-lockfile --fetch-timeout 100000
 
   - name: lint
-    image: node:20-alpine
+    image: node:22-alpine
     pull: always
     environment:
       PNPM_CACHE_FOLDER: .cache/pnpm
@@ -32,7 +32,7 @@ steps:
       - dependencies
 
   - name: build
-    image: node:20-alpine
+    image: node:22-alpine
     pull: always
     environment:
       PNPM_CACHE_FOLDER: .cache/pnpm
