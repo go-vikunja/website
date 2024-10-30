@@ -34,7 +34,7 @@
 </table>
 
 <script>
-	function formatDate(date) {
+	function formatDate(date: Date) {
 		return date.toLocaleString('en-US', {
 			year: 'numeric',
 			month: 'short',
@@ -49,33 +49,56 @@
 	function updateDates() {
 		const now = new Date()
 
-		document.getElementById('now').textContent = formatDate(now)
+        const nowElement = document.getElementById('now')
+        if (nowElement) {
+            nowElement.textContent = formatDate(now)
+        }
 
 		const now24h = new Date(now.getTime() + 24 * 60 * 60 * 1000)
-		document.getElementById('now24h').textContent = formatDate(now24h)
+        const now24hElement = document.getElementById('now24h')
+        if (now24hElement) {
+            now24hElement.textContent = formatDate(now24h)
+        }
 
-		const nowD = new Date(now.setHours(0, 0, 0, 0))
-		document.getElementById('nowD').textContent = formatDate(nowD)
+        const nowD = new Date(now.setHours(0, 0, 0, 0))
+        const nowDElement = document.getElementById('nowD')
+        if (nowDElement) {
+            nowDElement.textContent = formatDate(nowD)
+        }
 
-		const nowW = new Date(now)
-		nowW.setDate(now.getDate() - now.getDay())
-		nowW.setHours(0, 0, 0, 0)
-		document.getElementById('nowW').textContent = formatDate(nowW)
+        const nowW = new Date(now)
+        nowW.setDate(now.getDate() - now.getDay())
+        nowW.setHours(0, 0, 0, 0)
+        const nowWElement = document.getElementById('nowW')
+        if (nowWElement) {
+            nowWElement.textContent = formatDate(nowW)
+        }
 
-		const nowW1w = new Date(nowW)
-		nowW1w.setDate(nowW.getDate() + 7)
-		document.getElementById('nowW1w').textContent = formatDate(nowW1w)
+        const nowW1w = new Date(nowW)
+        nowW1w.setDate(nowW.getDate() + 7)
+        const nowW1wElement = document.getElementById('nowW1w')
+        if (nowW1wElement) {
+            nowW1wElement.textContent = formatDate(nowW1w)
+        }
 
-		const now30d = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
-		document.getElementById('now30d').textContent = formatDate(now30d)
+        const now30d = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
+        const now30dElement = document.getElementById('now30d')
+        if (now30dElement) {
+            now30dElement.textContent = formatDate(now30d)
+        }
 
-		const dateMathToday = new Date()
-		document.getElementById('date-math-today').textContent = formatDate(dateMathToday)
+        const dateMathTodayElement = document.getElementById('date-math-today')
+        if (dateMathTodayElement) {
+            dateMathTodayElement.textContent = formatDate(new Date())
+        }
 
-		const nowPlusMonth = new Date(dateMathToday)
-		nowPlusMonth.setMonth(nowPlusMonth.getMonth() + 1)
-		nowPlusMonth.setHours(0, 0, 0, 0)
-		document.getElementById('nowPlusMonth').textContent = formatDate(nowPlusMonth)
+        const nowPlusMonth = new Date()
+        nowPlusMonth.setMonth(nowPlusMonth.getMonth() + 1)
+        nowPlusMonth.setHours(0, 0, 0, 0)
+        const nowPlusMonthElement = document.getElementById('nowPlusMonth')
+        if (nowPlusMonthElement) {
+            nowPlusMonthElement.textContent = formatDate(nowPlusMonth)
+        }
 	}
 
 	setInterval(updateDates, 1000)
