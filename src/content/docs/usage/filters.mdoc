@@ -31,7 +31,7 @@ The available fields for filtering include:
 | `created`     | The time and date when the task was created.                                              |
 | `updated`     | The time and date when the task was updated.                                              |
 
-You can date math to set relative dates. Click on the date value in a query to find out more.
+You can use date math to set relative dates with any date field. [See below](#date-math) for an explanation.
 
 All strings must be either single-word or enclosed in `"` or `'`. This extends to date values like `2024-03-11`.
 
@@ -59,14 +59,45 @@ To combine multiple conditions, you can use the following logical operators:
 | `\|\|`      | OR operator  | matches if any of the conditions are true |
 | `(` and `)` | Parentheses  | for grouping conditions                   |
 
-## Examples
+## Date Math
+
+Date Math allows you to specify relative dates which are resolved on the fly by Vikunja when applying the filter.
+
+Each Date Math expression starts with an anchor date, which can either be `now`, or a date string ending with `||`.
+
+This anchor date can optionally be followed by one or more maths expressions, for example:
+ 
+* `+1d`: Add one day
+* `-1d`: Subtract one day
+* `/d`: Round down to the nearest day
+
+These expressions are similar to the ones provided by [Grafana](https://grafana.com/docs/grafana/latest/dashboards/time-range-controls/) and [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#date-math).
+
+### Supported time units
+
+|     |         |
+|-----|---------|
+| `s` | Seconds |
+| `m` | Minutes |
+| `h` | Hours   |
+| `d` | Days    |
+| `w` | Weeks   |
+| `M` | Months  |
+| `y` | Years   |
+
+### Example date math expressions
+
+{% dateMathExamples %}
+{% /dateMathExamples %}
+
+## Filter Examples
 
 Here are some examples of filter queries:
 
-|                                                              |                                                             |
-|--------------------------------------------------------------|-------------------------------------------------------------|
-| `priority = 4`                                               | tasks with priority level 4                                 |
-| `dueDate < now`                                              | tasks with a due date in the past                           |
-| `done = false && priority >= 3`                              | undone tasks with priority level 3 or higher                |
-| `assignees in user1, user2`                                  | tasks assigned to either user1 or user2                     |
-| `(priority = 1 \|\| priority = 2) &&` <br > `dueDate <= now` | tasks with priority level 1 or 2 and a due date in the past |
+|                                                      |                                                             |
+|------------------------------------------------------|-------------------------------------------------------------|
+| `priority = 4`                                       | tasks with priority level 4                                 |
+| `dueDate < now`                                      | tasks with a due date in the past                           |
+| `done = false && priority >= 3`                      | undone tasks with priority level 3 or higher                |
+| `assignees in user1, user2`                          | tasks assigned to either user1 or user2                     |
+| `(priority = 1 \|\| priority = 2) && dueDate <= now` | tasks with priority level 1 or 2 and a due date in the past |

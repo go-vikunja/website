@@ -23,6 +23,9 @@ export default defineMarkdocConfig({
 				type: {type: String},
 			},
 		},
+		dateMathExamples: {
+			render: component('./src/components/partials/DateMathExamples.astro'),
+		},
 		configOptions: {
 			render: component('./src/components/partials/ConfigOptions.astro'),
 		}
