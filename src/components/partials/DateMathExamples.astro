@@ -1,0 +1,83 @@
+<table>
+    <tbody>
+    <tr>
+        <td><code>now</code></td>
+        <td>Right now (<span id="now">Oct 30, 2024, 14:26:12</span>)</td>
+    </tr>
+    <tr>
+        <td><code>now+24h</code></td>
+        <td>In 24h (<span id="now24h">Oct 31, 2024, 14:26:12</span>)</td>
+    </tr>
+    <tr>
+        <td><code>now/d</code></td>
+        <td>Today at 00:00 (<span id="nowD">Oct 30, 2024, 00:00:00</span>)</td>
+    </tr>
+    <tr>
+        <td><code>now/w</code></td>
+        <td>The beginning of this week at 00:00 (<span id="nowW">Oct 27, 2024, 00:00:00</span>)</td>
+    </tr>
+    <tr>
+        <td><code>now/w+1w</code></td>
+        <td>The end of this week (<span id="nowW1w">Nov 3, 2024, 00:00:00</span>)</td>
+    </tr>
+    <tr>
+        <td><code>now+30d</code></td>
+        <td>In 30 days (<span id="now30d">Nov 29, 2024, 00:00:00</span>)</td>
+    </tr>
+    <tr>
+        <td><code><span id="date-math-today">Oct 30, 2024, 14:26:12</span>||+1M/d</code></td>
+        <td>
+            <span id="date-math-today">Oct 30, 2024, 14:26:12</span> plus one month at 00:00 of that day (<span id="nowPlusMonth">Nov 30, 2024, 00:00:00</span>)
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+	function formatDate(date) {
+		return date.toLocaleString('en-US', {
+			year: 'numeric',
+			month: 'short',
+			day: 'numeric',
+			hour: '2-digit',
+			minute: '2-digit',
+			second: '2-digit',
+			hour12: false,
+		})
+	}
+
+	function updateDates() {
+		const now = new Date()
+
+		document.getElementById('now').textContent = formatDate(now)
+
+		const now24h = new Date(now.getTime() + 24 * 60 * 60 * 1000)
+		document.getElementById('now24h').textContent = formatDate(now24h)
+
+		const nowD = new Date(now.setHours(0, 0, 0, 0))
+		document.getElementById('nowD').textContent = formatDate(nowD)
+
+		const nowW = new Date(now)
+		nowW.setDate(now.getDate() - now.getDay())
+		nowW.setHours(0, 0, 0, 0)
+		document.getElementById('nowW').textContent = formatDate(nowW)
+
+		const nowW1w = new Date(nowW)
+		nowW1w.setDate(nowW.getDate() + 7)
+		document.getElementById('nowW1w').textContent = formatDate(nowW1w)
+
+		const now30d = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
+		document.getElementById('now30d').textContent = formatDate(now30d)
+
+		const dateMathToday = new Date()
+		document.getElementById('date-math-today').textContent = formatDate(dateMathToday)
+
+		const nowPlusMonth = new Date(dateMathToday)
+		nowPlusMonth.setMonth(nowPlusMonth.getMonth() + 1)
+		nowPlusMonth.setHours(0, 0, 0, 0)
+		document.getElementById('nowPlusMonth').textContent = formatDate(nowPlusMonth)
+	}
+
+	setInterval(updateDates, 1000)
+	updateDates()
+</script>
