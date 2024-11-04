@@ -52,6 +52,26 @@ volumes:
 
 After all the setup is done, start Vikunja as shown in the [Docker Compose setup](/docs/full-docker-example).
 
+## Reading config values from files
+
+Starting with version 0.25.0, Vikunja can read any config value from a file saved on disk when the path to that file is specified in the config with the target config value suffixed with `_file`.
+This works with environment variables as well.
+
+Files are evaluated after any previously set values. That means if you set both, the value from the file will override any previously set value.
+
+If the specified file is not accessible, Vikunja will fail to start.
+
+For example, setting this in your config.yml:
+
+```yaml
+database:
+  password_file: /path/to/password
+```
+
+will load the content from the file at `/path/to/password` and set it as the config value of `database.password`.
+
+With an environment variable for the same config variable, you'd need to set the `VIKUNJA_DATABASE_PASSWORD_FILE` environment variable to `/path/to/password`.
+
 ## Default configuration with explanations
 
 The following explains all possible config variables and their defaults.
