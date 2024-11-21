@@ -1,0 +1,28 @@
+---
+title: 'Vikunja 0.24.5: Security fix'
+date: 2024-11-21T16:00:00.000Z
+slug: /vikunja-v0.24.5-was-released
+description: >-
+  Vikunja 0.24.5 update: two important security fixes.
+---
+
+This release contains only two security fixes and a handful of changes to the build pipeline. 
+
+Please update as soon as possible, especially if you have multiple users on your instance.
+
+A user has reported a way to bypass permission checks under certain circumstances which allowed other users of the 
+same instance to see tasks which they didn't have access to.
+
+I will update this post next week (2024-11-26) to provide more details and an explanation.
+
+Due to changes in xgo, which Vikunja uses for cross-platform builds, there will be no further releases for 32-bit linux systems.
+If you absolutely need 32-bit linux binaries, please reach out.
+
+To get the upgrade, simply replace the Vikunja binary or pull the latest docker image.
+You can also check out [the update docs](/docs/installing#updating) for more information about the process.
+
+If you have any questions about this release, please reach out
+either [in the community forum](https://community.vikunja.io), [Twitter / X](https://twitter.com/vikunja.io), [Mastodon](https://social.linux.pizza/@vikunja)
+or [via email](mailto:hello@vikunja.io).
+
+Thank you for using Vikunja, and I look forward to bringing you more enhancements in future updates! (hopefully actually useful ones, not only security fixes)
