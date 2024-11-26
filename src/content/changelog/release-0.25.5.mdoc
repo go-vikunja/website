@@ -10,16 +10,38 @@ This release contains only two security fixes and a handful of changes to the bu
 
 Please update as soon as possible, especially if you have multiple users on your instance.
 
-A user has reported a way to bypass permission checks under certain circumstances which allowed other users of the 
-same instance to see tasks which they didn't have access to.
+## Permission bypass
 
-I will update this post next week (2024-11-26) to provide more details and an explanation.
+It was possible to see all tasks of any saved filter, even if the filter was created by another user.
+The only thing required was an account on the instance.
+Because filters use numeric ids, it would have been possible to enumerate all filters to see all tasks that are included in other user's filters.
+
+This was possible because a permission check was missing when fetching all tasks of a saved filter.
+
+Using these steps, it was possible to exploit the vulnerability:
+
+1. Log in as user A
+2. Create a saved filter
+3. Get a bearer token for user B, using this curl request: `curl -d '{"username":"user_b","password":"12345678"}' localhost:3456/api/v1/login  -H 'Accept: application/json' -H 'Content-Type: application/json' | jq -r .token`
+4. Using the bearer token, fetch all tasks from any saved filter (id `-3` used here): `curl -H "Authorization: Bearer $BEARER" localhost:3456/api/v1/projects/-3/tasks | jq`
+5. See all tasks
+
+A further inspection revealed the same kind of vulnerability when fetching attachments of a task.
+Here, it was possible to fetch metadata of all attachments of any task, but not download any files. 
+
+This has been fixed as well.
+
+Thanks to the user who reported this!
+
+## Other changes
 
 Due to changes in xgo, which Vikunja uses for cross-platform builds, there will be no further releases for 32-bit linux systems.
 If you absolutely need 32-bit linux binaries, please reach out.
 
 To get the upgrade, simply replace the Vikunja binary or pull the latest docker image.
 You can also check out [the update docs](/docs/installing#updating) for more information about the process.
+
+## Closin
 
 If you have any questions about this release, please reach out
 either [in the community forum](https://community.vikunja.io), [Twitter / X](https://twitter.com/vikunja.io), [Mastodon](https://social.linux.pizza/@vikunja)
