@@ -25,6 +25,11 @@ There might be multiple new such builds a day.
 Versions contain the last stable version, the number of commits since then and the commit the currently running binary was built from.
 They look like this: `v0.20.2-75-6049427322`
 
+It might happen that the unstable version does not seem to be based on the latest release. 
+For example, the version might report `v0.24.1-566-gb3040b846` when the last release is `v0.25.5`.
+This does not mean the unstable builds are outdated. Depending on the release, we only backport changes to patch releases.
+The important part is the commit hash at the end, which you can verify [in the git repo](https://code.vikunja.io/vikunja).
+
 Since a release is also cut from the main branch at some point, features from unstable will eventually become available in stable releases.
 At the point in time of a new version release, the unstable build is the same exact thing.
 
