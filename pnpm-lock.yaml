@@ -15,8 +15,8 @@ importers:
         specifier: ^12.0.0
         version: 12.0.1(@types/node@22.10.1)(astro@5.0.4(@types/node@22.10.1)(jiti@1.21.6)(rollup@4.28.0)(typescript@5.7.2)(yaml@2.6.1))(jiti@1.21.6)(yaml@2.6.1)
       '@astrojs/markdoc':
-        specifier: ^0.12.0
-        version: 0.12.2(astro@5.0.4(@types/node@22.10.1)(jiti@1.21.6)(rollup@4.28.0)(typescript@5.7.2)(yaml@2.6.1))
+        specifier: ^0.12.3
+        version: 0.12.3(astro@5.0.4(@types/node@22.10.1)(jiti@1.21.6)(rollup@4.28.0)(typescript@5.7.2)(yaml@2.6.1))
       '@astrojs/node':
         specifier: ^9.0.0
         version: 9.0.0(astro@5.0.4(@types/node@22.10.1)(jiti@1.21.6)(rollup@4.28.0)(typescript@5.7.2)(yaml@2.6.1))
@@ -111,8 +111,8 @@ packages:
       prettier-plugin-astro:
         optional: true
 
-  '@astrojs/markdoc@0.12.2':
-    resolution: {integrity: sha512-4mq7Nh0/9cckaEKyceYSJ+Ut27Yd1biwkxAN7yKajXCzrrULbVRV79djpGK2C6znlGtuyY5chx1KdcfrZ/WwEg==}
+  '@astrojs/markdoc@0.12.3':
+    resolution: {integrity: sha512-LLmHq2vOkDGdfmr25r7gloRqU81Xx7LY85y/A4tSsWpINniStadH6ayL1aOM7ToU41CkNzb+87yVthW3wVGC0g==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=22.0.0}
     peerDependencies:
       astro: ^5.0.0
@@ -2900,7 +2900,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@astrojs/markdoc@0.12.2(astro@5.0.4(@types/node@22.10.1)(jiti@1.21.6)(rollup@4.28.0)(typescript@5.7.2)(yaml@2.6.1))':
+  '@astrojs/markdoc@0.12.3(astro@5.0.4(@types/node@22.10.1)(jiti@1.21.6)(rollup@4.28.0)(typescript@5.7.2)(yaml@2.6.1))':
     dependencies:
       '@astrojs/internal-helpers': 0.4.2
       '@astrojs/markdown-remark': 6.0.1
