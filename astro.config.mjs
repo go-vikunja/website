@@ -45,11 +45,9 @@ export default defineConfig({
 			],
 		],
 	},
-	experimental: {
-		env: {
-			schema: {
-				TURNSTILE_SECRET: envField.string({context: 'server', access: 'secret'}),
-			},
+	env: {
+		schema: {
+			TURNSTILE_SECRET: envField.string({context: 'server', access: 'secret'}),
 		},
 	},
 	redirects: {
