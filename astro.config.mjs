@@ -9,7 +9,7 @@ import sitemap from '@astrojs/sitemap'
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://vikunja.io',
-	output: 'hybrid',
+	output: 'static',
 	integrations: [
 		tailwind(), 
 		markdoc(), 
