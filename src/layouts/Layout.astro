@@ -78,9 +78,6 @@ const canonical = base.endsWith('/')
 
 <Footer/>
 
-</body>
-</html>
-
 <style is:global>
     ul.list-checkmark {
         list-style-type: '✓';
@@ -101,3 +98,28 @@ const canonical = base.endsWith('/')
     }
 
 </style>
+
+<script>
+const buttons = document.querySelectorAll('[data-toggle-dark-mode]')
+
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.contains('dark')
+        localStorage.theme = isDark ? 'light' : 'dark'
+        setThemeClass()
+    })
+})
+
+function setThemeClass() {
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
+    } else {
+        document.documentElement.classList.remove('dark')
+    }
+}
+
+setThemeClass()
+</script>
+
+</body>
+</html>
