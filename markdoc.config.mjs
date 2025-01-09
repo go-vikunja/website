@@ -6,7 +6,7 @@ export default defineMarkdocConfig({
 		shiki({
 			themes: {
 				light: 'github-light',
-				dark: 'min-dark',
+				dark: 'github-dark',
 			},
 
 			colorReplacements: {
