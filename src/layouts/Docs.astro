@@ -98,7 +98,7 @@ const sidebarEntries = await getSidebarNavigation()
                                     <li>
                                         <a
                                                 href={item.url}
-                                                class={'block rounded px-2 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-800 transition ' + ((Astro.url.pathname === item.url || Astro.url.pathname === item.url + '/') && ' !bg-gray-100 text-primary')}
+                                                class={'block rounded px-2 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-800 transition ' + ((Astro.url.pathname === item.url || Astro.url.pathname === item.url + '/') && ' !bg-gray-100 dark:!bg-gray-800 text-primary')}
                                         >
 											{item.title}
                                         </a>
