@@ -3,9 +3,7 @@ import tailwind from '@astrojs/tailwind'
 import markdoc from '@astrojs/markdoc'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import node from '@astrojs/node'
 import sitemap from '@astrojs/sitemap'
-
 import cloudflare from '@astrojs/cloudflare'
 
 // https://astro.build/config
