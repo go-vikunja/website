@@ -24,7 +24,7 @@ refer to our [privacy policy](/privacy).
 
 ## Vikunja Cloud Hosting
 
-All parts of Vikunja Cloud and this website are hosted at [Hetzner](https://hetzner.com) in Germany and Finland.
+All parts of Vikunja Cloud are hosted at [Hetzner](https://hetzner.com) in Germany and Finland.
 Their data centers are kept secure through multiple layers of [physical, network and system security](https://www.hetzner.com/assets/Uploads/downloads/Sicherheit-en.pdf)
 and their [ISO/IEC 27001 certification](https://www.hetzner.com/unternehmen/zertifizierung).
 
