@@ -6,13 +6,15 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import node from '@astrojs/node'
 import sitemap from '@astrojs/sitemap'
 
+import cloudflare from '@astrojs/cloudflare'
+
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://vikunja.io',
 	output: 'static',
 	integrations: [
-		tailwind(), 
-		markdoc(), 
+		tailwind(),
+		markdoc(),
 		sitemap({
 			serialize(item) {
 				if (item.url.endsWith('/')) {
@@ -23,9 +25,7 @@ export default defineConfig({
 			},
 		}),
 	],
-	adapter: node({
-		mode: 'standalone',
-	}),
+	adapter: cloudflare(),
 	markdown: {
 		rehypePlugins: [
 			rehypeSlug,
