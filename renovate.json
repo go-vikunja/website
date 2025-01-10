@@ -6,16 +6,16 @@
   "packageRules": [
     {
       "groupName": "astro",
-      "matchPackagePrefixes": [
-        "@astrojs/",
-        "astro"
+      "matchPackageNames": [
+        "@astrojs/{/,}**",
+        "astro{/,}**"
       ]
     },
     {
       "groupName": "tailwindcss",
-      "matchPackagePrefixes": [
-        "@tailwindcss/",
-        "tailwindcss"
+      "matchPackageNames": [
+        "@tailwindcss/{/,}**",
+        "tailwindcss{/,}**"
       ]
     }
   ]
