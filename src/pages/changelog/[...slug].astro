@@ -9,7 +9,7 @@ export async function getStaticPaths() {
 	const changelog = await getCollection('changelog')
 	return changelog.map((entry) => ({
 		params: {
-			slug: entry.slug,
+            slug: entry.slug.endsWith('/') ? entry.slug : entry.slug + '/',
 		},
 		props: entry,
 	}))
