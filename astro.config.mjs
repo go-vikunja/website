@@ -74,6 +74,5 @@ export default defineConfig({
 		'/blog/2023/12/whats-new-in-vikunja-0.22.0/': '/changelog/whats-new-in-vikunja-0.22.0',
 		'/blog/2024/01/vikunja-frontend-and-api-v0.22.1-was-released/': '/changelog/vikunja-frontend-and-api-v0.22.1-was-released',
 		'/blog/2024/02/whats-new-in-vikunja-0.23.0/': '/changelog/whats-new-in-vikunja-0.23.0',
-		'/survey': 'https://forms.reform.app/oSTwrh/vikunja-feedback/cejwzf',
 	},
 })
