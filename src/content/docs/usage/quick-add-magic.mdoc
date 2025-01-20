@@ -1,0 +1,122 @@
+---
+title: Quick Add Magic
+slug: quick-add-magic
+description: lol
+---
+
+When creating a task in Vikunja, you can use special keywords to directly add attributes to the newly created task. This allows to add commonly used attributes to tasks much faster.
+
+{% callout type="info" %}
+Quick add magic is not yet available when creating tasks through the API.
+{% /callout %}
+
+## Todoist Mode
+
+You can change the keywords Vikunja reacts on to the ones from [Todoist](https://todoist.com/help/articles/use-task-quick-add-in-todoist-va4Lhpzz).
+This is especially useful when you're used to these shortcuts and want an easy path to migrating to Vikunja.
+
+To change this, open the general settings in the menu on the top right, then scroll down to "Quick Add Magic Mode" and set it to "Todoist".
+
+## Labels
+
+To add a label, simply prefix the name of the label with `*`. Vikunja will first check if the label already exist and create it if not. You can use this multiple times.
+
+To use spaces, simply add a `"` or `'` around the label name. For example: `*"Label with spaces"`.
+
+## Priority
+
+To set a task's priority, add a number `1-5`, prefixed with a `!`. The higher the number, the higher the priority.
+
+## Assignees
+
+To directly assign the task to a user, add their username prefixed with `@` to the task. You can use this multiple times to assign multiple users to a task.
+
+## Projects
+
+To set a project for the task to appear in, enter its name prefixed with `+`. 
+This will return an error if the project does not exist.
+
+To use spaces, simply add a `"` or `'` around the project name. For example: `+"Project with spaces"`.
+
+## Date and time
+
+Any date will be used as the due date of the new task. You can use dates in any of these formats:
+
+* Today
+* Tonight
+* Tomorrow
+* Next monday
+* This weekend
+* Later this week
+* Later next week
+* Next week
+* Next month
+* End of month
+* In 5 days \[hours/weeks/months\]
+* Tuesday (any weekday, will use the next date with that date)
+* 17/02/2021
+* Feb 17 (will use the current year)
+* 17th (will use the 17th of the current month)
+
+Combine any of the date formats with a time like `"at 17:00"` (or 5pm) to set a time.
+
+## Repeating tasks
+
+To set a task as repeating in an interval, simply add `'every {amount} {type}'` to the task text. The amount needs to be a number and can be omitted to use just the type (see examples).
+
+For example:
+
+* Every day
+* Every 3 days
+* Every week
+* Every 2 weeks
+* Every month
+
+## Creating multiple tasks at once
+
+To create multiple tasks at once, simply insert them line by line. Each line will become a new task.
+
+You can press `shift + enter` to create a new line or paste multiline content from another document.
+
+### Subtasks
+
+When using multiline input as described above, you can indent tasks to create subtasks.
+It is possible to use spaces or tabs, as long as you're using the same in one creation.
+
+You can nest these as much as you want to create many levels of subtasks.
+
+For example:
+
+```
+This is a single task
+Parent task
+  This will be a sub task
+    And this will be a sub sub task.
+```
+
+## Examples
+
+1. Create a high-priority task with labels and assignees:
+```
+Buy groceries *shopping *urgent !4 @john @mary tomorrow at 5pm
+```
+
+2. Create a repeating task with a project and label:
+```
+Team meeting +"Work Projects" *important every week monday at 10am
+```
+
+3. Create a task with multiple labels and a future date:
+```
+Prepare presentation *"client meeting" *work *deadline in 5 days
+```
+
+4. Create a priority task with project and specific date:
+```
+Submit report !5 +"Q1 Reports" *urgent 17/02/2023 at 17:00
+```
+
+5. Create a repeating task with multiple components:
+```
+Clean office *maintenance *housekeeping !3 +"Office Management" @cleaning.team every 2 weeks monday at 9am
+```
