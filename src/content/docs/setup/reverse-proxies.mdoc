@@ -46,7 +46,7 @@ example:
   vikunja:
     image: vikunja/vikunja
     environment:
-      VIKUNJA_SERVICE_PUBLICURL: https://vikunja.your-domain.com/ # change vikunja.your-domain.com to your desired domain/subdomain.
+      VIKUNJA_SERVICE_PUBLICURL: https://vikunja.example.com/ # change vikunja.example.com to your desired domain/subdomain.
       VIKUNJA_DATABASE_HOST: db
       VIKUNJA_DATABASE_PASSWORD: secret
       VIKUNJA_DATABASE_TYPE: mysql
@@ -135,10 +135,10 @@ Put the following config in `cat /etc/apache2/sites-available/vikunja.conf`:
 
 ## Caddy
 
-Use the following Caddyfile to get Vikunja up and running:
+Adjust the following Caddyfile to get Vikunja up and running:
 
 ```conf
-vikunja.domainname.tld {
+vikunja.example.com {
 	handle /* {
 		reverse_proxy 127.0.0.1:3456
 	}
