@@ -1,0 +1,154 @@
+---
+title: LDAP Authentication
+slug: ldap
+description: Learn how to configure LDAP authentication with Vikunja.
+---
+
+{% callout type="warning" %}
+This feature has not been released yet. It is only available for testing in [unstable builds](/docs/versions#unstable).
+{% /callout %}
+
+Vikunja supports authentication through LDAP (Lightweight Directory Access Protocol), using LDAP Bind authentication to
+authorize users. This allows you to integrate Vikunja with existing directory services.
+
+## How It Works
+
+When a user attempts to log in, Vikunja:
+
+1. Connects to the configured LDAP server using the provided bind credentials
+2. Searches for the user using the provided filter
+3. If found, attempts to bind with the user's credentials
+4. On successful binding, creates or updates the user account in Vikunja using the configured LDAP attributes
+
+## Basic Setup
+
+To enable LDAP authentication, you need to configure the following basic settings [in a config file or via environment variables](/docs/config-options):
+
+```yaml
+auth:
+  ldap:
+    enabled: true
+    host: ldap.example.com
+    port: 389
+    basedn: dc=example,dc=com
+    userfilter: "(&(objectClass=person)(uid=%[1]s))"
+    binddn: "cn=admin,dc=example,dc=com"
+    bindpassword: "secretpassword"
+```
+
+Check out [the available config options](/docs/config-options#1-auth-ldap) to learn more about the variables and their default values.
+
+While the examples here use a config file, you can configure all of it via environment variables as well. Check out the config reference to see how that works.
+ 
+## Security Settings
+
+{% callout type="warning" %}
+If possible, you should only connect to the LDAP server via TLS. Only disable this if you absolutely know what you're doing.
+{% /callout %}
+
+By default, Vikunja will try to connect to the server using TLS. If you absolutely need it, you can disable this:
+
+```yaml
+auth:
+  ldap:
+    usetls: false
+```
+
+If you have TLS configured on your LDAP server, but don't have a valid certificate, you can disable checking the certificate chain by setting the `verifytls` option to `false`:
+
+```yaml
+auth:
+  ldap:
+    usetls: true
+    verifytls: false
+```
+
+## User Search Configuration
+
+To configure how Vikunja searches for users:
+
+```yaml
+auth:
+  ldap:
+    userfilter: "(&(objectClass=person)(uid=%[1]s))"
+    binddn: "cn=admin,dc=example,dc=com"
+    bindpassword: "secretpassword"
+```
+
+The `%[1]s` in the `userfilter` setting will be replaced with the username entered during login.
+
+You can use the placeholder multiple times, for example to search for users using username and email address:
+
+```yaml
+auth:
+  ldap:
+    userfilter: "(&(objectClass=Person)(|(uid=%[1]s)(mail=%[1]s)))"
+    binddn: "cn=admin,dc=example,dc=com"
+    bindpassword: "secretpassword"
+```
+
+Usually, you'll need to adjust at least the `objectClass`.
+
+### Bind Account
+
+You need to configure a service account used for searching users in the LDAP directory.
+This account should only have minimal permissions.
+
+## Attribute Mapping
+
+Vikunja will map attributes from the directory to users.
+You can configure how they are mapped to Vikunja user properties:
+
+```yaml
+auth:
+  ldap:
+    attribute:
+      username: uid
+      email: mail
+      displayname: displayName
+```
+
+Note that Vikunja requires users to have an email address to work correctly.
+
+## Example Configurations
+
+### Active Directory
+
+Here's a minimal example configuration for Active Directory:
+
+```yaml
+auth:
+  ldap:
+    enabled: true
+    host: ad.your-domain.tld
+    port: 389
+    basedn: "DC=company,DC=com"
+    userfilter: "(&(objectClass=user)(sAMAccountName=%[1]s))"
+    binddn: "CN=ServiceAccount,OU=ServiceAccounts,DC=company,DC=com"
+    bindpassword: "very-secret-password"
+    attribute:
+      username: sAMAccountName
+```
+
+### Authentik
+
+This config assumes:
+
+- You have created an [LDAP provider](https://docs.goauthentik.io/docs/add-secure-apps/providers/ldap) in Authentik
+- Your LDAP outpost is reachable on port `636`
+- You have configured that provider to [use TLS](https://docs.goauthentik.io/docs/add-secure-apps/providers/ldap/#ssl--starttls)
+- You have a service account called `ldap-service-account` which has permission to [search the full LDAP directory](https://docs.goauthentik.io/docs/add-secure-apps/providers/ldap/#searching--search-modes)
+
+```yaml
+auth:
+  ldap:
+    enabled: true
+    host: auth.your-domain.tld
+    port: 636
+    usetls: true
+    verifytls: false
+    basedn: dc=ldap,dc=your-domain,dc=tld
+    userfilter: (&(objectClass=user)(cn=%s))
+    binddn: cn=ldap-service-account,ou=users,dc=ldap,dc=your-domain,dc=tld
+    bindpassword: super-secret-password
+```
