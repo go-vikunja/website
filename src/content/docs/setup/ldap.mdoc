@@ -121,13 +121,24 @@ auth:
   ldap:
     enabled: true
     host: ad.your-domain.tld
-    port: 389
     basedn: "DC=company,DC=com"
     userfilter: "(&(objectClass=user)(sAMAccountName=%[1]s))"
     binddn: "CN=ServiceAccount,OU=ServiceAccounts,DC=company,DC=com"
     bindpassword: "very-secret-password"
     attribute:
       username: sAMAccountName
+```
+
+The same config with environment variables:
+
+```
+VIKUNJA_AUTH_LDAP_ENABLED=true
+VIKUNJA_AUTH_LDAP_HOST=ad.your-domain.tld
+VIKUNJA_AUTH_LDAP_BASEDN="DC=company,DC=com"
+VIKUNJA_AUTH_LDAP_USERFILTER="(&(objectClass=user)(sAMAccountName=%[1]s))"
+VIKUNJA_AUTH_LDAP_BINDDN="CN=ServiceAccount,OU=ServiceAccounts,DC=company,DC=com"
+VIKUNJA_AUTH_LDAP_BINDPASSWORD="very-secret-password"
+VIKUNJA_AUTH_LDAP_ATTRIBUTE_USERNAME=sAMAccountName
 ```
 
 ### Authentik
@@ -145,10 +156,22 @@ auth:
     enabled: true
     host: auth.your-domain.tld
     port: 636
-    usetls: true
     verifytls: false
     basedn: dc=ldap,dc=your-domain,dc=tld
     userfilter: (&(objectClass=user)(cn=%s))
     binddn: cn=ldap-service-account,ou=users,dc=ldap,dc=your-domain,dc=tld
-    bindpassword: super-secret-password
+    bindpassword: very-secret-password
+```
+
+The same config with environment variables:
+
+```
+VIKUNJA_AUTH_LDAP_ENABLED=true
+VIKUNJA_AUTH_LDAP_PORT=636
+VIKUNJA_AUTH_LDAP_VERIFYTLS=false
+VIKUNJA_AUTH_LDAP_HOST=auth.your-domain.tld
+VIKUNJA_AUTH_LDAP_BASEDN=dc=ldap,dc=your-domain,dc=tld
+VIKUNJA_AUTH_LDAP_USERFILTER="(&(objectClass=user)(cn=%s))"
+VIKUNJA_AUTH_LDAP_BINDDN="cn=ldap-service-account,ou=users,dc=ldap,dc=your-domain,dc=tld"
+VIKUNJA_AUTH_LDAP_BINDPASSWORD="very-secret-password"
 ```
