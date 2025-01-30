@@ -13,15 +13,7 @@ export default defineConfig({
 	integrations: [
 		tailwind(),
 		markdoc(),
-		sitemap({
-			serialize(item) {
-				if (item.url.endsWith('/')) {
-					item.url = item.url.slice(0, -1)
-				}
-
-				return item
-			},
-		}),
+		sitemap(),
 	],
 	adapter: cloudflare(),
 	markdown: {
