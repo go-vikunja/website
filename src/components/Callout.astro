@@ -10,14 +10,14 @@ function getClasses(): string {
 	let suffix = ''
 	switch (type) {
 		case 'info':
-			suffix = 'bg-primary-lighter !text-white'
+			suffix = 'bg-primary-lighter text-white!'
 			break
 		case 'warning':
-			suffix = 'bg-yellow-200 dark:bg-yellow-300 !text-gray-800'
+			suffix = 'bg-yellow-200 dark:bg-yellow-300 text-gray-800!'
 			break
 	}
 
-	return classNames + ' callout rounded px-4 py-3 ' + suffix
+	return classNames + ' callout rounded-sm px-4 py-3 ' + suffix
 }
 ---
 
@@ -26,7 +26,9 @@ function getClasses(): string {
 </div>
 
 <style>
-	.callout :global(> p) {
+    @reference '../styles/global.css';
+
+    .callout :global(> p) {
 		@apply m-0;
 	}
 </style>
