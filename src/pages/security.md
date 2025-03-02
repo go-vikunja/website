@@ -31,7 +31,7 @@ and their [ISO/IEC 27001 certification](https://www.hetzner.com/unternehmen/zert
 ## Reporting a security vulnerability
 
 <span class="text-gray-500">
-Based on <a class="!underline !text-gray-500" href="https://supabase.com/.well-known/security.txt">https://supabase.com/.well-known/security.txt</a>.
+Based on <a class="underline! text-gray-500!" href="https://supabase.com/.well-known/security.txt">https://supabase.com/.well-known/security.txt</a>.
 </span>
 
 At Vikunja, we consider the security of the product and our systems a top priority. But no matter how much effort we put

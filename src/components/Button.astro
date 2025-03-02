@@ -13,6 +13,8 @@ const {href, class: className, type} = Astro.props
 }
 
 <style>
+	@reference '../styles/global.css';
+
     a, button {
         @apply inline-flex relative justify-center items-center px-4 py-2 m-0 h-auto
         text-sm font-bold text-center text-white uppercase
@@ -22,6 +24,6 @@ const {href, class: className, type} = Astro.props
         leading-tight;
         outline: none;
         box-shadow: rgba(0, 0, 0, 0.05) 0 0 0 1px;
-        @apply hover:shadow-sm;
+        @apply hover:shadow-xs;
     }
 </style>

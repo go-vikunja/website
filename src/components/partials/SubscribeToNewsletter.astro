@@ -8,7 +8,7 @@ import Button from '../Button.astro'
     time.
 </p>
 
-<form method="post" action="" class="!mt-4 w-ful" id="newsletter-form">
+<form method="post" action="" class="mt-4! w-ful" id="newsletter-form">
     <p>
         <label for="newsletter-email" class="sr-only">Your mail address</label>
         <input
@@ -17,7 +17,7 @@ import Button from '../Button.astro'
                 type="email"
                 placeholder="Your mail address"
                 id="newsletter-email"
-                class="inline-flex relative justify-start items-center py-2 px-3 m-0 w-full max-w-full h-10 font-sans text-base leading-normal align-top bg-white dark:bg-gray-800 rounded border border-solid appearance-none cursor-text border-gray-300 dark:border-gray-700 text-neutral-700 dark:text-gray-200"
+                class="inline-flex relative justify-start items-center py-2 px-3 m-0 w-full max-w-full h-10 font-sans text-base leading-normal align-top bg-white dark:bg-gray-800 rounded-sm border border-solid appearance-none cursor-text border-gray-300 dark:border-gray-700 text-neutral-700 dark:text-gray-200"
         />
     </p>
 
@@ -26,7 +26,7 @@ import Button from '../Button.astro'
     <p id="newsletter-error-message" class="hidden text-red-500"></p>
 
     <Button
-            class="!mt-2 w-full"
+            class="mt-2! w-full"
             type="submit"
     >
         Subscribe to our newsletter
@@ -38,6 +38,8 @@ import Button from '../Button.astro'
 </p>
 
 <style>
+    @reference '../../styles/global.css';
+
     .cf-turnstile {
         @apply w-full mt-2
     }
