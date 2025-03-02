@@ -24,8 +24,8 @@ importers:
         specifier: ^3.2.1
         version: 3.2.1
       '@fontsource/open-sans':
-        specifier: ^5.1.1
-        version: 5.1.1
+        specifier: ^5.2.5
+        version: 5.2.5
       '@fontsource/quicksand':
         specifier: ^5.1.1
         version: 5.1.1
@@ -672,8 +672,8 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
-  '@fontsource/open-sans@5.1.1':
-    resolution: {integrity: sha512-Wfio5om0XH24ZUu6FfW4r50e4xLdoLzvd8midtqUFT2unniyWQj6GJ05RW1YQsHp4Sug3i+agFBIxEmYQzUHSg==}
+  '@fontsource/open-sans@5.2.5':
+    resolution: {integrity: sha512-f0Ww6H+LB6GXA8UCgqs90h4djVttu3quH/1+wkfUY8b09mG1ESn4ACRBHYY78bsoeDXpaCyZh7eoGROBWplvAQ==}
 
   '@fontsource/quicksand@5.1.1':
     resolution: {integrity: sha512-NnIL4yqpkn50GEpye7yztBmkkkQ5vjlVvMnjlkLQr/H8PXveUdaCdGIScd5yHvsc1qcTBwOaAtpz/YkDojwA1A==}
@@ -3369,7 +3369,7 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@fontsource/open-sans@5.1.1': {}
+  '@fontsource/open-sans@5.2.5': {}
 
   '@fontsource/quicksand@5.1.1': {}
 
