@@ -12,9 +12,9 @@ updates:
     groups:
       astro:
         patterns:
-          - @astrojs/*
-          - astro*
+          - '@astrojs/*'
+          - 'astro*'
       tailwindcss:
         patterns:
-          - @tailwindcss/*
-          - tailwindcss*
+          - '@tailwindcss/*'
+          - 'tailwindcss*'
