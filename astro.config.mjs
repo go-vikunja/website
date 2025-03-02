@@ -1,17 +1,21 @@
 import {defineConfig, envField} from 'astro/config'
-import tailwind from '@astrojs/tailwind'
 import markdoc from '@astrojs/markdoc'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import sitemap from '@astrojs/sitemap'
 import cloudflare from '@astrojs/cloudflare'
+import tailwindcss from '@tailwindcss/vite'
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://vikunja.io',
 	output: 'static',
+	vite: {
+		plugins: [
+			tailwindcss(),
+		],
+	},
 	integrations: [
-		tailwind(),
 		markdoc(),
 		sitemap(),
 	],

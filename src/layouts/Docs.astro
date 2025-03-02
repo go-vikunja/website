@@ -80,9 +80,9 @@ async function getSidebarNavigation(): Promise<DocumentationArray> {
 const sidebarEntries = await getSidebarNavigation()
 ---
 <Layout title={title} description={description}>
-    <div class="mx-auto flex max-w-screen-2xl flex-col lg:flex-row lg:pt-8">
+    <div class="mx-auto flex max-w-(--breakpoint-2xl) flex-col lg:flex-row lg:pt-8">
         <button
-                class="navbar-burger m-2 mt-6 block lg:hidden rounded-sm bg-gray-200 dark:bg-gray-800 py-2 px-1 text-center"
+                class="navbar-burger m-2 mt-6 block lg:hidden rounded-xs bg-gray-200 dark:bg-gray-800 py-2 px-1 text-center"
                 data-target="docsMenu"
         >
             Toggle Menu
@@ -98,7 +98,7 @@ const sidebarEntries = await getSidebarNavigation()
                                     <li>
                                         <a
                                                 href={item.url}
-                                                class={'block rounded px-2 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-800 transition ' + ((Astro.url.pathname === item.url || Astro.url.pathname === item.url + '/') && ' !bg-gray-100 dark:!bg-gray-800 text-primary')}
+                                                class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-800 transition ' + ((Astro.url.pathname === item.url || Astro.url.pathname === item.url + '/') && ' bg-gray-100! dark:bg-gray-800! text-primary')}
                                         >
 											{item.title}
                                         </a>

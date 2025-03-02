@@ -33,7 +33,7 @@ const {Content} = await post.render()
 const description = post.data.description || Astro.props?.frontmatter?.description || Astro.props.description
 ---
 <Layout title={post.data.title} description={description}>
-    <div class="flex flex-col lg:flex-row max-w-screen-lg mx-auto mt-6">
+    <div class="flex flex-col lg:flex-row max-w-(--breakpoint-lg) mx-auto mt-6">
         <div class="w-full lg:w-1/5 pl-4 lg:pl-0 lg:pt-4">
             <a href="/changelog" class="underline hover:text-primary flex items-center text-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -51,7 +51,7 @@ const description = post.data.description || Astro.props?.frontmatter?.descripti
 
 			{newestRelease.id !== post.id &&
                     <Callout type="warning" class="mt-6">
-                        There has been a <a href={'/changelog'+newestRelease.slug} class="!underline">new release</a> with additional fixes and
+                        There has been a <a href={'/changelog'+newestRelease.slug} class="underline!">new release</a> with additional fixes and
                         improvements.
                         Updating is highly encouraged.
                     </Callout>
@@ -59,10 +59,10 @@ const description = post.data.description || Astro.props?.frontmatter?.descripti
 
             <Callout type="info" class="mt-6">
                 If Vikunja is useful to you, please consider
-                <a href="https://www.buymeacoffee.com/kolaente" target="_blank" class="!text-white !underline">buying me a coffee</a>,
-                <a href="https://github.com/sponsors/kolaente" target="_blank" class="!text-white !underline">sponsoring me on GitHub</a>
-                or <a href="https://vikunja.io/stickers" class="!text-white !underline">buying a sticker pack</a>.
-                I'm also offering <a href="https://vikunja.cloud" class="!text-white !underline">a hosted version of
+                <a href="https://www.buymeacoffee.com/kolaente" target="_blank" class="text-white! underline!">buying me a coffee</a>,
+                <a href="https://github.com/sponsors/kolaente" target="_blank" class="text-white! underline!">sponsoring me on GitHub</a>
+                or <a href="https://vikunja.io/stickers" class="text-white! underline!">buying a sticker pack</a>.
+                I'm also offering <a href="https://vikunja.cloud" class="text-white! underline!">a hosted version of
                 Vikunja</a> if you want a hassle-free solution for yourself or your team.
             </Callout>
 
