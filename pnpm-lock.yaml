@@ -27,8 +27,8 @@ importers:
         specifier: ^5.2.5
         version: 5.2.5
       '@fontsource/quicksand':
-        specifier: ^5.1.1
-        version: 5.1.1
+        specifier: ^5.2.5
+        version: 5.2.5
       '@tailwindcss/aspect-ratio':
         specifier: ^0.4.2
         version: 0.4.2(tailwindcss@4.0.9)
@@ -675,8 +675,8 @@ packages:
   '@fontsource/open-sans@5.2.5':
     resolution: {integrity: sha512-f0Ww6H+LB6GXA8UCgqs90h4djVttu3quH/1+wkfUY8b09mG1ESn4ACRBHYY78bsoeDXpaCyZh7eoGROBWplvAQ==}
 
-  '@fontsource/quicksand@5.1.1':
-    resolution: {integrity: sha512-NnIL4yqpkn50GEpye7yztBmkkkQ5vjlVvMnjlkLQr/H8PXveUdaCdGIScd5yHvsc1qcTBwOaAtpz/YkDojwA1A==}
+  '@fontsource/quicksand@5.2.5':
+    resolution: {integrity: sha512-V8/RSjgRrLWRqAM0oyLwOWDITf8a9B4mM2RiEZhP6ZVORdXyOWur+MEL908syPi3AiNj90qh2/0d41+bY3LgAQ==}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -3371,7 +3371,7 @@ snapshots:
 
   '@fontsource/open-sans@5.2.5': {}
 
-  '@fontsource/quicksand@5.1.1': {}
+  '@fontsource/quicksand@5.2.5': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
