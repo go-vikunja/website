@@ -85,7 +85,7 @@ chown 1000 $PWD/files
 
 ## Run it
 
-Run `sudo docker-compose up` in your directory and take a look at the output you get.
+Run `sudo docker compose up` in your directory and take a look at the output you get.
 When first started, Vikunja will set up the database and run all migrations etc.
 Once it is ready, you should see a message like this one in your console:
 
@@ -143,7 +143,7 @@ If you get an error like this one:
 
 This is a mysql issue.
 Currently, we don't have a better solution than to completely wipe the database files and start over.
-To do this, first stop everything by running `sudo docker-compose down`, then remove the `db/` folder in your current folder with `sudo rm -rf db` and start the whole stack again with `sudo docker-compose up -d`.
+To do this, first stop everything by running `sudo docker compose down`, then remove the `db/` folder in your current folder with `sudo rm -rf db` and start the whole stack again with `sudo docker compose up -d`.
 
 ## Try it
 
