@@ -143,7 +143,7 @@ auth:
         scope: openid profile email
 ```
 
-## Login to pre-existing local user
+## Login existing local user with OpenID
 
 {% callout type="warning" %}
 This feature has not been released yet. It is only available for testing in [unstable builds](/docs/versions#unstable).
@@ -155,13 +155,13 @@ This feature allows one (or more) provider to login on a local user account
 based on `email` and/or `username`.
 
 In order to match on the username, we need the OpenID subject to be the same as the vikunja local account username. 
-that is to be configured in your SSO provider. 
+You need to make sure that's correctly configured in your SSO provider. 
 
 For instance with Authentik, you need to edit the provider under Applications > Providers > Vikunja provider. 
-Then under advanced protocol settings, subject mode must be set to : Based on the Users's username
+Then under advanced protocol settings, subject mode must be set to `Based on the Users's username`.
 
 
-A valid config to match on both username and password for a given provider would look like 
+A valid config to match on both username and password for a given provider would look like this:
 
 ```yaml
 auth:
@@ -184,7 +184,7 @@ Please note that when connecting using SSO, if no user is found, an SSO user is 
 Therefore, if you missconfigure something, chances are that you created a new SSO account for the user 
 and won't be able to login to the local user by using SSO, until the SSO user is deleted.
 
-Also note that this feature open the door to `local` account hijacking by the 3rd party provider.
+Also note that this feature opens the door to `local` account hijacking by the 3rd party provider.
 
 
 ## Automatically login with specified provider
@@ -196,7 +196,7 @@ This feature has not been released yet. It is only available for testing in [uns
 It is possible to automatically login using a specific provider. To any Vikunja URL, 
 you can add the following parameter `?redirectToProvider=provider-id1`
 
-By doing so, Vikunja will attempt login to `provider-id1` from the config file.
+By doing so, Vikunja will redirect to the provider with the key `provider-id1` from the config file.
 
 If only one provider is configured, the paramater can be one of the following:
 
@@ -204,7 +204,7 @@ If only one provider is configured, the paramater can be one of the following:
 - `?redirectToProvider=true` 
 - `?redirectToProvider=1`
 
-Example : https://vikunja.domain.tld/?redirectToProvider=authentiklogin
+Example: https://vikunja.domain.tld/?redirectToProvider=authentiklogin
 
 ## Automatically assign users to teams
 
