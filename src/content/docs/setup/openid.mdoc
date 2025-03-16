@@ -99,7 +99,7 @@ auth:
 Breaking change in [unstable builds](/docs/versions#unstable)
 {% /callout %}
 
-There is a new syntax to declare providers, however, it is pretty easy to convert to the new syntax.
+There is a new syntax to declare providers in unstable builds. The conversion between syntaxes is straightforward:
 
 Stable syntax:
 
@@ -149,19 +149,13 @@ auth:
 This feature has not been released yet. It is only available for testing in [unstable builds](/docs/versions#unstable).
 {% /callout %}
 
-It is possible to login via SSO to a pre-existing `local` user.
-When you create a `local` user, you must supply a `username` and an `email`. 
-This feature allows one (or more) provider to login on a local user account
-based on `email` and/or `username`.
+Vikunja allows users with existing local accounts to authenticate via SSO. This feature enables linking OpenID providers to local user accounts based on matching `email` and/or `username` attributes.
 
-In order to match on the username, we need the OpenID subject to be the same as the vikunja local account username. 
-You need to make sure that's correctly configured in your SSO provider. 
+For username matching to work, the OpenID subject must match the Vikunja local account username. This requires proper configuration in your SSO provider.
 
-For instance with Authentik, you need to edit the provider under Applications > Providers > Vikunja provider. 
-Then under advanced protocol settings, subject mode must be set to `Based on the Users's username`.
+For example, in Authentik, edit the provider under Applications > Providers > Vikunja provider. In the advanced protocol settings, set the subject mode to `Based on the User's username`.
 
-
-A valid config to match on both username and password for a given provider would look like this:
+A configuration that enables matching on both username and email would look like this:
 
 ```yaml
 auth:
@@ -179,13 +173,11 @@ auth:
         clientsecret: xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
+{% callout type="warning" %}
+When using SSO authentication, Vikunja will create a new SSO user if no matching local user is found. If you misconfigure the matching parameters, this could result in duplicate accounts that prevent logging into the intended local account via SSO until the duplicate SSO user is deleted.
 
-Please note that when connecting using SSO, if no user is found, an SSO user is created. 
-Therefore, if you missconfigure something, chances are that you created a new SSO account for the user 
-and won't be able to login to the local user by using SSO, until the SSO user is deleted.
-
-Also note that this feature opens the door to `local` account hijacking by the 3rd party provider.
-
+Additionally, this feature introduces potential security risks, as it allows third-party providers to authenticate as local users if they can control the username or email claims. Only enable this feature with trusted identity providers.
+{% /callout %}
 
 ## Automatically login with specified provider
 
@@ -193,18 +185,17 @@ Also note that this feature opens the door to `local` account hijacking by the 3
 This feature has not been released yet. It is only available for testing in [unstable builds](/docs/versions#unstable).
 {% /callout %}
 
-It is possible to automatically login using a specific provider. To any Vikunja URL, 
-you can add the following parameter `?redirectToProvider=provider-id1`
+Vikunja supports automatic redirection to a specific OpenID provider by appending the query parameter `?redirectToProvider=provider-id1` to any Vikunja URL.
 
-By doing so, Vikunja will redirect to the provider with the key `provider-id1` from the config file.
+This will immediately redirect the user to the authentication flow for the provider with the key `provider-id1` in your configuration.
 
-If only one provider is configured, the paramater can be one of the following:
+If you have only one provider configured, you can use any of these simplified parameters:
 
 - `?redirectToProvider` 
 - `?redirectToProvider=true` 
 - `?redirectToProvider=1`
 
-Example: https://vikunja.domain.tld/?redirectToProvider=authentiklogin
+Example: https://vikunja.domain.tld/?redirectToProvider=authentik
 
 ## Automatically assign users to teams
 
