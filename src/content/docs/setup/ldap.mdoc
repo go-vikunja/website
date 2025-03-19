@@ -110,6 +110,52 @@ auth:
 
 Note that Vikunja requires users to have an email address to work correctly.
 
+## Avatar Synchronization
+
+Vikunja can synchronize user avatars from LDAP if your directory stores user photos. To enable this feature, configure the LDAP attribute that contains the raw image data:
+
+```yaml
+auth:
+  ldap:
+    avatarsyncattribute: jpegPhoto
+```
+
+Using environment variables:
+
+```dotenv
+VIKUNJA_AUTH_LDAP_AVATARSYNCATTRIBUTE=jpegPhoto
+```
+
+When this is configured, Vikunja will use the binary image data from this attribute as the user's avatar during login.
+
+## Group Synchronization
+
+Vikunja can automatically create and synchronize teams based on LDAP groups. When enabled, users will be automatically added to Vikunja teams that match their LDAP groups.
+
+To enable group synchronization:
+
+```yaml
+auth:
+  ldap:
+    groupsyncenabled: true
+    groupsyncfilter: "(&(objectclass=*)(|(objectclass=group)(objectclass=groupOfNames)))" # This is the default filter
+```
+
+Using environment variables:
+
+```dotenv
+VIKUNJA_AUTH_LDAP_GROUPSYNCENABLED=true
+VIKUNJA_AUTH_LDAP_GROUPSYNCFILTER="(&(objectclass=*)(|(objectclass=group)(objectclass=groupOfNames)))"
+```
+
+When a user logs in, Vikunja will:
+
+1. Search for groups in the LDAP directory using the configured filter
+2. Create teams in Vikunja that match these groups (if they don't already exist)
+3. Add the user to the appropriate teams based on their group membership
+
+You may need to adjust the `groupsyncfilter` based on your LDAP directory structure. The default filter looks for objects with class `group` or `groupOfNames`.
+
 ## Example Configurations
 
 ### Active Directory
