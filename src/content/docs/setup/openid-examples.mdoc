@@ -28,16 +28,18 @@ auth:
 Authelia config:
 
 ```yaml
-- id: <vikunja-id>
-description: Vikunja
-secret: <vikunja secret>
-redirect_uris:
-  - https://vikunja.mydomain.com/auth/openid/authelia
-scopes:
-  - openid
-  - email
-  - profile
+- client_id: <vikunja-id>
+  client_name: Vikunja
+  client_secret: <vikunja secret>
+  redirect_uris:
+    - https://vikunja.mydomain.com/auth/openid/authelia
+  scopes:
+    - openid
+    - email
+    - profile
 ```
+
+Also see the [Authelia documentation](https://www.authelia.com/integration/openid-connect/vikunja/).
 
 ## Google / Google Workspace
 
