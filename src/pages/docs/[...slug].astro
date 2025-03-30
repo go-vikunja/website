@@ -17,7 +17,7 @@ type Props = CollectionEntry<'docs'>
 const post = Astro.props
 const {Content, headings} = await post.render()
 if (post.slug === 'config-options') {
-    const response = await fetch('https://kolaente.dev/vikunja/vikunja/raw/branch/main/config-raw.json')
+    const response = await fetch('https://github.com/go-vikunja/vikunja/blob/main/config-raw.json')
     const data: ConfigItem = await response.json()
     data.children?.forEach(c => headings.push(...generateConfigHeadings(c)))
 }

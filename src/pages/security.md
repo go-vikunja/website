@@ -86,5 +86,5 @@ systems.
 **PGP-Key:** 2DD15B4BBC0FFB1AEF056662182B59A2D78D7303
 
 You can download the public key from [here](/contact/security.pub)
-or [here](https://kolaente.dev/vikunja/website/src/branch/main/public/contact/security.pub)
+or [here](https://github.com/go-vikunja/website/blob/main/public/contact/security.pub)
 or [here](http://keyserver.ubuntu.com/pks/lookup?search=security%40vikunja.io&fingerprint=on&op=index).
