@@ -1,0 +1,75 @@
+---
+title: Why Vikunja is moving from Gitea to GitHub
+date: 2025-04-01T16:20:21.000Z
+slug: /moving-to-github
+description: >-
+  After years of self-hosting Gitea, Vikunja is moving to GitHub due to issues with spam, AI crawlers, and infrastructure management.
+---
+
+Today, I want to share our experience with self-hosting Gitea and explain why we're making the switch to [GitHub](https://github.com/go-vikunja/vikunja). It's been a journey, and there are some valuable lessons we've learned along the way.
+
+## The Self-Hosting Dream vs. Reality
+
+A few years ago, when Vikunja was just starting out, I knew a lot less than I do today. I had this idealistic vision of keeping open-source projects truly independent by hosting our own Git platform. The logic seemed sound: "How hard could hosting a Git server be?"
+
+I already had the Gitea server at that time and was using it mostly because GitHub back then didn’t have private repos unless you had a paid account. So, the decision to use Gitea to host Vikunja was quite natural.
+
+It turned out to be harder than I thought.
+
+## The Spam Nightmare
+
+One of our biggest challenges emerged when spam accounts started flooding our Gitea instance. The pattern was always the same: They created accounts (sometimes hundreds per day), filled the profile description with spam links and sometimes created issues with spam content. It seems like they are trying to rank certain websites in Google.
+
+To combat this, we first added a captcha, but ultimately had to [manually approve new accounts](https://community.vikunja.io/t/kolaente-dev-git-repo-sign-in-prohibited/2199). While this stopped the spam, it created a new headache: every new user had to manually request access.
+
+To this date, they are still creating new accounts daily. My guess is that these are click farms who are paid by the number of accounts they create.
+
+Right now, there are 18k accounts on the instance, 11k of which are not enabled. That also tells you many accounts slipped through and were created before we restricted new sign-ups. For comparison, the forum has ~700 members; that's more likely the actual size of the community.
+
+## The AI Crawler Challenge
+
+Then, around 2023, the AI wave hit, and with it came web crawlers. To a web crawler, a git repo on the web looks like a massive website: you can view every commit and for every commit, you can browse files. That’s a lot of links very fast. These web crawlers will visit each possible link, and because these are expensive endpoints like git blame, will use up a lot of resources.
+
+In the beginning, the most aggressive crawlers were OpenAI, Anthropic, [and Meta](https://bsky.app/profile/kolaente.de/post/3lczgawwgas2t). These were easy to block because they identify with an actual user agent and do not try to obfuscate things.
+
+However, for the past few weeks, there have been [increasingly](https://bsky.app/profile/kolaente.de/post/3ljrwkawa3c27) [more Chinese bots](https://drewdevault.com/2025/03/17/2025-03-17-Stop-externalizing-your-costs-on-me.html) [masquerading as regular users](https://arstechnica.com/ai/2025/03/devs-say-ai-crawlers-dominate-traffic-forcing-blocks-on-entire-countries/), making them nearly impossible to filter effectively. They sometimes crawl from a wide range of IP addresses.
+
+Let me be clear: I'm not anti-AI. I use AI tools myself and even build products with them. But there's a right way and a wrong way to collect training data. Hammering a small self-hosted instance with endless crawling requests seems like the wrong way.
+
+## The Hidden Costs of Self-Hosting
+
+What we've discovered by now is that hosting a Git platform is like an iceberg—there's so much more below the surface than you initially see:
+
+- **Small Scale**: Works great! Hosting for a handful of users is manageable and even fun
+- **Large Scale**: Opens up a whole can of worms with:
+  - [Infrastructure management](https://bsky.app/profile/kolaente.de/post/3lcimghilak2n)
+  - Performance optimization
+  - User support
+  - Bug management
+  - Feature requests
+
+I want to build software, not manage infrastructure. I want to support users with Vikunja, not manage their access to Gitea.
+
+As someone who was previously a Gitea maintainer, it kind of hurts to admit Gitea might not be the right choice for hosting even a mid-sized project like Vikunja.
+
+## The GitHub Advantage
+
+Here's the thing about GitHub—it's popular for a reason. The platform offers:
+
+- A proven, reliable infrastructure
+- A user base that already exists (no new accounts needed!)
+- Excellent integration with the wider open-source ecosystem
+
+And yet, using GitHub means depending on a third-party platform. But we've proven we can self-host if we need to. It's just that right now, the benefits of GitHub far outweigh the advantages of self-hosting.
+
+## The Impact on Open Source Contributions
+
+Together, these make contributing to Vikunja harder and harder. That’s not what I want. Vikunja has never received as many contributions as some other open-source projects, and I would guess this has something to do with it. Some people would send PRs to the GitHub mirror only to discover that they had to resend them—sometimes without doing so.
+
+## The Bottom Line
+
+While self-hosting sounds great in theory, the reality is that it can create many more problems for a project of our size. By moving to GitHub, we're choosing to focus our energy on building great software and fostering a community of contributors.
+
+Does this mean self-hosting is always wrong? Not at all! It just means that for our specific needs and circumstances, GitHub is the better choice. We've learned that sometimes the best way to stay true to open-source principles is to use the tools that best serve the community, even if they're not the ones we initially imagined using.
+
+Here's to the next chapter of our project on [GitHub](https://github.com/go-vikunja/vikunja)! 🚀
