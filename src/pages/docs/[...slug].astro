@@ -1,7 +1,7 @@
 ---
 import {type CollectionEntry, getCollection} from 'astro:content'
 import Docs from '../../layouts/Docs.astro'
-import {type ConfigItem, generateConfigHeadings} from '../../helpers/config'
+import {type ConfigItem, generateConfigHeadings, fetchConfigItems} from '../../helpers/config'
 
 export async function getStaticPaths() {
     const docs = await getCollection('docs')
@@ -17,8 +17,7 @@ type Props = CollectionEntry<'docs'>
 const post = Astro.props
 const {Content, headings} = await post.render()
 if (post.slug === 'config-options') {
-    const response = await fetch('https://github.com/go-vikunja/vikunja/blob/main/config-raw.json')
-    const data: ConfigItem = await response.json()
+    const data: ConfigItem = await fetchConfigItems()
     data.children?.forEach(c => headings.push(...generateConfigHeadings(c)))
 }
 ---

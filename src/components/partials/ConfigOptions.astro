@@ -1,10 +1,9 @@
 ---
 // @ts-nocheck
 import ConfigOption from '../ConfigOption.astro'
-import {type ConfigItem} from '../../helpers/config'
+import {type ConfigItem, fetchConfigItems} from '../../helpers/config'
 
-const response = await fetch('https://github.com/go-vikunja/vikunja/blob/main/config-raw.json')
-const data: ConfigItem = await response.json()
+const data: ConfigItem = await fetchConfigItems()
 ---
 
 {data.children?.map(c => (<ConfigOption item={c}/><hr/>))}
