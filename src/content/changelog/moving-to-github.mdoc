@@ -12,7 +12,7 @@ Today, I want to share our experience with self-hosting Gitea and explain why we
 
 A few years ago, when Vikunja was just starting out, I knew a lot less than I do today. I had this idealistic vision of keeping open-source projects truly independent by hosting our own Git platform. The logic seemed sound: "How hard could hosting a Git server be?"
 
-I already had the Gitea server at that time and was using it mostly because GitHub back then didn’t have private repos unless you had a paid account. So, the decision to use Gitea to host Vikunja was quite natural.
+I already had the Gitea server at that time and was using it mostly because GitHub back then didn't have private repos unless you had a paid account. So, the decision to use Gitea to host Vikunja was quite natural.
 
 It turned out to be harder than I thought.
 
@@ -28,7 +28,7 @@ Right now, there are 18k accounts on the instance, 11k of which are not enabled.
 
 ## The AI Crawler Challenge
 
-Then, around 2023, the AI wave hit, and with it came web crawlers. To a web crawler, a git repo on the web looks like a massive website: you can view every commit and for every commit, you can browse files. That’s a lot of links very fast. These web crawlers will visit each possible link, and because these are expensive endpoints like git blame, will use up a lot of resources.
+Then, around 2023, the AI wave hit, and with it came web crawlers. To a web crawler, a git repo on the web looks like a massive website: you can view every commit and for every commit, you can browse files. That's a lot of links very fast. These web crawlers will visit each possible link, and because these are expensive endpoints like git blame, will use up a lot of resources.
 
 In the beginning, the most aggressive crawlers were OpenAI, Anthropic, [and Meta](https://bsky.app/profile/kolaente.de/post/3lczgawwgas2t). These were easy to block because they identify with an actual user agent and do not try to obfuscate things.
 
@@ -60,11 +60,41 @@ Here's the thing about GitHub—it's popular for a reason. The platform offers:
 - A user base that already exists (no new accounts needed!)
 - Excellent integration with the wider open-source ecosystem
 
-And yet, using GitHub means depending on a third-party platform. But we've proven we can self-host if we need to. It's just that right now, the benefits of GitHub far outweigh the advantages of self-hosting.
+### But Microsoft is evil!
+
+You might be thinking: "But GitHub is owned by Microsoft, and that's problematic!" 
+
+It's a fair concern. Using GitHub does mean relying on a large American corporation at a time when US-EU relations have their challenges.
+
+But we can always move to other platforms if that becomes an issue. 
+We've already proven how this could work. 
+If circumstances change, we can always migrate again. 
+But right now, the practical benefits of GitHub outweigh the advantages of self-hosting.
+
+## What about GitLab?
+
+GitLab is often suggested as an alternative, and it does offer a more feature-rich product than Gitea. But self-hosting GitLab would leave us with the same infrastructure challenges we're trying to escape.
+Moving to GitHub means we can focus on building great software instead of managing infrastructure.
+
+As for GitLab.com's hosted option? It's a valid choice, but GitHub simply feels more like home to me. I've used both platforms, but GitHub's interface and workflows are more familiar.
+
+The GitHub ecosystem is also more extensive, especially for CI/CD pipelines. And practically speaking, more developers already have GitHub accounts, which lowers the barrier to contribution.
+
+## What about Codeberg?
+
+Codeberg represents another path we could have taken - a community-driven, free and open-source Git service built on Forgejo (a Gitea fork).
+
+I have a bit of history here. Back in 2018, when I was a Gitea maintainer, I participated in early discussions about creating something similar to what Codeberg eventually became. Our goal was to establish an entity that would support Gitea's development and ensure its long-term sustainability.
+
+That initial effort stalled when we couldn't reach consensus on key details. Later, some members of that original group went on to create Codeberg.
+
+While I respect what they've built, I never quite connected with the project after that early false start. That's admittedly a personal bias, but it's part of the decision-making calculus.
+
+More practically, Codeberg inherits many of the same product experience limitations as Gitea, which we're trying to move beyond.
 
 ## The Impact on Open Source Contributions
 
-Together, these make contributing to Vikunja harder and harder. That’s not what I want. Vikunja has never received as many contributions as some other open-source projects, and I would guess this has something to do with it. Some people would send PRs to the GitHub mirror only to discover that they had to resend them—sometimes without doing so.
+Together, these make contributing to Vikunja harder and harder. That's not what I want. Vikunja has never received as many contributions as some other open-source projects, and I would guess this has something to do with it. Some people would send PRs to the GitHub mirror only to discover that they had to resend them—sometimes without doing so.
 
 ## The Bottom Line
 
@@ -73,3 +103,5 @@ While self-hosting sounds great in theory, the reality is that it can create man
 Does this mean self-hosting is always wrong? Not at all! It just means that for our specific needs and circumstances, GitHub is the better choice. We've learned that sometimes the best way to stay true to open-source principles is to use the tools that best serve the community, even if they're not the ones we initially imagined using.
 
 Here's to the next chapter of our project on [GitHub](https://github.com/go-vikunja/vikunja)! 🚀
+
+*Updated 2025-04-01 17:00: Added more details about GitLab and Codeberg*
