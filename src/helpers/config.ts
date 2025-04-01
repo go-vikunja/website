@@ -42,3 +42,8 @@ export function generateConfigHeadings(data: ConfigItem, parentSlug: string = ''
 
 	return result
 }
+
+export async function fetchConfigItems(): Promise<ConfigItem> {
+	const response = await fetch('https://raw.githubusercontent.com/go-vikunja/vikunja/main/config-raw.json')
+	return await response.json()
+}
