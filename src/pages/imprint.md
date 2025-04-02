@@ -6,6 +6,8 @@ description: Discover our imprint page for essential legal information, publicat
 
 # Imprint
 
+*This imprint is valid for [vikunja.io](https://vikunja.io) and [vikunja.cloud](https://vikunja.cloud/dashboard).*
+
 Konrad Langenberg Software<br/>
 Mengstraße 9-11<br/>
 23552 Lübeck<br/>
