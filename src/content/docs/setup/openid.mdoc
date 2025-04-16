@@ -74,11 +74,15 @@ auth:
     redirecturl: https://vikunja.mydomain.com/auth/openid/  <---- slash at the end is important
     providers:
       - name: <provider-name>
-        authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer 
+        authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer
         clientid: <vikunja client-id>
         clientsecret: <vikunja client-secret>
         scope: openid profile email
 ```
+{% callout type="warning" %}
+The configuration will change in future releases. See the different syntax for the new configuration below.
+The new syntax is already available in the unstable builds, but not yet in the stable releases.
+{% /callout %}
 
 The value for `authurl` can be obtained from the metadata of your provider.
 Note that the `authurl` is used for [OIDC Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html).
@@ -110,12 +114,12 @@ auth:
     redirecturl: https://vikunja.mydomain.com/auth/openid/  <---- slash at the end is important
     providers:
       - name: <provider-name>
-        authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer 
+        authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer
         clientid: <vikunja client-id>
         clientsecret: <vikunja client-secret>
         scope: openid profile email
       - name: <provider2-name>
-        authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer 
+        authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer
         clientid: <vikunja client-id>
         clientsecret: <vikunja client-secret>
         scope: openid profile email
@@ -131,18 +135,17 @@ auth:
     providers:
       <provider-id1>:
         name: <provider1-name>
-        authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer 
+        authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer
         clientid: <vikunja client-id>
         clientsecret: <vikunja client-secret>
         scope: openid profile email
       <provider-id2>:
         name: <provider2-name>
-        authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer 
+        authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer
         clientid: <vikunja client-id>
         clientsecret: <vikunja client-secret>
         scope: openid profile email
 ```
-
 ## Login existing local user with OpenID
 
 {% callout type="warning" %}
@@ -191,8 +194,8 @@ This will immediately redirect the user to the authentication flow for the provi
 
 If you have only one provider configured, you can use any of these simplified parameters:
 
-- `?redirectToProvider` 
-- `?redirectToProvider=true` 
+- `?redirectToProvider`
+- `?redirectToProvider=true`
 - `?redirectToProvider=1`
 
 Example: https://vikunja.domain.tld/?redirectToProvider=authentik
