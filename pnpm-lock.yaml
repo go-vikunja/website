@@ -58,8 +58,8 @@ importers:
         version: 5.8.3
     devDependencies:
       '@anthropic-ai/sdk':
-        specifier: ^0.40.0
-        version: 0.40.0
+        specifier: ^0.40.1
+        version: 0.40.1
       esbuild:
         specifier: ^0.25.3
         version: 0.25.3
@@ -75,8 +75,8 @@ importers:
 
 packages:
 
-  '@anthropic-ai/sdk@0.40.0':
-    resolution: {integrity: sha512-NkIgtZxa4nWBzXtDuYe6Wumu1+cgEuEQtol8b1bVSjtS7Dvqex6iNdxaddV8PkRC8Z8mhbNw2m7j+9AD9uRRKw==}
+  '@anthropic-ai/sdk@0.40.1':
+    resolution: {integrity: sha512-DJMWm8lTEM9Lk/MSFL+V+ugF7jKOn0M2Ujvb5fN8r2nY14aHbGPZ1k6sgjL+tpJ3VuOGJNG+4R83jEpOuYPv8w==}
 
   '@astrojs/check@0.9.4':
     resolution: {integrity: sha512-IOheHwCtpUfvogHHsvu0AbeRZEnjJg3MopdLddkJE70mULItS/Vh37BHcI00mcOJcH1vhD3odbpvWokpxam7xA==}
@@ -2819,7 +2819,7 @@ packages:
 
 snapshots:
 
-  '@anthropic-ai/sdk@0.40.0':
+  '@anthropic-ai/sdk@0.40.1':
     dependencies:
       '@types/node': 18.19.87
       '@types/node-fetch': 2.6.12
