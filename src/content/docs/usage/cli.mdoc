@@ -21,6 +21,13 @@ Instead of running the `vikunja` binary directly, run it like this:
 docker exec <name of the Vikunja container> /app/vikunja/vikunja <subcommand>
 ```
 
+Some commands require an interactive shell. 
+You can run the docker command in an interactive shell using the following flags:
+
+```sh
+docker exec -it <name of the Vikunja container> /app/vikunja/vikunja <subcommand>
+```
+
 If you need to run a bunch of Vikunja commands, you can also create a shell alias for it:
 
 ```sh
