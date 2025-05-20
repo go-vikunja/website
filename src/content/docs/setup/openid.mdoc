@@ -78,7 +78,7 @@ auth:
         clientid: <vikunja client-id>
         clientsecret: <vikunja client-secret>
         scope: openid profile email
-        forceuserinfo: false  # Optional: Set to true to always use UserInfo endpoint instead of ID token claims
+        forceuserinfo: false # Optional: Set to true to always use UserInfo endpoint instead of ID token claims, defaults to false
 ```
 {% callout type="warning" %}
 The configuration will change in future releases. See the different syntax for the new configuration below.
@@ -119,13 +119,13 @@ auth:
         clientid: <vikunja client-id>
         clientsecret: <vikunja client-secret>
         scope: openid profile email
-        forceuserinfo: false  # Optional: Set to true to always use UserInfo endpoint instead of ID token claims
+        forceuserinfo: false # Optional: Set to true to always use UserInfo endpoint instead of ID token claims, defaults to false
       - name: <provider2-name>
         authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer
         clientid: <vikunja client-id>
         clientsecret: <vikunja client-secret>
         scope: openid profile email
-        forceuserinfo: false  # Optional: Set to true to always use UserInfo endpoint instead of ID token claims
+        forceuserinfo: false # Optional: Set to true to always use UserInfo endpoint instead of ID token claims, defaults to false
 ```
 
 Unstable syntax:
@@ -142,14 +142,14 @@ auth:
         clientid: <vikunja client-id>
         clientsecret: <vikunja client-secret>
         scope: openid profile email
-        forceuserinfo: false  # Optional: Set to true to always use UserInfo endpoint instead of ID token claims
+        forceuserinfo: false # Optional: Set to true to always use UserInfo endpoint instead of ID token claims, defaults to false
       <provider-id2>:
         name: <provider2-name>
         authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer
         clientid: <vikunja client-id>
         clientsecret: <vikunja client-secret>
         scope: openid profile email
-        forceuserinfo: false  # Optional: Set to true to always use UserInfo endpoint instead of ID token claims
+        forceuserinfo: false # Optional: Set to true to always use UserInfo endpoint instead of ID token claims, defaults to false
 ```
 ## Login existing local user with OpenID
 
