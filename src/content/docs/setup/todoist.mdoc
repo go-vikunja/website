@@ -1,0 +1,110 @@
+---
+title: Todoist Migration Setup
+slug: setup-todoist-migration
+description: >-
+  Learn how to migrate your tasks and projects from Todoist to Vikunja. 
+  Follow step-by-step instructions for setting up the Todoist integration and 
+  importing your data.
+---
+
+This guide explains how to migrate your tasks and projects from Todoist to Vikunja.
+
+{% callout type="warning" %}
+Your Vikunja installation needs to be publicly accessible for the Todoist migration to work.
+{% /callout %}
+
+## Setting up the Todoist Integration
+
+### Create a Todoist App
+
+1. In Todoist, go to **Settings** → **Integrations** → **Developer** → **Build Integrations**
+2. This will take you to the Todoist Developer app manager
+3. Click **Create a new app**
+4. Enter the following details:
+   - **App name**: vikunja
+   - **App service URL**: The URL to your Vikunja installation (e.g., `https://vikunja.yourdomain.com`)
+5. Click **Create app**
+
+### Configure App Settings
+
+On the app settings page, configure the following:
+
+- **Client ID**: Copy this value - you'll need it for `VIKUNJA_MIGRATION_TODOIST_CLIENTID`
+- **Client secret**: Copy this value - you'll need it for `VIKUNJA_MIGRATION_TODOIST_CLIENTSECRET`
+- **OAuth redirect URL**: `https://vikunja.yourdomain.com/migrate/todoist` (must end with `/migrate/todoist`)
+- **App name**: vikunja
+- **App service URL**: `https://vikunja.yourdomain.com/`
+
+Click **Save settings**.
+
+### Install the App
+
+1. On the same page, scroll down to **Installation**
+2. Click **Install for me**
+3. To verify the installation, go back to Todoist → **Settings** → **Integrations**
+4. In the **Installed** section, you should see your app named "vikunja"
+
+## Configure Vikunja
+
+To enable the Todoist migration in Vikunja, you need to change your config. You can do this either by editing the config file or by using environment variables in your Docker setup.
+
+For information about the specific migration configuration options, see the [config documentation](/docs/config-options#1-migration-todoist).
+
+{% callout type="note" %}
+If you don't plan on migrating again, you can remove the settings from your configuration after the migration is complete.
+{% /callout %}
+
+### Restart Vikunja
+
+Restart Vikunja to apply the new configuration.
+
+Using Docker Compose, you can do this by running:
+
+```bash
+docker compose down
+docker compose up -d
+```
+
+If you are using a systemd service, you can restart Vikunja with:
+```bash
+sudo systemctl restart vikunja
+```
+
+## Start the Migration
+
+1. Log in to your Vikunja instance
+2. Click on your avatar in the top-right corner
+3. Click **Settings**
+4. Click **Import from other services**
+5. You should see a Todoist icon
+6. Click the Todoist icon to start the migration
+
+The import will start in the background. Depending on the number of tasks, it should complete within seconds to minutes.
+
+## Troubleshooting
+
+### "redirect_uri_not_configured" Error
+
+If you see this error, check the following:
+
+1. Go to the [Todoist App Console](https://developer.todoist.com/appconsole.html)
+2. Verify that the **OAuth redirect URL** is set correctly to a valid, publicly accessible URL
+3. Ensure your Vikunja instance is reachable from the internet
+
+### Migration Not Starting
+
+If the Todoist icon doesn't appear in the import section:
+
+1. Check that all environment variables are correctly set
+2. Verify that your Vikunja instance restarted properly
+3. Check the Vikunja logs for any configuration errors
+
+## Cleanup
+
+After the migration is complete, you can:
+
+1. Remove the Todoist integration from your Todoist account if no longer needed
+2. Remove the configration for the Todoist migration from your Vikunja configuration file or environment variables
+3. Restart your Vikunja container to apply the cleanup
+
+The migration is now complete, and all your Todoist tasks and projects should be available in Vikunja.
