@@ -18,7 +18,7 @@ You can also:
 * Use the mobile app only, but as of right now it only supports the very basic features of Vikunja
 
 {% callout type="warning" %}
-If you intend to run Vikunja with mysql and/or to use non-latin
+If you intend to run Vikunja with MySQL or MariaDB and/or to use non-latin
 characters [make sure your db is utf-8 compatible](/docs/utf-8-settings).
 {% /callout %}
 
@@ -149,7 +149,7 @@ This will expose Vikunja on port `3456` on the host running the container and us
 You can use Docker's [`--user`](https://docs.docker.com/engine/reference/run/#user) flag to change that.
 Make sure the new user has required permissions on the `db` and `files` folder.
 
-Check out the [docker examples](/docs/full-docker-example) for more advanced configuration using mysql / postgres and a
+Check out the [docker examples](/docs/full-docker-example) for more advanced configuration using postgres or mysql and a
 reverse proxy.
 
 ### Using a configuration file with docker
