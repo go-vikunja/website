@@ -43,11 +43,9 @@ services:
         restart: unless-stopped
     db:
         image: postgres:17
-        
         environment:
             POSTGRES_PASSWORD: changeme
             POSTGRES_USER: vikunja
-            
             
         volumes:
             - ./db:/var/lib/postgresql/data

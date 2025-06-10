@@ -194,7 +194,6 @@ services:
       - "traefik.http.routers.vikunja.tls.certResolver=acme"
   db:
     image: postgres:17
-    
     environment:
       POSTGRES_PASSWORD: changeme 
       POSTGRES_USER: vikunja
