@@ -29,7 +29,7 @@ services:
             VIKUNJA_SERVICE_PUBLICURL: http://<the public url where Vikunja is reachable>
             VIKUNJA_DATABASE_HOST: db
             VIKUNJA_DATABASE_PASSWORD: changeme
-            VIKUNJA_DATABASE_TYPE: mysql
+            VIKUNJA_DATABASE_TYPE: postgres
             VIKUNJA_DATABASE_USER: vikunja
             VIKUNJA_DATABASE_DATABASE: vikunja
             VIKUNJA_SERVICE_JWTSECRET: <a super secure random secret>
@@ -42,18 +42,18 @@ services:
                 condition: service_healthy
         restart: unless-stopped
     db:
-        image: mariadb:10
-        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        image: postgres:17
+        
         environment:
-            MYSQL_ROOT_PASSWORD: supersecret
-            MYSQL_USER: vikunja
-            MYSQL_PASSWORD: changeme
-            MYSQL_DATABASE: vikunja
+            POSTGRES_PASSWORD: changeme
+            POSTGRES_USER: vikunja
+            
+            
         volumes:
-            - ./db:/var/lib/mysql
+            - ./db:/var/lib/postgresql/data
         restart: unless-stopped
         healthcheck:
-            test: ["CMD-SHELL", "mysqladmin ping -h localhost -u $$MYSQL_USER --password=$$MYSQL_PASSWORD"]
+            test: ["CMD-SHELL", "pg_isready -h localhost -U $$POSTGRES_USER"]
             interval: 2s
 			start_period: 30s
 ```
@@ -61,7 +61,7 @@ services:
 This defines two services, each with their own container:
 
 * A Vikunja service which runs the Vikunja api and hosts its frontend.
-* A database container which will store all projects, tasks, etc. We're using mariadb here, but you're free to use mysql or postgres if you want.
+* A database container which will store all projects, tasks, etc. We're using postgres here, but you're free to use mysql or mariadb if you want.
 
 If you already have a proxy on your host, you may want to check out the [reverse proxy examples](/docs/reverse-proxy) to use that.
 By default, Vikunja will be exposed on port 3456 on the host.
@@ -112,18 +112,17 @@ Indicated by an error message like this one from the api container:
 2020-05-23T15:37:59.974435725Z: CRITICAL	▶ migration/Migrate 002 Migration failed: dial tcp 172.19.0.2:3306: connect: connection refused
 ```
 
-Especially when using mysql, this can happen on first start, because the mysql database container will take a few seconds to start.
+Especially when using postgres, this can happen on first start, because the postgres database container will take a few seconds to start.
 Vikunja does not know the container is not ready, therefore it will just try to connect to the db, fail since it is not ready and exit.
 
 If you're using the docker compose example from above, you may notice the `restart: unless-stopped` option at the api service.
 This tells docker to restart the api container if it exits, unless you explicitly stop it.
 Therefore, it should "magically fix itself" by automatically restarting the container.
 
-After a few seconds (or minutes) you should see a log message like this one from the mariadb container:
+After a few seconds (or minutes) you should see a log message like this one from the postgres container:
 
 ```
-2020-05-24 11:42:15 0 [Note] mysqld: ready for connections.
-Version: '10.4.12-MariaDB-1:10.4.12+maria~bionic'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  mariadb.org binary distribution
+2024-01-01 00:00:00.000 UTC [1] LOG:  database system is ready to accept connections
 ```
 
 The next restart of Vikunja should be successful.
