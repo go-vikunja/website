@@ -40,6 +40,26 @@ Vikunja will search on various places for a config file:
 * In `/etc/vikunja`
 * In `~/.config/vikunja`
 
+The `service.rootpath` setting is used only while finding the first config file.
+You can therefore set `VIKUNJA_SERVICE_ROOTPATH` to point Vikunja to that
+initial config file, but any new `service.rootpath` defined inside it will not be
+considered for further config lookup.
+
+```sh
+export VIKUNJA_SERVICE_ROOTPATH=/etc/vikunja
+vikunja
+```
+
+Assuming `/etc/vikunja/config.yml` contains:
+
+```yaml
+service:
+  rootpath: /opt/vikunja
+```
+
+Vikunja reads `/etc/vikunja/config.yml` but does not check
+`/opt/vikunja/config.yml` afterward.
+
 ### Using a config file with Docker Compose
 
 In case you are using Docker Compose you need to edit the `docker-compose.yml` to load `config.yml`.
