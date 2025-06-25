@@ -17,7 +17,7 @@ const description = Astro.props?.frontmatter?.description || Astro.props.descrip
 ---
 
 <Layout title={title} type="text" image={image} description={description}>
-    <main class="mx-auto max-w-(--breakpoint-lg)">
+    <main class="mx-auto max-w-(--breakpoint-lg) px-4 md:px-0">
         <Prose>
             <slot/>
         </Prose>
