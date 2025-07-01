@@ -58,8 +58,8 @@ importers:
         version: 5.8.3
     devDependencies:
       '@anthropic-ai/sdk':
-        specifier: ^0.55.0
-        version: 0.55.0
+        specifier: ^0.55.1
+        version: 0.55.1
       esbuild:
         specifier: ^0.25.5
         version: 0.25.5
@@ -79,8 +79,8 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@anthropic-ai/sdk@0.55.0':
-    resolution: {integrity: sha512-VdxPRWPoeeVQt0XUZ3cXfeLB65Skkoo1FS7JAkr8/C7Q8+wjV7k2RsVGmFXBq12VeHxua7MUtNqXx6k8hgoIVg==}
+  '@anthropic-ai/sdk@0.55.1':
+    resolution: {integrity: sha512-gjOMS4chmm8BxClKmCjNHmvf1FrO1Cn++CSX6K3YCZjz5JG4I9ZttQ/xEH4FBsz6HQyZvnUpiKlOAkmxaGmEaQ==}
     hasBin: true
 
   '@astrojs/check@0.9.4':
@@ -2760,7 +2760,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@anthropic-ai/sdk@0.55.0': {}
+  '@anthropic-ai/sdk@0.55.1': {}
 
   '@astrojs/check@0.9.4(typescript@5.8.3)':
     dependencies:
