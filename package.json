@@ -31,7 +31,7 @@
     "typescript": "^5.8.3"
   },
   "devDependencies": {
-    "@anthropic-ai/sdk": "^0.56.0",
+    "@anthropic-ai/sdk": "^0.57.0",
     "esbuild": "^0.25.6",
     "gray-matter": "^4.0.3",
     "marked": "^16.1.1",
