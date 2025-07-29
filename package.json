@@ -17,7 +17,7 @@
     "@astrojs/cloudflare": "^12.6.0",
     "@astrojs/markdoc": "^0.15.1",
     "@astrojs/node": "^9.3.0",
-    "@astrojs/sitemap": "^3.4.1",
+    "@astrojs/sitemap": "^3.4.2",
     "@fontsource/open-sans": "^5.2.5",
     "@fontsource/quicksand": "^5.2.8",
     "@tailwindcss/aspect-ratio": "^0.4.2",
