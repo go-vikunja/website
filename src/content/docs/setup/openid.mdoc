@@ -72,7 +72,6 @@ Vikunja has to be configured to use the identity provider. Please note that ther
 auth:
   openid:
     enabled: true
-    redirecturl: https://vikunja.mydomain.com/auth/openid/  <---- slash at the end is important
     providers:
       - name: <provider-name>
         authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer
@@ -113,7 +112,6 @@ Stable syntax:
 auth:
   openid:
     enabled: true
-    redirecturl: https://vikunja.mydomain.com/auth/openid/  <---- slash at the end is important
     providers:
       - name: <provider-name>
         authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer
@@ -135,7 +133,6 @@ Unstable syntax:
 auth:
   openid:
     enabled: true
-    redirecturl: https://vikunja.mydomain.com/auth/openid/  <---- slash at the end is important
     providers:
       <provider-id1>:
         name: <provider1-name>
