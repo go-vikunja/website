@@ -83,16 +83,9 @@ Plugins must be compiled with the **exact same Go version** as your Vikunja bina
 ### Installing a Plugin
 
 1. Download the `.so` file for your architecture and Go version
-2. Copy to your configured plugins directory:
-   ```bash
-   cp my-plugin.so /path/to/vikunja/plugins/
-   ```
+2. Copy to your configured plugins directory: `cp my-plugin.so /path/to/vikunja/plugins/`
 3. Restart Vikunja
-4. Verify in logs:
-   ```
-   INFO Loaded plugin my-plugin
-   INFO my-plugin initialized
-   ```
+4. Verify in the logs if the plugin has been loaded successfully
 
 ### Removing a Plugin
 
