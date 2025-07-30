@@ -17,7 +17,6 @@ Vikunja Config:
 auth:
   openid:
     enabled: true
-    redirecturl: https://vikunja.mydomain.com/auth/openid/  <---- slash at the end is important
     providers:
       - name: Authelia
         authurl: https://login.mydomain.com
@@ -49,7 +48,6 @@ Vikunja Config:
 auth:
   openid:
     enabled: true
-    redirecturl: https://vikunja.mydomain.com/auth/openid/  <---- slash at the end is important
     providers:
       - name: Google
         authurl: https://accounts.google.com
@@ -73,7 +71,6 @@ Vikunja Config:
 auth:
   openid:
     enabled: true
-    redirecturl: https://vikunja.mydomain.com/auth/openid/  <---- slash at the end is important
     providers:
       - name: Keycloak
         authurl: https://keycloak.mydomain.com/realms/<relam-name>
@@ -104,7 +101,6 @@ Vikunja Config:
 auth:
   openid:
     enabled: true
-    redirecturl: "https://vikunja.mydomain.com/auth/openid/"
     providers:
       - name: authentik
         authurl: "https://authentik.mydomain.com/application/o/vikunja/"
@@ -126,7 +122,6 @@ Vikunja Config:
 auth:
   openid:
     enabled: true
-    redirecturl: https://vikunja.mydomain.com/auth/openid/  # <---- slash at the end is important
     providers:
       - name: AzureAD
         authurl: https://sts.windows.net/<tenant_id>/
