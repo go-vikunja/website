@@ -10,7 +10,11 @@ description: >-
 Plugins are not yet supported in stable releases. You need to use the unstable builds to use plugins.
 {% /callout %}
 
-This guide covers everything you need to implement and deploy plugins for the Vikunja task management system.
+This guide covers everything you need to implement and deploy plugins for Vikunja.
+
+Plugins can extend the api in different ways, for example add new routes or integrate with the [events system](/docs/events-and-listeners).
+
+Plugins use [Go's core plugin system](https://pkg.go.dev/plugin) to load and manage plugins.
 
 ## Quick Start
 
@@ -58,6 +62,9 @@ plugins:
 
 # Restart Vikunja
 systemctl restart vikunja
+
+# Or with docker
+docker restart <vikunja container name>
 ```
 
 ## Required Interfaces
@@ -124,7 +131,7 @@ All routes registered from a plugin are prefixed with `/api/v1/plugins/`.
 
 #### Authenticated Routes
 
-For routes requiring user authentication (JWT/API token):
+For routes requiring user authentication (JWT/API token), your plugin must implement the `AuthenticatedRouterPlugin` interface:
 
 ```go
 type AuthenticatedRouterPlugin interface {
@@ -157,7 +164,7 @@ func handleUserProfile(c echo.Context) error {
 
 #### Public Routes
 
-For routes that don't require authentication:
+For routes that don't require authentication your plugin must implement the `UnauthenticatedRouterPlugin` interface:
 
 ```go
 type UnauthenticatedRouterPlugin interface {
@@ -197,7 +204,7 @@ Your plugin can listen to any event dispatched by Vikunja.
 
 This works in the same way as [core events and listeners](/docs/events-and-listeners/).
 
-### Implementing Event Listeners
+Here's what that could look like:
 
 ```go
 import (
@@ -216,7 +223,8 @@ func (l *TaskCreatedListener) Handle(msg *message.Message) error {
     }
 
     log.Infof("Task created: %s", event.Task.Title)
-    // Add your custom logic here
+
+    // Do something with the created task
 
     return nil
 }
@@ -261,37 +269,46 @@ func (p *MyPlugin) Init() error {
 }
 ```
 
+You can access custom configuration for your plugin by calling [viper](https://pkg.go.dev/github.com/spf13/viper) functions directly:
+
+```go
+import (
+    "github.com/vikunja/vikunja/pkg/config"
+    "github.com/spf13/viper"
+)
+
+func (p *MyPlugin) Init() error {
+    // Access configuration values
+    dbType := config.DatabaseType.GetString()
+    logLevel := config.LogLevel.GetString()
+
+    // Access custom plugin configuration
+    customValue := viper.GetString("plugins.my-plugin.custom-value")
+
+    // Your initialization logic
+    return nil
+}
+```
+
 ## Building and Deployment
 
-### Using Mage (Recommended)
+### Using Mage
 
 ```bash
 # Build single plugin
 mage plugins:build path/to/your/plugin
-
-# This creates a .so file in the plugins/ directory
 ```
 
-### Manual Build
-
-```bash
-go build -buildmode=plugin -o plugins/my-plugin.so path/to/my-plugin
-```
+This creates a .so file in the plugins/ directory
 
 ### Deployment Steps
 
-1. **Build** your plugin as a shared library (`.so` file)
-2. **Copy** the `.so` file to your configured plugins directory
-3. **Enable** the plugin system in your Vikunja configuration
-4. **Restart** Vikunja to load the plugin
+1. Build your plugin as a shared library (`.so` file)
+2. Copy the `.so` file to your configured plugins directory
+3. Enable the plugin system in your Vikunja configuration
+4. Restart Vikunja to load the plugin
 
-### Verification
-
-Check your logs for successful plugin loading:
-
-```
-INFO my-plugin initialized
-```
+If loading a plugin fails, an error message will be logged.
 
 ## Common Patterns
 
@@ -334,31 +351,11 @@ func (p *MyPlugin) handleRequest(c echo.Context) error {
 }
 ```
 
-### Resource Cleanup
-
-```go
-func (p *MyPlugin) Shutdown() error {
-    // Close connections, cleanup resources
-    if p.connection != nil {
-        p.connection.Close()
-    }
-
-    log.Infof("Plugin %s cleaned up successfully", p.Name())
-    return nil
-}
-```
-
 ## Complete Example
 
-See `examples/plugins/example/` for a full working plugin that demonstrates:
+See [`examples/plugins/example/`](https://code.vikunja.io/tree/main/examples/plugins/example) for a full working plugin that demonstrates:
 
 - Basic plugin structure and interfaces
 - Event listener registration
 - Both authenticated and unauthenticated web routes
 - Proper error handling and logging
-
-Build and test it with:
-
-```bash
-mage plugins:build examples/plugins/example
-```
