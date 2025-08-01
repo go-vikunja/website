@@ -22,13 +22,6 @@ E-Mail: <a href="mailto:hello@vikunja.io">hello@vikunja.io</a>
 
 Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE362488951
 
-## Online Dispute Resolution website of the EU Commission
-
-In order for consumers and traders to resolve a dispute out-of-court, the European Commission developed the
-Online Dispute Resolution Website: [ec.europa.eu/consumers/odr](https://www.ec.europa.eu/consumers/odr)
-
-You can find our email above.
-
 ## Consumer Dispute Resolution/Universal Arbitration Body
 
 We are not willing or obligated to participate in dispute resolution proceedings before a
