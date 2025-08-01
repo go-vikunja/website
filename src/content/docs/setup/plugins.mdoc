@@ -1,0 +1,222 @@
+---
+title: Plugins
+slug: plugins
+description: >-
+  Learn how to install, configure, and use plugins as an end user.
+---
+
+{% callout type="warning" %}
+Plugins are not yet supported in stable releases. You need to use the unstable builds to use plugins.
+{% /callout %}
+
+The plugin system allows you to extend the core functionality with custom features through Go plugins. This guide covers how to install, configure, and use plugins as a Vikunja system admin.
+
+## Overview
+
+Plugins in Vikunja are compiled Go shared libraries (`.so` files) that can:
+- Add new API endpoints
+- Listen to system events
+- Run database migrations
+- Extend core functionality without modifying Vikunja's source code
+
+To learn more about how to develop plugins, visit the [plugin development guide](/docs/plugin-development).
+
+## Installation and Configuration
+
+### 1. Enable Plugin Support
+
+Plugins are disabled by default and require enabling in your Vikunja configuration:
+
+```yaml
+plugins:
+  enabled: true
+  dir: "plugins"  # Directory containing .so files (relative to Vikunja binary)
+```
+
+You can also use an absolute path:
+```yaml
+plugins:
+  enabled: true
+  dir: "/path/to/your/plugins"
+```
+
+### 2. Plugin Directory Structure
+
+Create the plugin directory and place your `.so` files:
+
+```
+vikunja/
+├── vikunja     # Main binary
+├── config.yml  # Configuration file
+└── plugins/    # Plugin directory
+    ├── webhook-plugin.so
+    └── analytics.so
+```
+
+### 3. Restart Vikunja
+
+After adding plugins and updating configuration:
+
+```bash
+# Using systemd
+sudo systemctl restart vikunja
+
+# Or with docker
+docker restart <vikunja container name>
+```
+
+## Plugin Distribution
+
+### Compatibility Requirements
+
+{% callout type="warning" %}
+Plugins must be compiled with the **exact same Go version** as your Vikunja binary. Mismatched versions will cause loading failures.
+{% /callout %}
+
+- Check your Vikunja Go version: Look at build info or release notes
+- Ensure plugin `.so` files match this version
+- Plugins compiled for different architectures (amd64, arm64) won't work
+- Plugins are only supported on linux or macos systems.
+
+## Managing Plugins
+
+### Installing a Plugin
+
+1. Download the `.so` file for your architecture and Go version
+2. Copy to your configured plugins directory: `cp my-plugin.so /path/to/vikunja/plugins/`
+3. Restart Vikunja
+4. Verify in the logs if the plugin has been loaded successfully
+
+### Removing a Plugin
+
+1. Stop Vikunja
+2. Delete the `.so` file from the plugins directory
+3. Restart Vikunja
+
+### Plugin Status
+
+Check Vikunja logs during startup to see loaded plugins:
+
+```bash
+# View recent logs
+journalctl -u vikunja -n 50
+
+# Or if running directly
+tail -f vikunja.log
+
+# Or with docker
+docker logs <vikunja container name>
+```
+
+Successful plugin loading shows:
+```
+INFO Loaded plugin example-plugin
+INFO example-plugin initialized
+```
+
+## Using Plugin Features
+
+### API Endpoints
+
+Plugins can add new API endpoints under `/api/v1/plugins/`:
+
+#### Authenticated Endpoints
+Require valid JWT token or API key:
+```bash
+# Example: Get user profile from auth plugin
+curl -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+     https://your-vikunja.com/api/v1/plugins/user-profile
+```
+
+#### Public Endpoints
+No authentication required:
+```bash
+# Example: Webhook endpoint
+curl -X POST \
+     -H "Content-Type: application/json" \
+     -d '{"event": "test"}' \
+     https://your-vikunja.com/api/v1/plugins/webhook
+```
+
+### Database Changes
+
+Some plugins run database migrations to add new tables or modify existing ones. These run automatically when:
+- Plugin is first loaded
+- Plugin version is upgraded
+- Vikunja starts with plugin enabled
+
+## Troubleshooting
+
+### Plugin Won't Load
+
+**Error**: `Failed to load plugin example-plugin.so: plugin.Open("example-plugin"): plugin was built with a different version of package X`
+
+**Solution**: Plugin was compiled with different Go version than Vikunja. Get a compatible version or recompile.
+
+**Error**: `invalid plugin entry point`
+
+**Solution**: Plugin doesn't export required `NewPlugin()` function. Contact plugin developer.
+
+### Plugin Loads But Doesn't Work
+
+Check logs for plugin-specific errors:
+```bash
+grep "plugin-name" /var/log/vikunja.log
+```
+
+**Common issues**:
+- Plugin configuration missing or incorrect
+- Database migration failures
+- Permission issues with plugin files
+- Missing dependencies
+
+### Routes Not Available
+
+**Issue**: Plugin API endpoints return 404
+
+**Solutions**:
+- Check if plugin initialization succeeded
+- Ensure Vikunja was restarted after adding plugin
+- Test with curl or API client to confirm route registration
+
+## Security Considerations
+
+### Plugin Trust
+
+- **Only install plugins from trusted sources**
+- Plugins run with full Vikunja permissions
+- Malicious plugins can access your database and user data
+- Review plugin source code if available
+
+### File Permissions
+
+Ensure proper permissions on plugin files:
+```bash
+# Plugin files should be readable by Vikunja user
+chmod 644 /path/to/plugins/*.so
+chown vikunja:vikunja /path/to/plugins/*.so
+```
+
+### Network Access
+
+Plugins can make network requests. Consider:
+- Firewall rules for plugin network access
+- Monitoring outbound connections
+- Reviewing plugin network usage
+
+## Go Plugin System Limitations
+
+### Known Issues
+
+1. **No Plugin Unloading**: Once loaded, plugins cannot be unloaded without restarting Vikunja
+2. **Version Sensitivity**: Exact Go version match required between plugin and Vikunja
+3. **Platform Specific**: Plugins compiled for Linux won't work on Windows/macOS
+4. **Memory Sharing**: Plugins share the same memory space as Vikunja
+
+### Best Practices
+
+- **Test thoroughly** in development environment first
+- **Backup database** before installing plugins with migrations
+- **Monitor resource usage** after adding new plugins
+- **Keep plugins updated** with Vikunja version upgrades
+- **Document plugin purposes** for team members

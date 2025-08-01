@@ -1,0 +1,361 @@
+---
+title: Plugin Development
+slug: plugin-development
+description: >-
+  Learn how to develop, build, and deploy plugins for Vikunja.
+  This guide covers plugin interfaces, event system integration, API routes, database migrations, and configuration.
+---
+
+{% callout type="warning" %}
+Plugins are not yet supported in stable releases. You need to use the unstable builds to use plugins.
+{% /callout %}
+
+This guide covers everything you need to implement and deploy plugins for Vikunja.
+
+Plugins can extend the api in different ways, for example add new routes or integrate with the [events system](/docs/events-and-listeners).
+
+Plugins use [Go's core plugin system](https://pkg.go.dev/plugin) to load and manage plugins.
+
+## Quick Start
+
+### 1. Create Your Plugin
+
+```go
+package main
+
+import (
+    "github.com/vikunja/vikunja/pkg/plugins"
+    "github.com/vikunja/vikunja/pkg/log"
+)
+
+type MyPlugin struct{}
+
+func (p *MyPlugin) Name() string    { return "my-plugin" }
+func (p *MyPlugin) Version() string { return "1.0.0" }
+
+func (p *MyPlugin) Init() error {
+    log.Infof("MyPlugin initialized")
+    return nil
+}
+
+func (p *MyPlugin) Shutdown() error {
+    log.Infof("MyPlugin shutting down")
+    return nil
+}
+
+// Required: Export function for plugin loading
+func NewPlugin() plugins.Plugin {
+    return &MyPlugin{}
+}
+```
+
+### 2. Build and Deploy
+
+```bash
+# Build plugin
+mage plugins:build path/to/your/plugin
+
+# Enable in config
+plugins:
+  enabled: true
+  dir: "plugins"
+
+# Restart Vikunja
+systemctl restart vikunja
+
+# Or with docker
+docker restart <vikunja container name>
+```
+
+## Required Interfaces
+
+### Base Plugin Interface
+
+Every plugin **must** implement this interface:
+
+```go
+type Plugin interface {
+    Name() string    // Unique plugin identifier
+    Version() string // Plugin version (semver recommended)
+    Init() error     // Called during plugin initialization
+    Shutdown() error // Called during graceful shutdown
+}
+```
+
+**Implementation Requirements:**
+- `Name()` must return a unique identifier
+- `Version()` should follow semantic versioning
+- `Init()` is called once during startup - register event listeners and initialize resources here
+- `Shutdown()` is called during graceful shutdown - clean up resources here
+- Must export a `NewPlugin()` function that returns your plugin instance
+
+## Optional Capabilities
+
+### Database Migrations
+
+Implement this interface to run database migrations:
+
+```go
+type MigrationPlugin interface {
+    Plugin
+    Migrations() []*xormigrate.Migration
+}
+
+func (p *MyPlugin) Migrations() []*xormigrate.Migration {
+    return []*xormigrate.Migration{
+        {
+            ID: "20240101000000-create-plugin-table",
+            Migrate: func(tx *xorm.Engine) error {
+                type PluginData struct {
+                    ID   int64  `xorm:"pk autoincr"`
+                    Key  string `xorm:"varchar(255) not null unique"`
+                    Data string `xorm:"text"`
+                }
+                return tx.Sync2(new(PluginData))
+            },
+            Rollback: func(tx *xorm.Engine) error {
+                return tx.DropTables("plugin_data")
+            },
+        },
+    }
+}
+```
+
+Migrations work in the same way as [Vikunja core migrations](/docs/database-migrations/).
+
+### Web API Routes
+
+You can register api routes which are either authenticated or unauthenticated. Both work very similar to each other, but authenticated routes require a valid JWT/API token.
+
+All routes registered from a plugin are prefixed with `/api/v1/plugins/`.
+
+#### Authenticated Routes
+
+For routes requiring user authentication (JWT/API token), your plugin must implement the `AuthenticatedRouterPlugin` interface:
+
+```go
+type AuthenticatedRouterPlugin interface {
+    Plugin
+    RegisterAuthenticatedRoutes(g *echo.Group)
+}
+
+func (p *MyPlugin) RegisterAuthenticatedRoutes(g *echo.Group) {
+    // Routes accessible at /api/v1/plugins/user-profile
+    g.GET("/user-profile", handleUserProfile)
+}
+
+func handleUserProfile(c echo.Context) error {
+    // Get database session
+    s := db.NewSession()
+    defer s.Close()
+
+    // Get authenticated user
+    user, err := user.GetCurrentUserFromDB(s, c)
+    if err != nil {
+        return echo.NewHTTPError(http.StatusUnauthorized, "User not found")
+    }
+
+    return c.JSON(http.StatusOK, map[string]interface{}{
+        "user_id": user.ID,
+        "message": "Hello " + user.Username,
+    })
+}
+```
+
+#### Public Routes
+
+For routes that don't require authentication your plugin must implement the `UnauthenticatedRouterPlugin` interface:
+
+```go
+type UnauthenticatedRouterPlugin interface {
+    Plugin
+    RegisterUnauthenticatedRoutes(g *echo.Group)
+}
+
+func (p *MyPlugin) RegisterUnauthenticatedRoutes(g *echo.Group) {
+    g.POST("/webhook", handleWebhook)
+}
+
+func handleWebhook(c echo.Context) error {
+    var payload map[string]interface{}
+    if err := c.Bind(&payload); err != nil {
+        return echo.NewHTTPError(http.StatusBadRequest, "Invalid payload")
+    }
+
+    log.Infof("Received webhook: %+v", payload)
+
+    return c.JSON(http.StatusOK, map[string]interface{}{
+        "message": "Webhook processed",
+    })
+}
+```
+
+**Route Best Practices:**
+- Use appropriate HTTP methods (GET, POST, PUT, DELETE)
+- Always validate input and handle errors properly
+- Use `db.NewSession()` for database operations and close sessions
+- Return consistent JSON responses with proper HTTP status codes
+
+## Event System Integration
+
+### Available Events
+
+Your plugin can listen to any event dispatched by Vikunja.
+
+This works in the same way as [core events and listeners](/docs/events-and-listeners/).
+
+Here's what that could look like:
+
+```go
+import (
+    "encoding/json"
+    "github.com/vikunja/vikunja/pkg/events"
+    "github.com/vikunja/vikunja/pkg/models"
+    "github.com/ThreeDotsLabs/watermill/message"
+)
+
+type TaskCreatedListener struct{}
+
+func (l *TaskCreatedListener) Handle(msg *message.Message) error {
+    var event models.TaskCreatedEvent
+    if err := json.Unmarshal(msg.Payload, &event); err != nil {
+        return err
+    }
+
+    log.Infof("Task created: %s", event.Task.Title)
+
+    // Do something with the created task
+
+    return nil
+}
+
+func (l *TaskCreatedListener) Name() string {
+    return "TaskCreatedListener"
+}
+
+// Register in your plugin's Init() method
+func (p *MyPlugin) Init() error {
+    events.RegisterListener((&models.TaskCreatedEvent{}).Name(), &TaskCreatedListener{})
+    return nil
+}
+```
+
+## Configuration
+
+### Enable Plugin System
+
+The plugin system is **disabled by default**. Enable it in your Vikunja config:
+
+```yaml
+plugins:
+  enabled: dir
+  dir: "/path/to/plugins" # Directory containing .so files - by default this is the plugins/ directory next to the Vikunja binary
+```
+
+### Plugin Configuration
+
+Access Vikunja's configuration in your plugin:
+
+```go
+import "github.com/vikunja/vikunja/pkg/config"
+
+func (p *MyPlugin) Init() error {
+    // Access configuration values
+    dbType := config.DatabaseType.GetString()
+    logLevel := config.LogLevel.GetString()
+
+    // Your initialization logic
+    return nil
+}
+```
+
+You can access custom configuration for your plugin by calling [viper](https://pkg.go.dev/github.com/spf13/viper) functions directly:
+
+```go
+import (
+    "github.com/vikunja/vikunja/pkg/config"
+    "github.com/spf13/viper"
+)
+
+func (p *MyPlugin) Init() error {
+    // Access configuration values
+    dbType := config.DatabaseType.GetString()
+    logLevel := config.LogLevel.GetString()
+
+    // Access custom plugin configuration
+    customValue := viper.GetString("plugins.my-plugin.custom-value")
+
+    // Your initialization logic
+    return nil
+}
+```
+
+## Building and Deployment
+
+### Using Mage
+
+```bash
+# Build single plugin
+mage plugins:build path/to/your/plugin
+```
+
+This creates a .so file in the plugins/ directory
+
+### Deployment Steps
+
+1. Build your plugin as a shared library (`.so` file)
+2. Copy the `.so` file to your configured plugins directory
+3. Enable the plugin system in your Vikunja configuration
+4. Restart Vikunja to load the plugin
+
+If loading a plugin fails, an error message will be logged.
+
+## Common Patterns
+
+### Project Structure
+
+```
+my-plugin/
+├── main.go          # Plugin implementation
+├── go.mod           # Go module file
+├── handlers.go      # Route handlers (optional)
+├── listeners.go     # Event listeners (optional)
+└── migrations.go    # Database migrations (optional)
+```
+
+### Database Operations
+
+```go
+import "github.com/vikunja/vikunja/pkg/db"
+
+func (p *MyPlugin) handleData(c echo.Context) error {
+    s := db.NewSession()
+    defer s.Close()
+
+    // Your database operations here
+
+    return c.JSON(http.StatusOK, result)
+}
+```
+
+### Error Handling
+
+```go
+func (p *MyPlugin) handleRequest(c echo.Context) error {
+    if err := someOperation(); err != nil {
+        log.Errorf("Plugin operation failed: %v", err)
+        return echo.NewHTTPError(http.StatusInternalServerError, "Operation failed")
+    }
+
+    return c.JSON(http.StatusOK, response)
+}
+```
+
+## Complete Example
+
+See [`examples/plugins/example/`](https://code.vikunja.io/tree/main/examples/plugins/example) for a full working plugin that demonstrates:
+
+- Basic plugin structure and interfaces
+- Event listener registration
+- Both authenticated and unauthenticated web routes
+- Proper error handling and logging
