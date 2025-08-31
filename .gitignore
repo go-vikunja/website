@@ -32,6 +32,3 @@ devenv.local.nix
 
 # pre-commit
 .pre-commit-config.yaml
-
-# Test files
-src/pages/test-callout.astro
