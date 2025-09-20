@@ -116,15 +116,14 @@ Your Vikunja service should now work and your HTTPS frontend should be able to r
 
 ## Apache
 
-Put the following config in `cat /etc/apache2/sites-available/vikunja.conf`:
+Put the following config in `/etc/apache2/sites-available/vikunja.conf`:
 
 ```aconf
 <VirtualHost *:80>
     ServerName localhost
-   
+
     <Proxy *>
-      Order Deny,Allow
-      Allow from all
+      Require all granted
     </Proxy>
     ProxyPass / http://localhost:3456/
     ProxyPassReverse / http://localhost:3456/
