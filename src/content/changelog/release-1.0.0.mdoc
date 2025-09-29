@@ -1,0 +1,216 @@
+---
+title: What's new in Vikunja 1.0.0
+date: 2026-01-27T18:00:00.000Z
+slug: /whats-new-in-vikunja-1.0.0
+description: >-
+  The long-anticipated 1.0 release is finally here! LDAP authentication, S3 storage, user mentions, improved Kanban, ParadeDB search, and much more.
+---
+
+It's been a long time coming, but I'm thrilled to announce Vikunja 1.0.0!
+
+More specifically, Vikunja has been in development for over 8 years now, with the first commit dating back to June 2018.
+During all this time, I never quite felt comfortable calling it 1.0.
+Now, I still would not consider it "done", but it's definitely mature enough to call it a 1.0 release.
+More will come!
+
+This release contains a whopping 2,652 commits since the last stable release. 1,227 of those are dependency updates (46%), leaving us with 1,425 commits of actual code and feature changes. It's been over a year since the last release, and we've been busy.
+
+Let's dive in!
+
+## New to Vikunja?
+
+Vikunja is the open-source, self-hostable to-do app.
+It lets you organize all kinds of things, from your shopping list to a multi-month project with multiple team members.
+Different ways to view, filter and share your tasks make this a breeze.
+
+Check out [the features page](https://vikunja.io/features) to learn more about all of its features.
+
+## Breaking Changes
+
+Since this is a major release, we've collected a number of breaking changes. Here's what you need to know when upgrading:
+
+### API Route Changes
+
+- `/tasks/all` → `/tasks`: The endpoint to fetch all tasks now lives at just `/tasks` for consistency.
+- `/tokenTest` → `/token/test`: Token validation endpoint renamed. This is particularly important for the n8n integration.
+- The avatar endpoint (`/avatar/:username`) now requires authentication ([#930](https://github.com/go-vikunja/vikunja/issues/930)). While usernames aren't exactly public, they can be guessed with some effort, so we've tightened this up.
+
+### Behavior Changes
+
+- **CORS is now enabled by default** ([#904](https://github.com/go-vikunja/vikunja/issues/904)): This was changed because people trying to use the desktop app found it didn't work without CORS enabled with no clear error if you did not know about it. Because CORS settings require a `service.publicurl`, this also means you now need to set one if you don't disable CORS. Vikunja will fail to start otherwise.
+- **File storage validation on startup** ([#2053](https://github.com/go-vikunja/vikunja/issues/2053)): Vikunja now checks if file storage is accessible and writable at startup. This prevents cases where Vikunja would start normally but file features wouldn't work due to misconfiguration.
+- **OAuth provider validation on startup**: If OAuth is configured, Vikunja will now attempt to connect to the provider on startup and fail to start if it can't reach it.
+- **Bucket limits enforced more strictly**: You can no longer create tasks in full buckets via the API. This is more of a bug fix that corrects to match expected behavior.
+- **Echo log options removed**: These have been unified with the general HTTP logging options.
+- **The Wunderlist migrator was removed**: Wunderlist has been defunct since Microsoft shut it down, so the migration code did not work anymore and thus was finally removed.
+
+### API Field Changes
+
+- `right` was renamed to `permission` in API responses and headers ([#1277](https://github.com/go-vikunja/vikunja/issues/1277)). Everything related to permission management now uses the `permission` field consistently.
+- The `done_bucket_id` field was removed from the project model - this is now handled per-view instead.
+
+### Config Changes
+
+- SQLite path handling changed ([#934](https://github.com/go-vikunja/vikunja/issues/934)) - paths are now relative to the configured `service.rootpath` unless an absolute path is specified.
+- The option `service.enablemetrics` was removed, use `metrics.enabled` instead. The old option was long deprecated and printed a warning on starup.
+- `log.standard = "false"` no longer works, use `log.standard = "off"`
+- `log.events = "false"` no longer works, use `log.events = "off"`
+
+### OpenID Config Format Changed
+
+The `auth.openid.providers` configuration format changed from an array to a map.
+Existing configs will need manual migration.
+[Check out the docs](/docs/openid#step-2-configure-vikunja) for the new format.
+
+## Major New Features
+
+There are a ton of new features in this release. Here are some of the highlights:
+
+(I'm sure I forgot some)
+
+### Authentication & SSO
+
+- **LDAP authentication**: Vikunja now supports LDAP authentication with group sync, avatar sync, and configurable filters. Check out [the docs](/docs/ldap) for setup instructions.
+- **Avatar sync from OpenID providers** ([#821](https://github.com/go-vikunja/vikunja/issues/821)): If your OpenID provider has avatar information, Vikunja can now sync those avatars automatically. Check out [the docs](/docs/openid#supported-and-required-claims) for details. Thanks to [@maggch97](https://github.com/maggch97) for contributing this!
+- **Automatic SSO login** ([#3071](https://kolaente.dev/vikunja/vikunja/issues/3071)): You can now pass a query parameter to automatically log in via SSO, plus there's fallback mapping if your provider does things a bit differently ([#3068](https://kolaente.dev/vikunja/vikunja/issues/3068)). Thanks to [@jyte](https://kolaente.dev/jyte) for these features!
+- **Custom settings links via OpenID claims**: OpenID claims can now provide custom links that appear in user settings. This is useful for pointing users to related services in your organization.
+
+### User Mentions
+
+![User mentions popup showing team members](../../assets/images/changelog/1.0.0-user-mentions.png)
+
+User mentions in task descriptions and comments have been completely revamped ([#1754](https://github.com/go-vikunja/vikunja/issues/1754)).
+Previously, this was a hidden feature - you had to know the exact username to mention someone.
+Now there's proper `@` mention support with a search popup that lets you find and mention team members easily.
+Mentions also show up properly highlighted in the UI and in notification emails.
+
+Thanks to [@maggch97](https://github.com/maggch97) for the initial work!
+
+### Comment Count and Unread Tracking
+
+![Tasks showing comment count badges](../../assets/images/changelog/1.0.0-comment-count.png)
+
+Tasks now display their comment count in list and Kanban views ([#1771](https://github.com/go-vikunja/vikunja/issues/1771)). Even better, if there are unread comments, they're shown with a visual indicator ([#1857](https://github.com/go-vikunja/vikunja/issues/1857)).
+
+Thanks to [@mithileshgupta12](https://github.com/mithileshgupta12) for both features!
+
+### Task Card Preview
+
+![Task card preview popup on hover](../../assets/images/changelog/1.0.0-task-card-preview.png)
+
+When hovering over a task title in list or table view, a preview popup now appears showing the description and key information ([#1863](https://github.com/go-vikunja/vikunja/issues/1863)). Quick way to see task details without opening the full view.
+
+### Drag and Drop Tasks Between Projects
+
+You can now drag tasks between projects directly ([#1945](https://github.com/go-vikunja/vikunja/issues/1945)).
+This allows to quickly reorganize tasks without having to open each one individually.
+Works from both list and Kanban views.
+
+### Kanban Improvements
+
+- **Collapse done column**: Click the green checkmark to fold the done column ([#1393](https://github.com/go-vikunja/vikunja/issues/1393))
+- **Always show bucket count**: New user setting to always display task counts in buckets ([#1966](https://github.com/go-vikunja/vikunja/issues/1966))
+- **Better task cards**: Items on Kanban task cards are now better arranged
+- **Default buckets**: New Kanban views now automatically get "To-Do", "Doing", and "Done" buckets
+
+### Gantt Chart Rebuild
+
+![The rebuilt Gantt chart showing task timeline](../../assets/images/changelog/1.0.0-gantt-chart.png)
+
+The Gantt chart was completely rebuilt ([#1001](https://github.com/go-vikunja/vikunja/issues/1001), [#1476](https://github.com/go-vikunja/vikunja/issues/1476)), resulting in significantly fewer bugs while maintaining the same functionality. Also, when switching between views, the Gantt date range is now preserved ([#2141](https://github.com/go-vikunja/vikunja/issues/2141)).
+
+### Clickable Labels
+
+![Home page filtered by a label](../../assets/images/changelog/1.0.0-labels-filter.png)
+
+On the Labels page, clicking a label now takes you to the home page filtered by that label ([#1825](https://github.com/go-vikunja/vikunja/issues/1825)).
+No need to create a filter to quickly see all tasks with a specific label!
+
+### Keyboard Navigation
+
+- `j`/`k` navigation in list view for Vim-style browsing ([#1040](https://github.com/go-vikunja/vikunja/issues/1040))
+- Press `Escape` while editing a task title to cancel and restore the original ([#2730](https://kolaente.dev/vikunja/vikunja/issues/2730)). Thanks to [@DanielPantle](https://kolaente.dev/DanielPantle) for contributing this!
+- New keyboard shortcut to copy task identifier, title, or URL: While on a task detail view, press `.` to copy the task identifier, `..` to copy the task identifier and title, and `...` to copy the task identifier, title, and url ([#2028](https://github.com/go-vikunja/vikunja/issues/2028))
+
+### Auto-save Everywhere
+
+- Descriptions are automatically saved when you navigate away from a task ([#1140](https://github.com/go-vikunja/vikunja/issues/1140))
+- Draft comments are saved locally in your browser ([#1868](https://github.com/go-vikunja/vikunja/issues/1868)) - if you accidentally click away while writing a comment, it'll still be there when you come back
+
+### New User Settings
+
+- You can now adjust the brightness of background images ([#1915](https://github.com/go-vikunja/vikunja/issues/1915)). Thanks to [@mithileshgupta12](https://github.com/mithileshgupta12)!
+- The sidebar can now be resized via drag and drop ([#1965](https://github.com/go-vikunja/vikunja/issues/1965))
+- It is now possible to change how dates are displayed in the UI - relative, American, ISO 8601, and more!
+- The time display can now be set to 12-hour or 24-hour time format ([#1807](https://github.com/go-vikunja/vikunja/issues/1807))
+- The user settings page has been reorganized so that things are easier to find - no longer just an overwhelming list of options.
+
+### S3 File Storage
+
+You can now store files in S3-compatible storage instead of the local filesystem ([#1688](https://github.com/go-vikunja/vikunja/issues/1688)).
+This is great when running Vikunja in containerized environments or on platforms where local storage isn't ideal.
+
+Check out [the docs](/docs/config-options/#1-files-type) for setup instructions.
+
+Thanks to [@maggch97](https://github.com/maggch97)!
+
+### ParadeDB Search Support
+
+We now support [ParadeDB](https://www.paradedb.com/), a Postgres extension for full-text search. The goal is to eventually replace Typesense with this, as it's significantly easier to operate - if you're already running Postgres, it's essentially a drop-in addition.
+
+**Typesense is now deprecated.** It requires maintaining a separate database that needs to stay in sync, which has led to various bugs over time. We won't be fixing Typesense-related bugs going forward and will remove support in one the next releases.
+If you're using Typesense, please migrate to ParadeDB.
+
+### Email Improvements
+
+- Task notification emails now include Thread IDs for proper threading in email clients ([#1826](https://github.com/go-vikunja/vikunja/issues/1826))
+- User mentions in emails are properly displayed with display names ([#1930](https://github.com/go-vikunja/vikunja/issues/1930))
+- All emails are now translated to match the user's language setting
+
+### Filter Improvements
+
+- New `not in` operator for filters
+- Filter by `created` and `updated` task fields
+- The filter input component was completely rebuilt, fixing many bugs
+
+### CalDAV Improvements
+
+CalDAV now returns proper intervals instead of using `FREQ=SECONDLY` for everything ([#1230](https://github.com/go-vikunja/vikunja/issues/1230)), improving compatibility with external clients. That said, CalDAV remains an area with room for improvement - there are still things that don't work quite right, and more updates are coming.
+
+### Preserve Config on Restore
+
+The `vikunja restore` command now has a `--preserve-config` flag that keeps your current config instead of restoring it from the dump ([#1939](https://github.com/go-vikunja/vikunja/issues/1939)).
+
+### Reliability Improvements
+
+- Duplicate task positions are now automatically detected and repaired ([#1998](https://github.com/go-vikunja/vikunja/issues/1998))
+- Centralized HTTP error handling provides better error messages ([#2062](https://github.com/go-vikunja/vikunja/issues/2062))
+
+## Other Notable Changes
+
+- **Saved filters as favorites** ([#2055](https://github.com/go-vikunja/vikunja/issues/2055)): You can now mark saved filters as favorites from the UI. This was previously only possible via the API.
+- **New translations**: Vikunja is now available in Bulgarian, Finnish, Hebrew, Lithuanian, and Turkish. Want to help translate? Check out [the translation docs](/docs/translations)!
+- **Right-to-left layout**: The UI now properly supports RTL layouts for Arabic and Hebrew.
+- **Auto TLS**: You can now run Vikunja with automatic TLS certificate acquisition via Let's Encrypt. Note that this is the only way to run Vikunja with HTTPS natively - you can't configure your own certificates directly. Check out [the docs](/docs/config-options/#0--autotls) for details.
+- **Rudimentary Plugin system**: There's now a rudimentary plugin system that allows registering routes and reacting to events. This is primarily for backend integrations where building a full feature doesn't make sense. It's very early for this and will probably change in the future. [Check out the docs](/docs/plugins) for details.
+- **Config from files**: Every configuration variable can now be read from a file. [Check out the docs](/docs/config-options#reading-config-values-from-files) for details.
+- **Mobile app updates**: The mobile app has seen renewed development and is now available as [beta in the Google Play Store](https://play.google.com/store/apps/details?id=io.vikunja.app). An iOS release is coming soon-ish.
+- **Configurable Gravatar base URL** ([#2083](https://github.com/go-vikunja/vikunja/issues/2083)): You can [now configure](/docs/config-options/#1-avatar-gravatarbaseurl) a Gravatar-compatible base URL for other avatar services. Thanks to [@rhclayto](https://github.com/rhclayto)!
+- **Lots of refactoring**: Major refactoring efforts include the filter input, settings page, and Gantt chart, plus countless smaller improvements throughout the codebase. Everything should be more stable overall.
+
+## How to Upgrade
+
+Grab the new release from the [downloads page](https://dl.vikunja.io/vikunja/v1.0.0/) or pull the `:latest` docker image.
+
+Make sure to review the breaking config changes above, especially the openid config format change and the CORS setting.
+
+## Support the Project
+
+If you find Vikunja useful, please consider [supporting the project](/support). Your support helps keep development going.
+
+## Closing
+
+After all this time, it feels great to finally ship 1.0. Thank you to everyone who contributed, tested, reported bugs, and waited patiently.
+
+If you have any questions about this release, please reach out either [in the community forum](https://community.vikunja.io), [Bluesky](https://bsky.app/profile/vikunja.io), or [Mastodon](https://social.linux.pizza/@vikunja).
+
