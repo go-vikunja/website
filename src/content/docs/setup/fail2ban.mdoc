@@ -5,6 +5,12 @@ description: >-
   This guide explains how to configure **Fail2Ban** to protect your Vikunja instance from repeated failed login attempts.
 ---
 
+Use the [ratelimit options](/docs/config-options/#0--ratelimit) to restrict the number of requests a client can make within a specific timeframe. This helps prevent abuse of the API through excessive requests and applies to all endpoints, with stricter limits for unauthenticated actions such as login, registration, and password reset.
+
+Use Fail2Ban when you want to block clients entirely after repeated failed authentication attempts. Fail2ban monitors the logs and, if the defined threshold is reached, bans the offending IP on the network level.
+
+Both mechanisms can be used together to provide layered protection against abuse and unauthorized access attempts.
+
 ## Configure Vikunja
 
 First, make sure Vikunja is logging HTTP requests to a file. Add or adjust the following section in your `config.yml`:
@@ -26,11 +32,21 @@ Set up Fail2Ban according to your distribution’s documentation or the official
 
 Add a new filter for Vikunja HTTP logs at `/etc/fail2ban/filter.d/vikunja.conf`:
 
+#### Versions < 1.0.0
+
 ```conf
 [Definition]
 datepattern = ^%%Y-%%m-%%dT%%H:%%M:%%S%%Z
-failregex = ^.*WEB\s+▶\s+<HOST>\s+POST\s+(?:401|402|412)\s+/api/v1/login\b.*$
+failregex = ^.*WEB\s+▶\s+<HOST>\s+POST\s+(?:400|403|412)\s+/api/v1/login\b.*$
 ignoreregex =
+```
+
+#### Since v1.0.0
+
+```conf
+[Definition]
+datepattern = ^time=%%Y-%%m-%%dT%%H:%%M:%%S%%Z
+failregex = ^.*\bmsg="POST\s+/api/v\d+/login[^"]*".*\bstatus=(?:400|403|412)\b.*\bremote_ip=<HOST>\b.*$
 ```
 
 This filter matches failed login attempts recorded in the HTTP log.
