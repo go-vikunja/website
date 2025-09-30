@@ -1,0 +1,109 @@
+---
+title: systemd hardening
+slug: systemd-hardening
+description: >-
+  Run Vikunja as a non-root user with systemd for additional security,
+  and optionally apply sandboxing to further limit access.
+---
+
+When [installing](/docs/installing) Vikunja on a systemd-based system, the service may be configured to run as `root`. It is generally a good idea to run services with the least amount of privileges they need. This guide shows how to run Vikunja as its own dedicated user and how to optionally add extra security restrictions using systemd.
+
+## Create a dedicated user
+
+Create a system account for Vikunja that will not be able to log in interactively and will only be used to run the service:
+
+```bash
+sudo useradd --system --home /var/lib/vikunja --shell /usr/sbin/nologin vikunja
+```
+
+Next, ensure Vikunja has its own directories for data, logs, and configuration, and that the new user owns them:
+
+```bash
+sudo mkdir -p /var/lib/vikunja /var/log/vikunja
+sudo chown -R vikunja:vikunja /var/lib/vikunja /var/log/vikunja
+sudo chmod -R o+r /etc/vikunja
+```
+
+If you are logging to files, modify their location in your `config.yml` inside the [log section](https://vikunja.io/docs/config-options/#0--log).
+
+## Modify the systemd service unit
+
+The package already provides a service unit (/lib/systemd/system/vikunja.service). Modify it using:
+
+```bash
+sudo systemctl edit vikunja.service
+```
+
+Apply the following changes:
+
+* Run Vikunja as the dedicated vikunja user
+* Uses /var/lib/vikunja as the working directory
+* Start the binary with the config file explicitly specified
+* Add basic systemd sandboxing options that limit what the service can do on the host
+
+
+```config
+[Service]
+User=vikunja
+Group=vikunja
+WorkingDirectory=/var/lib/vikunja
+ExecStart=/usr/local/bin/vikunja
+Environment=VIKUNJA_CONFIG=/etc/vikunja/config.yml
+Restart=always
+RestartSec=3
+LimitNOFILE=65536
+NoNewPrivileges=true
+ProtectHome=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/vikunja /var/log/vikunja /etc/vikunja
+```
+Also make sure to add your specified [files](/docs/config-options/#0--files) folder to ReadWritePaths and adapt permissions.
+
+## Reload systemd And Restart Vikunja
+
+```bash
+sudo systemctl daemon-reexec
+sudo systemctl restart vikunja.service
+```
+
+## Verify the Service
+
+Check that the service is running under the correct user:
+
+```bash
+ps -u vikunja -f
+```
+
+Additionaly, check the logs for errors using:
+
+```bash
+journalctl -u vikunja.service -e
+```
+
+## Extra hardening (optional)
+
+systemd provides further options to isolate services from the rest of the system. If you want to go beyond the basic setup, add the following in the [Service] section:
+
+```config
+CapabilityBoundingSet=
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+PrivateDevices=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+SystemCallArchitectures=native
+RestrictNamespaces=yes
+SystemCallFilter=@system-service @network-io ~@privileged
+ProtectProc=invisible
+ProcSubset=pid
+```
+
+This restricts access to kernel interfaces, devices, and system calls, providing a more “jail-like” environment. A detailed documentation is available [here](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html).
+
+## Using a Reverse Proxy
+
+When exposing Vikunja on the internet, it’s common to put it behind a reverse proxy such as Nginx. The proxy handles TLS, compression, and request routing, while Vikunja itself only listens locally. Detailed instructions can be found in the [docs](/docs/reverse-proxy).
