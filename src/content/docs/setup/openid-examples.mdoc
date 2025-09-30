@@ -157,3 +157,32 @@ Azure AD Config:
     - Select ID, then email
 
 Note: Replace `<tenant_id>` in the `authurl` with your Azure AD tenant ID. Ensure that the provider name in the Vikunja config matches the one used in the redirect URI (e.g., "azuread" in this example).
+
+## Dex
+
+Dex config:
+```yaml
+staticClients:
+- id: <vikunja-id>
+  redirectURIs:
+    - 'https://vikunja.mydomain.com/auth/openid/dex'
+  name: 'Vikunja'
+  secret: <dex-client-secret>
+```
+
+Note: All scopes required by Vikunja are already in the default scope definition of Dex (see [Dex docs](https://dexidp.io/docs/configuration/custom-scopes-claims-clients/)).
+
+Vikunja config:
+```yaml
+auth:
+  openid:
+    enabled: true
+    providers:
+      dex:
+        name: dex
+        authurl: <dex-url>
+        clientid: <vikunja-id>
+        clientsecret: <dex-client-secret>
+        scope: openid profile email
+        forceuserinfo: false
+```
