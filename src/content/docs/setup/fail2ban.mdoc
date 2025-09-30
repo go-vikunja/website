@@ -2,12 +2,12 @@
 title: Fail2Ban Setup
 slug: fail2ban
 description: >-
-  This guide explains how to configure **Fail2Ban** to protect your Vikunja instance from repeated failed login attempts.
+  This guide explains how to configure Fail2Ban to protect your Vikunja instance from repeated failed login attempts.
 ---
 
-Use the [ratelimit options](/docs/config-options/#0--ratelimit) to restrict the number of requests a client can make within a specific timeframe. This helps prevent abuse of the API through excessive requests and applies to all endpoints, with stricter limits for unauthenticated actions such as login, registration, and password reset.
+To protect your Vikunja instance from brute-force and abusive requests, you can use [Fail2Ban](https://github.com/fail2ban/fail2ban), which monitors logs and blocks IPs at the network level after repeated failed logins.
 
-Use Fail2Ban when you want to block clients entirely after repeated failed authentication attempts. Fail2ban monitors the logs and, if the defined threshold is reached, bans the offending IP on the network level.
+Use the [ratelimit options](/docs/config-options/#0--ratelimit) to limit request frequency across endpoints, and Fail2Ban when you want to ban clients entirely.
 
 Both mechanisms can be used together to provide layered protection against abuse and unauthorized access attempts.
 
@@ -55,7 +55,7 @@ This filter matches failed login attempts recorded in the HTTP log.
 
 Next, add a jail definition for Vikunja to your `/etc/fail2ban/jail.local`:
 
-Adjust the 'logfile' path to match your http.log file.
+Adjust the `logfile` path to match your `http.log` file.
 ```conf
 [vikunja]
 enabled  = true      # Enable this jail
