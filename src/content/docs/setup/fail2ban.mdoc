@@ -1,0 +1,81 @@
+---
+title: Fail2Ban Setup
+slug: fail2ban
+description: >-
+  This guide explains how to configure Fail2Ban to protect your Vikunja instance from repeated failed login attempts.
+---
+
+To protect your Vikunja instance from brute-force and abusive requests, you can use [Fail2Ban](https://github.com/fail2ban/fail2ban), which monitors logs and blocks IPs at the network level after repeated failed logins.
+
+Use the [ratelimit options](/docs/config-options/#0--ratelimit) to limit request frequency across endpoints, and Fail2Ban when you want to ban clients entirely.
+
+Both mechanisms can be used together to provide layered protection against abuse and unauthorized access attempts.
+
+## Configure Vikunja
+
+First, make sure Vikunja is logging HTTP requests to a file. Add or adjust the following section in your `config.yml`:
+
+```yaml
+log:
+  path: "/var/lib/vikunja/logs"
+  enabled: true
+  http: "file"
+```
+
+Adjust the path value if your environment uses a different log location.
+
+## Configure Fail2Ban
+
+Set up Fail2Ban according to your distribution’s documentation or the official [Fail2Ban documentation](https://github.com/fail2ban/fail2ban/).
+
+### Create a Filter
+
+Add a new filter for Vikunja HTTP logs at `/etc/fail2ban/filter.d/vikunja.conf`:
+
+#### Versions < 1.0.0
+
+```conf
+[Definition]
+datepattern = ^%%Y-%%m-%%dT%%H:%%M:%%S%%Z
+failregex = ^.*WEB\s+▶\s+<HOST>\s+POST\s+(?:400|403|412)\s+/api/v1/login\b.*$
+ignoreregex =
+```
+
+#### Since v1.0.0
+
+```conf
+[Definition]
+datepattern = ^time=%%Y-%%m-%%dT%%H:%%M:%%S%%Z
+failregex = ^.*\bmsg="POST\s+/api/v\d+/login[^"]*".*\bstatus=(?:400|403|412)\b.*\bremote_ip=<HOST>\b.*$
+```
+
+This filter matches failed login attempts recorded in the HTTP log.
+
+### Create a Jail
+
+Next, add a jail definition for Vikunja to your `/etc/fail2ban/jail.local`:
+
+Adjust the `logfile` path to match your `http.log` file.
+```conf
+[vikunja]
+enabled  = true      # Enable this jail
+backend  = auto      # Automatically select the backend
+filter   = vikunja   # Use the filter defined in filter.d/vikunja.conf
+port     = http,https # Ports to be banned
+logpath  = /var/lib/vikunja/logs/http.log # Path to Vikunja http log file
+maxretry = 3         # Allow 3 failures before banning
+findtime = 600       # Count failures over 10 minutes (600s)
+bantime  = 3600      # Ban the IP for 1 hour (3600s)
+```
+
+Make sure the logpath points to the correct HTTP log file configured earlier.
+
+### Verification
+
+After restarting Fail2Ban, you can verify that the jail is active and monitoring logs with:
+
+```bash
+fail2ban-client status vikunja
+```
+
+This should show the jail’s status, including any currently banned IPs.
