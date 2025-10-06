@@ -85,26 +85,3 @@ Additionally, check the logs for errors:
 ```bash
 journalctl -u vikunja.service -e
 ```
-
-## Extra hardening (optional)
-
-systemd provides further options to isolate services from the rest of the system. If you want to go beyond the basic setup, add the following in the [Service] section:
-
-```config
-CapabilityBoundingSet=
-ProtectKernelTunables=yes
-ProtectKernelModules=yes
-ProtectKernelLogs=yes
-ProtectControlGroups=yes
-PrivateDevices=yes
-RestrictSUIDSGID=yes
-LockPersonality=yes
-MemoryDenyWriteExecute=yes
-SystemCallArchitectures=native
-RestrictNamespaces=yes
-SystemCallFilter=@system-service @network-io ~@privileged
-ProtectProc=invisible
-ProcSubset=pid
-```
-
-This restricts access to kernel interfaces, devices, and system calls, providing a more “jail-like” environment. A detailed documentation is available [here](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html).
