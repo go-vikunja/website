@@ -28,6 +28,9 @@ export default defineMarkdocConfig({
 		},
 		configOptions: {
 			render: component('./src/components/partials/ConfigOptions.astro'),
+		},
+		cloudHostingAffiliate: {
+			render: component('./src/components/partials/CloudHostingAffiliate.astro'),
 		}
 	},
 	nodes: {
