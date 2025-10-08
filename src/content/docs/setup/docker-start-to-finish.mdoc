@@ -13,6 +13,9 @@ We'll use [docker compose](https://docs.docker.com/compose/) to make handling th
 
 > If you have any issues setting up Vikunja, please don't hesitate to reach out to us via [matrix](https://riot.im/app/#/room/!dCRiCiLaCCFVNlDnYs:matrix.org?via=matrix.org), the [community forum](https://community.vikunja.io/) or even [email](mailto:hello@vikunja.io).
 
+{% cloudHostingAffiliate %}
+{% /cloudHostingAffiliate %}
+
 ## Preparations (optional)
 
 Create a directory for the project where all data and the compose file will live in.
@@ -46,7 +49,7 @@ services:
         environment:
             POSTGRES_PASSWORD: changeme
             POSTGRES_USER: vikunja
-            
+
         volumes:
             - ./db:/var/lib/postgresql/data
         restart: unless-stopped
