@@ -12,7 +12,15 @@
 
   <!-- Modal -->
   <div id="search-modal-wrapper" class="fixed inset-0 flex items-start justify-center pt-[10vh] px-4">
-    <div id="search-modal-content" class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl max-w-2xl w-full max-h-[80vh] flex flex-col overflow-hidden">
+    <div
+      id="search-modal-content"
+      class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl max-w-2xl w-full max-h-[80vh] flex flex-col overflow-hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="search-modal-title"
+    >
+      <!-- Visually hidden title for screen readers -->
+      <h2 id="search-modal-title" class="sr-only">Search Documentation</h2>
 
       <!-- Search Input -->
       <div class="p-4 border-b border-gray-200 dark:border-gray-700">
@@ -43,6 +51,9 @@
           </kbd>
         </div>
       </div>
+
+      <!-- Live region for screen reader announcements -->
+      <div id="search-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
       <!-- Search Results -->
       <div

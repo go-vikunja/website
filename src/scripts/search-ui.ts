@@ -9,15 +9,20 @@ let resultsList: HTMLElement | null = null
 let loadingState: HTMLElement | null = null
 let emptyState: HTMLElement | null = null
 let noResultsState: HTMLElement | null = null
+let statusRegion: HTMLElement | null = null
 
 // State
 let selectedIndex = -1
 let currentResults: SearchResult[] = []
 let searchInitialized = false
+let lastFocusedElement: HTMLElement | null = null
 
 // Debouncing
 let searchTimeout: ReturnType<typeof setTimeout> | null = null
 const SEARCH_DEBOUNCE_MS = 150
+
+// Focusable elements selector
+const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
 /**
  * Initialize search UI
@@ -32,6 +37,7 @@ export function initializeSearchUI(): void {
   loadingState = document.getElementById('search-loading')
   emptyState = document.getElementById('search-empty')
   noResultsState = document.getElementById('search-no-results')
+  statusRegion = document.getElementById('search-status')
 
   if (!modal || !input || !resultsList) {
     console.warn('Search UI elements not found')
@@ -84,6 +90,9 @@ function attachEventListeners(): void {
 
   // Click on results
   resultsList?.addEventListener('click', handleResultClick)
+
+  // Focus trap
+  document.addEventListener('keydown', handleFocusTrap)
 }
 
 /**
@@ -92,6 +101,9 @@ function attachEventListeners(): void {
 async function openModal(): Promise<void> {
   console.log('Opening search modal')
   if (!modal || !input) return
+
+  // Store currently focused element to restore later
+  lastFocusedElement = document.activeElement as HTMLElement
 
   // Show modal
   modal.classList.add('show')
@@ -131,6 +143,11 @@ function closeModal(): void {
   selectedIndex = -1
   renderResults()
   showEmptyState()
+
+  // Restore focus to previously focused element
+  if (lastFocusedElement && lastFocusedElement.focus) {
+    lastFocusedElement.focus()
+  }
 }
 
 /**
@@ -160,8 +177,11 @@ function handleSearchInput(e: Event): void {
 
     if (currentResults.length === 0) {
       showNoResultsState()
+      announceToScreenReader('No results found')
     } else {
       hideAllStates()
+      const resultText = currentResults.length === 1 ? '1 result' : `${currentResults.length} results`
+      announceToScreenReader(`${resultText} found`)
     }
   }, SEARCH_DEBOUNCE_MS)
 }
@@ -289,4 +309,47 @@ function hideAllStates(): void {
   loadingState?.classList.add('hidden')
   emptyState?.classList.add('hidden')
   noResultsState?.classList.add('hidden')
+}
+
+/**
+ * Announce message to screen readers
+ */
+function announceToScreenReader(message: string): void {
+  if (statusRegion) {
+    statusRegion.textContent = message
+  }
+}
+
+/**
+ * Handle focus trap to keep focus within modal
+ */
+function handleFocusTrap(e: KeyboardEvent): void {
+  // Only trap focus if modal is open and Tab key is pressed
+  if (!modal?.classList.contains('show') || e.key !== 'Tab') {
+    return
+  }
+
+  const modalContent = document.getElementById('search-modal-content')
+  if (!modalContent) return
+
+  // Get all focusable elements within modal
+  const focusableElements = Array.from(
+    modalContent.querySelectorAll(FOCUSABLE_SELECTOR)
+  ) as HTMLElement[]
+
+  if (focusableElements.length === 0) return
+
+  const firstElement = focusableElements[0]
+  const lastElement = focusableElements[focusableElements.length - 1]
+
+  // If shift+tab on first element, go to last
+  if (e.shiftKey && document.activeElement === firstElement) {
+    e.preventDefault()
+    lastElement.focus()
+  }
+  // If tab on last element, go to first
+  else if (!e.shiftKey && document.activeElement === lastElement) {
+    e.preventDefault()
+    firstElement.focus()
+  }
 }
