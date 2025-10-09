@@ -94,7 +94,7 @@ export function search(query: string): SearchResult[] {
 
   if (isDev) {
     const endTime = performance.now()
-    console.log(`Search for "${query}" took ${(endTime - startTime).toFixed(2)}ms, found ${results.length} results`)
+    console.debug(`Search for "${query}" took ${(endTime - startTime).toFixed(2)}ms, found ${results.length} results`)
   }
 
   return parsed
@@ -104,7 +104,7 @@ export function search(query: string): SearchResult[] {
  * Parse raw MiniSearch result into displayable format
  * Extracts relevant excerpt and highlights matched terms
  */
-function parseSearchResult(result: MiniSearchResult, _query: string): SearchResult {
+function parseSearchResult(result: MiniSearchResult, query: string): SearchResult {
   const doc = searchIndex.find(item => item.slug === result.id)
   if (!doc) {
     return {
@@ -117,18 +117,20 @@ function parseSearchResult(result: MiniSearchResult, _query: string): SearchResu
     }
   }
 
-  // Get matched terms from result
-  const matchedTerms = new Set<string>()
-  Object.values(result.match || {}).forEach(terms => {
-    terms.forEach(term => matchedTerms.add(term.toLowerCase()))
-  })
+  // Use the actual query terms instead of MiniSearch's processed terms
+  // Split query into individual words and normalize
+  const queryTerms = new Set<string>(
+    query.toLowerCase()
+      .split(/\s+/)
+      .filter(term => term.length >= 2) // Filter out very short terms
+  )
 
   // Find best excerpt from body
-  const excerpt = extractBestExcerpt(doc.body, matchedTerms, 150)
+  const excerpt = extractBestExcerpt(doc.body, queryTerms, 150)
 
   // Highlight matches in title and excerpt
-  const highlightedTitle = highlightMatches(doc.title, matchedTerms)
-  const highlightedExcerpt = highlightMatches(excerpt, matchedTerms)
+  const highlightedTitle = highlightMatches(doc.title, queryTerms)
+  const highlightedExcerpt = highlightMatches(excerpt, queryTerms)
 
   return {
     id: result.id,
@@ -150,19 +152,32 @@ function extractBestExcerpt(text: string, matchedTerms: Set<string>, maxLength: 
 
   const lowerText = text.toLowerCase()
   let bestIndex = 0
-  let bestScore = 0
+  let bestScore = -1
 
-  // Find position with most matched terms
+  // Find position with most matched terms nearby
   for (const term of matchedTerms) {
-    const index = lowerText.indexOf(term)
-    if (index !== -1) {
-      // Score based on how early in text + number of nearby matches
-      const score = (1000 - index) + countNearbyMatches(lowerText, index, matchedTerms)
+    let searchStart = 0
+    let index = lowerText.indexOf(term, searchStart)
+
+    // Check all occurrences of this term
+    while (index !== -1) {
+      // Score based primarily on nearby match density, not position in text
+      const nearbyCount = countNearbyMatches(lowerText, index, matchedTerms)
+      const score = nearbyCount * 100 // Prioritize match density over position
+
       if (score > bestScore) {
         bestScore = score
         bestIndex = index
       }
+
+      searchStart = index + 1
+      index = lowerText.indexOf(term, searchStart)
     }
+  }
+
+  // If no matches found (shouldn't happen), return start of text
+  if (bestScore === -1) {
+    return text.slice(0, maxLength) + (text.length > maxLength ? '...' : '')
   }
 
   // Extract excerpt around best position

@@ -99,7 +99,6 @@ function attachEventListeners(): void {
  * Open search modal
  */
 async function openModal(): Promise<void> {
-  console.log('Opening search modal')
   if (!modal || !input) return
 
   // Store currently focused element to restore later
