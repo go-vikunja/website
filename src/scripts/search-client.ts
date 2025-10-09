@@ -4,7 +4,6 @@ import type { SearchIndexItem } from '../pages/api/search-index.json'
 export interface SearchResult {
   id: string
   title: string
-  category: string
   excerpt: string
   highlightedTitle: string
   highlightedExcerpt: string
@@ -47,7 +46,7 @@ export async function initializeSearch(): Promise<void> {
     // Initialize MiniSearch with configuration
     miniSearch = new MiniSearch({
       fields: ['title', 'headings', 'body', 'description'], // Fields to index
-      storeFields: ['title', 'slug', 'category', 'headings', 'body'], // Fields to store
+      storeFields: ['title', 'slug', 'headings', 'body'], // Fields to store
       searchOptions: {
         prefix: true, // Match partial words (e.g., "doc" matches "documentation")
         fuzzy: 0.2, // Allow typos (0.2 = 20% character difference)
@@ -70,7 +69,6 @@ export async function initializeSearch(): Promise<void> {
         headings: item.headings.join(' '), // Join headings as string
         body: item.body,
         slug: item.slug,
-        category: item.category,
       }))
     )
 
@@ -112,7 +110,6 @@ function parseSearchResult(result: MiniSearchResult, _query: string): SearchResu
     return {
       id: result.id,
       title: 'Unknown',
-      category: 'other',
       excerpt: '',
       highlightedTitle: 'Unknown',
       highlightedExcerpt: '',
@@ -136,7 +133,6 @@ function parseSearchResult(result: MiniSearchResult, _query: string): SearchResu
   return {
     id: result.id,
     title: doc.title,
-    category: doc.category,
     excerpt,
     highlightedTitle,
     highlightedExcerpt,
