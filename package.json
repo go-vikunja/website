@@ -25,6 +25,7 @@
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.14.0",
+    "minisearch": "^7.2.0",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-slug": "^6.0.0",
     "tailwindcss": "^4.1.6",
@@ -32,10 +33,17 @@
   },
   "devDependencies": {
     "@anthropic-ai/sdk": "^0.65.0",
+    "@types/unist": "^3.0.3",
     "esbuild": "^0.25.9",
     "gray-matter": "^4.0.3",
+    "hast-util-to-text": "^4.0.2",
     "marked": "^16.4.0",
-    "sharp": "^0.34.4"
+    "mdast-util-to-string": "^4.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "sharp": "^0.34.4",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.0.0"
   },
   "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39"
 }
