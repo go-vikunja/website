@@ -130,6 +130,7 @@ function closeModal(): void {
   currentResults = []
   selectedIndex = -1
   renderResults()
+  showEmptyState()
 }
 
 /**
