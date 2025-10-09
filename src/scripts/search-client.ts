@@ -197,16 +197,28 @@ function countNearbyMatches(text: string, position: number, matchedTerms: Set<st
 }
 
 /**
+ * Escape HTML to prevent XSS
+ */
+function escapeHtml(text: string): string {
+  const div = document.createElement('div')
+  div.textContent = text
+  return div.innerHTML
+}
+
+/**
  * Highlight matched terms in text
  */
 function highlightMatches(text: string, matchedTerms: Set<string>): string {
-  if (!text || matchedTerms.size === 0) return text
+  if (!text || matchedTerms.size === 0) return escapeHtml(text)
 
-  let result = text
+  // First escape HTML
+  let result = escapeHtml(text)
   const sortedTerms = Array.from(matchedTerms).sort((a, b) => b.length - a.length)
 
+  // Then add highlight marks (safe because we escaped first)
   for (const term of sortedTerms) {
-    const regex = new RegExp(`(${escapeRegex(term)})`, 'gi')
+    const escapedTerm = escapeHtml(term)
+    const regex = new RegExp(`(${escapeRegex(escapedTerm)})`, 'gi')
     result = result.replace(regex, '<mark class="search-highlight">$1</mark>')
   }
 

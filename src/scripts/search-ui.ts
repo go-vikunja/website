@@ -244,30 +244,47 @@ function navigateToResult(result: SearchResult): void {
 function renderResults(): void {
   if (!resultsList) return
 
+  resultsList.innerHTML = ''
+
   if (currentResults.length === 0) {
-    resultsList.innerHTML = ''
     return
   }
 
-  resultsList.innerHTML = currentResults
-    .map((result, index) => {
-      const isSelected = index === selectedIndex
-      return `
-        <li>
-          <a
-            href="${result.id}"
-            class="block px-3 py-2.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors ${isSelected ? 'bg-gray-100 dark:bg-gray-700' : ''}"
-            data-index="${index}"
-            role="option"
-            aria-selected="${isSelected}"
-          >
-            <div class="font-semibold text-gray-900 dark:text-gray-100 mb-1 text-sm">${result.highlightedTitle}</div>
-            <div class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">${result.highlightedExcerpt}</div>
-          </a>
-        </li>
-      `
-    })
-    .join('')
+  // Create document fragment for better performance
+  const fragment = document.createDocumentFragment()
+
+  currentResults.forEach((result, index) => {
+    const isSelected = index === selectedIndex
+
+    // Create list item
+    const li = document.createElement('li')
+
+    // Create link
+    const link = document.createElement('a')
+    link.href = result.id
+    link.className = `block px-3 py-2.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors ${isSelected ? 'bg-gray-100 dark:bg-gray-700' : ''}`
+    link.dataset.index = index.toString()
+    link.setAttribute('role', 'option')
+    link.setAttribute('aria-selected', isSelected.toString())
+
+    // Create title div with highlighted content
+    const titleDiv = document.createElement('div')
+    titleDiv.className = 'font-semibold text-gray-900 dark:text-gray-100 mb-1 text-sm'
+    titleDiv.innerHTML = result.highlightedTitle
+
+    // Create excerpt div with highlighted content
+    const excerptDiv = document.createElement('div')
+    excerptDiv.className = 'text-sm text-gray-600 dark:text-gray-300 line-clamp-2'
+    excerptDiv.innerHTML = result.highlightedExcerpt 
+
+    // Assemble the DOM structure
+    link.appendChild(titleDiv)
+    link.appendChild(excerptDiv)
+    li.appendChild(link)
+    fragment.appendChild(li)
+  })
+
+  resultsList.appendChild(fragment)
 }
 
 /**
