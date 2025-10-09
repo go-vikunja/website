@@ -5,6 +5,8 @@ import {getCollection} from 'astro:content'
 import Layout from './Layout.astro'
 import Prose from '../components/Prose.astro'
 import TableOfContentsHeading from '../components/TableOfContentsHeading.astro'
+import SearchButton from '../components/SearchButton.astro'
+import SearchModal from '../components/SearchModal.astro'
 
 interface Props {
 	title: string
@@ -80,7 +82,14 @@ async function getSidebarNavigation(): Promise<DocumentationArray> {
 const sidebarEntries = await getSidebarNavigation()
 ---
 <Layout title={title} description={description}>
+    <SearchModal />
+
     <div class="mx-auto flex max-w-(--breakpoint-2xl) flex-col lg:flex-row lg:pt-8">
+        <!-- Search Button (fixed position on mobile) -->
+        <div class="fixed bottom-4 right-4 z-40 lg:hidden">
+            <SearchButton />
+        </div>
+
         <button
                 class="navbar-burger m-2 mt-6 block lg:hidden rounded-xs bg-gray-200 dark:bg-gray-800 py-2 px-1 text-center"
                 data-target="docsMenu"
@@ -88,6 +97,11 @@ const sidebarEntries = await getSidebarNavigation()
             Toggle Menu
         </button>
         <aside class="w-full lg:w-1/5 hidden lg:block order-1 px-2 text-gray-600 dark:text-gray-300" id="docsMenu">
+            <!-- Search Button for desktop (in sidebar) -->
+            <div class="pb-4 pt-2">
+                <SearchButton />
+            </div>
+
             <nav class="pb-4">
 				{sidebarEntries.map(([key, entries]) => (
                         <p class="pb-2 pt-4 pl-2 font-display uppercase font-bold text-gray-500 dark:text-gray-400">
@@ -156,4 +170,12 @@ const sidebarEntries = await getSidebarNavigation()
 			}
 		}
 	})
+</script>
+
+<script>
+  import { initializeSearchUI } from '../scripts/search-ui'
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initializeSearchUI()
+  })
 </script>
