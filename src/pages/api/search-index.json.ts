@@ -8,7 +8,6 @@ export interface SearchIndexItem {
   description: string
   headings: string[]
   body: string
-  category: string
 }
 
 export async function GET() {
@@ -22,16 +21,12 @@ export async function GET() {
       // Extract headings for boosting
       const headings = extractHeadings(ast)
 
-      // Determine category from slug (first part of path)
-      const category = doc.slug.split('/')[0] || 'other'
-
       return {
         slug: `/docs/${doc.slug}`,
         title: doc.data.title,
         description: doc.data.description || '',
         headings,
         body: text,
-        category,
       }
     })
   )

@@ -240,7 +240,6 @@ function renderResults(): void {
             role="option"
             aria-selected="${isSelected}"
           >
-            <div class="inline-block text-xs px-2 py-0.5 rounded-full bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 mb-1">${result.category}</div>
             <div class="font-semibold text-gray-900 dark:text-gray-100 mb-1 text-sm">${result.highlightedTitle}</div>
             <div class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">${result.highlightedExcerpt}</div>
           </a>
