@@ -109,6 +109,8 @@
 </div>
 
 <style>
+	@reference '../styles/global.css';
+
   /* Smooth transitions */
   #search-modal {
     transition: opacity 150ms ease-in-out;
@@ -120,11 +122,11 @@
 
   /* Highlight matched text */
   :global(.search-highlight) {
-    background-color: #fef08a;
     font-weight: 600;
+    @apply bg-yellow-100;
   }
 
   :global(.dark .search-highlight) {
-    background-color: #ca8a04;
+    @apply bg-yellow-600;
   }
 </style>
