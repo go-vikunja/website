@@ -73,7 +73,7 @@ vikunja:
     VIKUNJA_SERVICE_JWTSECRET: <a super secure random secret>
     VIKUNJA_SERVICE_PUBLICURL: http://<your public frontend url with slash>/
     # Note the default path is /app/vikunja/vikunja.db.
-    # This config variable moves it to a different folder so you can use a volume and 
+    # This config variable moves it to a different folder so you can use a volume and
     # store the database file outside the container so state is persisted even if the container is destroyed.
     VIKUNJA_DATABASE_PATH: /db/vikunja.db
   ports:
@@ -104,12 +104,12 @@ If you'll use your instance with more than a handful of users, we recommend usin
 
 ## Example without any proxy
 
-This example lets you host Vikunja without any reverse proxy in front of it. 
-This is the absolute minimum configuration you need to get something up and running. 
+This example lets you host Vikunja without any reverse proxy in front of it.
+This is the absolute minimum configuration you need to get something up and running.
 If you want to make Vikunja available on a domain or need tls termination, check out one of the other examples.
 
 Note that you need to change the [`VIKUNJA_SERVICE_PUBLICURL`](/docs/config-options#1-service-publicurl) environment variable to the public ip or hostname including the port (the docker host you're running this on) is reachable at, prefixed with `http://`.
-Because the browser you'll use to access the Vikunja frontend uses that url to make the requests, it has to be able to reach it from the outside. 
+Because the browser you'll use to access the Vikunja frontend uses that url to make the requests, it has to be able to reach it from the outside.
 
 {% callout type="warning" %}
 You must ensure Vikunja has write permissions on the `files` directory before starting the stack.
@@ -137,7 +137,7 @@ services:
         condition: service_healthy
     restart: unless-stopped
   db:
-    image: postgres:17
+    image: postgres:18
     environment:
       POSTGRES_PASSWORD: changeme
       POSTGRES_USER: vikunja
@@ -177,7 +177,7 @@ services:
       VIKUNJA_DATABASE_USER: vikunja
       VIKUNJA_DATABASE_DATABASE: vikunja
       VIKUNJA_SERVICE_JWTSECRET: <a super secure random secret>
-    volumes: 
+    volumes:
       - ./files:/app/vikunja/files
     networks:
       - web
@@ -193,9 +193,9 @@ services:
       - "traefik.http.routers.vikunja.entrypoints=https"
       - "traefik.http.routers.vikunja.tls.certResolver=acme"
   db:
-    image: postgres:17
+    image: postgres:18
     environment:
-      POSTGRES_PASSWORD: changeme 
+      POSTGRES_PASSWORD: changeme
       POSTGRES_USER: vikunja
     volumes:
       - ./db:/var/lib/postgresql/data
@@ -251,7 +251,7 @@ services:
         condition: service_healthy
     restart: unless-stopped
   db:
-    image: postgres:17
+    image: postgres:18
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
       POSTGRES_PASSWORD: changeme
@@ -270,7 +270,7 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
-      - vikunja 
+      - vikunja
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
 ```
