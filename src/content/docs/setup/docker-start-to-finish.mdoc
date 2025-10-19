@@ -45,7 +45,7 @@ services:
                 condition: service_healthy
         restart: unless-stopped
     db:
-        image: postgres:17
+        image: postgres:18
         environment:
             POSTGRES_PASSWORD: changeme
             POSTGRES_USER: vikunja
