@@ -13,7 +13,7 @@
     "deploy-cf": "pnpm run build && wrangler pages deploy dist"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.5",
     "@astrojs/cloudflare": "^12.6.10",
     "@astrojs/markdoc": "^0.15.2",
     "@astrojs/node": "^9.4.6",
