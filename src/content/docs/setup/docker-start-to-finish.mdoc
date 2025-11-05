@@ -51,7 +51,7 @@ services:
             POSTGRES_USER: vikunja
 
         volumes:
-            - ./db:/var/lib/postgresql/data
+            - ./db:/var/lib/postgresql
         restart: unless-stopped
         healthcheck:
             test: ["CMD-SHELL", "pg_isready -h localhost -U $$POSTGRES_USER"]
