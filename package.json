@@ -37,7 +37,7 @@
     "esbuild": "^0.25.12",
     "gray-matter": "^4.0.3",
     "hast-util-to-text": "^4.0.2",
-    "marked": "^16.4.0",
+    "marked": "^17.0.0",
     "mdast-util-to-string": "^4.0.0",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
