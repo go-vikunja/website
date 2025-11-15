@@ -1,4 +1,4 @@
-FROM node:22-bookworm AS build
+FROM node:24-bookworm AS build
 WORKDIR /app
 ENV ASTRO_TELEMETRY_DISABLED=1
 COPY . .
@@ -6,7 +6,7 @@ RUN corepack enable && \
     pnpm install --frozen-lockfile && \
     pnpm run build
 
-FROM node:22-bookworm AS runtime
+FROM node:24-bookworm AS runtime
 WORKDIR /app
 ENV ASTRO_TELEMETRY_DISABLED=1
 
