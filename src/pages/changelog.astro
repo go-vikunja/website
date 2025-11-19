@@ -21,7 +21,20 @@ const entries = await getChangelogEntries()
 
 <Layout title="Changelog" description="Looking for the latest information about Vikunja's product development and releases? You've come to the right place!">
     <div class="max-w-(--breakpoint-md) mx-auto mt-6">
-        <h1 class="text-4xl font-display font-bold mb-6">Changelog</h1>
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-4xl font-display font-bold">Changelog</h1>
+            <a 
+                href="/changelog/rss.xml" 
+                class="inline-flex items-center gap-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 transition"
+                title="Subscribe to RSS feed"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M5 3a1 1 0 000 2c5.523 0 10 4.477 10 10a1 1 0 102 0C17 8.373 11.627 3 5 3z"/>
+                    <path d="M4 9a1 1 0 011-1 7 7 0 017 7 1 1 0 11-2 0 5 5 0 00-5-5 1 1 0 01-1-1zM3 15a2 2 0 114 0 2 2 0 01-4 0z"/>
+                </svg>
+                <span>RSS Feed</span>
+            </a>
+        </div>
         <p class="mb-8">Looking for the latest news about Vikunja's product development? You've come to the right place!</p>
 		{entries.map(e => (
                 <section class="mb-8">
