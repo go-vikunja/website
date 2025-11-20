@@ -65,7 +65,7 @@ importers:
     devDependencies:
       '@anthropic-ai/sdk':
         specifier: ^0.70.0
-        version: 0.70.0(zod@3.25.76)
+        version: 0.70.1(zod@3.25.76)
       '@types/unist':
         specifier: ^3.0.3
         version: 3.0.3
@@ -102,8 +102,8 @@ importers:
 
 packages:
 
-  '@anthropic-ai/sdk@0.70.0':
-    resolution: {integrity: sha512-FYIuhF/lSCa+pgtaMGgsTF14aOIiWtBnu3azXITDOELv6yxsDNJwcjjt+Zr7vwyuTUjZJE/YL7s9m5r1jXkoeQ==}
+  '@anthropic-ai/sdk@0.70.1':
+    resolution: {integrity: sha512-AGEhifuvE22VxfQ5ROxViTgM8NuVQzEvqcN8bttR4AP24ythmNE/cL/SrOz79xiv7/osrsmCyErjsistJi7Z8A==}
     hasBin: true
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
@@ -2953,7 +2953,7 @@ packages:
 
 snapshots:
 
-  '@anthropic-ai/sdk@0.70.0(zod@3.25.76)':
+  '@anthropic-ai/sdk@0.70.1(zod@3.25.76)':
     dependencies:
       json-schema-to-ts: 3.1.1
     optionalDependencies:
