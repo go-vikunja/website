@@ -80,7 +80,7 @@ importers:
         version: 4.0.2
       marked:
         specifier: ^17.0.0
-        version: 17.0.0
+        version: 17.0.1
       mdast-util-to-string:
         specifier: ^4.0.0
         version: 4.0.0
@@ -1999,8 +1999,8 @@ packages:
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
 
-  marked@17.0.0:
-    resolution: {integrity: sha512-KkDYEWEEiYJw/KC+DVm1zzlpMQSMIu6YRltkcCvwheCp8HWPXCk9JwOmHJKBlGfzcpzcIt6x3sMnTsRm/51oDg==}
+  marked@17.0.1:
+    resolution: {integrity: sha512-boeBdiS0ghpWcSwoNm/jJBwdpFaMnZWRzjA6SkUMYb40SVaN1x7mmfGKp0jvexGcx+7y2La5zRZsYFZI6Qpypg==}
     engines: {node: '>= 20'}
     hasBin: true
 
@@ -4704,7 +4704,7 @@ snapshots:
 
   markdown-table@3.0.4: {}
 
-  marked@17.0.0: {}
+  marked@17.0.1: {}
 
   mdast-util-definitions@6.0.0:
     dependencies:
