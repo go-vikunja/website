@@ -10,7 +10,7 @@ We have public issue trackers in the different [code repos](https://code.vikunja
 
 ## Chat
 
-You can chat with us on [matrix](https://riot.im/app/#/room/!dCRiCiLaCCFVNlDnYs:matrix.org?via=matrix.org).
+You can chat with us on [matrix](https://matrix.to/#/#vikunja:matrix.org).
 
 ## Forum
 
