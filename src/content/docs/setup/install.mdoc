@@ -81,6 +81,11 @@ chmod +x /opt/vikunja
 sudo ln -s /opt/vikunja/vikunja /usr/bin/vikunja
 ```
 
+{% callout type="warning" %}
+The default configuration has CORS enabled, which requires a public URL to be set.
+You must either set [`service.publicurl`](/docs/config-options#1-service-publicurl) in your config file to the URL where Vikunja will be reachable, or disable CORS by setting [`cors.enable`](/docs/config-options#1-cors-enable) to `false`.
+{% /callout %}
+
 ### Systemd service
 
 To automatically start Vikunja when your system boots and to ensure all dependent services are met, you want to use an
@@ -152,6 +157,11 @@ docker run -p 3456:3456 -v $PWD/files:/app/vikunja/files -v $PWD/db:/db vikunja/
 
 This will expose Vikunja on port `3456` on the host running the container and use sqlite as database backend.
 
+{% callout type="warning" %}
+The default configuration has CORS enabled, which requires a public URL to be set.
+You must either set the `VIKUNJA_SERVICE_PUBLICURL` environment variable to the URL where Vikunja will be reachable, or disable CORS by setting [`VIKUNJA_CORS_ENABLE`](/docs/config-options#1-cors-enable) to `false`.
+{% /callout %}
+
 **Note**: The container runs as the user `1000` and no group by default.
 You can use Docker's [`--user`](https://docs.docker.com/engine/reference/run/#user) flag to change that.
 Make sure the new user has required permissions on the `db` and `files` folder.
@@ -195,6 +205,11 @@ dpkg -i vikunja.deb
 This will install Vikunja to `/opt/vikunja`.
 To configure it, use the config file in `/etc/vikunja/config.yml`.
 
+{% callout type="warning" %}
+The default configuration has CORS enabled, which requires a public URL to be set.
+You must either set [`service.publicurl`](/docs/config-options#1-service-publicurl) in your config file to the URL where Vikunja will be reachable, or disable CORS by setting [`cors.enable`](/docs/config-options#1-cors-enable) to `false`.
+{% /callout %}
+
 ## RPM
 
 Vikunja is available as rpm package for installation on Fedora, CentOS and others.
@@ -206,6 +221,11 @@ rpm -i vikunja.rpm
 ```
 
 To configure Vikunja, use the config file in `/etc/vikunja/config.yml`.
+
+{% callout type="warning" %}
+The default configuration has CORS enabled, which requires a public URL to be set.
+You must either set [`service.publicurl`](/docs/config-options#1-service-publicurl) in your config file to the URL where Vikunja will be reachable, or disable CORS by setting [`cors.enable`](/docs/config-options#1-cors-enable) to `false`.
+{% /callout %}
 
 ## FreeBSD / FreeNAS
 
@@ -307,6 +327,11 @@ Vikunja is now available through IP:
 ```
 192.168.1.XXX:3456
 ```
+
+{% callout type="warning" %}
+The default configuration has CORS enabled, which requires a public URL to be set.
+You must either set [`service.publicurl`](/docs/config-options#1-service-publicurl) in your config file to the URL where Vikunja will be reachable, or disable CORS by setting [`cors.enable`](/docs/config-options#1-cors-enable) to `false`.
+{% /callout %}
 
 ## Ansible
 
