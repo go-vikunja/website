@@ -31,9 +31,17 @@ function getClasses(): string {
     .callout :global(> p) {
 		@apply m-0;
 	}
-	
+
 	.callout :global(strong),
 	.callout :global(b) {
 		@apply dark:text-black!;
+	}
+
+	.callout :global(a) {
+		@apply dark:text-gray-800! underline;
+	}
+
+	.callout :global(code) {
+		@apply dark:text-gray-800!;
 	}
 </style>
