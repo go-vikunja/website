@@ -187,7 +187,7 @@ When using SSO authentication, Vikunja will create a new SSO user if no matching
 Additionally, this feature introduces potential security risks, as it allows third-party providers to authenticate as local users if they can control the username or email claims. Only enable this feature with trusted identity providers.
 {% /callout %}
 
-{% callout type="note" %}
+{% callout type="info" %}
 The fallback mapping only links OIDC logins to existing **local** user accounts. It does not merge or link users across different OIDC issuers. If you have users that were originally created through a different OIDC provider, logging in through a new provider will create a separate account even if the email address matches.
 {% /callout %}
 
