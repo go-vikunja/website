@@ -155,11 +155,11 @@ auth:
 This feature has not been released yet. It is only available for testing in [unstable builds](/docs/versions#unstable).
 {% /callout %}
 
-Vikunja allows users with existing local accounts to authenticate via SSO. This feature enables linking OpenID providers to local user accounts based on matching `email` and/or `username` attributes.
+Vikunja allows users with existing local accounts to authenticate via SSO. This feature enables linking OpenID providers to local user accounts based on matching `email` and `username` attributes. For the fallback to work, **both** `usernamefallback` **and** `emailfallback` must be set to `true` - setting only one of them will not enable fallback matching.
 
-For username matching to work, the OpenID subject must match the Vikunja local account username. This requires proper configuration in your SSO provider.
+Note that the fallback mapping only links OIDC logins to existing **local** user accounts. It does not merge or link users across different OIDC issuers. If you have users that were originally created through a different OIDC provider, logging in through a new provider will create a separate account even if the email address matches.
 
-For example, in Authentik, edit the provider under Applications > Providers > Vikunja provider. In the advanced protocol settings, set the subject mode to `Based on the User's username`.
+For username matching to work, the OpenID subject must match the Vikunja local account username. This requires proper configuration in your SSO provider. For example, in Authentik, edit the provider under Applications > Providers > Vikunja provider. In the advanced protocol settings, set the subject mode to `Based on the User's username`.
 
 A configuration that enables matching on both username and email would look like this:
 
@@ -180,15 +180,9 @@ auth:
 ```
 
 {% callout type="warning" %}
-**Important:** For the fallback to work, **both** `usernamefallback` **and** `emailfallback` must be set to `true`. Setting only one of them will not enable fallback matching.
-
 When using SSO authentication, Vikunja will create a new SSO user if no matching local user is found. If you misconfigure the matching parameters, this could result in duplicate accounts that prevent logging into the intended local account via SSO until the duplicate SSO user is deleted.
 
 Additionally, this feature introduces potential security risks, as it allows third-party providers to authenticate as local users if they can control the username or email claims. Only enable this feature with trusted identity providers.
-{% /callout %}
-
-{% callout type="info" %}
-The fallback mapping only links OIDC logins to existing **local** user accounts. It does not merge or link users across different OIDC issuers. If you have users that were originally created through a different OIDC provider, logging in through a new provider will create a separate account even if the email address matches.
 {% /callout %}
 
 ## Automatically login with specified provider
