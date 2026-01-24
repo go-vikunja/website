@@ -12,8 +12,12 @@ Not all steps are necessary for every release.
 * Website update
 	* New Features: If there are new features worth mentioning the feature page should be updated.
 	* New Screenshots: If an overhaul of an existing feature happened so that it now looks different from the existing screenshot, a new one is required.
-* Generate changelogs (with git-cliff)
-* Tag a new version: Include the changelog for that version as the tag message
+* Tag a new version: Run `mage dev:tag-release <version>` (e.g. `mage dev:tag-release v1.0.0`). This will:
+	* Update the version badge in README.md
+	* Generate the changelog using git-cliff
+	* Clean up and prepend the changelog to CHANGELOG.md
+	* Commit the changes with message "chore: <version> release preparations"
+	* Create an annotated tag with the changelog as the message
 	* Once built: Prune the cloudflare cache so that the new versions show up at [dl.vikunja.io](https://dl.vikunja.io/)
 * Update external packages:
 	* [Flathub desktop package](https://github.com/flathub/io.vikunja.Vikunja)
