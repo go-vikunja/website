@@ -51,3 +51,6 @@ This allows you to prevent SSRF attacks on your own infrastructure.
 You should use this and [configure it appropriately](/docs/config-options#0--webhooks) if you're not the only one using your Vikunja instance.
 
 Check out [webhooks.fyi](https://webhooks.fyi/best-practices/webhook-providers#implement-security-on-egress-communication) for more information about the attack vector and reasoning to prevent this.
+
+### Basic Auth
+If the webhook target you have configured requires Basic Auth, you may configure it by clicking on the `Use Basic Auth?` button, which will expand a form where you may enter the Basic Auth Username and Password. All outgoing webhook requests will contain an `Authorization: Basic` header.
