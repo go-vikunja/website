@@ -82,7 +82,8 @@ Flags:
 
 ## `index`
 
-Perform a full reindex of all tasks into Typesense. This will clear all tasks already present in the index unless the `--partial` flag is provided, see below.
+Perform a full reindex of all tasks into Typesense.
+The command will clear all tasks already present in the index unless the `--partial` flag is provided, see below.
 
 The command will only work if Typesense is enabled.
 
@@ -150,6 +151,10 @@ Usage:
 ```sh
 vikunja restore [path to dump zip file]
 ```
+
+Flags:
+
+* `--preserve-config`: Keep the current configuration instead of restoring it from the dump. Useful when migrating to a new environment with different database connection settings or file paths.
 
 ## `testmail`
 
