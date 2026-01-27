@@ -32,17 +32,6 @@ Set up Fail2Ban according to your distribution’s documentation or the official
 
 Add a new filter for Vikunja HTTP logs at `/etc/fail2ban/filter.d/vikunja.conf`:
 
-#### Versions < 1.0.0
-
-```conf
-[Definition]
-datepattern = ^%%Y-%%m-%%dT%%H:%%M:%%S%%Z
-failregex = ^.*WEB\s+▶\s+<HOST>\s+POST\s+(?:400|403|412)\s+/api/v1/login\b.*$
-ignoreregex =
-```
-
-#### Since v1.0.0
-
 ```conf
 [Definition]
 datepattern = ^time=%%Y-%%m-%%dT%%H:%%M:%%S%%Z
