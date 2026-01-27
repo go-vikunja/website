@@ -1,0 +1,68 @@
+---
+title: Full-text Search with ParadeDB
+slug: paradedb
+description: >-
+  Learn how to enable enhanced full-text search in Vikunja using ParadeDB, a
+  PostgreSQL extension that provides fast, fuzzy search capabilities.
+---
+
+Vikunja supports using [ParadeDB](https://www.paradedb.com/) for improved full-text search capabilities. ParadeDB is a PostgreSQL extension that provides fast, fuzzy matching search similar to Typesense, but without requiring a separate service.
+
+## Requirements
+
+- **PostgreSQL database**: ParadeDB only works with PostgreSQL (not MySQL or SQLite)
+- **pg_search extension**: The ParadeDB pg_search extension must be installed in your PostgreSQL instance
+
+## Setup
+
+### Using the ParadeDB Docker Image
+
+The easiest way to get started is using the official ParadeDB Docker image, which comes with all extensions pre-installed and can be used as a drop-in replacement for a standard PostgreSQL container:
+
+```yaml
+services:
+  db:
+    image: paradedb/paradedb:latest
+    environment:
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_USER: vikunja
+      POSTGRES_DB: vikunja
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -U $$POSTGRES_USER"]
+      interval: 2s
+      start_period: 30s
+```
+
+That's it! Vikunja will automatically detect ParadeDB and enable full-text search.
+
+### Using an Existing PostgreSQL Installation
+
+If you're running your own PostgreSQL server:
+
+1. Install the pg_search extension following the [ParadeDB installation guide](https://docs.paradedb.com/documentation/getting-started/installation)
+2. Ensure the extension is available in your Vikunja database
+3. Restart Vikunja - it will automatically detect and use ParadeDB
+
+## Migration from Typesense
+
+If you're currently using Typesense and want to migrate to ParadeDB:
+
+1. Set up PostgreSQL with ParadeDB (see setup instructions above)
+2. If you're not already using PostgreSQL, migrate your database first
+3. Remove the Typesense configuration from your Vikunja config
+4. Restart Vikunja
+
+Vikunja will automatically detect ParadeDB and begin using it for search. Your existing task data will be indexed automatically.
+
+## How It Works
+
+When ParadeDB is available, Vikunja creates a BM25 search index on your tasks table. This index enables:
+
+- Fast full-text search across task titles and descriptions
+- Fuzzy matching for typo tolerance
+- Relevance-based result ranking
+
+The index is maintained automatically as tasks are created, updated, or deleted.
