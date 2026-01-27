@@ -7,6 +7,10 @@ description: >-
 
 The plugin system allows you to extend the core functionality with custom features through Go plugins. This guide covers how to install, configure, and use plugins as a Vikunja system admin.
 
+{% callout type="warning" %}
+**Experimental Feature**: The plugin system is still experimental and the API may change in future versions. Additionally, plugins currently only support backend functionality - there is no frontend plugin support yet.
+{% /callout %}
+
 ## Overview
 
 Plugins in Vikunja are compiled Go shared libraries (`.so` files) that can:
