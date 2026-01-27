@@ -6,6 +6,12 @@ description: >-
   search. Enhance your search experience with fast, fuzzy matching capabilities.
 ---
 
+{% callout type="warning" %}
+**Deprecated:** Typesense support is deprecated as of Vikunja 1.0 and will be removed in a future version. For new installations, we recommend using [ParadeDB](/docs/paradedb) instead, which provides similar full-text search capabilities without requiring a separate service.
+
+Existing Typesense users can continue using it, but should plan to migrate to ParadeDB.
+{% /callout %}
+
 Vikunja supports using [Typesense](https://typesense.org/) for a better search experience.
 Typesense allows fast fulltext search including fuzzy matching support.
 It may return different results than what you'd get with a database-only search, but generally, the results are more relevant to what you're looking for.
