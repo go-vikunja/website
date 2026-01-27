@@ -14,10 +14,7 @@ To add another example, please [edit this document](https://github.com/go-vikunj
 
 The redirect URL format is: `https://vikunja.mydomain.com/auth/openid/<provider-id>`
 
-- For **stable syntax**: Use the `name` field value (lowercase) as the identifier
-- For **unstable syntax**: Use the provider ID (the key in your config) as the identifier
-
-For example, if your config uses `name: authentik` or provider ID `authentiklogin`, the redirect URL would be `/auth/openid/authentik` or `/auth/openid/authentiklogin` respectively.
+Use the provider ID (the key in your config) as the identifier. For example, if your config uses `authentiklogin:` as the provider key, the redirect URL would be `/auth/openid/authentiklogin`.
 {% /callout %}
 
 ## Authelia
