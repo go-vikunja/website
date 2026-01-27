@@ -332,3 +332,46 @@ services:
   redis:
     image: redis
 ```
+
+## ParadeDB (Full-text Search)
+
+[ParadeDB](/docs/paradedb) provides enhanced full-text search capabilities for Vikunja. Unlike Typesense, ParadeDB runs as a PostgreSQL extension, so you don't need a separate service.
+
+To use ParadeDB, simply replace the standard PostgreSQL image with the ParadeDB image:
+
+```yaml
+services:
+  vikunja:
+    image: vikunja/vikunja
+    environment:
+      VIKUNJA_SERVICE_PUBLICURL: http://<the public ip or host where Vikunja is reachable>
+      VIKUNJA_DATABASE_HOST: db
+      VIKUNJA_DATABASE_PASSWORD: changeme
+      VIKUNJA_DATABASE_TYPE: postgres
+      VIKUNJA_DATABASE_USER: vikunja
+      VIKUNJA_DATABASE_DATABASE: vikunja
+      VIKUNJA_SERVICE_JWTSECRET: <a super secure random secret>
+    ports:
+      - 3456:3456
+    volumes:
+      - ./files:/app/vikunja/files
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+  db:
+    image: paradedb/paradedb:latest
+    environment:
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_USER: vikunja
+      POSTGRES_DB: vikunja
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -U $$POSTGRES_USER"]
+      interval: 2s
+      start_period: 30s
+```
+
+Vikunja will automatically detect ParadeDB and enable enhanced search - no additional configuration required.
