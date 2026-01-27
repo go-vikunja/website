@@ -36,6 +36,34 @@ alias vikunja-docker='docker exec <name of the Vikunja container> /app/vikunja/v
 
 Then use it as `vikunja-docker <subcommand>`.
 
+## `doctor`
+
+Runs a series of diagnostic checks to help troubleshoot issues with your Vikunja installation.
+
+Checks performed:
+
+* **System**: Version, Go version, OS/architecture, running user, working directory
+* **Configuration**: Config file path, public URL, JWT secret, CORS origins
+* **Database**: Connection test, server version (SQLite/MySQL/PostgreSQL)
+* **Files**: Storage path, writability, disk space (Unix only)
+* **Optional services** (when enabled):
+  * Redis: Connection ping
+  * Typesense: Health endpoint
+  * Mailer: SMTP connection
+  * LDAP: Bind authentication test
+  * OpenID Connect: Discovery endpoint for each configured provider
+
+Usage:
+
+```sh
+vikunja doctor
+```
+
+Exit codes:
+
+* `0` - All checks passed
+* `1` - One or more checks failed
+
 ## `dump`
 
 Creates a zip file with all Vikunja-related files.
