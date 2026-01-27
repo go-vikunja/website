@@ -73,17 +73,16 @@ auth:
   openid:
     enabled: true
     providers:
-      - name: <provider-name>
+      <provider-id>:
+        name: <provider-name>
         authurl: <auth-url>  <----- Used for OIDC Discovery, usually the issuer
         clientid: <vikunja client-id>
         clientsecret: <vikunja client-secret>
         scope: openid profile email
         forceuserinfo: false # Optional: Set to true to always use UserInfo endpoint instead of ID token claims, defaults to false
 ```
-{% callout type="warning" %}
-The configuration will change in future releases. See the different syntax for the new configuration below.
-The new syntax is already available in the unstable builds, but not yet in the stable releases.
-{% /callout %}
+
+The `<provider-id>` is used in the redirect URL for your identity provider (e.g., `/auth/openid/<provider-id>`).
 
 The value for `authurl` can be obtained from the metadata of your provider.
 Note that the `authurl` is used for [OIDC Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html).
@@ -150,10 +149,6 @@ auth:
         forceuserinfo: false # Optional: Set to true to always use UserInfo endpoint instead of ID token claims, defaults to false
 ```
 ## Login existing local user with OpenID
-
-{% callout type="warning" %}
-This feature has not been released yet. It is only available for testing in [unstable builds](/docs/versions#unstable).
-{% /callout %}
 
 Vikunja allows users with existing local accounts to authenticate via SSO. This feature enables linking OpenID providers to local user accounts based on matching `email` and `username` attributes. For the fallback to work, **both** `usernamefallback` **and** `emailfallback` must be set to `true` - setting only one of them will not enable fallback matching.
 
