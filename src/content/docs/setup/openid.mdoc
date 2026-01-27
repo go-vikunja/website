@@ -100,12 +100,12 @@ auth:
 ```
 
 {% callout type="warning" %}
-Breaking change in [unstable builds](/docs/versions#unstable)
+Migration from versions before 1.0
 {% /callout %}
 
-There is a new syntax to declare providers in unstable builds. The conversion between syntaxes is straightforward:
+Version 1.0 introduced a new syntax to declare providers. If you're upgrading from a pre-1.0 version, the conversion is straightforward:
 
-Stable syntax:
+Pre-1.0 syntax (deprecated):
 
 ```yaml
 auth:
@@ -126,7 +126,7 @@ auth:
         forceuserinfo: false # Optional: Set to true to always use UserInfo endpoint instead of ID token claims, defaults to false
 ```
 
-Unstable syntax:
+1.0+ syntax:
 
 ```yaml
 auth:
@@ -242,6 +242,28 @@ It is also possible to pass the `description` and the `isPublic` flag as optiona
 
 For each team, you need to define a team `name` and an `oidcID`, where the `oidcID` can be any string with a length of less than 250 characters.
 The `oidcID` is used to uniquely identify the team, so please make sure to keep this unique.
+
+### Custom Settings Links
+
+The `extra_settings_links` claim allows identity providers to inject custom links into the user settings navigation in Vikunja. This is useful for organizations that want to point users to related services or documentation.
+
+The expected format in the ID token is:
+
+```json
+{
+    "extra_settings_links": {
+        "key1": {"text": "Link Text", "url": "https://example.com"},
+        "key2": {"text": "Another Link", "url": "https://other.com"}
+    }
+}
+```
+
+Each key in the object represents a unique link identifier. The `text` field is the display text shown in the navigation, and `url` is the destination when clicked.
+
+Common use cases include:
+- Linking to organization-specific documentation
+- Pointing to related internal services (password reset, account management)
+- Providing quick access to support resources
 
 Below you'll find two example implementations for Authentik and Keycloak.
 If you've successfully implemented this with another identity provider, please let us know and submit a PR to improve the docs.
