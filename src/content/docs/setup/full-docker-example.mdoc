@@ -36,6 +36,31 @@ You'll need to do this before running any of the examples on this page.
 
 Vikunja will not try to acquire ownership of the files folder, as that would mean it had to run as root.
 
+### Rootless Docker
+
+If you're running Docker in [rootless mode](https://docs.docker.com/engine/security/rootless/), file permissions work differently than with a regular Docker installation.
+
+Rootless Docker uses [user namespace remapping](https://docs.docker.com/engine/security/userns-remap/) to map UIDs inside the container to different UIDs on the host.
+This means that even if you set `-u 1000:1000` and the files directory is owned by UID 1000 on the host, the process inside the container will actually run as a different UID on the kernel level.
+Because file permission checks happen at the kernel level, this causes `permission denied` errors when Vikunja tries to write to its files directory, even though the ownership appears to be correct.
+
+To fix this, run Vikunja as root inside the container by setting the user to `0:0`:
+
+```yaml
+services:
+  vikunja:
+    image: vikunja/vikunja
+    user: "0:0"
+```
+
+This is safe because rootless Docker maps the container root user (UID 0) to your unprivileged host user.
+The process will not have any elevated privileges on the host.
+
+{% callout type="info" %}
+You can use [`vikunja doctor`](/docs/cli#doctor) to check if your Vikunja instance is affected by this issue.
+It will detect user namespace problems and suggest the fix.
+{% /callout %}
+
 ## MySQL / MariaDB
 
 Vikunja supports postgres, mysql and sqlite as a database backend. The examples on this page use postgres with a postgres container.
