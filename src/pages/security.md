@@ -16,7 +16,7 @@ refer to our [privacy policy](/privacy).
 
 ## General practices
 
-* Access to production servers, source code repositories, and integrated third-party services are secured with two-factor authentication.
+* Access to production servers, source code repositories, and integrated third-party services is secured with two-factor authentication.
 * We implement strong, randomly-generated passwords that are unique to each system and user.
 * Vikunja team members and contractors are granted the minimum level of access required to perform their duties. This typically excludes direct access to production systems or user data.
 * We employ automated security scanning tools to identify vulnerabilities in our codebase and dependencies. We prioritize rapid application of security patches and swift deployment of updates.

@@ -20,7 +20,7 @@ A community forum is available on [community.vikunja.io](https://community.vikun
 
 [hello@vikunja.io](mailto:hello@vikunja.io)
 
-General inqueries and requests.
+General inquiries and requests.
 
 ## Maintainers
 

@@ -35,7 +35,7 @@ type Migrator interface {
 	// This is used to show the name to users and to keep track of users who already migrated.
 	Name() string
 	// Migrate is the interface used to migrate a user's tasks from another platform to Vikunja.
-	// The user object is the user who's tasks will be migrated.
+	// The user object is the user whose tasks will be migrated.
 	Migrate(user *models.User) error
 	// AuthURL returns a url for clients to authenticate against.
 	// The use case for this are Oauth flows, where the server token should remain hidden and not
@@ -53,7 +53,7 @@ type FileMigrator interface {
 	// This is used to show the name to users and to keep track of users who already migrated.
 	Name() string
 	// Migrate is the interface used to migrate a user's tasks, projects and other things from a file to Vikunja.
-	// The user object is the user who's tasks will be migrated.
+	// The user object is the user whose tasks will be migrated.
 	Migrate(user *user.User, file io.ReaderAt, size int64) error
 }
 ```
@@ -94,7 +94,7 @@ You should also document the routes with [swagger annotations](/docs/modifying-s
 ## Insertion helper method
 
 There is a method available in the `migration` package which takes a fully nested Vikunja structure and creates it with all relations.
-This means you start by adding a project, then add projects inside that project, then tasks in the lists and so on.
+This means you start by adding a project, then add projects inside that project, then tasks in the projects and so on.
 In general, it is recommended to have one root project with all projects of the other service as child projects.
 
 The root structure must be present as `[]*models.ProjectWithTasksAndBuckets`. It allows to represent all of Vikunja's hierarchy as a single data structure.
@@ -115,7 +115,7 @@ err = migration.InsertFromStructure(fullVikunjaHierarchy, user)
 If your migrator is an oauth-based one, you should add at least an option to enable or disable it.
 Chances are, you'll need some more options for things like client ID and secret (if the other service uses oAuth as an authentication flow).
 
-The easiest way to implement an on/off switch is to check whether your migration service is enabled or not when registering the routes, and then simply don't registering the routes in case it is disabled.
+The easiest way to implement an on/off switch is to check whether your migration service is enabled or not when registering the routes, and then simply don't register the routes in case it is disabled.
 
 File based migrators can always be enabled.
 
