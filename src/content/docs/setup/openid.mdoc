@@ -26,7 +26,7 @@ There's different types of tokens (ID token, access token, refresh token), and a
 Claims in turn are assertions containing information about the token bearer, usually the user.
 
 **Scopes** are requested by the client when redirecting the end-user to the Authorization Server for authentication, and indirectly control which claims are included in the resulting tokens.
-There's certain default scopes, but its also possible to define custom scopes, which are used by the feature assigning users to Teams automatically.
+There's certain default scopes, but it's also possible to define custom scopes, which are used by the feature assigning users to Teams automatically.
 
 ## Supported and required claims
 
@@ -206,7 +206,7 @@ Within the UI, the teams created through OIDC get a `(OIDC)` suffix to make them
 On a high level, you need to make sure that the **ID token** issued by your identity provider contains a `vikunja_groups` claim, following the structure defined below.
 It depends on the provider being used as well as the preferences of the administrator how this is achieved.
 Typically you'd want to request an additional scope (e.g. `vikunja_scope`) which then triggers the identity provider to add the claim.
-If the `vikunja_groups` is part of the **ID token**, Vikunja will  start the procedure and import teams and team memberships.
+If the `vikunja_groups` is part of the **ID token**, Vikunja will start the procedure and import teams and team memberships.
 
 The minimal claim structure expected by Vikunja is as follows:
 
@@ -225,7 +225,7 @@ The minimal claim structure expected by Vikunja is as follows:
 }
 ```
 
-It is also possible to pass the `description` and the `isPublic` flag as optional parameters. If not present, the description will be empty and project visibility defaults to false.
+It is also possible to pass the `description` and the `isPublic` flag as optional parameters. If not present, the description will be empty and team visibility defaults to false.
 
 ```json
 {

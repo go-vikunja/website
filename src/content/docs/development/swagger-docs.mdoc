@@ -48,7 +48,7 @@ type Project struct {
 	IsFavorite bool `xorm:"-" json:"is_favorite"`
 
 	// The subscription status for the user reading this project. You can only read this property, use the subscription endpoints to modify it.
-	// Will only returned when retrieving one project.
+	// Will only be returned when retrieving one project.
 	Subscription *Subscription `xorm:"-" json:"subscription,omitempty"`
 
 	// The position this project has when querying all projects. See the tasks.position property on how to use this.
@@ -64,7 +64,7 @@ type Project struct {
 }
 ```
 
-## Documenting api Endpoints
+## Documenting API Endpoints
 
 All api routes should be documented with a comment above the handler function.
 When generating the api docs with mage, the swagger cli will pick these up and put them in a neat document.

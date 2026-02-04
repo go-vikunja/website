@@ -7,7 +7,7 @@ description: >-
   setup.
 ---
 
-You can either use a `config.yml` file in the root directory of Vikunja or set almost all config option with environment variables. If you have both, the value set in the config file is used.
+You can either use a `config.yml` file in the root directory of Vikunja or set almost all config options with environment variables. If you have both, the value set in the config file is used.
 Right now it is not possible to configure openid authentication via environment variables.
 
 Variables are nested in the `config.yml`, these nested variables become `VIKUNJA_FIRST_CHILD` when configuring via
@@ -33,7 +33,7 @@ Vikunja provides a default [`config.yml`](https://dl.vikunja.io/vikunja/unstable
 
 ## Config file locations
 
-Vikunja will search on various places for a config file:
+Vikunja will search in various places for a config file:
 
 * Next to the location of the binary
 * In the `service.rootpath` location set in a config (remember you can set config arguments via environment variables)
@@ -97,7 +97,7 @@ With an environment variable for the same config variable, you'd need to set the
 ## Default configuration with explanations
 
 The following explains all possible config variables and their defaults.
-You can find a full example configuration file in [here](https://dl.vikunja.io/vikunja/unstable/config.yml.sample).
+You can find a full example configuration file [here](https://dl.vikunja.io/vikunja/unstable/config.yml.sample).
 
 If you don't provide a value in your config file, their default will be used.
 
@@ -107,7 +107,7 @@ Most config variables are nested under some "higher-level" key.
 For example, the `interface` config variable is a child of the `service` key.
 
 The docs below aim to reflect that leveling, but please also have a look at [the default config](https://dl.vikunja.io/vikunja/unstable/config.yml.sample) file
-to better grasp how the nesting looks like.
+to better grasp what the nesting looks like.
 
 {% configOptions %}
 {% /configOptions %}
