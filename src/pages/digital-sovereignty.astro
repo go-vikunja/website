@@ -1,0 +1,276 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Button from '../components/Button.astro'
+import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
+---
+<Layout title="Digital Sovereignty" description="Take back control of your data with Vikunja. A self-hosted, open-source task manager made and hosted in the EU — no US cloud dependency, no kill switches, no data access by foreign governments.">
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0">
+
+        <!-- Hero -->
+        <section class="pt-32 pb-16 text-center max-w-(--breakpoint-md) mx-auto">
+            <p class="text-primary font-bold uppercase tracking-wider text-sm mb-4">Digital Sovereignty</p>
+            <h1 class="text-4xl md:text-5xl font-display text-balance">
+                Your tasks. Your server. Your rules.
+            </h1>
+            <p class="mt-6 text-lg text-gray-600 dark:text-gray-300 text-balance">
+                In a world where governments pressure tech giants, services get cut off overnight, and your data
+                is subject to foreign laws — Vikunja gives you a way out. Open-source, self-hostable, and made in the EU.
+            </p>
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Button href="/docs/installing">Self-Host Vikunja</Button>
+                <Button href="https://vikunja.cloud/?utm_source=io&utm_medium=io&utm_campaign=sovereignty" class="bg-gray-700! hover:bg-gray-800!">Try Vikunja Cloud</Button>
+            </div>
+        </section>
+
+        <!-- Why it matters now -->
+        <section class="py-16 max-w-(--breakpoint-md) mx-auto">
+            <h2 class="text-3xl font-display text-center mb-12">Why this matters right now</h2>
+            <div class="space-y-8 text-gray-700 dark:text-gray-300">
+                <p>
+                    The question of who controls your digital tools has never been more urgent.
+                    In 2025, the Trump administration
+                    <a href="https://www.cnn.com/2026/01/12/tech/us-eu-tech-regulation-fight-explained" class="underline" target="_blank" rel="noopener">directly linked the removal of EU digital regulations to trade negotiations</a>,
+                    threatening tariffs against countries that impose rules on American tech companies.
+                    US Commerce Secretary Howard Lutnick visited Brussels and tied steel tariff relief to weakening European data protection standards.
+                </p>
+                <p>
+                    When the International Criminal Court issued an arrest warrant the US disagreed with, the
+                    <a href="https://techcrunch.com/2026/01/27/amid-trump-attacks-and-weaponized-sanctions-europeans-look-to-rely-less-on-us-tech/" class="underline" target="_blank" rel="noopener">Trump administration sanctioned the ICC's chief prosecutor</a>
+                    — and Microsoft promptly cut off his email account.
+                    This was a wake-up call: the software you depend on can be switched off by a foreign government.
+                </p>
+                <p>
+                    The European Commission's official for tech sovereignty, Henna Virkkunen,
+                    <a href="https://theweek.com/tech/can-europe-regain-its-digital-sovereignty" class="underline" target="_blank" rel="noopener">put it plainly</a>:
+                    <em>"Europe's reliance on others can be weaponized against us."</em>
+                </p>
+            </div>
+        </section>
+
+        <!-- The problem in numbers -->
+        <section class="py-16 bg-gray-100 dark:bg-gray-800/50 rounded-xl px-8">
+            <h2 class="text-3xl font-display text-center mb-12">The scope of the problem</h2>
+            <div class="grid md:grid-cols-3 gap-8 max-w-(--breakpoint-lg) mx-auto text-center">
+                <div>
+                    <p class="text-5xl font-display text-primary">70%+</p>
+                    <p class="mt-2 text-gray-600 dark:text-gray-300">
+                        of Europe's cloud infrastructure is controlled by US companies (Google, Amazon, Microsoft).
+                    </p>
+                </div>
+                <div>
+                    <p class="text-5xl font-display text-primary">78%</p>
+                    <p class="mt-2 text-gray-600 dark:text-gray-300">
+                        of German companies say they are too dependent on US cloud providers
+                        (<a href="https://www.theregister.com/2025/12/22/europe_gets_serious_about_cutting/" class="underline" target="_blank" rel="noopener">Bitkom study</a>).
+                    </p>
+                </div>
+                <div>
+                    <p class="text-5xl font-display text-primary">18%</p>
+                    <p class="mt-2 text-gray-600 dark:text-gray-300">
+                        increase in GDPR fines for cross-border data transfer violations in the past year (DLA Piper report).
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLOUD Act section -->
+        <section class="py-16 max-w-(--breakpoint-md) mx-auto">
+            <h2 class="text-3xl font-display text-center mb-8">The CLOUD Act: your data isn't safe just because it's in Europe</h2>
+            <div class="space-y-6 text-gray-700 dark:text-gray-300">
+                <p>
+                    The US
+                    <a href="https://wire.com/en/blog/cloud-act-eu-data-sovereignty" class="underline" target="_blank" rel="noopener">CLOUD Act</a>
+                    (Clarifying Lawful Overseas Use of Data Act) allows American law enforcement to compel
+                    US-based companies to hand over data — regardless of where it is physically stored.
+                    Even if your data sits on a server in Frankfurt or Amsterdam, if the provider is an American company,
+                    the US government can demand access to it.
+                </p>
+                <p>
+                    This directly conflicts with the EU's GDPR, which prohibits transferring personal data
+                    to non-EU authorities without an international agreement.
+                    Organizations using US cloud services face an impossible choice:
+                    comply with the CLOUD Act and violate GDPR, or refuse US demands and face American legal consequences.
+                </p>
+                <p>
+                    The
+                    <a href="https://cms-lawnow.com/en/ealerts/2026/02/white-paper-demystifying-the-debate-on-the-us-cloud-act-vs-european-uk-data-sovereignty-in-the-context-of-cloud-services" class="underline" target="_blank" rel="noopener">EU-US Data Privacy Framework</a>
+                    doesn't solve this. It covers commercial data transfers between companies but does not change
+                    US lawful-access rules. The CLOUD Act still applies.
+                </p>
+                <p class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+                    <strong>Data residency is not data sovereignty.</strong>
+                    Storing your data in a European data center owned by a US company does not make it subject
+                    only to European law. True sovereignty requires that the software itself is outside the reach
+                    of foreign jurisdictions — which means using tools that are not controlled by US corporations.
+                </p>
+            </div>
+        </section>
+
+        <!-- Europe is acting -->
+        <section class="py-16 bg-gray-100 dark:bg-gray-800/50 rounded-xl px-8">
+            <h2 class="text-3xl font-display text-center mb-8">Europe is already acting</h2>
+            <div class="max-w-(--breakpoint-md) mx-auto space-y-6 text-gray-700 dark:text-gray-300">
+                <p>
+                    This isn't theoretical. Governments and institutions across Europe are actively
+                    replacing US-controlled tools:
+                </p>
+                <ul class="space-y-4 list-none">
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold mt-0.5">&#10003;</span>
+                        <span>
+                            <strong>France</strong> is
+                            <a href="https://abcnews.go.com/Technology/wireStory/france-ditches-zoom-teams-homegrown-system-amid-european-129802792" class="underline" target="_blank" rel="noopener">replacing Zoom and Microsoft Teams</a>
+                            with a homegrown video conferencing system for all civil servants.
+                        </span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold mt-0.5">&#10003;</span>
+                        <span>
+                            <strong>The International Criminal Court</strong> in The Hague
+                            <a href="https://www.theregister.com/2025/12/22/europe_gets_serious_about_cutting/" class="underline" target="_blank" rel="noopener">replaced Microsoft Office</a>
+                            with OpenDesk, an open-source suite — after the chief prosecutor's email
+                            was shut off following US sanctions.
+                        </span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold mt-0.5">&#10003;</span>
+                        <span>
+                            <strong>Austria's military</strong> switched to open-source office software.
+                            German federal states are following suit.
+                        </span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold mt-0.5">&#10003;</span>
+                        <span>
+                            <strong>France and Germany</strong> convened a
+                            <a href="https://www.atlanticcouncil.org/in-depth-research-reports/report/digital-sovereignty-europes-declaration-of-independence/" class="underline" target="_blank" rel="noopener">Summit on European Digital Sovereignty</a>
+                            in November 2025, launching a joint task force to build alternatives.
+                        </span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold mt-0.5">&#10003;</span>
+                        <span>
+                            <strong>Germany, France, Italy, and the Netherlands</strong> established the European Digital
+                            Infrastructure Consortium to develop and scale sovereign digital tools.
+                        </span>
+                    </li>
+                </ul>
+                <p>
+                    IT spending in Europe is set to grow by 11% in 2026 to $1.4 trillion, with a significant share
+                    going toward sovereign cloud options. 61% of European CIOs want to increase their use of local
+                    providers, and more than half say geopolitics will prevent them from relying further on US hyperscalers.
+                </p>
+            </div>
+        </section>
+
+        <!-- Why Vikunja -->
+        <section class="py-16 max-w-(--breakpoint-md) mx-auto">
+            <h2 class="text-3xl font-display text-center mb-12">Why Vikunja is the sovereign choice for task management</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl">
+                    <h3 class="font-display text-xl mb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
+                        </svg>
+                        Self-hosted on your infrastructure
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Run Vikunja on your own server, your own hardware, in your own jurisdiction.
+                        No third-party cloud provider can access your data, and no foreign government can compel its disclosure.
+                        You control the infrastructure, the backups, and the access.
+                    </p>
+                </div>
+                <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl">
+                    <h3 class="font-display text-xl mb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                        </svg>
+                        Fully open-source (AGPLv3)
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Every line of Vikunja's code is
+                        <a href="https://code.vikunja.io" class="underline" target="_blank" rel="noopener">publicly available</a>.
+                        You can audit it, modify it, and verify that it does exactly what it claims.
+                        No hidden telemetry, no backdoors, no vendor lock-in. If Vikunja ever disappeared,
+                        the code would still be yours.
+                    </p>
+                </div>
+                <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl">
+                    <h3 class="font-display text-xl mb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Made and hosted in the EU
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Vikunja is developed and maintained in Europe.
+                        <a href="https://vikunja.cloud/?utm_source=io&utm_medium=io&utm_campaign=sovereignty" class="underline" rel="noopener">Vikunja Cloud</a>
+                        is hosted on EU infrastructure, subject only to European law.
+                        No CLOUD Act, no foreign subpoenas, no "kill switch" that a non-EU government can pull.
+                    </p>
+                </div>
+                <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl">
+                    <h3 class="font-display text-xl mb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                        No vendor lock-in
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Your data is stored in standard formats. Import from Todoist, Trello, or Microsoft To-Do.
+                        Export whenever you want. Vikunja supports CalDAV for interoperability with other tools.
+                        You're never trapped.
+                    </p>
+                </div>
+                <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl">
+                    <h3 class="font-display text-xl mb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                        Privacy by design
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Vikunja was built from the ground up with privacy as a core principle. No tracking,
+                        no analytics, no selling your data. When you self-host, not even the Vikunja team
+                        has access to your information.
+                    </p>
+                </div>
+                <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl">
+                    <h3 class="font-display text-xl mb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                        Bootstrapped, not VC-funded
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Vikunja is completely bootstrapped. There are no venture capital investors pushing for
+                        growth-at-all-costs, no pressure to monetize your data, and no risk of being acquired
+                        by a company whose interests don't align with yours.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quote -->
+        <section class="py-16 max-w-(--breakpoint-md) mx-auto text-center">
+            <blockquote class="text-2xl font-display text-balance italic text-gray-700 dark:text-gray-300">
+                "The question is not whether Europeans can afford to build their own technology stack, but whether they can afford not to."
+            </blockquote>
+            <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">
+                &mdash;
+                <a href="https://ecfr.eu/publication/get-over-your-x-a-european-plan-to-escape-american-technology/" class="underline" target="_blank" rel="noopener">European Council on Foreign Relations</a>
+            </p>
+        </section>
+
+        <!-- CTA -->
+        <section class="py-20 text-center">
+            <h2 class="text-3xl font-display mb-4">Take back control</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-12 max-w-(--breakpoint-sm) mx-auto text-balance">
+                Whether you self-host or use Vikunja Cloud, your task management stays under your control
+                — not in the hands of foreign governments or Big Tech shareholders.
+            </p>
+            <CloudOrSelfHosted/>
+        </section>
+
+    </main>
+</Layout>
