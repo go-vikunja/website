@@ -198,9 +198,9 @@ Example: https://vikunja.domain.tld/?redirectToProvider=authentik
 
 Starting with version 0.24.0, Vikunja is capable of automatically adding users to a team based on OIDC claims added by the identity provider.
 If configured, Vikunja will sync teams, automatically create new ones and make sure the members are part of the configured teams.
-Teams which exist only because they were created from oidc attributes are not editable in Vikunja.
+Teams which exist only because they were created from OIDC attributes are not editable in Vikunja.
 
-To distinguish between teams created in Vikunja and teams generated automatically via oidc, generated teams have an `oidcID` assigned internally.
+To distinguish between teams created in Vikunja and teams generated automatically via OIDC, generated teams have an `oidcID` assigned internally.
 Within the UI, the teams created through OIDC get a `(OIDC)` suffix to make them distinguishable from locally created teams.
 
 On a high level, you need to make sure that the **ID token** issued by your identity provider contains a `vikunja_groups` claim, following the structure defined below.
@@ -318,7 +318,7 @@ new team will be created called "team 1" with attribute oidcID: "33929"
 nothing happens
 
 6. *oidcID is not set:* \
-You'll get error.
+You'll get an error.
 Custom Scope malformed
 "The custom scope set by the OIDC provider is malformed. Please make sure the openid provider sets the data correctly for your scope. Check especially to have set an oidcID."
 
