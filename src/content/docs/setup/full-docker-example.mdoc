@@ -3,7 +3,7 @@ title: Full docker example
 slug: full-docker-example
 description: >-
   Learn how to deploy Vikunja using Docker Compose with various database options
-  and proxy configurations. Includes examples popular reverse proxies.
+  and proxy configurations. Includes examples for popular reverse proxies.
 ---
 
 This docker compose configuration will run Vikunja with a postgres database.
@@ -86,7 +86,7 @@ db:
 
 You'll also need to change the `VIKUNJA_DATABASE_TYPE` to `mysql` on the vikunja container declaration.
 
-## Sqlite
+## SQLite
 
 Vikunja supports postgres, mysql and sqlite as a database backend. The examples on this page use postgres with a postgres container.
 To use sqlite as a database backend, change the `vikunja` section of the examples to this:
@@ -110,7 +110,7 @@ vikunja:
 ```
 
 The default path Vikunja uses for sqlite is relative to the binary, which in the docker container would be `/app/vikunja/vikunja.db`.
-The `VIKUNJA_DATABASE_PATH` environment variable moves changes it so that the database file is stored in a volume at `/db`, to persist state across restarts.
+The `VIKUNJA_DATABASE_PATH` environment variable changes it so that the database file is stored in a volume at `/db`, to persist state across restarts.
 
 You'll also need to remove or change the `VIKUNJA_DATABASE_TYPE` to `sqlite` on the container declaration.
 
@@ -302,7 +302,7 @@ services:
 ## Setup on a Synology NAS
 
 There is a proxy preinstalled in DSM, so if you want to access Vikunja from outside,
-you need to prepare a proxy rule the Vikunja Service.
+you need to prepare a proxy rule for the Vikunja Service.
 
 ![Synology Proxy Settings](../../../assets/images/docs/synology-proxy-1.png)
 

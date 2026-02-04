@@ -9,7 +9,7 @@ description: Learn about vikunja.io's privacy policy, GDPR compliance, data prot
 At vikunja.io, one of our main priorities is the privacy of our visitors. 
 This Privacy Policy document contains types of information that is collected and recorded by vikunja.io and how we use it.
 
-If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us through email at [gpdr@vikunja.io](mailto:gpdr@vikunja.io)
+If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us through email at [gdpr@vikunja.io](mailto:gdpr@vikunja.io).
 
 ## General Data Protection Regulation (GDPR)
 
@@ -20,7 +20,7 @@ and the specific context in which we collect the information:
 
 *   vikunja.io needs to perform a contract with you
 *   You have given vikunja.io permission to do so
-*   Processing your personal information is in vikunja.io legitimate interests
+*   Processing your personal information is in vikunja.io's legitimate interests
 *   vikunja.io needs to comply with the law
 
 vikunja.io will retain your personal information only for as long as is necessary for the purposes set out in this Privacy Policy. 
@@ -51,7 +51,7 @@ The purpose of the information is for administering the site, preventing abuse a
 ## Online Privacy Policy Only
 
 Our Privacy Policy (created at GDPRPrivacyPolicy.net) applies only to our online activities and is valid for visitors to our website with regards 
-to the information that they shared and/or collect in vikunja.io. This policy is not applicable to any information collected offline or via 
+to the information that they shared and/or collected in vikunja.io. This policy is not applicable to any information collected offline or via 
 channels other than this website. [Our GDPR Privacy Policy](https://gdprprivacypolicy.net) was generated from the GDPR Privacy Policy Generator.
 
 ## Consent

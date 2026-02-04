@@ -52,7 +52,7 @@ Since this is a major release, we've collected a number of breaking changes. Her
 ### Config Changes
 
 - SQLite path handling changed ([#934](https://github.com/go-vikunja/vikunja/issues/934)) - paths are now relative to the configured `service.rootpath` unless an absolute path is specified.
-- The option `service.enablemetrics` was removed, use `metrics.enabled` instead. The old option was long deprecated and printed a warning on starup.
+- The option `service.enablemetrics` was removed, use `metrics.enabled` instead. The old option was long deprecated and printed a warning on startup.
 - `log.standard = "false"` no longer works, use `log.standard = "off"`
 - `log.events = "false"` no longer works, use `log.events = "off"`
 
@@ -158,7 +158,7 @@ Thanks to [@maggch97](https://github.com/maggch97)!
 
 We now support [ParadeDB](https://www.paradedb.com/), a Postgres extension for full-text search. The goal is to eventually replace Typesense with this, as it's significantly easier to operate - if you're already running Postgres, it's essentially a drop-in addition.
 
-**Typesense is now deprecated.** It requires maintaining a separate database that needs to stay in sync, which has led to various bugs over time. We won't be fixing Typesense-related bugs going forward and will remove support in one the next releases.
+**Typesense is now deprecated.** It requires maintaining a separate database that needs to stay in sync, which has led to various bugs over time. We won't be fixing Typesense-related bugs going forward and will remove support in one of the next releases.
 If you're using Typesense, please migrate to ParadeDB.
 
 ### Email Improvements
