@@ -17,7 +17,7 @@ import DarkModeSwitch from './partials/DarkModeSwitch.astro'
     </svg>
 </button>
 
-<div class="hidden sm:block fixed sm:static top-0 bottom-0 left-0 right-0 sm:size-fit sm:m-auto z-50" id="navbar-menu">
+<nav class="hidden sm:block fixed sm:static top-0 bottom-0 left-0 right-0 sm:size-fit sm:m-auto z-50" id="navbar-menu" aria-label="Main navigation">
     <div class="relative p-2 bg-gray-200 dark:bg-gray-800 sm:bg-gray-700/5 sm:dark:bg-gray-200/5 sm:rounded-lg h-full box-border">
         <div class="relative w-full text-gray-600 dark:text-gray-300">
             <ul class="flex flex-col gap-2 tracking-wide sm:flex-row sm:gap-0 sm:text-sm">
@@ -50,7 +50,7 @@ import DarkModeSwitch from './partials/DarkModeSwitch.astro'
             <ButtonGetStarted/>
         </div>
     </div>
-</div>
+</nav>
 
 <script>
 	const navbar = document.getElementById('navbar-menu')
