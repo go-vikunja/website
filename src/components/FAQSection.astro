@@ -25,15 +25,33 @@ const faqs = [
 
 <section class="w-full max-w-3xl mt-16 mb-24 px-4 mx-auto">
 	<h2 class="text-3xl font-display mb-8">Frequently Asked Questions</h2>
-	<dl>
-		{faqs.map((faq, index) => (
-			<div class:list={['py-6', index > 0 && 'border-t border-gray-200 dark:border-gray-700']}>
-				<dt class="text-lg font-display">{faq.question}</dt>
-				<dd class="mt-2 text-gray-600 dark:text-gray-400" set:html={faq.answer} />
+	{faqs.map((faq, index) => (
+		<details class:list={['faq-item group', index > 0 && 'border-t border-gray-200 dark:border-gray-700']}>
+			<summary class="flex cursor-pointer items-center justify-between py-5 text-lg font-display list-none [&::-webkit-details-marker]:hidden">
+				{faq.question}
+				<svg class="size-5 shrink-0 transition-transform duration-200 group-open:rotate-45" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+				</svg>
+			</summary>
+			<div class="faq-content grid">
+				<div class="overflow-hidden">
+					<p class="pb-5 text-gray-600 dark:text-gray-400" set:html={faq.answer} />
+				</div>
 			</div>
-		))}
-	</dl>
+		</details>
+	))}
 </section>
+
+<style>
+	.faq-content {
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.2s ease-out;
+	}
+
+	.faq-item[open] .faq-content {
+		grid-template-rows: 1fr;
+	}
+</style>
 
 <script type="application/ld+json" set:html={JSON.stringify({
 	"@context": "https://schema.org",
