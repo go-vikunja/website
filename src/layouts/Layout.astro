@@ -63,6 +63,7 @@ const canonical = (new URL(Astro.url.pathname, Astro.site)).toString()
     <meta property="og:image" content={imageUrl}/>
     <meta name="twitter:image" content={imageUrl}/>
     <meta name="twitter:image:src" content={imageUrl}/>
+    <meta name="twitter:card" content="summary_large_image"/>
 
     <meta property="og:type" content={type || 'website'}/>
 
