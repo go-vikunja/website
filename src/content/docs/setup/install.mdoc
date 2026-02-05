@@ -155,7 +155,7 @@ chown 1000 $PWD/files $PWD/db
 docker run -p 3456:3456 -v $PWD/files:/app/vikunja/files -v $PWD/db:/db vikunja/vikunja
 ```
 
-This will expose Vikunja on port `3456` on the host running the container and use sqlite as database backend.
+This will expose Vikunja on port `3456` on the host running the container and use SQLite as database backend.
 
 {% callout type="warning" %}
 The default configuration has CORS enabled, which requires a public URL to be set.
@@ -166,7 +166,7 @@ You must either set the `VIKUNJA_SERVICE_PUBLICURL` environment variable to the 
 You can use Docker's [`--user`](https://docs.docker.com/engine/reference/run/#user) flag to change that.
 Make sure the new user has required permissions on the `db` and `files` folder.
 
-Check out the [docker examples](/docs/full-docker-example) for more advanced configuration using postgres or mysql and a
+Check out the [docker examples](/docs/full-docker-example) for more advanced configuration using PostgreSQL or MySQL and a
 reverse proxy.
 
 ### Using a configuration file with docker

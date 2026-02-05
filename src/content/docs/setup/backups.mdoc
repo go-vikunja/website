@@ -16,10 +16,10 @@ To back up attachments and other files, it is enough to copy them [from the atta
 
 ### MySQL
 
-To create a backup from mysql use the `mysqldump` command:
+To create a backup from MySQL, use the `mysqldump` command:
 
 ```sh
-mysqldump -u <user> -p -h <db-host> <database> > vkunja-backup.sql
+mysqldump -u <user> -p -h <db-host> <database> > vikunja-backup.sql
 ```
 
 You will be prompted for the password of the mysql user.
@@ -27,7 +27,7 @@ You will be prompted for the password of the mysql user.
 To restore it, simply pipe it back into the `mysql` command:
 
 ```sh
-mysql -u <user> -p -h <db-host> <database> < vkunja-backup.sql
+mysql -u <user> -p -h <db-host> <database> < vikunja-backup.sql
 ```
 
 ### PostgreSQL

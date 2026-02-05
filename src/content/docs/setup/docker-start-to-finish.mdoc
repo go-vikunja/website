@@ -6,7 +6,7 @@ description: >-
   covers installation, configuration, and troubleshooting for quick deployment.
 ---
 
-This tutorial assumes basic knowledge of docker.
+This tutorial assumes basic knowledge of Docker.
 It is aimed at beginners and should get you up and running quickly.
 
 We'll use [docker compose](https://docs.docker.com/compose/) to make handling the bunch of containers easier.
@@ -61,8 +61,8 @@ services:
 
 This defines two services, each with their own container:
 
-* A Vikunja service which runs the Vikunja api and hosts its frontend.
-* A database container which will store all projects, tasks, etc. We're using postgres here, but you're free to use mysql or mariadb if you want.
+* A Vikunja service which runs the Vikunja API and hosts its frontend.
+* A database container which will store all projects, tasks, etc. We're using PostgreSQL here, but you're free to use MySQL or MariaDB if you want.
 
 If you already have a proxy on your host, you may want to check out the [reverse proxy examples](/docs/reverse-proxy) to use that.
 By default, Vikunja will be exposed on port 3456 on the host.
@@ -115,14 +115,14 @@ Indicated by an error message like this one from the api container:
 2020-05-23T15:37:59.974435725Z: CRITICAL	▶ migration/Migrate 002 Migration failed: dial tcp 172.19.0.2:3306: connect: connection refused
 ```
 
-Especially when using postgres, this can happen on first start, because the postgres database container will take a few seconds to start.
+Especially when using PostgreSQL, this can happen on first start, because the PostgreSQL database container will take a few seconds to start.
 Vikunja does not know the container is not ready, therefore it will just try to connect to the db, fail since it is not ready and exit.
 
 If you're using the docker compose example from above, you may notice the `restart: unless-stopped` option at the api service.
 This tells docker to restart the api container if it exits, unless you explicitly stop it.
 Therefore, it should "magically fix itself" by automatically restarting the container.
 
-After a few seconds (or minutes) you should see a log message like this one from the postgres container:
+After a few seconds (or minutes) you should see a log message like this one from the PostgreSQL container:
 
 ```
 2024-01-01 00:00:00.000 UTC [1] LOG:  database system is ready to accept connections
@@ -143,7 +143,7 @@ If you get an error like this one:
 2020-05-23T15:53:38.762747276Z: CRITICAL	▶ migration/Migrate 002 Migration failed: commands out of sync. Did you run multiple statements at once?
 ```
 
-This is a mysql issue.
+This is a MySQL issue.
 Currently, we don't have a better solution than to completely wipe the database files and start over.
 To do this, first stop everything by running `sudo docker compose down`, then remove the `db/` folder in your current folder with `sudo rm -rf db` and start the whole stack again with `sudo docker compose up -d`.
 
@@ -193,7 +193,7 @@ You should see something like this:
 }
 ```
 
-This shows you can reach the api through the api proxy.
+This shows you can reach the API through the API proxy.
 
 Now head over to `http://<host-ip or url>/` which should show the login mask.
 
