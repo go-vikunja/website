@@ -18,6 +18,7 @@ import HeroLlama1 from '../assets/images/hero-llamas-small.jpg'
 import HeroLlama2 from '../assets/images/hero-llamas-2-small.jpg'
 import HeroLlama3 from '../assets/images/hero-llamas-3-small.jpg'
 import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
+import FAQSection from '../components/FAQSection.astro'
 
 const carouselImages = [
 	{src: VikunjaTaskOverview, alt: 'Overview dashboard showing recently viewed projects and current tasks with due dates and labels.'},
@@ -174,6 +175,8 @@ const carouselImages = [
                 <i>Founder of Vikunja</i>
             </p>
         </div>
+
+        <FAQSection />
 
         <section class="mx-auto mb-16 flex w-full max-w-6xl flex-col px-4 md:px-2 gap-4 text-left md:flex-row">
             <LinkCard

@@ -1,0 +1,45 @@
+---
+const faqs = [
+	{
+		question: 'What is Vikunja?',
+		answer: 'Vikunja is an open-source, self-hostable to-do app. It helps you organize your tasks and projects with features like list, kanban, gantt, and table views — all while keeping your data under your control.',
+	},
+	{
+		question: 'Is Vikunja free and open source?',
+		answer: 'Yes. Vikunja is licensed under the AGPLv3 and completely free to self-host. If you prefer not to manage your own server, <a href="https://vikunja.cloud/?utm_source=io&utm_medium=faq&utm_campaign=faq" class="underline decoration-1 underline-offset-1">Vikunja Cloud</a> offers a paid hosted option.',
+	},
+	{
+		question: 'How do I install Vikunja?',
+		answer: 'You can install Vikunja using Docker, native binaries for your platform, or sign up for <a href="https://vikunja.cloud/?utm_source=io&utm_medium=faq&utm_campaign=faq" class="underline decoration-1 underline-offset-1">Vikunja Cloud</a>. Check the <a href="/docs/installing/" class="underline decoration-1 underline-offset-1">installation docs</a> for detailed instructions.',
+	},
+	{
+		question: 'Can I import tasks from Todoist, Trello, or Microsoft To-Do?',
+		answer: 'Yes. Vikunja has built-in migration support for Todoist, Trello, Microsoft To-Do, and other platforms. You can import your existing tasks and projects directly from the Vikunja interface.',
+	},
+]
+---
+
+<section class="w-full max-w-3xl mt-16 mb-24 px-4 mx-auto">
+	<h2 class="text-3xl font-display mb-8">Frequently Asked Questions</h2>
+	<dl>
+		{faqs.map((faq, index) => (
+			<div class:list={['py-6', index > 0 && 'border-t border-gray-200 dark:border-gray-700']}>
+				<dt class="text-lg font-display">{faq.question}</dt>
+				<dd class="mt-2 text-gray-600 dark:text-gray-400" set:html={faq.answer} />
+			</div>
+		))}
+	</dl>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	"mainEntity": faqs.map(faq => ({
+		"@type": "Question",
+		"name": faq.question,
+		"acceptedAnswer": {
+			"@type": "Answer",
+			"text": faq.answer.replace(/<[^>]*>/g, ''),
+		},
+	})),
+})}></script>
