@@ -32,6 +32,22 @@ const carouselImages = [
 ]
 ---
 <Layout title="Vikunja: The open-source, self-hostable to-do app" description="Discover Vikunja, the open-source, self-hostable to-do app. Stay organized, collaborate with peers, and plan projects with elegance and privacy in mind.">
+    <Fragment slot="head">
+        <script type="application/ld+json" set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Vikunja",
+            "description": "Open-source, self-hostable to-do app. Stay organized, collaborate with peers, and plan projects with elegance and privacy in mind.",
+            "applicationCategory": "ProjectManagement",
+            "operatingSystem": "Web, Docker, Linux",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "EUR"
+            },
+            "license": "https://code.vikunja.io/api/src/branch/main/LICENSE"
+        })}></script>
+    </Fragment>
     <main>
         <section
                 class="flex min-h-screen w-full flex-col items-center justify-center pb-8 text-center text-gray-700 dark:text-gray-300 md:px-0">
