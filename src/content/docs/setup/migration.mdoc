@@ -13,6 +13,24 @@ There are several importers available for third-party services like Trello, Micr
 
 To set up migration, check out [the config docs](/docs/config-options#0--migration).
 
+## Prerequisites
+
+Several migration sources (Trello, Todoist, Microsoft To Do) use OAuth for authentication. The OAuth redirect happens in your browser, so your Vikunja instance does **not** need to be publicly accessible from the internet — it only needs to be reachable from the browser you're using to perform the migration.
+
+However, the `VIKUNJA_SERVICE_PUBLICURL` must be set correctly so that the OAuth redirect URL points to where your browser can reach Vikunja.
+
+### Supported migration sources
+
+| Source | Method |
+|--------|--------|
+| Todoist | OAuth |
+| Trello | OAuth |
+| Microsoft To Do | OAuth |
+| TickTick | OAuth |
+| Vikunja (file export) | File import |
+
+If your source service is not listed, you may be able to export data as CSV or JSON and convert it to Vikunja's import format. See the [development docs](/docs/migrations) for writing custom importers.
+
 ## Start the Migration Process
 
 Log in, and navigate to Settings > Import from other services. In the list of available third-party services, there should be an icon for each of the enabled services.
