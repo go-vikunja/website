@@ -11,6 +11,23 @@ To filter tasks via the api, you can use a query syntax similar to SQL.
 This document is about filtering via the api. To filter in Vikunja's web ui, check out the help text below the filter
 query input.
 
+## Filters in the web UI
+
+When using filters in Vikunja's web interface, there is an important default setting to be aware of:
+
+{% callout type="info" %}
+**"Include Tasks which don't have a value set"** is enabled by default. This means a filter like `assignees in user1` will also return tasks with *no* assignee at all. If this is not what you want, disable this toggle in the filter settings.
+{% /callout %}
+
+### Saved Filters vs Views
+
+Vikunja has two related but distinct concepts for organizing how you see tasks:
+
+- **Saved Filters** are personal, cross-project filter queries. They appear in the sidebar and let you create custom filtered lists across all your projects. Saved Filters cannot be shared with other users.
+- **Views** are per-project display configurations (list, kanban, gantt, table). Each view can have its own filter applied. Views are accessed through the context menu next to the project title (the three dots).
+
+Saved Filters are personal and cannot be shared.
+
 ## Available fields
 
 The available fields for filtering include:
@@ -105,3 +122,7 @@ Here are some examples of filter queries:
 | `done = false && priority >= 3`                      | undone tasks with priority level 3 or higher                |
 | `assignees in user1, user2`                          | tasks assigned to either user1 or user2                     |
 | `(priority = 1 \|\| priority = 2) && dueDate <= now` | tasks with priority level 1 or 2 and a due date in the past |
+
+{% callout type="info" %}
+When filtering by labels via the API, you must use the label's numeric ID, not its name (e.g. `labels in 1, 5`). To find a label's ID, use `GET /api/v1/labels`.
+{% /callout %}
