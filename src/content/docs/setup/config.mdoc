@@ -72,6 +72,19 @@ volumes:
 
 After all the setup is done, start Vikunja as shown in the [Docker Compose setup](/docs/full-docker-example).
 
+## Common configuration tasks
+
+Here are some frequently requested configuration changes:
+
+| Task | Config option | Docs |
+|------|--------------|------|
+| Disable public link sharing | `service.enablelinksharing: false` | [Details](/docs/config-options#1-service-enablelinksharing) |
+| Disable user registration | `service.enableregistration: false` | [Details](/docs/config-options#1-service-enableregistration) |
+| Enable OIDC authentication | `auth.openid.enabled: true` | [OpenID guide](/docs/openid) |
+| Configure SMTP for emails | `mailer.*` | [Details](/docs/config-options#0--mailer) |
+| Set up rate limiting | `ratelimit.*` | [Details](/docs/config-options#0--ratelimit) |
+| Change the default language | `service.defaultlanguage` | [Details](/docs/config-options#1-defaultsettings-language) |
+
 ## Reading config values from files
 
 Vikunja can read any config value from a file saved on disk when the path to that file is 
