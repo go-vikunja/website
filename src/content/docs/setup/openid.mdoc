@@ -298,6 +298,49 @@ You should see "(OIDC)" written next to each team you were assigned through OIDC
 
 The kind people from Makerspace Darmstadt e.V. have written [a guide on how to create a mapper for Vikunja here](https://github.com/makerspace-darmstadt/keycloak-vikunja-mapper).
 
+## Troubleshooting
+
+### Vikunja ignores my configured endpoint URLs
+
+Vikunja uses [OpenID Connect Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html) to automatically determine endpoint URLs. It fetches `<authurl>/.well-known/openid-configuration` and uses the URLs returned by your provider.
+
+This means that even if you manually configure specific endpoint URLs, the values from the discovery document will take precedence. If your provider is running on a non-standard port or behind a proxy, make sure the discovery document returns the correct URLs.
+
+To debug, fetch the discovery document yourself:
+
+```sh
+curl https://your-provider/.well-known/openid-configuration | jq .
+```
+
+Verify that the `authorization_endpoint`, `token_endpoint`, and `userinfo_endpoint` values point to the correct host and port.
+
+### Usernames are auto-generated (random characters)
+
+If users logging in via OIDC get random usernames instead of their actual name, the identity provider is not including the `preferred_username` claim. Vikunja checks these sources in order:
+
+1. `preferred_username` from the ID token
+2. `preferred_username` from the userinfo endpoint
+3. `nickname` from the userinfo endpoint
+4. If none are available, a random username is generated
+
+Check your provider's configuration to ensure it includes `preferred_username` in the profile scope. Some providers (like Synology SSO) do not include this claim by default.
+
+### Users must log in before they can be assigned to tasks
+
+Vikunja creates user accounts on first OIDC login. There is no SCIM provisioning or bulk user import via OIDC. This means you cannot assign a user to a task or team until they have logged in at least once.
+
+If you need to pre-create users, you can use the [Vikunja API](https://try.vikunja.io/api/v1/docs) to create local user accounts, but these will be separate from OIDC accounts unless you configure [fallback matching](#login-existing-local-user-with-openid).
+
+### OIDC works in browser but not on mobile app
+
+The Android and iOS apps use an embedded webview for the OIDC flow, which may behave differently than a full browser. Known limitations:
+
+- Some providers may have issues with the webview's cookie handling
+- The "Login with frontend" option is recommended for mobile OIDC
+- If you see a "State does not match" error, this is typically a webview session issue
+
+If you encounter OIDC issues only on mobile, please [report it](https://github.com/go-vikunja/app/issues) with your provider details.
+
 ## Use cases
 
 All examples assume one team called "Team 1" to be configured within your provider.
