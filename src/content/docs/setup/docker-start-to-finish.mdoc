@@ -86,6 +86,14 @@ chown 1000 $PWD/files
 
 If you're using [rootless Docker](/docs/full-docker-example#rootless-docker), see the dedicated section about file permissions in that setup.
 
+{% callout type="warning" %}
+Vikunja's Docker image is based on a `scratch` image. This means:
+
+- **There is no shell inside the container.** Commands like `docker exec -it vikunja sh` will not work. Use `docker logs vikunja` to check for errors instead.
+- **`PUID` and `PGID` environment variables are not supported.** These are conventions from other images (like LinuxServer.io) but have no effect on the Vikunja container. To change the user the container runs as, use Docker's [`user:` directive](https://docs.docker.com/compose/how-tos/user/) in your compose file.
+- **The `/tmp` directory must be writable** for data exports to work. If you use a custom user, ensure `/tmp` is accessible or mount a writable volume at `/tmp`.
+{% /callout %}
+
 ## Run it
 
 Run `sudo docker compose up` in your directory and take a look at the output you get.
@@ -146,6 +154,69 @@ If you get an error like this one:
 This is a MySQL issue.
 Currently, we don't have a better solution than to completely wipe the database files and start over.
 To do this, first stop everything by running `sudo docker compose down`, then remove the `db/` folder in your current folder with `sudo rm -rf db` and start the whole stack again with `sudo docker compose up -d`.
+
+#### Permission denied on file upload
+
+If you see an error like:
+
+```
+open /app/vikunja/files/1: permission denied
+```
+
+This means the `files` directory is not writable by the Vikunja process. Make sure you followed the [file permission steps above](#ensure-adequate-file-permissions).
+
+Common mistakes:
+
+- Forgetting to `chown` the directory to UID `1000` before starting the container
+- Using `PUID`/`PGID` environment variables (these have no effect — use Docker's `user:` directive instead)
+- Not using the `-R` flag when running `chown` on a directory that already contains files: `chown -R 1000 $PWD/files`
+
+#### Data export fails with permission denied
+
+If data export fails with an error like:
+
+```
+mkdir /app/vikunja/files/user-export-tmp/: permission denied
+```
+
+or:
+
+```
+open /tmp/vikunja-export-*.zip: no such file or directory
+```
+
+This is the same permissions issue. Make sure the `files` volume is writable. If you see the `/tmp` error, your container may lack a writable `/tmp` directory — mount one in your compose file:
+
+```yaml
+volumes:
+  - /tmp:/tmp
+```
+
+#### "/.cache: permission denied" warning
+
+If you see this warning at startup:
+
+```
+failed to create modcache index dir: mkdir /.cache: permission denied
+```
+
+This is a [known Go runtime warning](https://github.com/golang/go/issues/75505) and is harmless. Vikunja will work correctly despite this message.
+
+#### Database hostname mismatch
+
+If you see an error like:
+
+```
+Migration failed: dial tcp: lookup db on 127.0.0.11:53: server misbehaving
+```
+
+Make sure the `VIKUNJA_DATABASE_HOST` value matches the service name of your database container in `docker-compose.yml`. For example, if your database service is called `db`, the host must be `db`. If you renamed the service to `postgres`, update the environment variable to match.
+
+#### Email test fails with "not connected to SMTP server"
+
+If the `testmail` command fails with this error but you believe your SMTP settings are correct, note that Vikunja sends an SMTP `NOOP` command to verify the connection. Some minimal SMTP relays (like `msmtpd`) do not support this command. Use a full-featured SMTP server or relay instead.
+
+Also ensure your SMTP configuration is defined in **one place only** — either environment variables or a config file. If both are set, the config file takes precedence, which can cause confusion if they have different values.
 
 ## Try it
 
