@@ -1,0 +1,51 @@
+---
+title: 'Vikunja 1.1.0: One Security fix, bugfixes, a few new features'
+date: 2026-02-09T12:00:00.000Z
+slug: /vikunja-v1.1.0-was-released
+description: >-
+  Vikunja 1.1.0 update: new features and improvements.
+---
+
+Almost only two weeks after [the 1.0 release](/changelog/whats-new-in-vikunja-1.0.0/), we're back with 1.1.0!
+
+This release contains one security fix, a bunch of bugfixes, and a few new features. Let's dive in!
+
+## Security issue
+
+An XSS vulnerability was discovered in a new feature that was released in 1.0.0.
+We highly encourage you to upgrade to 1.1.0 which contains the fix.
+
+We have requested a CVE via GitHub for this and will update this post with the number and details when we have it.
+
+Thanks to [`@supercoolspy`](https://github.com/supercoolspy) for finding and reporting this!
+
+If you found a security issue that you want to report, check out [our security policy](/security/) for more details.
+
+## Fixes and improvements
+
+- **File uploads ([#2186](https://github.com/go-vikunja/vikunja/pull/2186), [#2204](https://github.com/go-vikunja/vikunja/pull/2204)):** Fixed "permission denied" errors for S3 uploads in Docker containers, potential OOM when downloading large Unsplash backgrounds, and attachment upload errors now show user-visible notifications.
+- **Logs ([#2206](https://github.com/go-vikunja/vikunja/pull/2206)):** Fixed a bug where all log categories (database, http, events, mail) were writing to the same `standard.log` file instead of their own separate log files.
+- **Date parsing in quick add magic ([#2200](https://github.com/go-vikunja/vikunja/pull/2200)):** Fixed overzealous date detection that would incorrectly parse numbers in task titles as dates (e.g. "The 9/11 Report" was being parsed as a date). Numeric dates are now only recognized at the start or end of the text input or when followed by a time expression.
+- **Flashing after login ([#2201](https://github.com/go-vikunja/vikunja/pull/2201)):** Fixed a visual glitch where the login form would briefly flash inside the authenticated layout for about 250ms after logging in or registering before redirecting.
+- **Shared sub-projects ([#2176](https://github.com/go-vikunja/vikunja/pull/2176)):** Fixed shared sub-projects not showing in the sidebar when the parent project is inaccessible.
+- **Mobile drag-and-drop ([#2198](https://github.com/go-vikunja/vikunja/pull/2198)):** Fixed drag-and-drop not working on mobile devices in list view because the browser's native long-press text selection was firing before the drag could start.
+
+## New Features
+
+- **S3 signing config option ([#2205](https://github.com/go-vikunja/vikunja/pull/2205)):** Added [`files.s3.disablesigning`](https://vikunja.io/docs/config-options/#2-files.s3-disablesigning) config option that sends `UNSIGNED-PAYLOAD` instead of computing SHA256 hashes. This fixes `XAmzContentSHA256Mismatch` errors with S3-compatible providers like Ceph RadosGW and Clever Cloud Cellar.
+- **Basic Auth for webhooks ([#2137](https://github.com/go-vikunja/vikunja/pull/2137)):** Added an option to send a Basic Auth header with webhook requests. Thanks to [`@rhclayto`](https://github.com/rhclayto) for the contribution!
+- **[Doctor](https://vikunja.io/docs/cli/#doctor) diagnostics ([#2179](https://github.com/go-vikunja/vikunja/pull/2179), [#2180](https://github.com/go-vikunja/vikunja/pull/2180)):** The `doctor` command now reports detailed file storage diagnostics including directory permissions, ownership, file count and size, and detects Linux user namespaces (commonly used in rootless Docker containers).
+
+## How to Upgrade
+
+To get the upgrade, simply replace the Vikunja binary with the new release from the [downloads page](https://dl.vikunja.io/vikunja/v1.1.0/) or pull the `:latest` docker image.
+
+You can also check out [the update docs](/docs/installing#updating) for more information about the process.
+
+## Closing
+
+As usual, you can find the full changelogs [in the GitHub repo](https://github.com/go-vikunja/vikunja/blob/main/CHANGELOG.md#110---2026-02-09).
+
+If you have any questions about this release, please reach out either [in the community forum](https://community.vikunja.io), [Bluesky](https://bsky.app/profile/vikunja.io), or [Mastodon](https://social.linux.pizza/@vikunja).
+
+Thank you for using Vikunja, and I look forward to bringing you more enhancements in future updates! (hopefully actually useful ones, not only security fixes)
