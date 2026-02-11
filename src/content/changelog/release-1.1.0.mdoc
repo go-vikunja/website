@@ -14,10 +14,12 @@ This release contains one security fix, a bunch of bugfixes, and a few new featu
 
 ## Security issue
 
-An XSS vulnerability was discovered in a new feature that was released in 1.0.0.
-We highly encourage you to upgrade to 1.1.0 which contains the fix.
+An XSS vulnerability was discovered in the task glance feature that was released in 1.0.0.
+A bug in the rendering mechanism allowed users to execute arbitrary js code in the context of the user when they hovered over a task in the list view.
 
-We have requested a CVE via GitHub for this and will update this post with the number and details when we have it.
+We highly encourage you to upgrade to 1.1.0 which includes the fix.
+
+This vulnerability is tracked as `CVE-2026-25935`. Check out [this GitHub advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-m4g2-2q66-vc9v) for more details about the effect and the root cause of the issue.
 
 Thanks to [`@supercoolspy`](https://github.com/supercoolspy) for finding and reporting this!
 
