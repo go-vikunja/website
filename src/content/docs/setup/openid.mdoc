@@ -182,7 +182,7 @@ Additionally, this feature introduces potential security risks, as it allows thi
 
 ## Automatically login with specified provider
 
-Vikunja supports automatic redirection to a specific OpenID provider by appending the query parameter `?redirectToProvider=provider-id1` to any Vikunja URL.
+Vikunja supports automatic redirection to a specific OpenID provider by appending the query parameter `?redirectToProvider=provider-id1` to the login URL.
 
 This will immediately redirect the user to the authentication flow for the provider with the key `provider-id1` in your configuration.
 
@@ -192,7 +192,7 @@ If you have only one provider configured, you can use any of these simplified pa
 - `?redirectToProvider=true`
 - `?redirectToProvider=1`
 
-Example: https://vikunja.domain.tld/?redirectToProvider=authentik
+Example: https://vikunja.domain.tld/login?redirectToProvider=authentik
 
 ## Automatically assign users to teams
 
