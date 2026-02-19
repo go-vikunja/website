@@ -1,0 +1,184 @@
+---
+import Layout from '../layouts/Layout.astro'
+---
+<Layout title="Install Vikunja" description="Get Vikunja up and running in minutes with this interactive install wizard.">
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-6">
+        <div class="pt-24 pb-8 text-center">
+            <h1 class="text-4xl font-display">Install Vikunja</h1>
+            <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Get up and running in minutes.</p>
+        </div>
+
+        <!-- Step indicator -->
+        <div id="step-indicator" class="flex items-center justify-center gap-2 mb-12">
+            <span data-step-dot="1" class="w-3 h-3 rounded-full bg-primary"></span>
+            <span data-step-dot="2" class="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+            <span data-step-dot="3" class="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+        </div>
+
+        <!-- Step 1: Pick environment -->
+        <section id="step-1" class="wizard-step">
+            <h2 class="text-2xl font-display text-center mb-8">What environment are you installing on?</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                <button data-env="debian" class="wizard-card">
+                    <span class="text-lg font-bold">Linux</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">Debian / Ubuntu</span>
+                </button>
+                <button data-env="fedora" class="wizard-card">
+                    <span class="text-lg font-bold">Linux</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">Fedora / CentOS</span>
+                </button>
+                <button data-env="linux-other" class="wizard-card">
+                    <span class="text-lg font-bold">Linux</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">Other</span>
+                </button>
+                <button data-env="freebsd" class="wizard-card">
+                    <span class="text-lg font-bold">FreeBSD</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">Build from source</span>
+                </button>
+                <button data-env="docker" class="wizard-card">
+                    <span class="text-lg font-bold">Docker</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">Docker Compose</span>
+                </button>
+                <button data-env="kubernetes" class="wizard-card">
+                    <span class="text-lg font-bold">Kubernetes</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">Helm chart</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Step 2: Pick method -->
+        <section id="step-2" class="wizard-step hidden">
+            <button id="back-to-1" class="wizard-back mb-8">&larr; Back</button>
+            <h2 class="text-2xl font-display text-center mb-8">How do you want to install Vikunja?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                <button data-method="docker" class="wizard-card">
+                    <span class="text-lg font-bold">Docker</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">Recommended</span>
+                </button>
+                <button data-method="native" class="wizard-card">
+                    <span class="text-lg font-bold">Native</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400" id="native-method-label">Package manager</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Step 3: Your setup -->
+        <section id="step-3" class="wizard-step hidden">
+            <button id="back-to-prev" class="wizard-back mb-8">&larr; Back</button>
+            <h2 class="text-2xl font-display text-center mb-2">Your setup</h2>
+            <p class="text-center text-gray-600 dark:text-gray-400 mb-8" id="setup-summary"></p>
+
+            <!-- Customization accordions -->
+            <div class="max-w-3xl mx-auto mb-8 space-y-2" id="customization-options">
+                <!-- Database -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg">
+                    <button class="accordion-toggle w-full flex items-center justify-between p-4 text-left font-bold" data-accordion="db">
+                        <span>Customize database</span>
+                        <svg class="accordion-chevron w-5 h-5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="accordion-content hidden px-4 pb-4">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">SQLite works great for personal use. Pick PostgreSQL or MySQL for multi-user setups.</p>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="flex items-center gap-2"><input type="radio" name="db" value="sqlite" checked class="text-primary"> SQLite</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="db" value="postgres" class="text-primary"> PostgreSQL</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="db" value="mysql" class="text-primary"> MySQL / MariaDB</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg">
+                    <button class="accordion-toggle w-full flex items-center justify-between p-4 text-left font-bold" data-accordion="email">
+                        <span>Configure email (SMTP)</span>
+                        <svg class="accordion-chevron w-5 h-5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="accordion-content hidden px-4 pb-4">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Optional. Required for email notifications and password resets.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">SMTP Host</label>
+                                <input type="text" id="smtp-host" placeholder="smtp.example.com" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">SMTP Port</label>
+                                <input type="number" id="smtp-port" placeholder="587" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Username</label>
+                                <input type="text" id="smtp-user" placeholder="user@example.com" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Password</label>
+                                <input type="password" id="smtp-password" placeholder="password" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-sm">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium mb-1">From Address</label>
+                                <input type="email" id="smtp-from" placeholder="vikunja@example.com" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-sm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reverse Proxy -->
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg">
+                    <button class="accordion-toggle w-full flex items-center justify-between p-4 text-left font-bold" data-accordion="proxy">
+                        <span>Set up reverse proxy</span>
+                        <svg class="accordion-chevron w-5 h-5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="accordion-content hidden px-4 pb-4">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Recommended for production. Handles TLS/SSL and domain routing.</p>
+                        <div class="flex flex-wrap gap-4 mb-4">
+                            <label class="flex items-center gap-2"><input type="radio" name="proxy" value="none" checked class="text-primary"> None</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="proxy" value="nginx" class="text-primary"> Nginx</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="proxy" value="apache" class="text-primary"> Apache</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="proxy" value="caddy" class="text-primary"> Caddy</label>
+                        </div>
+                        <div id="proxy-domain-field" class="hidden">
+                            <label class="block text-sm font-medium mb-1">Domain</label>
+                            <input type="text" id="proxy-domain" placeholder="vikunja.example.com" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-sm">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Generated output -->
+            <div id="output-blocks" class="max-w-3xl mx-auto space-y-6">
+                <!-- JS will render code blocks here -->
+            </div>
+
+            <!-- What's next -->
+            <div class="max-w-3xl mx-auto mt-16 mb-16 border-t border-gray-200 dark:border-gray-700 pt-8">
+                <h3 class="text-xl font-display mb-4">What's next?</h3>
+                <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+                    <li><a href="/docs/config-options" class="text-primary hover:underline">Configuration options</a> — Fine-tune your Vikunja instance</li>
+                    <li><a href="/docs/openid" class="text-primary hover:underline">OpenID Connect</a> — Set up SSO authentication</li>
+                    <li><a href="/docs/ldap" class="text-primary hover:underline">LDAP</a> — Connect to your directory service</li>
+                    <li><a href="/docs/what-to-backup" class="text-primary hover:underline">Backups</a> — Keep your data safe</li>
+                    <li><a href="/docs/installing" class="text-primary hover:underline">Full installation docs</a> — All the details</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <script src="../scripts/install-wizard.js"></script>
+</Layout>
+
+<style>
+    @reference '../styles/global.css';
+
+    .wizard-card {
+        @apply flex flex-col items-center justify-center gap-1 p-6 rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 cursor-pointer transition hover:border-primary hover:shadow-sm;
+    }
+
+    .wizard-card:focus {
+        @apply outline-none ring-2 ring-primary ring-offset-2;
+    }
+
+    .wizard-back {
+        @apply text-sm text-gray-500 dark:text-gray-400 hover:text-primary transition;
+    }
+
+    .accordion-toggle[aria-expanded="true"] .accordion-chevron {
+        transform: rotate(180deg);
+    }
+</style>
