@@ -1,0 +1,57 @@
+---
+title: Labels
+slug: labels
+description: >-
+  Learn how to use labels in Vikunja to categorize and organize your tasks
+  across projects with colors, descriptions, and filtered views.
+---
+
+Labels are tags you can attach to tasks for extra categorization or metadata. They work across all your projects, so the same label can be used on tasks in different projects.
+
+## Label overview
+
+You can access all your labels from the **Labels** entry in the left sidebar menu. This overview page shows every label you have created, along with its color and description.
+
+From the overview, you can:
+
+- **Create** new labels
+- **Edit** existing labels (change title, color, or description)
+- **Delete** labels you no longer need
+- **Browse by label** by clicking on a label to see all tasks that have it assigned, regardless of which project those tasks belong to
+
+## Creating labels
+
+There are two ways to create a label:
+
+1. **From the label overview page:** Click the button to create a new label and fill in its properties.
+2. **Inline on a task:** When adding a label to a task, you can type a new label name and Vikunja will create it for you if it does not already exist.
+
+## Label properties
+
+Each label has the following properties:
+
+| Property      | Description                                              |
+|---------------|----------------------------------------------------------|
+| **Title**     | The name of the label                                    |
+| **Color**     | A color to visually distinguish the label                |
+| **Description** | An optional description for additional context         |
+
+## Using labels with Quick Add Magic
+
+You can add labels to a task while creating it by using the `*` prefix in the task title. For example, typing:
+
+```
+Buy milk *shopping
+```
+
+will create the task "Buy milk" and attach the label "shopping" to it. If the label does not exist yet, Vikunja will create it automatically.
+
+See [Quick Add Magic](/docs/quick-add-magic) for more details on this and other shortcuts.
+
+## Using labels in filters
+
+Labels can be used in [Filters](/docs/filters) to create saved filtered views of your tasks. This lets you quickly see all tasks matching a specific label or combination of labels across your projects.
+
+{% callout type="info" %}
+Since labels are not tied to any specific project, they are a great way to create cross-project categories like "urgent", "waiting", or "review".
+{% /callout %}
