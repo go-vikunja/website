@@ -367,7 +367,7 @@ sudo apt install -y mariadb-server
 sudo mysql -e "CREATE DATABASE vikunja; CREATE USER 'vikunja'@'localhost' IDENTIFIED BY 'changeme'; GRANT ALL PRIVILEGES ON vikunja.* TO 'vikunja'@'localhost'; FLUSH PRIVILEGES;"`
     }
 
-    if (s.proxy !== 'none') {
+    if (s.proxy !== 'none' && s.proxy !== 'traefik') {
       const proxyPkg = { nginx: 'nginx', apache: 'apache2', caddy: 'caddy' }
       cmds += `
 
@@ -417,7 +417,7 @@ sudo systemctl enable --now mariadb
 sudo mysql -e "CREATE DATABASE vikunja; CREATE USER 'vikunja'@'localhost' IDENTIFIED BY 'changeme'; GRANT ALL PRIVILEGES ON vikunja.* TO 'vikunja'@'localhost'; FLUSH PRIVILEGES;"`
     }
 
-    if (s.proxy !== 'none') {
+    if (s.proxy !== 'none' && s.proxy !== 'traefik') {
       const proxyPkg = { nginx: 'nginx', apache: 'httpd', caddy: 'caddy' }
       cmds += `
 
@@ -649,6 +649,19 @@ mailer:
         content: `${domain} {
     reverse_proxy 127.0.0.1:3456
 }`,
+      }
+    }
+
+    if (s.proxy === 'traefik') {
+      return {
+        filename: 'docker-compose.yml (Traefik labels)',
+        content: `# Add these labels to your Vikunja service:
+labels:
+  - "traefik.enable=true"
+  - "traefik.http.routers.vikunja.rule=Host(\`${domain}\`)"
+  - "traefik.http.routers.vikunja.entrypoints=websecure"
+  - "traefik.http.routers.vikunja.tls.certresolver=letsencrypt"
+  - "traefik.http.services.vikunja.loadbalancer.server.port=3456"`,
       }
     }
 
