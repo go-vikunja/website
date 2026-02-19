@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         state.method = 'native'
         showStep(2)
         updateSummary()
+        syncFormWithState()
         renderOutput()
       }
     })
@@ -56,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       showStep(2)
       updateSummary()
+      syncFormWithState()
       renderOutput()
     })
   })
@@ -99,6 +101,27 @@ document.addEventListener('DOMContentLoaded', () => {
       content.classList.toggle('hidden')
     })
   })
+
+  // Sync HTML form controls with JS state (needed when navigating back then forward)
+  function syncFormWithState() {
+    const dbRadio = document.querySelector(`input[name="db"][value="${state.db}"]`)
+    if (dbRadio) dbRadio.checked = true
+
+    const proxyRadio = document.querySelector(`input[name="proxy"][value="${state.proxy}"]`)
+    if (proxyRadio) proxyRadio.checked = true
+
+    document.getElementById('proxy-domain-field').classList.toggle('hidden', state.proxy === 'none')
+    document.getElementById('proxy-domain').value = state.proxyDomain
+
+    const archRadio = document.querySelector(`input[name="arch"][value="${state.arch}"]`)
+    if (archRadio) archRadio.checked = true
+
+    document.getElementById('smtp-host').value = state.smtp.host
+    document.getElementById('smtp-port').value = state.smtp.port
+    document.getElementById('smtp-user').value = state.smtp.user
+    document.getElementById('smtp-password').value = state.smtp.password
+    document.getElementById('smtp-from').value = state.smtp.from
+  }
 
   // Customization change listeners — re-render output on any change
   document.querySelectorAll('input[name="db"]').forEach(r => {
