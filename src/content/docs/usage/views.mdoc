@@ -1,0 +1,104 @@
+---
+title: Views
+slug: views
+description: >-
+  Learn how to use and configure views in Vikunja. Understand the different view
+  types — List, Table, Gantt, and Kanban — and how to create custom views with
+  filters.
+---
+
+Views are per-project display configurations that determine how tasks are shown within a project. Every project comes with four default views: **List**, **Gantt**, **Table**, and **Kanban**. You can switch between them using the tabs at the top of a project.
+
+You can configure which view is the default when opening a project in your user settings.
+
+## Managing views
+
+To manage views for a project, click the three-dot menu next to the project title, then select **Views**.
+
+From here you can:
+
+- **Create a new view:** Give it a title, choose the type (list, table, kanban), and optionally set a filter.
+- **Edit a view:** Change its title, type, or filter.
+- **Delete a view:** Remove views you no longer need.
+- **Reorder views:** Drag and drop using the handle on the right side of each view in the list.
+
+Each view can have its own filter applied. Only tasks matching the filter will appear in that view. See [Filters](/docs/filters) for the full filter syntax.
+
+## List view
+
+The list view shows all tasks in a flat list. It is the simplest way to see everything in a project at a glance.
+
+- **Drag and drop** tasks to reorder them within the project.
+- **Move tasks to another project** by dragging them onto a project in the sidebar.
+- **Hover** over a task to see a small popup with summary information such as the title, description, creator, and labels.
+- **Quick-add input** at the top lets you create new tasks. It supports [Quick Add Magic](/docs/quick-add-magic) for setting attributes as you type.
+
+{% callout type="info" %}
+By default, done tasks are hidden in the list view. This is controlled by a default filter that is applied automatically. You can change this by editing the view's filter.
+{% /callout %}
+
+## Table view
+
+The table view displays tasks in a spreadsheet-like layout, giving you a structured overview of your project.
+
+- **Configurable columns:** Choose which task attributes to show or hide as columns. This makes it easy to focus on exactly the information you need.
+- **Filtering:** Use the filter option in the top right to narrow down the displayed tasks.
+
+The table view works similarly to the list view but is especially useful when you need to see many task attributes side by side.
+
+## Gantt view
+
+The Gantt view displays tasks on a timeline based on their start and end dates, making it ideal for planning and tracking schedules.
+
+- **Set the date range** using the controls at the top left to zoom in or out on a specific time period.
+- **Show tasks without dates:** Use the option to include tasks that have no start or end date set.
+- **Adjust dates visually:** Hover over a task on the timeline, then grab and drag it to change its start and end dates.
+- **Open task details:** Double-click a task on the timeline to open its full detail view.
+- **Create new tasks** from the input at the bottom left of the Gantt view.
+
+{% callout type="info" %}
+Filtering is not available in the Gantt view.
+{% /callout %}
+
+## Kanban view
+
+The Kanban view organizes tasks into buckets (columns), which is great for workflow-based task management. By default, every project starts with three buckets: **To Do**, **Doing**, and **Done**.
+
+### Working with tasks
+
+- **Drag and drop** tasks between buckets to change their status.
+- **Click a card** to open the full task detail view.
+- Task cards show useful details at a glance: color, due date, comment count, labels, and other attribute icons.
+
+### Managing buckets
+
+- **Create a new bucket** by entering a title in the input field at the far right of the board.
+- **Collapse a bucket** to save screen space when you do not need to see its contents.
+- **Set a WIP (work-in-progress) limit** on a bucket to cap how many tasks it can hold. This aligns with Kanban methodology to avoid overloading a stage.
+- **Mark a bucket as "done bucket":** Any task dragged into this bucket will automatically be marked as done.
+- **Mark a bucket as "default bucket":** New tasks created from other views (such as list or table) will be placed in this bucket.
+
+### Cover images
+
+You can set a cover image on a task card to make it visually stand out on the Kanban board. To do this:
+
+1. Upload an image as an attachment on the task.
+2. Click the icon on the attachment to set it as the cover image.
+
+The image will then appear on the Kanban card.
+
+### Filter-based buckets
+
+When configuring a Kanban view, you have two options for how buckets work:
+
+- **Manual bucket management (default):** You freely drag tasks between buckets and manage them yourself.
+- **Filter-based buckets:** Each bucket is built dynamically from a filter query. Tasks are automatically sorted into the appropriate bucket based on the filter. In this mode, tasks cannot be dragged between buckets.
+
+## Saved filters vs. views
+
+Vikunja has two related but distinct concepts for organizing how you see tasks:
+
+- **Views** are per-project display configurations. They determine how tasks in a specific project are shown and can be shared with everyone who has access to the project.
+- **Saved Filters** are personal, cross-project filter queries. They appear in your sidebar and let you create custom filtered lists across all your projects. Saved Filters cannot be shared with other users.
+
+To create a saved filter, go to the project overview page and click **New saved filter**.
