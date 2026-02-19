@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let compose = `services:
   vikunja:
-    image: vikunja/vikunja:${s.version}
+    image: vikunja/vikunja:${s.version.replace(/^v/, '')}
     environment:
       VIKUNJA_SERVICE_PUBLICURL: ${publicUrl}
       VIKUNJA_SERVICE_JWTSECRET: ${jwtSecret}`
