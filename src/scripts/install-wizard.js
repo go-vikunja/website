@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let compose = `services:
   vikunja:
-    image: vikunja/vikunja
+    image: vikunja/vikunja:${s.version}
     environment:
       VIKUNJA_SERVICE_PUBLICURL: ${publicUrl}
       VIKUNJA_SERVICE_JWTSECRET: <change-this-to-a-random-secret>`
