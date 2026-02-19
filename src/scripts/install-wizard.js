@@ -352,9 +352,9 @@ mailer:
   function generateDebian(s) {
     const blocks = []
 
-    let cmds = `# Download and install Vikunja
-wget https://dl.vikunja.io/vikunja/vikunja-latest-amd64.deb
-sudo dpkg -i vikunja-latest-amd64.deb`
+    let cmds = `# Download the latest .deb from https://dl.vikunja.io/vikunja/
+wget https://dl.vikunja.io/vikunja/<version>/vikunja-<version>-x86_64.deb
+sudo dpkg -i vikunja-<version>-x86_64.deb`
 
     if (s.db === 'postgres') {
       cmds += `
@@ -399,9 +399,9 @@ sudo systemctl enable --now vikunja`
   function generateFedora(s) {
     const blocks = []
 
-    let cmds = `# Download and install Vikunja
-wget https://dl.vikunja.io/vikunja/vikunja-latest-x86_64.rpm
-sudo rpm -i vikunja-latest-x86_64.rpm`
+    let cmds = `# Download the latest .rpm from https://dl.vikunja.io/vikunja/
+wget https://dl.vikunja.io/vikunja/<version>/vikunja-<version>-x86_64.rpm
+sudo rpm -i vikunja-<version>-x86_64.rpm`
 
     if (s.db === 'postgres') {
       cmds += `
@@ -449,10 +449,10 @@ sudo systemctl enable --now vikunja`
   function generateBinary(s) {
     const blocks = []
 
-    let cmds = `# Download and install Vikunja
-wget https://dl.vikunja.io/vikunja/vikunja-latest-linux-amd64-full.zip
+    let cmds = `# Download the latest .zip from https://dl.vikunja.io/vikunja/
+wget https://dl.vikunja.io/vikunja/<version>/vikunja-<version>-linux-amd64-full.zip
 mkdir -p /opt/vikunja
-unzip vikunja-latest-linux-amd64-full.zip -d /opt/vikunja
+unzip vikunja-<version>-linux-amd64-full.zip -d /opt/vikunja
 chmod +x /opt/vikunja/vikunja
 sudo ln -s /opt/vikunja/vikunja /usr/bin/vikunja`
 
