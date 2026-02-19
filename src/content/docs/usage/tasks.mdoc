@@ -1,0 +1,113 @@
+---
+title: Tasks
+slug: tasks
+description: >-
+  Learn how to work with tasks in Vikunja. Covers the task detail view,
+  descriptions, labels, priorities, assignees, comments, checklists, and more.
+---
+
+Tasks are the core building blocks in Vikunja. Every to-do item, action item, or piece of work lives as a task inside a project.
+
+## Opening a task
+
+Click on any task from the list, Kanban, Gantt, or table view to open the **task detail view**. This is where you can see and edit all of a task's properties.
+
+## Title
+
+The task title is displayed at the top of the detail view. Click on it to edit it inline.
+
+## Description
+
+Below the title is a rich text editor for the task description. If the description is empty, the editor opens in edit mode automatically so you can start typing right away.
+
+The editor supports:
+
+- Headings
+- **Bold**, *italic*, underline, and ~~strikethrough~~ text
+- Inline code and code blocks
+- File uploads — you can upload attachments directly in the editor by dragging a file into it or using the upload button
+
+## Right sidebar
+
+The right sidebar of the task detail view contains a set of buttons and fields for managing the task's properties. The sections below walk through each one.
+
+### Marking a task as done
+
+Click the **Done** button in the right sidebar to mark the task as completed. Click it again to reopen the task.
+
+### Subscribing to a task
+
+Click **Subscribe** in the right sidebar to subscribe to the task. When subscribed, you will receive notifications about changes to the task, including new comments, edits, and triggered reminders.
+
+### Favoriting a task
+
+Click **Favorite** in the right sidebar to mark the task as a favorite. Favorited tasks appear in the **Favorites** project in the left sidebar menu, giving you quick access to important tasks across all your projects.
+
+### Labels
+
+Add labels to a task to tag it with extra markers. Labels are useful for categorizing and filtering tasks later.
+
+Click the labels field in the right sidebar to search for and add existing labels, or create new ones on the fly.
+
+See [Labels](/docs/labels) for more details on creating and managing labels.
+
+### Priority
+
+Set a priority from **1** (low) to **5** (high). The higher the number, the more important the task. Priority can be used for sorting and filtering.
+
+### Progress
+
+Set a percentage between **0** and **100** to indicate how far along the task is. This is a manual value you can update as work progresses.
+
+### Color
+
+Assign a color to the task. The color is primarily visible in the **Kanban** and **Gantt** views, making it easy to visually distinguish tasks at a glance.
+
+### Assignees
+
+Assign one or more users who are responsible for completing the task.
+
+{% callout type="info" %}
+Only users who already have access to the project can be assigned to a task.
+{% /callout %}
+
+### Attachments
+
+Upload files to the task using the attachments section in the right sidebar. You can also upload files directly inside the description editor (see above).
+
+### Relations
+
+Create relationships between tasks. For example, you can mark a task as a subtask, parent task, blocking task, or related task.
+
+Click **Add a relation** in the right sidebar, then search for the task you want to link and choose the relation type.
+
+See [Task Relations](/docs/task-relations) for the full list of available relation types and how to use them.
+
+## Moving a task
+
+You can move a task to a different project in two ways:
+
+- **From the detail view:** Use the project field in the right sidebar to select a different project.
+- **From the list view:** Drag and drop the task from the list into another project in the left sidebar.
+
+## Comments
+
+Comments appear below the task description. They use the same rich text editor as the description, so you can format text, add code blocks, and upload files.
+
+You can **mention other users** by typing `@` followed by their username. Mentioned users will receive a notification.
+
+{% callout type="info" %}
+Comment sort order can be toggled between oldest-first and newest-first. The sort toggle appears once the task has at least one comment.
+{% /callout %}
+
+## Checklists
+
+To create a checklist, use the checkbox list feature in the description editor. Each checkbox item can be checked off independently.
+
+{% callout type="info" %}
+The progress of checklist items is shown on the task card in the list view, giving you a quick overview of how many items are completed without opening the task.
+{% /callout %}
+
+## Hover preview
+
+In the list view, hovering over a task shows a small popup preview. This preview includes the task title, description, creator, labels, and other key details, so you can get a quick summary without opening the full detail view.
