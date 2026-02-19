@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const jwtSecret = Array.from(crypto.getRandomValues(new Uint8Array(32)))
+    .map(b => b.toString(16).padStart(2, '0')).join('')
+
   const state = {
     platform: null, // 'linux' | 'freebsd' | 'kubernetes'
     env: null,      // 'debian' | 'fedora' | 'linux-other' | 'freebsd' | 'kubernetes'
@@ -183,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     image: vikunja/vikunja:${s.version}
     environment:
       VIKUNJA_SERVICE_PUBLICURL: ${publicUrl}
-      VIKUNJA_SERVICE_JWTSECRET: <change-this-to-a-random-secret>`
+      VIKUNJA_SERVICE_JWTSECRET: ${jwtSecret}`
 
     if (s.db === 'postgres') {
       compose += `
@@ -311,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let config = `service:
   publicurl: "${publicUrl}"
-  jwtsecret: "<change-this-to-a-random-secret>"`
+  jwtsecret: "${jwtSecret}"`
 
     if (s.db === 'postgres') {
       config += `
