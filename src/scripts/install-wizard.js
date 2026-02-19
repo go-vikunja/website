@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const state = {
-    env: null,      // 'debian' | 'fedora' | 'linux-other' | 'freebsd' | 'docker' | 'kubernetes'
+    platform: null, // 'linux' | 'freebsd' | 'kubernetes'
+    env: null,      // 'debian' | 'fedora' | 'linux-other' | 'freebsd' | 'kubernetes'
     method: null,   // 'docker' | 'native'
     db: 'sqlite',
     smtp: { host: '', port: '', user: '', password: '', from: '' },
@@ -13,12 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('step-2'),
     document.getElementById('step-3'),
   ]
-  // Environments that skip step 2
-  const singleMethodEnvs = {
-    freebsd: 'native',
-    docker: 'docker',
-    kubernetes: 'native',
-  }
 
   function showStep(n) {
     steps.forEach((s, i) => {
@@ -27,26 +22,33 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  // Step 1: environment cards
-  document.querySelectorAll('[data-env]').forEach(btn => {
+  // Step 1: platform cards
+  document.querySelectorAll('[data-platform]').forEach(btn => {
     btn.addEventListener('click', () => {
-      state.env = btn.dataset.env
-      if (singleMethodEnvs[state.env]) {
-        state.method = singleMethodEnvs[state.env]
-        showStep(2)
-        renderOutput()
-      } else {
-        updateNativeLabel()
+      state.platform = btn.dataset.platform
+      if (state.platform === 'linux') {
         showStep(1)
+      } else {
+        state.env = state.platform
+        state.method = 'native'
+        showStep(2)
+        updateSummary()
+        renderOutput()
       }
-      updateSummary()
     })
   })
 
-  // Step 2: method cards
-  document.querySelectorAll('[data-method]').forEach(btn => {
+  // Step 2: Linux install method cards
+  document.querySelectorAll('[data-linux-method]').forEach(btn => {
     btn.addEventListener('click', () => {
-      state.method = btn.dataset.method
+      const choice = btn.dataset.linuxMethod
+      if (choice === 'docker') {
+        state.env = 'docker'
+        state.method = 'docker'
+      } else {
+        state.env = choice
+        state.method = 'native'
+      }
       showStep(2)
       updateSummary()
       renderOutput()
@@ -56,23 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Back buttons
   document.getElementById('back-to-1').addEventListener('click', () => showStep(0))
   document.getElementById('back-to-prev').addEventListener('click', () => {
-    if (singleMethodEnvs[state.env]) {
-      showStep(0)
-    } else {
+    if (state.platform === 'linux') {
       showStep(1)
+    } else {
+      showStep(0)
     }
   })
-
-  // Update native method label based on env
-  function updateNativeLabel() {
-    const label = document.getElementById('native-method-label')
-    const labels = {
-      debian: 'Debian package (.deb)',
-      fedora: 'RPM package',
-      'linux-other': 'Binary download',
-    }
-    label.textContent = labels[state.env] || 'Package manager'
-  }
 
   // Update the summary text on step 3
   function updateSummary() {
