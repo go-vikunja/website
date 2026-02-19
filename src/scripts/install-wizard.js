@@ -3,11 +3,33 @@ document.addEventListener('DOMContentLoaded', () => {
     platform: null, // 'linux' | 'freebsd' | 'kubernetes'
     env: null,      // 'debian' | 'fedora' | 'linux-other' | 'freebsd' | 'kubernetes'
     method: null,   // 'docker' | 'native'
+    version: '<version>',
     db: 'sqlite',
     smtp: { host: '', port: '', user: '', password: '', from: '' },
     proxy: 'none',
     proxyDomain: '',
   }
+
+  // Fetch latest version from download server
+  fetch('https://dl.vikunja.io/vikunja/', {
+    headers: { 'Accept': 'application/json' },
+  })
+    .then(r => r.json())
+    .then(data => {
+      const stable = data.folders
+        .map(f => f.name)
+        .filter(n => /^v?\d+\.\d+\.\d+$/.test(n))
+        .sort((a, b) => {
+          const pa = a.replace(/^v/, '').split('.').map(Number)
+          const pb = b.replace(/^v/, '').split('.').map(Number)
+          return pa[0] - pb[0] || pa[1] - pb[1] || pa[2] - pb[2]
+        })
+      if (stable.length) {
+        state.version = stable[stable.length - 1]
+        renderOutput()
+      }
+    })
+    .catch(() => {})
 
   const steps = [
     document.getElementById('step-1'),
@@ -352,9 +374,10 @@ mailer:
   function generateDebian(s) {
     const blocks = []
 
-    let cmds = `# Download the latest .deb from https://dl.vikunja.io/vikunja/
-wget https://dl.vikunja.io/vikunja/<version>/vikunja-<version>-x86_64.deb
-sudo dpkg -i vikunja-<version>-x86_64.deb`
+    const v = s.version
+    let cmds = `# Download and install Vikunja
+wget https://dl.vikunja.io/vikunja/${v}/vikunja-${v}-x86_64.deb
+sudo dpkg -i vikunja-${v}-x86_64.deb`
 
     if (s.db === 'postgres') {
       cmds += `
@@ -399,9 +422,10 @@ sudo systemctl enable --now vikunja`
   function generateFedora(s) {
     const blocks = []
 
-    let cmds = `# Download the latest .rpm from https://dl.vikunja.io/vikunja/
-wget https://dl.vikunja.io/vikunja/<version>/vikunja-<version>-x86_64.rpm
-sudo rpm -i vikunja-<version>-x86_64.rpm`
+    const v = s.version
+    let cmds = `# Download and install Vikunja
+wget https://dl.vikunja.io/vikunja/${v}/vikunja-${v}-x86_64.rpm
+sudo rpm -i vikunja-${v}-x86_64.rpm`
 
     if (s.db === 'postgres') {
       cmds += `
@@ -449,10 +473,11 @@ sudo systemctl enable --now vikunja`
   function generateBinary(s) {
     const blocks = []
 
-    let cmds = `# Download the latest .zip from https://dl.vikunja.io/vikunja/
-wget https://dl.vikunja.io/vikunja/<version>/vikunja-<version>-linux-amd64-full.zip
+    const v = s.version
+    let cmds = `# Download and install Vikunja
+wget https://dl.vikunja.io/vikunja/${v}/vikunja-${v}-linux-amd64-full.zip
 mkdir -p /opt/vikunja
-unzip vikunja-<version>-linux-amd64-full.zip -d /opt/vikunja
+unzip vikunja-${v}-linux-amd64-full.zip -d /opt/vikunja
 chmod +x /opt/vikunja/vikunja
 sudo ln -s /opt/vikunja/vikunja /usr/bin/vikunja`
 
