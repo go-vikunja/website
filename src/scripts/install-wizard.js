@@ -138,8 +138,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const blocks = generateOutput(state)
     const container = document.getElementById('output-blocks')
-    container.innerHTML = blocks.map(block => `
-      <div>
+    container.innerHTML = blocks.map(block => {
+      if (block.type === 'link') {
+        return `<div>
+          <a href="${block.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-sm font-medium hover:border-primary hover:text-primary transition">
+            ${block.label} &rarr;
+          </a>
+        </div>`
+      }
+      return `<div>
         <div class="flex items-center justify-between mb-2">
           <span class="text-sm font-mono text-gray-500 dark:text-gray-400">${block.filename}</span>
           <button class="copy-btn text-xs text-gray-500 hover:text-primary transition px-2 py-1 rounded border border-gray-200 dark:border-gray-700" data-copy>
@@ -147,8 +154,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </button>
         </div>
         <pre class="bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto text-sm leading-relaxed"><code>${escapeHtml(block.content)}</code></pre>
-      </div>
-    `).join('')
+      </div>`
+    }).join('')
 
     // Bind copy buttons
     container.querySelectorAll('[data-copy]').forEach(btn => {
@@ -628,8 +635,7 @@ mailer:
       blocks.push({ filename: 'values.yaml', content: values })
     }
 
-    // Link to full Helm docs
-    blocks.push({ filename: 'More info', content: '# See the full Helm chart documentation:\n# https://github.com/go-vikunja/helm-chart' })
+    blocks.push({ type: 'link', label: 'Helm chart documentation', url: 'https://github.com/go-vikunja/helm-chart' })
 
     return blocks
   }
