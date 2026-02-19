@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     env: null,      // 'debian' | 'fedora' | 'linux-other' | 'freebsd' | 'kubernetes'
     method: null,   // 'docker' | 'native'
     version: document.querySelector('main').dataset.version || '<version>',
+    arch: 'amd64',
     db: 'sqlite',
     smtp: { host: '', port: '', user: '', password: '', from: '' },
     proxy: 'none',
@@ -117,6 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
     renderOutput()
   })
 
+  // Architecture
+  document.querySelectorAll('input[name="arch"]').forEach(r => {
+    r.addEventListener('change', () => { state.arch = r.value; renderOutput() })
+  })
+
   // SMTP fields
   ;['smtp-host', 'smtp-port', 'smtp-user', 'smtp-password', 'smtp-from'].forEach(id => {
     document.getElementById(id).addEventListener('input', (e) => {
@@ -127,6 +133,9 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   function renderOutput() {
+    // Show arch option only for binary installs
+    document.getElementById('arch-option').classList.toggle('hidden', state.env !== 'linux-other')
+
     const blocks = generateOutput(state)
     const container = document.getElementById('output-blocks')
     container.innerHTML = blocks.map(block => `
@@ -462,10 +471,11 @@ sudo systemctl enable --now vikunja`
     const blocks = []
 
     const v = s.version
+    const arch = s.arch
     let cmds = `# Download and install Vikunja
-wget https://dl.vikunja.io/vikunja/${v}/vikunja-${v}-linux-amd64-full.zip
+wget https://dl.vikunja.io/vikunja/${v}/vikunja-${v}-linux-${arch}-full.zip
 mkdir -p /opt/vikunja
-unzip vikunja-${v}-linux-amd64-full.zip -d /opt/vikunja
+unzip vikunja-${v}-linux-${arch}-full.zip -d /opt/vikunja
 chmod +x /opt/vikunja/vikunja
 sudo ln -s /opt/vikunja/vikunja /usr/bin/vikunja`
 
