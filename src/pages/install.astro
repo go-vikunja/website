@@ -47,7 +47,6 @@ try {
 
         <!-- Step 2: Pick Linux install method -->
         <section id="step-2" class="wizard-step hidden">
-            <button id="back-to-1" class="wizard-back mb-8">&larr; Back</button>
             <h2 class="text-2xl font-display text-center mb-8">How do you want to install Vikunja?</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
                 <button data-linux-method="docker" class="wizard-card">
@@ -67,11 +66,13 @@ try {
                     <span class="text-sm text-gray-500 dark:text-gray-400">Binary download</span>
                 </button>
             </div>
+            <div class="text-center mt-8">
+                <button id="back-to-1" class="wizard-back">&larr; Back</button>
+            </div>
         </section>
 
         <!-- Step 3: Your setup -->
         <section id="step-3" class="wizard-step hidden">
-            <button id="back-to-prev" class="wizard-back mb-8">&larr; Back</button>
             <h2 class="text-2xl font-display text-center mb-2">Your setup</h2>
             <p class="text-center text-gray-600 dark:text-gray-400 mb-8" id="setup-summary"></p>
 
@@ -152,6 +153,10 @@ try {
             <!-- Generated output -->
             <div id="output-blocks" class="max-w-3xl mx-auto space-y-6">
                 <!-- JS will render code blocks here -->
+            </div>
+
+            <div class="text-center mt-8">
+                <button id="back-to-prev" class="wizard-back">&larr; Back</button>
             </div>
 
             <!-- What's next -->
