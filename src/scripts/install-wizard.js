@@ -138,39 +138,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const blocks = generateOutput(state)
     const container = document.getElementById('output-blocks')
-    container.innerHTML = blocks.map(block => {
+    container.replaceChildren()
+
+    for (const block of blocks) {
+      const wrapper = document.createElement('div')
+
       if (block.type === 'link') {
-        return `<div>
-          <a href="${block.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-sm font-medium hover:border-primary hover:text-primary transition">
-            ${block.label} &rarr;
-          </a>
-        </div>`
-      }
-      return `<div>
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-sm font-mono text-gray-500 dark:text-gray-400">${block.filename}</span>
-          <button class="copy-btn text-xs text-gray-500 hover:text-primary transition px-2 py-1 rounded border border-gray-200 dark:border-gray-700" data-copy>
-            Copy
-          </button>
-        </div>
-        <pre class="bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto text-sm leading-relaxed"><code>${escapeHtml(block.content)}</code></pre>
-      </div>`
-    }).join('')
+        const a = document.createElement('a')
+        a.setAttribute('href', block.url)
+        a.setAttribute('target', '_blank')
+        a.setAttribute('rel', 'noopener noreferrer')
+        a.className = 'inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-sm font-medium hover:border-primary hover:text-primary transition'
+        a.textContent = block.label + ' \u2192'
+        wrapper.appendChild(a)
+      } else {
+        const header = document.createElement('div')
+        header.className = 'flex items-center justify-between mb-2'
 
-    // Bind copy buttons
-    container.querySelectorAll('[data-copy]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const code = btn.closest('div').nextElementSibling.querySelector('code').textContent
-        navigator.clipboard.writeText(code).then(() => {
-          btn.textContent = 'Copied!'
-          setTimeout(() => { btn.textContent = 'Copy' }, 2000)
+        const filename = document.createElement('span')
+        filename.className = 'text-sm font-mono text-gray-500 dark:text-gray-400'
+        filename.textContent = block.filename
+        header.appendChild(filename)
+
+        const copyBtn = document.createElement('button')
+        copyBtn.className = 'copy-btn text-xs text-gray-500 hover:text-primary transition px-2 py-1 rounded border border-gray-200 dark:border-gray-700'
+        copyBtn.textContent = 'Copy'
+        header.appendChild(copyBtn)
+
+        const pre = document.createElement('pre')
+        pre.className = 'bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto text-sm leading-relaxed'
+        const code = document.createElement('code')
+        code.textContent = block.content
+        pre.appendChild(code)
+
+        wrapper.appendChild(header)
+        wrapper.appendChild(pre)
+
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(code.textContent).then(() => {
+            copyBtn.textContent = 'Copied!'
+            setTimeout(() => { copyBtn.textContent = 'Copy' }, 2000)
+          })
         })
-      })
-    })
-  }
+      }
 
-  function escapeHtml(str) {
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      container.appendChild(wrapper)
+    }
   }
 
   // --- Template generation functions ---
