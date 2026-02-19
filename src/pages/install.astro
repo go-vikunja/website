@@ -1,8 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro'
+
+let latestVersion = '<version>'
+try {
+    const res = await fetch('https://dl.vikunja.io/vikunja/', {
+        headers: { 'Accept': 'application/json' },
+    })
+    const data = await res.json()
+    const stable = data.folders
+        .map((f: { name: string }) => f.name)
+        .filter((n: string) => /^v?\d+\.\d+\.\d+$/.test(n))
+        .sort((a: string, b: string) => {
+            const pa = a.replace(/^v/, '').split('.').map(Number)
+            const pb = b.replace(/^v/, '').split('.').map(Number)
+            return pa[0] - pb[0] || pa[1] - pb[1] || pa[2] - pb[2]
+        })
+    if (stable.length) {
+        latestVersion = stable[stable.length - 1]
+    }
+} catch {}
 ---
 <Layout title="Install Vikunja" description="Get Vikunja up and running in minutes with this interactive install wizard.">
-    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-6">
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-6" data-version={latestVersion}>
         <div class="pt-24 pb-8 text-center">
             <h1 class="text-4xl font-display">Install Vikunja</h1>
             <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Get up and running in minutes.</p>
