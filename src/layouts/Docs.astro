@@ -49,6 +49,12 @@ interface SectionItem {
 
 type DocumentationArray = [string, SectionItem[]][];
 
+const groupLabels: { [key: string]: string } = {
+	'setup': 'Setup',
+	'usage': 'User Guide',
+	'development': 'Development',
+}
+
 async function getSidebarNavigation(): Promise<DocumentationArray> {
 	const docs = await getCollection('docs')
 	const entries: { [key: string]: SectionItem[] } = {}
@@ -105,7 +111,7 @@ const sidebarEntries = await getSidebarNavigation()
             <nav class="pb-4">
 				{sidebarEntries.map(([key, entries]) => (
                         <p class="pb-2 pt-4 pl-2 font-display uppercase font-bold text-gray-500 dark:text-gray-400">
-							{key}
+							{groupLabels[key] || key}
                         </p>
                         <ul>
 							{entries.map(item => (
