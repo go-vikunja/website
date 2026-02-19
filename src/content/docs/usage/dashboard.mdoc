@@ -1,0 +1,68 @@
+---
+title: Dashboard / Home Screen
+slug: dashboard
+description: >-
+  Learn about Vikunja's dashboard — the home screen you see after logging in,
+  including upcoming tasks, the quick-add bar, and how to customize your view.
+---
+
+After logging in, Vikunja takes you to the dashboard (home screen). This is your central hub for staying on top of tasks across all your projects.
+
+## Overview
+
+At the top of the dashboard you will see a greeting, followed by a quick-add input bar and a list of your upcoming tasks.
+
+### Quick-add bar
+
+The input field at the top lets you create a new task without navigating to a specific project first. You can use [Quick Add Magic](/docs/quick-add-magic) syntax here to set due dates, labels, priorities, and more directly from the input.
+
+Tasks created from the dashboard are added to your **default project** (the inbox project). See [Changing the default project](#changing-the-default-project) below to learn how to change it.
+
+### Upcoming tasks
+
+Below the quick-add bar you will find all tasks that have a due date, collected from every project you have access to. They are sorted by due date:
+
+1. **Overdue tasks** appear first.
+2. Remaining tasks are sorted with the closest due date on top.
+
+This gives you a quick view of what needs attention right now and what is coming up next.
+
+## Default project (inbox)
+
+Every Vikunja account has a default project, sometimes called the inbox project. When you create a task from the dashboard (or anywhere else that does not specify a project), the task lands in this project.
+
+### Changing the default project
+
+To change which project is used as the default:
+
+1. Click your username or avatar in the top-right corner.
+2. Select **Settings**.
+3. Look for the **Default Project** option and choose a different project.
+
+{% callout type="info" %}
+On Vikunja Cloud, some account settings may be read-only if your account is managed through an external authentication provider.
+{% /callout %}
+
+## Customizing the home screen filter
+
+By default, the dashboard shows all upcoming tasks from all projects. If you want to narrow this down, you can set a custom filter for the home screen:
+
+1. Open **Settings** from the user menu in the top-right corner.
+2. Find the option to set a filter for the home screen.
+3. Enter a filter query using the [filter syntax](/docs/filters) to show only the tasks you care about.
+
+This is useful if you work across many projects but only want to see certain priorities or labels on your dashboard.
+
+## Upcoming view (sidebar)
+
+In addition to the dashboard, the left sidebar contains an **Upcoming** entry. This dedicated view gives you more control over the date range:
+
+- Select a custom date range to see all tasks due within that window.
+- Toggle whether to **include tasks without a due date**.
+- Toggle whether to **show overdue tasks**.
+
+Use this view when you want to plan ahead for a specific time period, such as the current week or the next two weeks.
+
+## Recently viewed projects
+
+Once you have opened a few projects, the dashboard will also show a **recently viewed projects** section. This lets you quickly jump back to projects you have been working in without searching for them in the sidebar.
