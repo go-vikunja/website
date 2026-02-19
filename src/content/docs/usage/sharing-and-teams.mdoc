@@ -1,0 +1,84 @@
+---
+title: Sharing & Teams
+slug: sharing-and-teams
+description: >-
+  Learn how to share projects with users, teams, and link shares in Vikunja.
+  Understand permission levels and how to create and manage teams.
+---
+
+Vikunja makes it easy to collaborate on projects by sharing them with other users, teams, or even via public links. This page explains all the ways you can share a project and how to work with teams.
+
+## Sharing a project
+
+To share a project, click the three-dot menu next to the project title and select **Share**. This opens the sharing settings where you can choose from three sharing methods:
+
+- **With users** -- share directly with individual Vikunja users
+- **With teams** -- share with an entire team at once
+- **Via link shares** -- generate a link that anyone can use to access the project
+
+## Sharing with users
+
+In the sharing settings, you can search for users by their username. If the other user has enabled it in their privacy settings, you can also search by their name or email address.
+
+Once you find the user, select the permission level you want to grant them (see [Permission levels](#permission-levels) below) and add the share.
+
+## Sharing with teams
+
+You can share a project with any team you are a member of. In the sharing settings, search for the team by name, select the permission level, and add the share. All members of that team will then have access to the project at the specified permission level.
+
+## Permission levels
+
+Every sharing method (user, team, or link share) lets you set one of three permission levels:
+
+| Permission     | What it allows                                                                                     |
+|----------------|----------------------------------------------------------------------------------------------------|
+| **Read**       | View only. The user or team can see the project and its tasks but cannot edit anything.             |
+| **Read & Write** | Can read and edit tasks in the project, including creating new tasks and modifying existing ones. |
+| **Admin**      | Everything Read & Write allows, plus the ability to manage sharing settings -- add or remove other shares. |
+
+{% callout type="info" %}
+For technical details on how permissions are represented in the API, see [Permissions](/docs/permissions).
+{% /callout %}
+
+## Link shares
+
+Link shares let you generate a link that anyone can use to access the project -- no Vikunja account required. This is useful for sharing a project publicly or with people who do not have an account on your instance.
+
+When creating a link share, you can configure the following options:
+
+- **Name** (optional): Give the link share a name. This name is displayed when the link share user writes comments on tasks, so others can identify where the comment came from.
+- **Password** (optional): Protect the link with a password. Anyone who opens the link will need to enter the password before they can access the project.
+- **Permission level**: Choose from the same Read, Read & Write, or Admin permission levels described above.
+
+Once created, copy the generated link and share it with whoever needs access.
+
+## Teams
+
+Teams let you group multiple users together so you can share projects with the whole group at once instead of adding each person individually.
+
+### Accessing teams
+
+You can access teams from the left sidebar menu.
+
+### Creating a team
+
+To create a new team, go to the teams section and click the button to create a team. Give it a name and it will be created right away.
+
+### Managing team members
+
+Once a team is created, you can add new members by searching for their username and removing existing members from the team settings.
+
+### Team admin role
+
+Each team member can optionally be a **team admin**. A team admin can:
+
+- Add and remove members from the team
+- Change whether other members are team admins
+
+{% callout type="info" %}
+Being a team admin is about managing the team itself. Project-level permissions are controlled separately through the sharing settings described above.
+{% /callout %}
+
+### Sharing projects with teams
+
+To share a project with a team, open the project sharing settings (three-dot menu next to the project title, then **Share**), switch to the teams tab, and search for the team. Select the desired permission level and add the share. All current and future members of that team will have access to the project.
