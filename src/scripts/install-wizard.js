@@ -213,9 +213,19 @@ document.addEventListener('DOMContentLoaded', () => {
       VIKUNJA_MAILER_FROMEMAIL: "${s.smtp.from}"`
     }
 
-    compose += `
+    if (s.proxy === 'traefik') {
+      // Traefik routes traffic via Docker network, no port binding needed
+    } else if (s.proxy !== 'none') {
+      compose += `
     ports:
-      - 3456:3456
+      - 127.0.0.1:3456:3456`
+    } else {
+      compose += `
+    ports:
+      - 3456:3456`
+    }
+
+    compose += `
     volumes:
       - ./files:/app/vikunja/files`
 
