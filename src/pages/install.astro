@@ -78,6 +78,28 @@ try {
 
             <!-- Customization accordions -->
             <div class="max-w-3xl mx-auto mb-8 space-y-2" id="customization-options">
+                <!-- Architecture (shown only for binary installs) -->
+                <div id="arch-option" class="border border-gray-200 dark:border-gray-700 rounded-lg hidden">
+                    <button class="accordion-toggle w-full flex items-center justify-between p-4 text-left font-bold" data-accordion="arch">
+                        <span>CPU architecture</span>
+                        <svg class="accordion-chevron w-5 h-5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="accordion-content hidden px-4 pb-4">
+                        <div class="flex flex-wrap gap-4">
+                            <label class="flex items-center gap-2"><input type="radio" name="arch" value="amd64" checked class="text-primary"> x86_64 / amd64</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="arch" value="arm64" class="text-primary"> arm64</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="arch" value="arm-7" class="text-primary"> armv7</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="arch" value="arm-6" class="text-primary"> armv6</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="arch" value="arm-5" class="text-primary"> armv5</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="arch" value="riscv64" class="text-primary"> riscv64</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="arch" value="mips" class="text-primary"> mips</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="arch" value="mipsle" class="text-primary"> mipsle</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="arch" value="mips64" class="text-primary"> mips64</label>
+                            <label class="flex items-center gap-2"><input type="radio" name="arch" value="mips64le" class="text-primary"> mips64le</label>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Database -->
                 <div class="border border-gray-200 dark:border-gray-700 rounded-lg">
                     <button class="accordion-toggle w-full flex items-center justify-between p-4 text-left font-bold" data-accordion="db">
