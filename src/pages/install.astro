@@ -8,49 +8,44 @@ import Layout from '../layouts/Layout.astro'
             <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Get up and running in minutes.</p>
         </div>
 
-        <!-- Step 1: Pick environment -->
+        <!-- Step 1: Pick platform -->
         <section id="step-1" class="wizard-step">
-            <h2 class="text-2xl font-display text-center mb-8">What environment are you installing on?</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-                <button data-env="debian" class="wizard-card">
+            <h2 class="text-2xl font-display text-center mb-8">What are you installing on?</h2>
+            <div class="grid grid-cols-3 gap-4 max-w-3xl mx-auto">
+                <button data-platform="linux" class="wizard-card">
                     <span class="text-lg font-bold">Linux</span>
-                    <span class="text-sm text-gray-500 dark:text-gray-400">Debian / Ubuntu</span>
                 </button>
-                <button data-env="fedora" class="wizard-card">
-                    <span class="text-lg font-bold">Linux</span>
-                    <span class="text-sm text-gray-500 dark:text-gray-400">Fedora / CentOS</span>
-                </button>
-                <button data-env="linux-other" class="wizard-card">
-                    <span class="text-lg font-bold">Linux</span>
-                    <span class="text-sm text-gray-500 dark:text-gray-400">Other</span>
-                </button>
-                <button data-env="freebsd" class="wizard-card">
+                <button data-platform="freebsd" class="wizard-card">
                     <span class="text-lg font-bold">FreeBSD</span>
                     <span class="text-sm text-gray-500 dark:text-gray-400">Build from source</span>
                 </button>
-                <button data-env="docker" class="wizard-card">
-                    <span class="text-lg font-bold">Docker</span>
-                    <span class="text-sm text-gray-500 dark:text-gray-400">Docker Compose</span>
-                </button>
-                <button data-env="kubernetes" class="wizard-card">
+                <button data-platform="kubernetes" class="wizard-card">
                     <span class="text-lg font-bold">Kubernetes</span>
                     <span class="text-sm text-gray-500 dark:text-gray-400">Helm chart</span>
                 </button>
             </div>
         </section>
 
-        <!-- Step 2: Pick method -->
+        <!-- Step 2: Pick Linux install method -->
         <section id="step-2" class="wizard-step hidden">
             <button id="back-to-1" class="wizard-back mb-8">&larr; Back</button>
             <h2 class="text-2xl font-display text-center mb-8">How do you want to install Vikunja?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
-                <button data-method="docker" class="wizard-card">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+                <button data-linux-method="docker" class="wizard-card">
                     <span class="text-lg font-bold">Docker</span>
                     <span class="text-sm text-gray-500 dark:text-gray-400">Recommended</span>
                 </button>
-                <button data-method="native" class="wizard-card">
-                    <span class="text-lg font-bold">Native</span>
-                    <span class="text-sm text-gray-500 dark:text-gray-400" id="native-method-label">Package manager</span>
+                <button data-linux-method="debian" class="wizard-card">
+                    <span class="text-lg font-bold">Debian / Ubuntu</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">.deb package</span>
+                </button>
+                <button data-linux-method="fedora" class="wizard-card">
+                    <span class="text-lg font-bold">Fedora / CentOS</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">RPM package</span>
+                </button>
+                <button data-linux-method="linux-other" class="wizard-card">
+                    <span class="text-lg font-bold">Other</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">Binary download</span>
                 </button>
             </div>
         </section>
