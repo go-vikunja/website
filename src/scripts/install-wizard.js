@@ -3,33 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     platform: null, // 'linux' | 'freebsd' | 'kubernetes'
     env: null,      // 'debian' | 'fedora' | 'linux-other' | 'freebsd' | 'kubernetes'
     method: null,   // 'docker' | 'native'
-    version: '<version>',
+    version: document.querySelector('main').dataset.version || '<version>',
     db: 'sqlite',
     smtp: { host: '', port: '', user: '', password: '', from: '' },
     proxy: 'none',
     proxyDomain: '',
   }
-
-  // Fetch latest version from download server
-  fetch('https://dl.vikunja.io/vikunja/', {
-    headers: { 'Accept': 'application/json' },
-  })
-    .then(r => r.json())
-    .then(data => {
-      const stable = data.folders
-        .map(f => f.name)
-        .filter(n => /^v?\d+\.\d+\.\d+$/.test(n))
-        .sort((a, b) => {
-          const pa = a.replace(/^v/, '').split('.').map(Number)
-          const pb = b.replace(/^v/, '').split('.').map(Number)
-          return pa[0] - pb[0] || pa[1] - pb[1] || pa[2] - pb[2]
-        })
-      if (stable.length) {
-        state.version = stable[stable.length - 1]
-        renderOutput()
-      }
-    })
-    .catch(() => {})
 
   const steps = [
     document.getElementById('step-1'),
