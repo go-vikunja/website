@@ -13,8 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('step-2'),
     document.getElementById('step-3'),
   ]
-  const dots = document.querySelectorAll('[data-step-dot]')
-
   // Environments that skip step 2
   const singleMethodEnvs = {
     freebsd: 'native',
@@ -25,11 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function showStep(n) {
     steps.forEach((s, i) => {
       s.classList.toggle('hidden', i !== n)
-    })
-    dots.forEach((d, i) => {
-      d.classList.toggle('bg-primary', i <= n)
-      d.classList.toggle('bg-gray-300', i > n)
-      d.classList.toggle('dark:bg-gray-600', i > n)
     })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
