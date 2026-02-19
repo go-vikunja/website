@@ -316,6 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (s.db === 'postgres') {
       config += `
 
+# See https://vikunja.io/docs/database for more details
 database:
   type: postgres
   host: localhost
@@ -325,6 +326,7 @@ database:
     } else if (s.db === 'mysql') {
       config += `
 
+# See https://vikunja.io/docs/database for more details
 database:
   type: mysql
   host: localhost
@@ -362,6 +364,7 @@ sudo dpkg -i vikunja-${v}-x86_64.deb`
       cmds += `
 
 # Install PostgreSQL
+# See https://vikunja.io/docs/database for more details
 sudo apt install -y postgresql
 sudo -u postgres createuser vikunja
 sudo -u postgres createdb -O vikunja vikunja
@@ -370,6 +373,7 @@ sudo -u postgres psql -c "ALTER USER vikunja PASSWORD 'changeme';"`
       cmds += `
 
 # Install MariaDB
+# See https://vikunja.io/docs/database for more details
 sudo apt install -y mariadb-server
 sudo mysql -e "CREATE DATABASE vikunja; CREATE USER 'vikunja'@'localhost' IDENTIFIED BY 'changeme'; GRANT ALL PRIVILEGES ON vikunja.* TO 'vikunja'@'localhost'; FLUSH PRIVILEGES;"`
     }
@@ -410,6 +414,7 @@ sudo rpm -i vikunja-${v}-x86_64.rpm`
       cmds += `
 
 # Install PostgreSQL
+# See https://vikunja.io/docs/database for more details
 sudo dnf install -y postgresql-server postgresql
 sudo postgresql-setup --initdb
 sudo systemctl enable --now postgresql
@@ -420,6 +425,7 @@ sudo -u postgres psql -c "ALTER USER vikunja PASSWORD 'changeme';"`
       cmds += `
 
 # Install MariaDB
+# See https://vikunja.io/docs/database for more details
 sudo dnf install -y mariadb-server
 sudo systemctl enable --now mariadb
 sudo mysql -e "CREATE DATABASE vikunja; CREATE USER 'vikunja'@'localhost' IDENTIFIED BY 'changeme'; GRANT ALL PRIVILEGES ON vikunja.* TO 'vikunja'@'localhost'; FLUSH PRIVILEGES;"`
