@@ -1,0 +1,160 @@
+# Install Wizard Design
+
+## Goal
+
+Get new users up and running with Vikunja as fast as possible. A guided wizard at `/install` walks them through environment and method selection, then generates a ready-to-run command or configuration they can copy and paste.
+
+## User Flow
+
+### Step 1 — Pick your environment
+
+The user selects one of:
+
+- Linux — Debian/Ubuntu
+- Linux — Fedora/CentOS
+- Linux — Other
+- FreeBSD
+- Docker
+- Kubernetes
+
+Displayed as a grid of clickable cards.
+
+### Step 2 — Pick install method
+
+Two options:
+
+- **Docker** (recommended)
+- **Native** (package manager / binary)
+
+This step is **skipped** for environments with only one path:
+
+| Environment | Behavior |
+|---|---|
+| FreeBSD | Skipped — shows note: "We'll build from source" |
+| Docker | Skipped — shows note: "We'll use Docker Compose" |
+| Kubernetes | Skipped — shows note: "We'll use Helm" |
+| All Linux variants | Shows both Docker and Native options |
+
+When skipped, a brief note explains what method will be used, so the user doesn't feel disoriented.
+
+### Step 3 — Your setup
+
+Shows a minimal, ready-to-run output using sensible defaults (SQLite, no email, no reverse proxy). The user can expand optional customization sections:
+
+- **Customize database** — Radio buttons: SQLite (default), PostgreSQL, MySQL/MariaDB. Changing this updates the generated output.
+- **Configure email (SMTP)** — Form fields: host, port, username, password, from address. Adds SMTP env vars to output.
+- **Set up reverse proxy** — Radio buttons: Nginx, Apache, Caddy. Shows the proxy config as a separate code block.
+
+Each section is a collapsible accordion, collapsed by default. The output updates live as the user changes options.
+
+A "Copy to clipboard" button sits on each code block.
+
+## Output per Path
+
+### Docker path (any OS that chose Docker)
+
+Generates a `docker-compose.yml` with:
+
+- Vikunja container
+- Database container (if PostgreSQL or MySQL selected; omitted for SQLite)
+- SMTP env vars (if email configured)
+- Appropriate volume mounts and healthchecks
+
+Plus shell commands:
+
+```
+mkdir files db
+chown 1000 files db
+docker compose up -d
+```
+
+If reverse proxy is selected, an additional code block with the proxy config file.
+
+### Native — Debian/Ubuntu
+
+```sh
+wget -O vikunja.deb <download-url>
+sudo dpkg -i vikunja.deb
+sudo systemctl enable --now vikunja
+```
+
+If database customized: adds `apt install postgresql` or `apt install mariadb-server` commands + Vikunja config snippet (`/etc/vikunja/config.yml`).
+
+If reverse proxy selected: adds install command for the proxy + config file.
+
+### Native — Fedora/CentOS
+
+Same pattern with `dnf install` / `rpm -i`.
+
+### Native — Linux other
+
+Binary download via `wget`, unzip to `/opt/vikunja`, systemd unit file, symlink setup.
+
+### FreeBSD
+
+Build-from-source commands pulled from the existing docs (git clone, pnpm, mage build, rc.d setup).
+
+### Kubernetes
+
+Helm chart commands. Customization options modify a `values.yaml` snippet shown alongside the install command.
+
+## Page Layout
+
+- Lives at `/install` as a standalone page
+- Uses `Layout.astro` (with Header/Footer) but no docs sidebar
+- Clean, focused layout — just the wizard
+
+### Structure
+
+1. **Title**: "Install Vikunja" + subtitle "Get up and running in minutes."
+2. **Step indicator**: Simple text/dots showing current step (1, 2, 3). Skipped steps don't appear.
+3. **Step content**: Cards for selection steps, code output for the final step.
+4. **Back button**: Lets users go to a previous step without losing customization state.
+5. **"What's next?" footer**: Links to configuration docs, authentication setup (OIDC/LDAP), full documentation.
+
+### Navigation
+
+- No page reloads — vanilla JS swaps step visibility
+- Back button on steps 2 and 3
+- Step indicator updates to reflect current position
+
+## Technical Implementation
+
+### Files
+
+- `src/pages/install.astro` — The page. Uses `Layout.astro`. Contains all the HTML structure for all three steps.
+- `src/scripts/install-wizard.js` — Client-side logic: step navigation, template generation, copy-to-clipboard, accordion toggling.
+
+### Template generation
+
+Each install path has a generator function in the JS file. It takes the current state (OS, method, database, email settings, proxy choice) and returns an array of code blocks:
+
+```js
+function generateOutput(state) → [{ filename, lang, content }]
+```
+
+Templates are JS template literals — no external templating library needed. The existing docker-compose examples, systemd units, and proxy configs from the docs serve as the source of truth for these templates.
+
+### Styling
+
+- Tailwind classes, matching the existing site design
+- Code blocks styled with `<pre><code>` and the same Shiki classes the docs use
+- Form inputs use `@tailwindcss/forms` plugin (already installed)
+- Cards for step 1/2 selection use a style consistent with the existing `LinkCard` component
+
+### No server-side logic
+
+Everything runs client-side. The page is statically generated by Astro. The JS handles all interactivity (step transitions, template rendering, clipboard).
+
+## Integration with existing site
+
+- The homepage "Get Started" button in `CloudOrSelfHosted.astro` should link to `/install` instead of `/docs/installing`
+- The existing install docs remain unchanged — the wizard links to them for advanced/detailed info
+- The "What's next?" section at the end of the wizard links back into the docs
+
+## What this does NOT cover
+
+- Account creation / first-run setup (that happens in Vikunja itself after install)
+- OIDC/LDAP configuration in the wizard (linked to docs instead)
+- Redis/caching setup (advanced, not for new users)
+- Ansible deployment (linked to docs)
