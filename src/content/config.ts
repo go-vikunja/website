@@ -9,6 +9,16 @@ const docsCollection = defineCollection({
 	}),
 })
 
+const helpCollection = defineCollection({
+	type: 'content',
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		hideInMenu: z.boolean().optional(),
+		sortOrder: z.number().optional(),
+	}),
+})
+
 const changelogCollection = defineCollection({
 	type: 'content',
 	schema: z.object({
@@ -20,5 +30,6 @@ const changelogCollection = defineCollection({
 
 export const collections = {
 	'docs': docsCollection,
+	'help': helpCollection,
 	'changelog': changelogCollection,
 }
