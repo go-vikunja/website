@@ -1,0 +1,187 @@
+---
+import {type MarkdownHeading} from 'astro'
+import {getCollection} from 'astro:content'
+
+import Layout from './Layout.astro'
+import Prose from '../components/Prose.astro'
+import TableOfContentsHeading from '../components/TableOfContentsHeading.astro'
+import SearchButton from '../components/SearchButton.astro'
+import SearchModal from '../components/SearchModal.astro'
+
+interface Props {
+	title: string
+	headings: MarkdownHeading[]
+}
+
+interface MarkdownWithSubheadings extends MarkdownHeading {
+	subheadings: MarkdownWithSubheadings[]
+}
+
+const {title: originalTitle, headings} = Astro.props
+// @ts-ignore: Property exists
+const title = originalTitle ?? Astro.props.frontmatter?.title
+// @ts-ignore: Property exists
+const description = Astro.props?.frontmatter?.description || Astro.props.description
+
+// Taken from https://kld.dev/building-table-of-contents/
+function buildToc(headings: MarkdownHeading[]) {
+	const toc: MarkdownWithSubheadings[] = []
+	const parentHeadings = new Map()
+	headings.forEach((h) => {
+		const heading = {...h, subheadings: []}
+		parentHeadings.set(heading.depth, heading)
+		if (heading.depth === 2) {
+			toc.push(heading)
+		} else {
+			parentHeadings.get(heading.depth - 1)?.subheadings.push(heading)
+		}
+	})
+	return toc
+}
+
+const toc = buildToc(headings)
+
+interface SectionItem {
+	url: string;
+	title: string;
+}
+
+const sidebarOrder = [
+	'dashboard',
+	'projects',
+	'tasks',
+	'relation_kinds',
+	'dates-and-reminders',
+	'views',
+	'labels',
+	'filters',
+	'quick-add-magic',
+	'sharing-and-teams',
+	'permissions',
+	'search-and-navigation',
+	'settings',
+	'import-and-export',
+	'caldav',
+	'webhooks',
+]
+
+async function getSidebarNavigation(): Promise<SectionItem[]> {
+	const help = await getCollection('help')
+	const itemsBySlug = new Map<string, SectionItem>()
+
+	help.forEach(d => {
+		if (d.data.hideInMenu) {
+			return
+		}
+		itemsBySlug.set(d.slug, {
+			url: '/help/' + d.slug,
+			title: d.data.title,
+		})
+	})
+
+	const ordered: SectionItem[] = []
+	for (const slug of sidebarOrder) {
+		const item = itemsBySlug.get(slug)
+		if (item) {
+			ordered.push(item)
+		}
+	}
+
+	return ordered
+}
+
+const sidebarEntries = await getSidebarNavigation()
+---
+<Layout title={title} description={description}>
+    <SearchModal />
+
+    <div class="mx-auto flex max-w-(--breakpoint-2xl) flex-col lg:flex-row lg:pt-8">
+        <!-- Search Button (fixed position on mobile) -->
+        <div class="fixed bottom-4 right-4 z-40 lg:hidden">
+            <SearchButton />
+        </div>
+
+        <button
+                class="navbar-burger m-2 mt-6 block lg:hidden rounded-xs bg-gray-200 dark:bg-gray-800 py-2 px-1 text-center"
+                data-target="helpMenu"
+        >
+            Toggle Menu
+        </button>
+        <aside class="w-full lg:w-1/5 hidden lg:block order-1 px-2 text-gray-600 dark:text-gray-300" id="helpMenu">
+            <!-- Search Button for desktop (in sidebar) -->
+            <div class="pb-4 pt-2">
+                <SearchButton />
+            </div>
+
+            <nav class="pb-4">
+                <ul>
+                    {sidebarEntries.map(item => (
+                            <li>
+                                <a
+                                        href={item.url}
+                                        class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-800 transition ' + ((Astro.url.pathname === item.url || Astro.url.pathname === item.url + '/') && ' bg-gray-100! dark:bg-gray-800! text-primary')}
+                                >
+                                    {item.title}
+                                </a>
+                            </li>
+                    ))}
+                </ul>
+            </nav>
+        </aside>
+        <main class="w-full lg:w-3/5 p-4 pt-6 lg:pt-2 order-3 lg:order-2" id="main-content">
+            <Prose>
+                <h1>{title}</h1>
+                <slot/>
+            </Prose>
+        </main>
+        <div class="w-full lg:w-1/5 pl-4 order-2 lg:order-3">
+            {toc.length > 0 &&
+                    <div class="sticky top-2">
+                        <div class="font-display font-bold">
+                            On this page
+                        </div>
+                        <nav class="text-gray-600 dark:text-gray-300 pt-2 max-h-[calc(100vh-2rem)] overflow-y-auto overflow-x-hidden"
+                             id="toc">
+                            <ul>
+                                {toc.map((heading) =>
+                                        <TableOfContentsHeading heading={heading}/>)}
+                            </ul>
+                        </nav>
+                    </div>
+            }
+        </div>
+    </div>
+</Layout>
+
+<script>
+	// Adjusted from https://stackoverflow.com/a/73255559
+
+	const anchors = document.querySelectorAll('#main-content h2, #main-content h3, #main-content h4, #main-content h5, #main-content h6')
+	window.addEventListener('scroll', function () {
+		let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+
+		// highlight the last scrolled-to: set everything inactive first
+		anchors.forEach(anchor => {
+			const link = document.querySelector(`nav#toc ul li a[href="#${anchor.id}"]`)
+			if (link) link.classList.remove('text-primary')
+		})
+
+		// then iterate backwards, on the first match highlight it and break
+		for (let i = anchors.length - 1; i >= 0; i--) {
+			// @ts-ignore
+			if (scrollTop > anchors[i].offsetTop - 75) {
+				const link = document.querySelector(`nav ul li a[href="#${anchors[i].id}"]`)
+				if (link) link.classList.add('text-primary')
+				break
+			}
+		}
+	})
+</script>
+
+<script>
+  import { initializeSearchUI } from '../scripts/search-ui'
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initializeSearchUI()
+  })
+</script>
