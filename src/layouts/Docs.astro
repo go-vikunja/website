@@ -51,7 +51,7 @@ type DocumentationArray = [string, SectionItem[]][];
 
 const groupLabels: { [key: string]: string } = {
 	'setup': 'Setup',
-	'usage': 'User Guide',
+	'integrations': 'API & Integrations',
 	'development': 'Development',
 }
 
@@ -73,7 +73,7 @@ async function getSidebarNavigation(): Promise<DocumentationArray> {
 		})
 	})
 
-	const order = ['setup', 'usage', 'development']
+	const order = ['setup', 'integrations', 'development']
 
 	const sortedData = order.reduce((obj: { [key: string]: SectionItem[] }, key) => {
 		if (entries[key]) {
