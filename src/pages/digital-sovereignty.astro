@@ -13,8 +13,8 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
                 Your tasks. Your server. Your rules.
             </h1>
             <p class="mt-6 text-lg text-gray-600 dark:text-gray-300 text-balance">
-                In a world where governments pressure tech giants, services get cut off overnight, and your data
-                is subject to foreign laws — Vikunja gives you a way out. Open-source, self-hostable, and made in the EU.
+                Governments pressure tech giants. Services get cut off overnight. Your data lives under foreign laws
+                you never agreed to. Vikunja is the way out — open-source, self-hostable, and made in the EU.
             </p>
             <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button href="/docs/installing">Self-Host Vikunja</Button>
@@ -28,16 +28,18 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
             <div class="space-y-8 text-gray-700 dark:text-gray-300">
                 <p>
                     The question of who controls your digital tools has never been more urgent.
+                </p>
+                <p>
                     In 2025, the Trump administration
                     <a href="https://www.cnn.com/2026/01/12/tech/us-eu-tech-regulation-fight-explained" class="underline" target="_blank" rel="noopener">directly linked the removal of EU digital regulations to trade negotiations</a>,
                     threatening tariffs against countries that impose rules on American tech companies.
                     US Commerce Secretary Howard Lutnick visited Brussels and tied steel tariff relief to weakening European data protection standards.
                 </p>
                 <p>
-                    When the International Criminal Court issued an arrest warrant the US disagreed with, the
+                    Then it got worse. When the International Criminal Court issued an arrest warrant the US disagreed with, the
                     <a href="https://techcrunch.com/2026/01/27/amid-trump-attacks-and-weaponized-sanctions-europeans-look-to-rely-less-on-us-tech/" class="underline" target="_blank" rel="noopener">Trump administration sanctioned the ICC's chief prosecutor</a>
                     — and Microsoft promptly cut off his email account.
-                    This was a wake-up call: the software you depend on can be switched off by a foreign government.
+                    One day you have access to your tools. The next, you don't.
                 </p>
                 <p>
                     The European Commission's official for tech sovereignty, Henna Virkkunen,
@@ -79,30 +81,32 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
             <h2 class="text-3xl font-display text-center mb-8">The CLOUD Act: your data isn't safe just because it's in Europe</h2>
             <div class="space-y-6 text-gray-700 dark:text-gray-300">
                 <p>
-                    The US
+                    Here's what most people get wrong about data protection: they think location is enough.
+                </p>
+                <p>
+                    It's not. The US
                     <a href="https://wire.com/en/blog/cloud-act-eu-data-sovereignty" class="underline" target="_blank" rel="noopener">CLOUD Act</a>
                     (Clarifying Lawful Overseas Use of Data Act) allows American law enforcement to compel
                     US-based companies to hand over data — regardless of where it is physically stored.
-                    Even if your data sits on a server in Frankfurt or Amsterdam, if the provider is an American company,
-                    the US government can demand access to it.
+                    Your data sits on a server in Frankfurt. The provider is American.
+                    The US government can demand access to it.
                 </p>
                 <p>
-                    This directly conflicts with the EU's GDPR, which prohibits transferring personal data
-                    to non-EU authorities without an international agreement.
+                    This directly conflicts with the EU's GDPR.
                     Organizations using US cloud services face an impossible choice:
                     comply with the CLOUD Act and violate GDPR, or refuse US demands and face American legal consequences.
                 </p>
                 <p>
                     The
                     <a href="https://cms-lawnow.com/en/ealerts/2026/02/white-paper-demystifying-the-debate-on-the-us-cloud-act-vs-european-uk-data-sovereignty-in-the-context-of-cloud-services" class="underline" target="_blank" rel="noopener">EU-US Data Privacy Framework</a>
-                    doesn't solve this. It covers commercial data transfers between companies but does not change
+                    doesn't fix this. It covers commercial data transfers between companies but does not change
                     US lawful-access rules. The CLOUD Act still applies.
                 </p>
                 <p class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
                     <strong>Data residency is not data sovereignty.</strong>
-                    Storing your data in a European data center owned by a US company does not make it subject
-                    only to European law. True sovereignty requires that the software itself is outside the reach
-                    of foreign jurisdictions — which means using tools that are not controlled by US corporations.
+                    A European data center owned by a US company is still subject to US law. True sovereignty means
+                    the software itself is outside the reach of foreign jurisdictions — tools not controlled by
+                    US corporations.
                 </p>
             </div>
         </section>
@@ -112,7 +116,7 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
             <h2 class="text-3xl font-display text-center mb-8">Europe is already acting</h2>
             <div class="max-w-(--breakpoint-md) mx-auto space-y-6 text-gray-700 dark:text-gray-300">
                 <p>
-                    This isn't theoretical. Governments and institutions across Europe are actively
+                    This shift is already underway. Governments and institutions across Europe are
                     replacing US-controlled tools:
                 </p>
                 <ul class="space-y-4 list-none">
@@ -129,7 +133,7 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
                         <span>
                             <strong>The International Criminal Court</strong> in The Hague
                             <a href="https://www.theregister.com/2025/12/22/europe_gets_serious_about_cutting/" class="underline" target="_blank" rel="noopener">replaced Microsoft Office</a>
-                            with OpenDesk, an open-source suite — after the chief prosecutor's email
+                            with OpenDesk after the chief prosecutor's email
                             was shut off following US sanctions.
                         </span>
                     </li>
@@ -176,9 +180,8 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
                         Self-hosted on your infrastructure
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300">
-                        Run Vikunja on your own server, your own hardware, in your own jurisdiction.
-                        No third-party cloud provider can access your data, and no foreign government can compel its disclosure.
-                        You control the infrastructure, the backups, and the access.
+                        Your server, your hardware, your jurisdiction. No cloud provider sits between you
+                        and your data. No foreign government can compel disclosure or flip a switch and cut you off.
                     </p>
                 </div>
                 <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl">
@@ -189,10 +192,10 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
                         Fully open-source (AGPLv3)
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300">
-                        Every line of Vikunja's code is
+                        Every line of code is
                         <a href="https://code.vikunja.io" class="underline" target="_blank" rel="noopener">publicly available</a>.
-                        You can audit it, modify it, and verify that it does exactly what it claims.
-                        No hidden telemetry, no backdoors, no vendor lock-in. If Vikunja ever disappeared,
+                        Audit it. Modify it. Verify it does exactly what it claims.
+                        No hidden telemetry, no backdoors. If Vikunja disappeared tomorrow,
                         the code would still be yours.
                     </p>
                 </div>
@@ -204,10 +207,10 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
                         Made and hosted in the EU
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300">
-                        Vikunja is developed and maintained in Europe.
+                        Developed and maintained in Europe.
                         <a href="https://vikunja.cloud/?utm_source=io&utm_medium=io&utm_campaign=sovereignty" class="underline" rel="noopener">Vikunja Cloud</a>
-                        is hosted on EU infrastructure, subject only to European law.
-                        No CLOUD Act, no foreign subpoenas, no "kill switch" that a non-EU government can pull.
+                        runs on EU infrastructure, subject only to European law.
+                        No CLOUD Act. No foreign subpoenas. No kill switch a non-EU government can pull.
                     </p>
                 </div>
                 <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl">
@@ -218,9 +221,9 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
                         No vendor lock-in
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300">
-                        Your data is stored in standard formats. Import from Todoist, Trello, or Microsoft To-Do.
-                        Export whenever you want. Vikunja supports CalDAV for interoperability with other tools.
-                        You're never trapped.
+                        Standard data formats. Import from Todoist, Trello, or Microsoft To-Do.
+                        Export whenever you want. CalDAV support for interoperability.
+                        Sovereignty means you can leave, too. You're never trapped.
                     </p>
                 </div>
                 <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl">
@@ -231,9 +234,9 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
                         Privacy by design
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300">
-                        Vikunja was built from the ground up with privacy as a core principle. No tracking,
-                        no analytics, no selling your data. When you self-host, not even the Vikunja team
-                        has access to your information.
+                        No tracking. No analytics. No selling your data. When you self-host, not even
+                        the Vikunja team can access your information. Privacy isn't a feature we added —
+                        it's how we built the thing.
                     </p>
                 </div>
                 <div class="p-6 border border-gray-200 dark:border-gray-700 rounded-xl">
@@ -244,9 +247,9 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
                         Bootstrapped, not VC-funded
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300">
-                        Vikunja is completely bootstrapped. There are no venture capital investors pushing for
-                        growth-at-all-costs, no pressure to monetize your data, and no risk of being acquired
-                        by a company whose interests don't align with yours.
+                        No venture capital. No pressure to monetize your data. No risk of being acquired
+                        by a company whose interests don't align with yours. Vikunja answers to its users,
+                        not to investors.
                     </p>
                 </div>
             </div>
@@ -267,8 +270,8 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
         <section class="py-20 text-center">
             <h2 class="text-3xl font-display mb-4">Take back control</h2>
             <p class="text-lg text-gray-600 dark:text-gray-300 mb-12 max-w-(--breakpoint-sm) mx-auto text-balance">
-                Whether you self-host or use Vikunja Cloud, your task management stays under your control
-                — not in the hands of foreign governments or Big Tech shareholders.
+                Self-host on your own infrastructure, or use Vikunja Cloud on EU servers under EU law.
+                Either way, your task management answers to you — not to foreign governments or Big Tech shareholders.
             </p>
             <CloudOrSelfHosted/>
         </section>
