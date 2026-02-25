@@ -144,6 +144,88 @@ Flags:
 
 * `-n`, `--name` string: The id of the migration you want to roll back until.
 
+## `repair`
+
+Bundles commands to detect and fix various data integrity issues in your Vikunja installation.
+
+Usage:
+
+```sh
+vikunja repair [command]
+```
+
+All repair subcommands support the `--dry-run` flag to preview changes without applying them.
+
+### `repair file-mime-types`
+
+Scans all files in the database that have no MIME type set, detects the type from the stored file content, and updates the database.
+
+This is useful after upgrading from a version that did not store MIME types on file creation. Only files with an empty or NULL mime column are affected.
+
+Usage:
+
+```sh
+vikunja repair file-mime-types [flags]
+```
+
+Flags:
+
+* `--dry-run`: Preview repairs without making changes.
+
+### `repair orphan-positions`
+
+Removes all task position records that reference tasks or project views which no longer exist in the database.
+
+This can happen when tasks or views are deleted but their position records are not fully cleaned up.
+
+Usage:
+
+```sh
+vikunja repair orphan-positions [flags]
+```
+
+Flags:
+
+* `--dry-run`: Preview repairs without making changes.
+
+### `repair projects`
+
+Finds projects whose parent project no longer exists in the database and re-parents them to the top level.
+
+This can happen when a parent project is deleted but its sub-projects are not fully cleaned up, for example after importing from external services like Trello. Orphaned projects cannot be un-archived, modified, or deleted through the UI because permission checks fail when traversing the broken parent chain.
+
+Usage:
+
+```sh
+vikunja repair projects [flags]
+```
+
+Flags:
+
+* `--dry-run`: Preview repairs without making changes.
+
+### `repair task-positions`
+
+Scans all project views for tasks with duplicate position values and repairs them.
+
+Duplicate positions can occur due to race conditions or historical bugs, causing tasks to appear in the wrong order or jump around when the page is refreshed.
+
+This command will:
+
+1. Scan all project views for duplicate positions
+2. Attempt localized repair by redistributing conflicting tasks
+3. Fall back to full view recalculation if localized repair fails
+
+Usage:
+
+```sh
+vikunja repair task-positions [flags]
+```
+
+Flags:
+
+* `--dry-run`: Preview repairs without making changes.
+
 ## `restore`
 
 Restores a previously created dump from a zip file, see `dump`.
