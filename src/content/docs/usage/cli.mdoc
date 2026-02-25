@@ -48,7 +48,6 @@ Checks performed:
 * **Files**: Storage path, writability, disk space (Unix only)
 * **Optional services** (when enabled):
   * Redis: Connection ping
-  * Typesense: Health endpoint
   * Mailer: SMTP connection
   * LDAP: Bind authentication test
   * OpenID Connect: Discovery endpoint for each configured provider
@@ -81,23 +80,6 @@ Flags:
 
 * `-p`, `--path`: The folder path where the dump file should be saved. Vikunja will use the configured root path or the binary location if the flag is not provided.
 * `-f`, `--filename`: The filename of the dump file. If it does not end in '.zip', it will be added as a file extension. Defaults to 'vikunja-dump_YYYY-MM-DD_HH-II-SS.zip'.
-
-## `index`
-
-Perform a full reindex of all tasks into Typesense.
-The command will clear all tasks already present in the index unless the `--partial` flag is provided, see below.
-
-The command will only work if Typesense is enabled.
-
-Flags:
-
-* `-p`, `--partial`: If provided, Vikunja will only index tasks which are not present in the index yet.
-
-Usage:
-
-```sh
-vikunja index [flags]
-```
 
 ## `help`
 
