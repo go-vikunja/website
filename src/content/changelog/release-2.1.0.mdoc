@@ -1,0 +1,46 @@
+---
+title: 'Vikunja 2.1.0: One security fix and some improvements'
+date: 2026-02-27T12:00:00.000Z
+slug: /vikunja-v2.1.0-was-released
+description: >-
+  Vikunja 2.1.0 fixes a security issue where password reset tokens were not
+  cleaned up after use (CVE-2026-28268) and includes quality of life
+  improvements like a green checklist indicator when all items are done.
+---
+
+Just two days after the 2.0.0 release, we're back with 2.1.0!
+
+With just 15 commits, this is a very small release with one important security fix and a few bugfixes and quality of life improvments.
+
+## Security fix: Password reset tokens were not cleaned up (CVE-2026-28268)
+
+This release fixes a security issue where password reset tokens were not cleaned up after use, nor when they should have expired.
+This allowed a potential attacker to re-use a password reset token they obtained once infinitely.
+
+This flaw has existed in Vikunja since v0.18.0, released on September 5, 2021 - almost 5 years ago.
+
+You should upgrade to 2.1.0 especially if you're using Vikunja's authentication and not a oauth or ldap.
+
+[Check out the full advisory on GitHub](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-rfjg-6m84-crj2) to learn more about the full details of the issue.
+
+Thanks to [@VashuVats](https://github.com/VashuVats) for reporting this!
+
+## Quality of life improvments
+
+If you're using checklists in a task, the checklist indicator now turns green when you have checked all items in the list:
+
+![Vikunja's list view with the checklist indicator, one task has a green circle with all check items marked done, the other one has a blue circle with some check items not done](../../assets/images/changelog/2.1.0-checklist-indicator.png)
+
+## How to Upgrade
+
+To get the upgrade, simply replace the Vikunja binary with the new release from the [downloads page](https://dl.vikunja.io/vikunja/v2.1.0/) or pull the `:latest` docker image.
+
+You can also check out [the update docs](/docs/installing#updating) for more information about the process.
+
+## Closing
+
+As usual, you can find the full changelogs [in the GitHub repo](https://github.com/go-vikunja/vikunja/blob/main/CHANGELOG.md#210---2026-02-27).
+
+If you have any questions about this release, please reach out either [in the community forum](https://community.vikunja.io), [Bluesky](https://bsky.app/profile/vikunja.io), or [Mastodon](https://social.linux.pizza/@vikunja).
+
+Thank you for using Vikunja, and I look forward to bringing you more enhancements in future updates!
