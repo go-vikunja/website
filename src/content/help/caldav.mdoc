@@ -39,7 +39,9 @@ Vikunja currently supports the following properties:
 * `DTSTAMP`
 * `DTSTART`
 * `LAST-MODIFIED` (only Vikunja → Client)
+* `RELATED-TO` (parent/child relations)
 * `RRULE` (Recurrence) (only Vikunja → Client)
+* `STATUS` (only `COMPLETED` status, used to mark tasks as done)
 * `VALARM` (Reminders)
 
 Vikunja **currently does not** support these properties:
@@ -53,10 +55,8 @@ Vikunja **currently does not** support these properties:
 * `ORGANIZER` (disabled)
 * `PERCENT-COMPLETE`
 * `RECURRENCE-ID`
-* `RELATED-TO`
 * `RESOURCES`
 * `SEQUENCE`
-* `STATUS`
 * `URL`
 
 ## Tested Clients
@@ -81,7 +81,7 @@ Request body and headers are logged if the debug output is enabled.
 
 ```
 Creating a new task:
-PUT /dav/lists/1/cd4dd0e1b3c19cc9d787829b6e08be536e3df3a4.ics
+PUT /dav/projects/1/cd4dd0e1b3c19cc9d787829b6e08be536e3df3a4.ics
 
 Body:
 
