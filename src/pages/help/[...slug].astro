@@ -1,0 +1,21 @@
+---
+import {type CollectionEntry, getCollection} from 'astro:content'
+import Help from '../../layouts/Help.astro'
+
+export async function getStaticPaths() {
+    const help = await getCollection('help')
+    return help.map((entry) => ({
+        params: {
+            slug: entry.slug,
+        },
+        props: entry,
+    }))
+}
+type Props = CollectionEntry<'help'>
+
+const post = Astro.props
+const {Content, headings} = await post.render()
+---
+<Help headings={headings} {...post.data}>
+    <Content/>
+</Help>

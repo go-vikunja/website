@@ -1,0 +1,159 @@
+---
+title: Settings
+slug: settings
+description: >-
+  A walkthrough of all user settings in Vikunja, including general preferences,
+  password, email, avatar, data export, import, CalDAV, API tokens, and account deletion.
+---
+
+To access your settings, click your username in the top right corner of the screen, then select **Settings**.
+
+The settings page is organized into several tabs, each covering a different area of your account.
+
+## General
+
+The General tab contains most of the day-to-day preferences for your account.
+
+### Name
+
+Change the display name shown to other users throughout Vikunja.
+
+{% callout type="info" %}
+When you are logged in via an external authentication provider (for example, Vikunja Cloud), your display name is managed by that provider. You will need to change it there instead.
+{% /callout %}
+
+### Default project
+
+Choose which project new tasks are added to when you create them from the [homepage](/help/dashboard). This is useful if you have a primary project you work with most often.
+
+### Default view
+
+Set the [view](/help/views) that is shown when you first open a project. The available views are:
+
+- **List** -- a simple list of tasks
+- **Gantt** -- a timeline view for planning
+- **Table** -- a spreadsheet-style view
+- **Kanban** -- a board with columns, typically grouped by bucket
+
+### Minimum priority filter
+
+Set a minimum priority level. Tasks with a priority below this value will not be shown. This helps you focus on the most important items.
+
+### Email reminders
+
+Toggle whether you receive task [reminders](/help/dates-and-reminders) via email. You can also enable a summary of overdue tasks delivered by email at a time you choose.
+
+### Language
+
+Set the language for the Vikunja interface.
+
+### Timezone
+
+Set your timezone. This affects how dates and times are displayed throughout Vikunja.
+
+### Week start day
+
+Choose which day your week starts on (for example, Sunday or Monday). This affects calendar-style views.
+
+### Date format
+
+Choose how dates are displayed. Many formats are available to pick from.
+
+### Color scheme
+
+Choose between **System** (follows your operating system setting), **Light**, or **Dark**.
+
+### Quick Add Magic mode
+
+Choose between Vikunja's own prefix-based shortcuts or Todoist-style shortcuts for quickly adding attributes to tasks as you create them. See [Quick Add Magic](/help/quick-add-magic) for full details on the available syntax.
+
+### Default task relation type
+
+Set the default [relation type](/help/task-relations) used when creating relations between tasks. For example, you might default to "related" or "subtask."
+
+### Display options
+
+A few additional toggles control visual behavior:
+
+- **Show tasks in the done bucket** -- whether completed tasks appear in the Done bucket on Kanban boards
+- **Background brightness** -- adjust the brightness of custom project backgrounds for readability
+
+### Privacy settings
+
+At the bottom of the General tab you will find privacy-related options:
+
+- **Allow other users to find you by searching for parts of your name** -- when enabled, other users can search for your display name (or part of it) to find your account, for example when adding you to a team or project.
+- **Allow other users to find you by your full email address** -- when enabled, others can look you up by typing your exact email address.
+
+These settings control whether other users can discover your account to add you to teams or projects. If both are disabled, others will not be able to find you through search.
+
+## Password
+
+Update your account password. You will need to enter your current password before setting a new one.
+
+{% callout type="info" %}
+When you are using external authentication (for example, Vikunja Cloud), password management is handled by the external provider and this section will be disabled. Change your password through that provider instead.
+{% /callout %}
+
+## Email
+
+Update the email address associated with your account.
+
+{% callout type="info" %}
+As with the password setting, this is disabled when your account uses external authentication. Manage your email through your authentication provider instead.
+{% /callout %}
+
+## Avatar
+
+Choose how your avatar is displayed across Vikunja. The available options are:
+
+- **Initials** -- generates an avatar from your name's initials
+- **Default avatar** -- a generic placeholder image
+- **Gravatar** -- uses the avatar linked to your email on [gravatar.com](https://gravatar.com)
+- **Marble** -- a colorful, gradient-based avatar generated for your account
+- **Upload** -- upload a custom image file to use as your avatar
+
+## Data export
+
+Export all of your data from Vikunja, including projects, tasks, attachments, and everything else associated with your account. See [Import & Export](/help/import-and-export) for more details.
+
+After confirming with your password (or confirming through your external authentication provider if you use one, such as Vikunja Cloud), the export is downloaded as a ZIP file. This file can be re-imported into Vikunja later if needed.
+
+## Import
+
+[Import](/help/import-and-export) data into Vikunja from other sources. The supported import formats are:
+
+- **Vikunja export** -- re-import a previously exported Vikunja ZIP file
+- **TickTick**
+- **Todoist**
+- **Trello**
+- **Microsoft To Do**
+
+## CalDAV
+
+This tab shows the CalDAV connection details you need to connect external calendar or task apps to Vikunja.
+
+See [CalDAV](/help/caldav) for full details on supported properties, URLs, and client compatibility.
+
+## API Tokens
+
+Create API tokens to interact with the Vikunja API without using your password. This is useful for scripts, automations, and third-party integrations.
+
+When creating a token, you can:
+
+- Give it a descriptive **title** so you remember what it is for
+- Choose **specific permissions** to limit what the token is allowed to do
+
+{% callout type="info" %}
+The token value is only shown once, immediately after creation. Vikunja does not store the token in plaintext, so you must copy and save it right away. If you lose it, you will need to create a new token.
+{% /callout %}
+
+For more information on using the API, see the [API documentation](/docs/api).
+
+## Delete account
+
+At the bottom of the settings page you can permanently delete your account. This action cannot be undone.
+
+{% callout type="info" %}
+When your account is managed by an external authentication provider (for example, Vikunja Cloud), account deletion may be disabled in Vikunja. You will need to delete your account through that provider instead.
+{% /callout %}

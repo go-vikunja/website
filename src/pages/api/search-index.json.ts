@@ -10,26 +10,32 @@ export interface SearchIndexItem {
   body: string
 }
 
-export async function GET() {
-  const docs = await getCollection('docs')
+async function buildIndex(collection: 'docs' | 'help', prefix: string): Promise<SearchIndexItem[]> {
+  const entries = await getCollection(collection)
 
-  const index: SearchIndexItem[] = await Promise.all(
-    docs.map(async (doc) => {
-      // Parse mdoc body to plain text
-      const { text, ast } = await mdocToPlainText(doc.body || '')
-
-      // Extract headings for boosting
+  return Promise.all(
+    entries.map(async (entry) => {
+      const { text, ast } = await mdocToPlainText(entry.body || '')
       const headings = extractHeadings(ast)
 
       return {
-        slug: `/docs/${doc.slug}`,
-        title: doc.data.title,
-        description: doc.data.description || '',
+        slug: `${prefix}${entry.slug}`,
+        title: entry.data.title,
+        description: entry.data.description || '',
         headings,
         body: text,
       }
     })
   )
+}
+
+export async function GET() {
+  const [docsIndex, helpIndex] = await Promise.all([
+    buildIndex('docs', '/docs/'),
+    buildIndex('help', '/help/'),
+  ])
+
+  const index = [...docsIndex, ...helpIndex]
 
   return new Response(
     JSON.stringify(index),

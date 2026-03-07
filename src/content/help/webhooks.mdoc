@@ -11,13 +11,13 @@ Starting with version 0.22.0, Vikunja allows you to define webhooks to notify ot
 
 ## How to create webhooks
 
-To create a webhook, in the project options select "Webhooks". The form will allow you to create and modify webhooks.
+To create a webhook, in the [project](/help/projects) options select "Webhooks". The form will allow you to create and modify webhooks.
 
 Check out [the api docs](https://try.vikunja.io/api/v1/docs#tag/webhooks) for information about how to create webhooks programmatically.
 
 ## Available events and their payload
 
-All events registered as webhook events in [the event listeners definition](https://github.com/go-vikunja/vikunja/blob/main/pkg/models/listeners.go#L40) can be used as webhook target.
+All events registered as webhook events in [the event listeners definition](https://github.com/go-vikunja/vikunja/blob/main/pkg/models/listeners.go) can be used as webhook target.
 
 A webhook payload will look similar to this:
 

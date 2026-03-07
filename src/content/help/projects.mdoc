@@ -1,0 +1,80 @@
+---
+title: Projects
+slug: projects
+description: >-
+  Learn how to create, organize, and manage projects in Vikunja, including
+  sub-projects, backgrounds, archiving, duplicating, and more.
+---
+
+A project is the main container for [tasks](/help/tasks) in Vikunja. Every task belongs to a project, and you can create as many projects as you need to organize your work.
+
+## The inbox project
+
+Every user has a default **Inbox** project.
+When you create a task from the [homepage](/help/dashboard) without specifying a project, it goes into your Inbox.
+Think of it as a quick-capture bucket for tasks you will organize later.
+
+## Creating a project
+
+To create a new project, click on *Projects* in the sidebar, then on the top right there is a button to create a project.
+
+## Project settings
+
+To access a project's settings, click the **three-dot menu** (context menu) next to the project title at the top or in the navigation.
+From there, select **Edit** to open the settings. The following options are available:
+
+- **Title:** The display name of the project.
+- **Parent project:** Assign this project as a sub-project of another project. You can also change this by dragging and dropping the project in the sidebar.
+- **Description:** An optional text description for the project.
+- **Identifier:** A short ID (e.g. `VIK`) used as a prefix for task numbers within this project. This makes it easier to reference individual tasks.
+- **Color:** A color associated with the project, shown in the sidebar and on the project overview page.
+
+## Sub-projects
+
+You can nest projects inside each other to create a hierarchy. There are two ways to move a project under another:
+
+- **Drag and drop** the project in the sidebar to place it under a parent project.
+- **Edit the project settings** and set the desired parent project.
+
+To create a sub-project directly, open the **three-dot menu** next to a project and select the option to create a sub-project. You can set a title and color for the new sub-project.
+
+## Background images
+
+You can set a background image for any project. Open the **three-dot menu** and look for the background option. There are two ways to set a background:
+
+- **Upload** a custom image from your device.
+- **Search Unsplash** for a photo to use as the background.
+
+{% callout type="info" %}
+The Unsplash integration requires an API key configured on the instance. If you are using Vikunja Cloud, this works out of the box.
+{% /callout %}
+
+## Archiving a project
+
+Archiving a project hides it from your default views and makes it read-only. You will not be able to edit tasks or change project settings while it is archived.
+
+To archive a project, open the **three-dot menu** and select **Archive**. You can unarchive it later from the same menu.
+
+## Duplicating a project
+
+To create a copy of an existing project, open the **three-dot menu** and select **Duplicate**. This creates a new project with copies of all tasks, views, sub-projects, and other settings.
+
+## Favoriting a project
+
+To mark a project as a favorite, hover over the project title in the **sidebar** or on the **project overview** page and click the **star** icon. Favorited projects appear at the top of the sidebar for quick access.
+
+## Deleting a project
+
+To delete a project, open the **three-dot menu** and select **Delete**. This will permanently remove the project, and all of its tasks and related data.
+
+{% callout type="info" %}
+Deleting a project cannot be undone. Make sure you no longer need the project or its tasks before deleting it.
+{% /callout %}
+
+## Related features
+
+Projects support several additional features covered in their own documentation pages:
+
+- [Sharing and Teams](/help/sharing-and-teams) - Share projects with other users or teams.
+- [Views](/help/views) - Configure how tasks are displayed within a project (list, kanban, gantt, table).
+- [Webhooks](/help/webhooks) - Set up webhooks to notify external services of events in a project.

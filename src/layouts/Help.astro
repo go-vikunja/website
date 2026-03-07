@@ -41,48 +41,53 @@ function buildToc(headings: MarkdownHeading[]) {
 
 const toc = buildToc(headings)
 
-
 interface SectionItem {
 	url: string;
 	title: string;
 }
 
-type DocumentationArray = [string, SectionItem[]][];
+const sidebarOrder = [
+	'dashboard',
+	'projects',
+	'tasks',
+	'relation_kinds',
+	'dates-and-reminders',
+	'views',
+	'labels',
+	'filters',
+	'quick-add-magic',
+	'sharing-and-teams',
+	'permissions',
+	'search-and-navigation',
+	'settings',
+	'import-and-export',
+	'caldav',
+	'webhooks',
+]
 
-const groupLabels: { [key: string]: string } = {
-	'setup': 'Setup',
-	'integrations': 'API & Integrations',
-	'development': 'Development',
-}
+async function getSidebarNavigation(): Promise<SectionItem[]> {
+	const help = await getCollection('help')
+	const itemsBySlug = new Map<string, SectionItem>()
 
-async function getSidebarNavigation(): Promise<DocumentationArray> {
-	const docs = await getCollection('docs')
-	const entries: { [key: string]: SectionItem[] } = {}
-
-	docs.forEach(d => {
-		const groupKey = d.id.split('/')[0]
-		if (!entries[groupKey]) {
-			entries[groupKey] = []
-		}
+	help.forEach(d => {
 		if (d.data.hideInMenu) {
 			return
 		}
-		entries[groupKey].push({
-			url: '/docs/' + d.slug,
+		itemsBySlug.set(d.slug, {
+			url: '/help/' + d.slug,
 			title: d.data.title,
 		})
 	})
 
-	const order = ['setup', 'integrations', 'development']
-
-	const sortedData = order.reduce((obj: { [key: string]: SectionItem[] }, key) => {
-		if (entries[key]) {
-			obj[key] = entries[key].sort((a: SectionItem, b: SectionItem) => a.title.localeCompare(b.title))
+	const ordered: SectionItem[] = []
+	for (const slug of sidebarOrder) {
+		const item = itemsBySlug.get(slug)
+		if (item) {
+			ordered.push(item)
 		}
-		return obj
-	}, {})
+	}
 
-	return Object.entries(sortedData)
+	return ordered
 }
 
 const sidebarEntries = await getSidebarNavigation()
@@ -98,34 +103,29 @@ const sidebarEntries = await getSidebarNavigation()
 
         <button
                 class="navbar-burger m-2 mt-6 block lg:hidden rounded-xs bg-gray-200 dark:bg-gray-800 py-2 px-1 text-center"
-                data-target="docsMenu"
+                data-target="helpMenu"
         >
             Toggle Menu
         </button>
-        <aside class="w-full lg:w-1/5 hidden lg:block order-1 px-2 text-gray-600 dark:text-gray-300" id="docsMenu">
+        <aside class="w-full lg:w-1/5 hidden lg:block order-1 px-2 text-gray-600 dark:text-gray-300" id="helpMenu">
             <!-- Search Button for desktop (in sidebar) -->
             <div class="pb-4 pt-2">
                 <SearchButton />
             </div>
 
             <nav class="pb-4">
-				{sidebarEntries.map(([key, entries]) => (
-                        <p class="pb-2 pt-4 pl-2 font-display uppercase font-bold text-gray-500 dark:text-gray-400">
-							{groupLabels[key] || key}
-                        </p>
-                        <ul>
-							{entries.map(item => (
-                                    <li>
-                                        <a
-                                                href={item.url}
-                                                class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-800 transition ' + ((Astro.url.pathname === item.url || Astro.url.pathname === item.url + '/') && ' bg-gray-100! dark:bg-gray-800! text-primary')}
-                                        >
-											{item.title}
-                                        </a>
-                                    </li>
-							))}
-                        </ul>
-				))}
+                <ul>
+                    {sidebarEntries.map(item => (
+                            <li>
+                                <a
+                                        href={item.url}
+                                        class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-800 transition ' + ((Astro.url.pathname === item.url || Astro.url.pathname === item.url + '/') && ' bg-gray-100! dark:bg-gray-800! text-primary')}
+                                >
+                                    {item.title}
+                                </a>
+                            </li>
+                    ))}
+                </ul>
             </nav>
         </aside>
         <main class="w-full lg:w-3/5 p-4 pt-6 lg:pt-2 order-3 lg:order-2" id="main-content">
@@ -135,7 +135,7 @@ const sidebarEntries = await getSidebarNavigation()
             </Prose>
         </main>
         <div class="w-full lg:w-1/5 pl-4 order-2 lg:order-3">
-			{toc.length > 0 &&
+            {toc.length > 0 &&
                     <div class="sticky top-2">
                         <div class="font-display font-bold">
                             On this page
@@ -143,12 +143,12 @@ const sidebarEntries = await getSidebarNavigation()
                         <nav class="text-gray-600 dark:text-gray-300 pt-2 max-h-[calc(100vh-2rem)] overflow-y-auto overflow-x-hidden"
                              id="toc">
                             <ul>
-								{toc.map((heading) =>
+                                {toc.map((heading) =>
                                         <TableOfContentsHeading heading={heading}/>)}
                             </ul>
                         </nav>
                     </div>
-			}
+            }
         </div>
     </div>
 </Layout>
