@@ -6,56 +6,86 @@ description: >-
   Filter by due date, priority, labels, assignees, and more.
 ---
 
-Filters let you narrow down your task list so you only see the tasks that matter right now -- for example, all high-priority tasks due this week, or everything assigned to you that is not yet done.
+Filters let you narrow down your task list so you only see what matters right now. Instead of scrolling through everything, you write a short query and Vikunja shows only the matching tasks.
 
-You write a short filter query using field names, operators, and values. Vikunja applies the query and shows only matching tasks. The filter editor offers autocomplete for field names, label names, usernames, and project names as you type.
+## Common examples
 
-## Where you can use filters
+Copy any of these into a filter field to try it out:
 
-- **[Views](/help/views):** Each view in a project can have its own filter. Only tasks matching the filter appear in that view.
-- **[Saved filters](/help/saved-filters):** Create a personal, cross-project filter that appears in your sidebar. See [Saved Filters vs. Views](/help/views#saved-filters-vs-views) for how these compare.
+|                                         |                                           |
+|-----------------------------------------|-------------------------------------------|
+| `done = false`                          | All undone tasks                          |
+| `dueDate < now`                         | Overdue tasks                             |
+| `dueDate > now && dueDate < now+7d`     | Tasks due in the next 7 days              |
+| `done = false && priority >= 3`         | Undone tasks with high priority (3+)      |
+| `assignees in currentUser`              | Tasks assigned to you                     |
+| `labels in bug`                         | Tasks with the "bug" label                |
+| `labels in bug, urgent`                 | Tasks labeled "bug" or "urgent"           |
+| `done = false && dueDate < now`         | Undone overdue tasks                      |
+
+You can combine any of these patterns. For example, undone high-priority tasks due this week:
+
+```
+done = false && priority >= 3 && dueDate > now && dueDate < now+7d
+```
+
+## Where to use filters
+
+- **[Views](/help/views):** Add a filter to any view so it only shows matching tasks.
+- **[Saved filters](/help/saved-filters):** Create a reusable filter that appears in your sidebar and works across all your projects.
 - **[Dashboard](/help/dashboard):** Set a saved filter to control which tasks appear on your home screen.
 
 {% callout type="info" %}
-**"Include Tasks which don't have a value set"** is enabled by default. This means a filter like `assignees in user1` will also return tasks with *no* assignee at all. If this is not what you want, disable this toggle in the filter settings.
+**"Include Tasks which don't have a value set"** is on by default. A filter like `assignees in user1` will also return tasks with *no* assignee. Disable this toggle in the filter settings if you only want tasks that have a value.
 {% /callout %}
 
-## Examples
+## How to write a filter
 
-Here are some common filter queries to get you started:
+A filter query has three parts: a **field**, an **operator**, and a **value**.
 
-|                                                      |                                                             |
-|------------------------------------------------------|-------------------------------------------------------------|
-| `priority = 4`                                       | Tasks with priority level 4                                 |
-| `dueDate < now`                                      | Tasks with a due date in the past                           |
-| `done = false && priority >= 3`                      | Undone tasks with priority 3 or higher                      |
-| `assignees in user1, user2`                          | Tasks assigned to either user1 or user2                     |
-| `labels in bug, urgent`                              | Tasks with the "bug" or "urgent" label                      |
-| `(priority = 1 \|\| priority = 2) && dueDate <= now` | Tasks with priority 1 or 2 that are overdue                 |
+```
+priority >= 3
+```
 
-## Available fields
+- `priority` is the field (what you are checking)
+- `>=` is the operator (how to compare)
+- `3` is the value (what to compare against)
 
-You can filter on the following task properties:
+To combine conditions, use `&&` (and) or `||` (or):
 
-|               |                                                                                           |
-|---------------|-------------------------------------------------------------------------------------------|
-| `done`        | Whether the task is completed or not                                                      |
-| `priority`    | The priority level of the task (1–5)                                                      |
-| `percentDone` | The percentage of completion (0–100)                                                      |
-| `dueDate`     | The [due date](/help/dates-and-reminders) of the task                                     |
-| `startDate`   | The [start date](/help/dates-and-reminders) of the task                                   |
-| `endDate`     | The [end date](/help/dates-and-reminders) of the task                                     |
-| `doneAt`      | When the task was completed                                                               |
-| `assignees`   | The [assignees](/help/tasks#assignees) of the task                                        |
-| `labels`      | The [labels](/help/labels) on the task                                                    |
-| `project`     | The [project](/help/projects) the task belongs to (only available in [saved filters](/help/saved-filters)) |
-| `reminders`   | The [reminders](/help/dates-and-reminders) set on the task                                |
-| `created`     | When the task was created                                                                 |
-| `updated`     | When the task was last updated                                                            |
+```
+done = false && priority >= 3
+```
 
-All strings must be either a single word or enclosed in `"` or `'`. This includes date values like `"2024-03-11"`.
+Use parentheses to group conditions:
 
-## Operators
+```
+(priority = 1 || priority = 2) && dueDate <= now
+```
+
+The filter editor offers autocomplete for field names, label names, usernames, and project names as you type.
+
+### Fields
+
+|               |                                                                                               |
+|---------------|-----------------------------------------------------------------------------------------------|
+| `done`        | Whether the task is completed (`true` or `false`)                                             |
+| `priority`    | Priority level (1--5)                                                                         |
+| `percentDone` | Completion percentage (0--100)                                                                |
+| `dueDate`     | The [due date](/help/dates-and-reminders)                                                     |
+| `startDate`   | The [start date](/help/dates-and-reminders)                                                   |
+| `endDate`     | The [end date](/help/dates-and-reminders)                                                     |
+| `doneAt`      | When the task was completed                                                                   |
+| `assignees`   | The [assignees](/help/tasks#assignees)                                                        |
+| `labels`      | The [labels](/help/labels) on the task                                                        |
+| `project`     | The [project](/help/projects) (only in [saved filters](/help/saved-filters))                  |
+| `reminders`   | The [reminders](/help/dates-and-reminders) set on the task                                    |
+| `created`     | When the task was created                                                                     |
+| `updated`     | When the task was last updated                                                                |
+
+Strings with spaces or special characters must be wrapped in quotes: `"2024-03-11"`, `"my label"`.
+
+### Operators
 
 |          |                                                    |
 |----------|----------------------------------------------------|
@@ -69,25 +99,31 @@ All strings must be either a single word or enclosed in `"` or `'`. This include
 | `in`     | Matches any value in a comma-separated list        |
 | `not in` | Does not match any value in a comma-separated list |
 
-### Combining conditions
+## Relative dates
 
-|             |              |                                           |
-|-------------|--------------|-------------------------------------------|
-| `&&`        | AND operator | Matches if all conditions are true        |
-| `\|\|`      | OR operator  | Matches if any of the conditions are true |
-| `(` and `)` | Parentheses  | Group conditions together                 |
+Instead of typing a fixed date, use `now` so your filter stays current automatically.
 
-## Relative dates (date math)
+Add or subtract time from `now` using units like `d` (days), `w` (weeks), or `M` (months):
 
-Instead of typing a specific date, you can use relative expressions like `now` to create filters that stay current -- for example, "tasks due in the next 7 days."
+|                    |                                  |
+|--------------------|----------------------------------|
+| `now`              | Right now                        |
+| `now+1d`           | Tomorrow                         |
+| `now-1d`           | Yesterday                        |
+| `now+7d`           | One week from now                |
+| `now+1M`           | One month from now               |
 
-Each expression starts with `now` (or a fixed date followed by `||`), then adds or subtracts time:
+Use `/d` to round down to the start of the day, which is useful for "today" or "this week" filters:
 
-* `+1d`: Add one day
-* `-1d`: Subtract one day
-* `/d`: Round down to the nearest day
+|                    |                                  |
+|--------------------|----------------------------------|
+| `now/d`            | Start of today                   |
+| `now+7d/d`         | Start of the day, 7 days from now |
 
-### Supported time units
+{% dateMathExamples %}
+{% /dateMathExamples %}
+
+### All time units
 
 |     |         |
 |-----|---------|
@@ -99,11 +135,6 @@ Each expression starts with `now` (or a fixed date followed by `||`), then adds 
 | `M` | Months  |
 | `y` | Years   |
 
-### Examples
-
-{% dateMathExamples %}
-{% /dateMathExamples %}
-
 ## API reference
 
-If you are using filters through the Vikunja API rather than the web UI, see the [Filter API Reference](/docs/filters) for details on field names, query parameters, and other differences.
+If you use filters through the Vikunja API rather than the web UI, see the [Filter API Reference](/docs/filters) for field names, query parameters, and other differences.
