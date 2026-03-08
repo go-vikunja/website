@@ -6,7 +6,7 @@ description: >-
   services when tasks, projects, or other events occur.
 ---
 
-Webhooks let Vikunja send automatic notifications to other services whenever something happens -- for example, when a task is created, completed, or commented on. This is useful for connecting Vikunja to chat tools, automation platforms, or custom scripts.
+Webhooks let Vikunja send automatic notifications to other services whenever something happens in your projects, like when a task is created, completed, or commented on. This is useful for connecting Vikunja to chat tools, automation platforms, or custom scripts.
 
 ## Types of webhooks
 
@@ -101,5 +101,5 @@ To create and manage webhooks programmatically, see the [Webhooks API Reference]
 ## Notes
 
 - Webhooks are sent once. If delivery fails (e.g., the target URL is unreachable), Vikunja does not retry.
-- Webhooks cannot be created via link shares — you need a user account.
+- Webhooks cannot be created via link shares. You need a user account.
 - Instance administrators can configure webhook timeouts and proxy settings. See the [webhook configuration options](/docs/config-options#0--webhooks) for details.
