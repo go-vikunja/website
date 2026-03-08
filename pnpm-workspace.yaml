@@ -1,5 +1,6 @@
 packages:
   - '.'
+  - 'scripts/screenshots'
 
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
