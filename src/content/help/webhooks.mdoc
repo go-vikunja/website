@@ -2,55 +2,104 @@
 title: Webhooks
 slug: webhooks
 description: >-
-  Learn how to create and manage webhooks in Vikunja, including available
-  events, payload structure, and security considerations for safe
-  implementation.
+  Learn how to create and manage webhooks in Vikunja to notify external
+  services when tasks, projects, or other events occur.
 ---
 
-Vikunja allows you to define webhooks to notify other services of events happening in Vikunja.
+Webhooks let Vikunja send automatic notifications to other services whenever something happens -- for example, when a task is created, completed, or commented on. This is useful for connecting Vikunja to chat tools, automation platforms, or custom scripts.
 
-## How to create webhooks
+## Types of webhooks
 
-To create a webhook, in the [project](/help/projects) options select "Webhooks". The form will allow you to create and modify webhooks.
+Vikunja has two types of webhooks:
 
-Check out [the api docs](https://try.vikunja.io/api/v1/docs#tag/webhooks) for information about how to create webhooks programmatically. You can create [API tokens](/help/settings#api-tokens) in your settings to authenticate with the API.
+- **Project webhooks:** Trigger when something happens in a specific project (e.g., a task is created or a comment is added). Set these up from the project settings.
+- **User webhooks:** Trigger for events directed at you personally, such as task reminders firing or tasks becoming overdue. Set these up from your account settings.
 
-## Available events and their payload
+## Creating a webhook
 
-All events registered as webhook events in [the event listeners definition](https://github.com/go-vikunja/vikunja/blob/main/pkg/models/listeners.go) can be used as webhook target.
+### Project webhooks
 
-A webhook payload will look similar to this:
+1. Open the [project](/help/projects) where you want the webhook.
+2. Go to the project settings and select **Webhooks**.
+3. Fill in the form:
+   - **Target URL** (required): The URL that Vikunja will send data to (must start with `http://` or `https://`).
+   - **Events** (required): Choose which events should trigger the webhook.
+   - **Secret** (optional): A shared secret for verifying that requests really come from Vikunja. See [Signing](#signing) below.
+   - **Basic Auth** (optional): Click **Use Basic Auth?** to enter a username and password if the target URL requires it.
+4. Click **Save**.
+
+### User webhooks
+
+1. Open your **[Settings](/help/settings)** and go to the **Webhooks** section.
+2. Fill in the same form as above. User webhooks only allow user-directed events (reminders and overdue notifications).
+
+## Available events
+
+### Project events
+
+These events are available for project webhooks:
+
+|                            |                                                    |
+|----------------------------|----------------------------------------------------|
+| `task.created`             | A task was created                                 |
+| `task.updated`             | A task was updated                                 |
+| `task.deleted`             | A task was deleted                                 |
+| `task.assignee.created`    | An assignee was added to a task                    |
+| `task.assignee.deleted`    | An assignee was removed from a task                |
+| `task.comment.created`     | A comment was added to a task                      |
+| `task.comment.edited`      | A comment was edited                               |
+| `task.comment.deleted`     | A comment was deleted                              |
+| `task.attachment.created`  | An attachment was added to a task                  |
+| `task.attachment.deleted`  | An attachment was removed from a task              |
+| `task.relation.created`    | A relation between tasks was created               |
+| `task.relation.deleted`    | A relation between tasks was removed               |
+| `project.updated`          | The project was updated                            |
+| `project.deleted`          | The project was deleted                            |
+| `project.shared.user`      | The project was shared with a user                 |
+| `project.shared.team`      | The project was shared with a team                 |
+
+### User events
+
+These events are available for user webhooks:
+
+|                            |                                                    |
+|----------------------------|----------------------------------------------------|
+| `task.reminder.fired`      | A reminder for a task fired                        |
+| `task.overdue`             | A task became overdue                              |
+| `tasks.overdue`            | Multiple tasks became overdue                      |
+
+## Editing and deleting webhooks
+
+To edit or delete a webhook, go to the same settings page where you created it (project settings for project webhooks, account settings for user webhooks). Your existing webhooks are listed there with options to modify or remove them.
+
+## Signing
+
+If you set a **secret** when creating the webhook, Vikunja includes an `X-Vikunja-Signature` header in every request. This header contains an HMAC-SHA256 signature of the request body, which lets the receiving service verify that the request genuinely came from Vikunja.
+
+See [webhooks.fyi](https://webhooks.fyi/security/hmac) for details on how to validate HMAC signatures.
+
+## Payload format
+
+Every webhook request sends a JSON body with this structure:
 
 ```json
 {
-	"event_name": "task.created",
-	"time": "2023-10-17T19:39:32.924194436+02:00",
-	"data": {}
+  "event_name": "task.created",
+  "time": "2023-10-17T19:39:32.924194436+02:00",
+  "data": {}
 }
 ```
 
-The `data` property will contain the raw event data.
+- `event_name`: Which event triggered the webhook.
+- `time`: When the webhook was sent, in ISO 8601 format.
+- `data`: The event data, containing the relevant objects (task, project, user, etc.) depending on the event type.
 
-The `time` property holds the time when the webhook payload data was sent.
-It always uses the ISO 8601 format with date, time and time zone offset.
+## API reference
 
-## Security considerations
+To create and manage webhooks programmatically, see the [Webhooks API Reference](/docs/webhooks). You can create [API tokens](/help/settings#api-tokens) in your settings to authenticate with the API.
 
-### Signing
+## Notes
 
-Vikunja allows you to provide a secret when creating the webhook.
-If you set a secret, all outgoing webhook requests will contain an `X-Vikunja-Signature` header with an HMAC signature over the webhook JSON payload.
-
-Check out [webhooks.fyi](https://webhooks.fyi/security/hmac) for more information about how to validate the HMAC signature.
-
-### Hosting webhook infrastructure
-
-Vikunja has support to use [mole](https://github.com/frain-dev/mole) as a proxy for outgoing webhook requests.
-This allows you to prevent SSRF attacks on your own infrastructure.
-
-You should use this and [configure it appropriately](/docs/config-options#0--webhooks) if you're not the only one using your Vikunja instance.
-
-Check out [webhooks.fyi](https://webhooks.fyi/best-practices/webhook-providers#implement-security-on-egress-communication) for more information about the attack vector and reasoning to prevent this.
-
-### Basic Auth
-If the webhook target you have configured requires Basic Auth, you may configure it by clicking on the `Use Basic Auth?` button, which will expand a form where you may enter the Basic Auth Username and Password. All outgoing webhook requests will contain an `Authorization: Basic` header.
+- Webhooks are sent once. If delivery fails (e.g., the target URL is unreachable), Vikunja does not retry.
+- Webhooks created via link shares are not supported -- you need a user account.
+- Instance administrators can configure webhook timeouts and proxy settings. See the [webhook configuration options](/docs/config-options#0--webhooks) for details.

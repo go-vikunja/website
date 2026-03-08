@@ -1,90 +1,91 @@
 ---
-title: Filter Syntax
+title: Filters
 slug: filters
 description: >-
-  Learn how to filter tasks in Vikunja using SQL-like syntax. Discover
-  available fields, operators, and examples for effective task management.
+  Learn how to filter tasks in Vikunja to find exactly the tasks you need.
+  Filter by due date, priority, labels, assignees, and more.
 ---
 
-To filter tasks via the api, you can use a special query syntax.
+Filters let you narrow down your task list so you only see the tasks that matter right now -- for example, all high-priority tasks due this week, or everything assigned to you that is not yet done.
 
-## Filters in the web UI
+You write a short filter query using field names, operators, and values. Vikunja applies the query and shows only matching tasks. The filter editor offers autocomplete for field names, label names, usernames, and project names as you type.
 
-When using filters in Vikunja's web interface, there is an important default setting to be aware of:
+## Where you can use filters
+
+- **[Views](/help/views):** Each view in a project can have its own filter. Only tasks matching the filter appear in that view.
+- **[Saved filters](/help/saved-filters):** Create a personal, cross-project filter that appears in your sidebar. See [Saved Filters vs. Views](/help/views#saved-filters-vs-views) for how these compare.
+- **[Dashboard](/help/dashboard):** Set a saved filter to control which tasks appear on your home screen.
 
 {% callout type="info" %}
 **"Include Tasks which don't have a value set"** is enabled by default. This means a filter like `assignees in user1` will also return tasks with *no* assignee at all. If this is not what you want, disable this toggle in the filter settings.
 {% /callout %}
 
-### Saved Filters vs Views
+## Examples
 
-Filters can be used in two ways: as [**saved filters**](/help/saved-filters) (personal, cross-project) or applied to [**views**](/help/views) (per-project). See [Saved Filters](/help/saved-filters) to learn how to create and manage them, or [Views — Saved filters vs. views](/help/views#saved-filters-vs-views) for how these two concepts compare.
+Here are some common filter queries to get you started:
+
+|                                                      |                                                             |
+|------------------------------------------------------|-------------------------------------------------------------|
+| `priority = 4`                                       | Tasks with priority level 4                                 |
+| `dueDate < now`                                      | Tasks with a due date in the past                           |
+| `done = false && priority >= 3`                      | Undone tasks with priority 3 or higher                      |
+| `assignees in user1, user2`                          | Tasks assigned to either user1 or user2                     |
+| `labels in bug, urgent`                              | Tasks with the "bug" or "urgent" label                      |
+| `(priority = 1 \|\| priority = 2) && dueDate <= now` | Tasks with priority 1 or 2 that are overdue                 |
 
 ## Available fields
 
-The available fields for filtering include:
+You can filter on the following task properties:
 
 |               |                                                                                           |
 |---------------|-------------------------------------------------------------------------------------------|
 | `done`        | Whether the task is completed or not                                                      |
 | `priority`    | The priority level of the task (1–5)                                                      |
-| `percentDone` | The percentage of completion for the task (0–100)                                         |
-| `dueDate`     | The [due date](/help/dates-and-reminders) of the task                                                                  |
-| `startDate`   | The [start date](/help/dates-and-reminders) of the task                                                                |
-| `endDate`     | The [end date](/help/dates-and-reminders) of the task                                                                  |
-| `doneAt`      | The date and time when the task was completed                                             |
-| `assignees`   | The assignees of the task                                                                 |
-| `labels`      | The [labels](/help/labels) associated with the task                                                       |
-| `project`     | The [project](/help/projects) the task belongs to. Only available for saved filters, not on a project level |
-| `reminders`   | The [reminders](/help/dates-and-reminders) of a task.                                                                  |
-| `created`     | The time and date when the task was created.                                              |
-| `updated`     | The time and date when the task was updated.                                              |
+| `percentDone` | The percentage of completion (0–100)                                                      |
+| `dueDate`     | The [due date](/help/dates-and-reminders) of the task                                     |
+| `startDate`   | The [start date](/help/dates-and-reminders) of the task                                   |
+| `endDate`     | The [end date](/help/dates-and-reminders) of the task                                     |
+| `doneAt`      | When the task was completed                                                               |
+| `assignees`   | The [assignees](/help/tasks#assignees) of the task                                        |
+| `labels`      | The [labels](/help/labels) on the task                                                    |
+| `project`     | The [project](/help/projects) the task belongs to (only available in [saved filters](/help/saved-filters)) |
+| `reminders`   | The [reminders](/help/dates-and-reminders) set on the task                                |
+| `created`     | When the task was created                                                                 |
+| `updated`     | When the task was last updated                                                            |
 
-{% callout type="info" %}
-All fields are in `snake_case` when accessed through the api.
-{% /callout %}
-
-You can use date math to set relative dates with any date field. [See below](#date-math) for an explanation.
-
-All strings must be either single-word or enclosed in `"` or `'`. This extends to date values like `2024-03-11`.
+All strings must be either a single word or enclosed in `"` or `'`. This includes date values like `"2024-03-11"`.
 
 ## Operators
 
-The available operators for filtering include:
+|          |                                                    |
+|----------|----------------------------------------------------|
+| `=`      | Equal to                                           |
+| `!=`     | Not equal to                                       |
+| `>`      | Greater than                                       |
+| `>=`     | Greater than or equal to                           |
+| `<`      | Less than                                          |
+| `<=`     | Less than or equal to                              |
+| `like`   | Matches a pattern (use `%` as wildcard)            |
+| `in`     | Matches any value in a comma-separated list        |
+| `not in` | Does not match any value in a comma-separated list |
 
-|          |                                                                                                                                                                                                                  |
-|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `!=`     | Not equal to                                                                                                                                                                                                     |
-| `=`      | Equal to                                                                                                                                                                                                         |
-| `>`      | Greater than                                                                                                                                                                                                     |
-| `>=`     | Greater than or equal to                                                                                                                                                                                         |
-| `<`      | Less than                                                                                                                                                                                                        |
-| `<=`     | Less than or equal to                                                                                                                                                                                            |
-| `like`   | Matches a pattern (using wildcard `%`)                                                                                                                                                                           |
-| `in`     | Matches any value in a comma-separated list of values                                                                                                                                                            |
-| `not in` | Matches any value not in a comma-separated list of values |
-
-To combine multiple conditions, you can use the following logical operators:
+### Combining conditions
 
 |             |              |                                           |
 |-------------|--------------|-------------------------------------------|
-| `&&`        | AND operator | matches if all conditions are true        |
-| `\|\|`      | OR operator  | matches if any of the conditions are true |
-| `(` and `)` | Parentheses  | for grouping conditions                   |
+| `&&`        | AND operator | Matches if all conditions are true        |
+| `\|\|`      | OR operator  | Matches if any of the conditions are true |
+| `(` and `)` | Parentheses  | Group conditions together                 |
 
-## Date Math
+## Relative dates (date math)
 
-Date Math allows you to specify relative dates which are resolved on the fly by Vikunja when applying the filter.
+Instead of typing a specific date, you can use relative expressions like `now` to create filters that stay current -- for example, "tasks due in the next 7 days."
 
-Each Date Math expression starts with an anchor date, which can either be `now`, or a date string ending with `||`.
+Each expression starts with `now` (or a fixed date followed by `||`), then adds or subtracts time:
 
-This anchor date can optionally be followed by one or more maths expressions, for example:
- 
 * `+1d`: Add one day
 * `-1d`: Subtract one day
 * `/d`: Round down to the nearest day
-
-These expressions are similar to the ones provided by [Grafana](https://grafana.com/docs/grafana/latest/dashboards/time-range-controls/) and [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/common-options.html#date-math).
 
 ### Supported time units
 
@@ -98,23 +99,11 @@ These expressions are similar to the ones provided by [Grafana](https://grafana.
 | `M` | Months  |
 | `y` | Years   |
 
-### Example date math expressions
+### Examples
 
 {% dateMathExamples %}
 {% /dateMathExamples %}
 
-## Filter Examples
+## API reference
 
-Here are some examples of filter queries:
-
-|                                                      |                                                             |
-|------------------------------------------------------|-------------------------------------------------------------|
-| `priority = 4`                                       | tasks with priority level 4                                 |
-| `dueDate < now`                                      | tasks with a due date in the past                           |
-| `done = false && priority >= 3`                      | undone tasks with priority level 3 or higher                |
-| `assignees in user1, user2`                          | tasks assigned to either user1 or user2                     |
-| `(priority = 1 \|\| priority = 2) && dueDate <= now` | tasks with priority level 1 or 2 and a due date in the past |
-
-{% callout type="info" %}
-When filtering by labels via the API, you must use the label's numeric ID, not its name (e.g. `labels in 1, 5`). To find a label's ID, use `GET /api/v1/labels`.
-{% /callout %}
+If you are using filters through the Vikunja API rather than the web UI, see the [Filter API Reference](/docs/filters) for details on field names, query parameters, and other differences.
