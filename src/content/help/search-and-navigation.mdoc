@@ -18,7 +18,23 @@ You can navigate through search results using the arrow keys and press `Enter` t
 
 ### Scoped Searching
 
-You can combine your search with [labels](/help/labels) and project names to narrow down results. For example, searching within a specific project or filtering by a label lets you quickly find exactly what you are looking for.
+You can narrow your search by adding prefixes for projects, labels, assignees, or priorities directly in the search box. The prefixes depend on your [Quick Add Magic mode](/help/settings#quick-add-magic-mode):
+
+**Vikunja mode (default):**
+
+- `+ProjectName` -- scope to a project
+- `*LabelName` -- scope to a label
+- `@AssigneeName` -- scope to an assignee
+- `!3` -- scope to a priority level
+
+**Todoist mode:**
+
+- `#ProjectName` -- scope to a project
+- `@LabelName` -- scope to a label
+- `+AssigneeName` -- scope to an assignee
+- `!3` -- scope to a priority level
+
+For example, typing `+Work meeting notes` finds tasks matching "meeting notes" inside the project named "Work". Typing `*urgent` finds all tasks with the "urgent" label.
 
 ### Quick Actions
 
