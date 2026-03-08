@@ -80,16 +80,19 @@ export async function initializeSearch(): Promise<void> {
 }
 
 /**
- * Search documents
+ * Search documents, optionally filtering by URL prefix (e.g. '/help/' or '/docs/')
  */
-export function search(query: string): SearchResult[] {
+export function search(query: string, pathPrefix?: string): SearchResult[] {
   if (!miniSearch || !query || query.trim().length < MIN_QUERY_LENGTH) {
     return []
   }
 
   const startTime = isDev ? performance.now() : 0
 
-  const results = miniSearch.search(query.trim()) as MiniSearchResult[]
+  let results = miniSearch.search(query.trim()) as MiniSearchResult[]
+  if (pathPrefix) {
+    results = results.filter(r => r.id.startsWith(pathPrefix))
+  }
   const parsed = results.slice(0, 10).map(result => parseSearchResult(result, query))
 
   if (isDev) {
