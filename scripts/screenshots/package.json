@@ -1,0 +1,17 @@
+{
+  "name": "vikunja-help-screenshots",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "screenshots": "playwright test",
+    "screenshots:headed": "playwright test --headed",
+    "screenshots:debug": "playwright test --debug",
+    "optimize": "npx tsx optimize.ts",
+    "all": "playwright test && npx tsx optimize.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.0",
+    "@faker-js/faker": "^9.0.0",
+    "sharp": "^0.33.0"
+  }
+}
