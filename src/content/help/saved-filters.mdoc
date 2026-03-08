@@ -1,0 +1,61 @@
+---
+title: Saved Filters
+slug: saved-filters
+description: >-
+  Learn how to create and manage saved filters in Vikunja to build personal,
+  cross-project task views using custom filter queries.
+---
+
+Saved filters let you create personal, cross-project task views based on a [filter query](/help/filters). Unlike [views](/help/views), which are tied to a single project and shared with its members, saved filters are private to your account and pull tasks from all your projects at once.
+
+This makes them useful for things like "all high-priority tasks across every project" or "tasks assigned to me that are due this week."
+
+## Creating a saved filter
+
+To create a saved filter, go to the project overview page and click **New saved filter**. You will be prompted to fill in the following:
+
+- **Title** (required): a name for the filter, up to 250 characters
+- **Description** (optional): a longer explanation of what the filter is for, with rich text formatting
+- **Filter query**: the [filter expression](/help/filters) that determines which tasks are shown
+
+The filter query uses the same syntax as project view filters. You can use all available [filter fields](/help/filters#available-fields), including the `project` field, which is only available in saved filters and lets you limit results to specific projects.
+
+{% callout type="info" %}
+The default filter for new saved filters is `done = false`, which shows only incomplete tasks.
+{% /callout %}
+
+## Editing a saved filter
+
+To edit a saved filter, open it from the sidebar, then click the three-dot menu next to its title and select **Edit**. You can change the title, description, and filter query.
+
+## Deleting a saved filter
+
+Open the filter's edit page and click **Delete** at the bottom. You will be asked to confirm before the filter is removed.
+
+## Sidebar and navigation
+
+Saved filters appear in the left sidebar alongside your projects, marked with a filter icon. You can also find them through the quick actions menu (Ctrl+K or Cmd+K on macOS).
+
+## Views within saved filters
+
+Each saved filter automatically gets multiple views, just like a regular project. You can switch between **List**, **Gantt**, **Table**, and **Kanban** views using the tabs at the top.
+
+When using the Kanban view on a saved filter, you can create and manage buckets the same way as in a regular project. Vikunja automatically keeps the kanban board in sync with the filter: tasks that start matching the filter are added to the default bucket, and tasks that no longer match are removed.
+
+## Favorites
+
+You can mark a saved filter as a favorite by clicking the star icon next to its title in the sidebar. Favorited filters appear in the **Favorites** section at the top of the sidebar for quick access.
+
+## Using saved filters on the dashboard
+
+You can use a saved filter to customize which tasks appear on your [dashboard](/help/dashboard). To do this:
+
+1. Create a saved filter with the query you want.
+2. Open your **[Settings](/help/settings)** and set the filter as the home screen filter.
+
+This is useful if you only want to see specific tasks when you log in, rather than everything from all projects.
+
+## Limitations
+
+- Saved filters are **personal**: only you can see and edit your saved filters. They cannot be shared with other users, teams, or via link shares.
+- Saved filters are **not available via link shares** at all.
