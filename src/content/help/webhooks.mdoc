@@ -7,7 +7,7 @@ description: >-
   implementation.
 ---
 
-Starting with version 0.22.0, Vikunja allows you to define webhooks to notify other services of events happening within Vikunja.
+Vikunja allows you to define webhooks to notify other services of events happening in Vikunja.
 
 ## How to create webhooks
 
@@ -29,7 +29,7 @@ A webhook payload will look similar to this:
 }
 ```
 
-The `data` property will contain the raw event data as it was registered in the `listeners.go` file.
+The `data` property will contain the raw event data.
 
 The `time` property holds the time when the webhook payload data was sent.
 It always uses the ISO 8601 format with date, time and time zone offset.
