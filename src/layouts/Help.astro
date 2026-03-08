@@ -46,48 +46,16 @@ interface SectionItem {
 	title: string;
 }
 
-const sidebarOrder = [
-	'dashboard',
-	'projects',
-	'tasks',
-	'relation_kinds',
-	'dates-and-reminders',
-	'views',
-	'labels',
-	'filters',
-	'quick-add-magic',
-	'sharing-and-teams',
-	'permissions',
-	'search-and-navigation',
-	'settings',
-	'import-and-export',
-	'caldav',
-	'webhooks',
-]
-
 async function getSidebarNavigation(): Promise<SectionItem[]> {
 	const help = await getCollection('help')
-	const itemsBySlug = new Map<string, SectionItem>()
 
-	help.forEach(d => {
-		if (d.data.hideInMenu) {
-			return
-		}
-		itemsBySlug.set(d.slug, {
+	return help
+		.filter(d => !d.data.hideInMenu)
+		.map(d => ({
 			url: '/help/' + d.slug,
 			title: d.data.title,
-		})
-	})
-
-	const ordered: SectionItem[] = []
-	for (const slug of sidebarOrder) {
-		const item = itemsBySlug.get(slug)
-		if (item) {
-			ordered.push(item)
-		}
-	}
-
-	return ordered
+		}))
+		.sort((a, b) => a.title.localeCompare(b.title))
 }
 
 const sidebarEntries = await getSidebarNavigation()
