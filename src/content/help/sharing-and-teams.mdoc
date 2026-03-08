@@ -34,6 +34,8 @@ Available permission levels are the same for users, teams, and link shares.
 
 Link shares let you generate a link that anyone can use to access the project -- no Vikunja account required. This is useful for sharing a project publicly or with people who do not have an account on your instance.
 
+### Creating a link share
+
 When creating a link share, you can configure the following options:
 
 - **Name** (optional): Give the link share a name. This name is displayed when the link share user writes comments on tasks, so others can identify where the comment came from.
@@ -41,6 +43,24 @@ When creating a link share, you can configure the following options:
 - **Permission level**: Choose from the same Read, Read & Write, or Admin permission levels described below.
 
 Once created, copy the generated link and share it with whoever needs access.
+
+### Managing link shares
+
+All link shares for a project are listed in the sharing settings. Each entry shows the share name (if set), who created it, the permission level, and the share link.
+
+For each link share, you can:
+
+- **Copy the link** to your clipboard
+- **Change the default view**: Select which view (List, Gantt, Table, or Kanban) opens when someone follows the link
+- **Delete the share**: Remove the link share entirely, immediately revoking access for anyone using it
+
+Link shares cannot be edited after creation. If you need to change the name, password, or permission level, delete the existing share and create a new one.
+
+### What recipients see
+
+When someone opens a link share, they can interact with the project according to the permission level you set, without needing a Vikunja account.
+
+If the link share is password-protected, the recipient is prompted to enter the password before they can see the project. Once authenticated, they have access for the duration of their session.
 
 ## Permission levels
 
