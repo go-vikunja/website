@@ -8,7 +8,17 @@ description: >-
 
 To access your settings, click your username in the top right corner of the screen, then select **Settings**.
 
-The settings page is organized into several tabs, each covering a different area of your account.
+## Settings worth checking first
+
+You can explore settings at any pace, but these are the ones most likely to improve your day-to-day experience early on:
+
+- **Default view** — choose whether projects open in List, Gantt, Table, or Kanban view. Pick the layout you prefer so you don't have to switch every time.
+- **Timezone** — make sure this matches where you are, otherwise due dates and reminders will be off.
+- **Email reminders** — turn these on if you want to receive reminders and overdue-task summaries by email.
+- **Quick Add Magic mode** — choose Vikunja-style or Todoist-style shortcuts for adding dates, labels, and other attributes while typing a task title. See [Quick Add Magic](/help/quick-add-magic) for the full syntax.
+- **Privacy settings** — decide whether other users can find you by name or email when they want to add you to a team or project.
+
+Everything below covers every setting on the page, organized by section.
 
 ## General
 
@@ -24,7 +34,7 @@ When you are logged in via an external authentication provider (for example, Vik
 
 ### Default project
 
-Choose which project new tasks are added to when you create them from the [dashboard](/help/dashboard). This is useful if you have a primary project you work with most often.
+Choose which project new tasks are added to when you create them from the [dashboard](/help/dashboard). If you have one project you work in most of the time, setting it here saves a step on every new task.
 
 ### Default view
 
@@ -32,13 +42,13 @@ Set the [view](/help/views) that is shown when you first open a project. Choose 
 
 ### Minimum priority
 
-Control which tasks show a colored priority badge in project views. Tasks with a priority below this setting still appear in your lists -- they just won't display their priority indicator.
+Control which tasks show a colored priority badge in project views. Tasks with a priority below this setting still appear in your lists — they just won't display their priority indicator.
 
 For example, if you set this to **High**, only tasks marked High, Urgent, or DO NOW will show a priority badge. Tasks with Low or Medium priority will still be listed, but without a visible priority label.
 
 ### Email reminders
 
-Toggle whether you receive task [reminders](/help/dates-and-reminders) via email. You can also enable a summary of overdue tasks delivered by email at a time you choose.
+Toggle whether you receive task [reminders](/help/dates-and-reminders) via email. You can also enable a daily summary of overdue tasks delivered at a time you choose — useful for catching tasks that slipped past their due date.
 
 ### Language
 
@@ -46,7 +56,7 @@ Set the language for the Vikunja interface.
 
 ### Timezone
 
-Set your timezone. This affects how dates and times are displayed throughout Vikunja.
+Set your timezone so that dates and times display correctly. If your due dates or reminders seem off by a few hours, this is the first thing to check.
 
 ### Week start day
 
@@ -78,27 +88,19 @@ Adjust the brightness of custom project backgrounds for readability.
 
 ### Privacy settings
 
-At the bottom of the General tab you will find privacy-related options:
+These options control whether other users can discover your account when adding people to teams or projects:
 
-- **Allow other users to find you by searching for parts of your name:** when enabled, other users can search for your display name (or part of it) to find your account, for example when adding you to a team or project.
-- **Allow other users to find you by your full email address:** when enabled, others can look you up by typing your exact email address.
+- **Allow other users to find you by searching for parts of your name:** other users can search for your display name (or part of it) to find your account.
+- **Allow other users to find you by your full email address:** others can look you up by typing your exact email address.
 
-These settings control whether other users can discover your account to add you to teams or projects. If both are disabled, others will only able to find you by searching for your username (not the same as your display name).
+If both are disabled, others can only find you by searching for your exact username (not the same as your display name). For shared instances where you collaborate with others, keeping at least one of these enabled makes it easier for teammates to find you.
 
-## Password
+## Password and Email
 
-Update your account password. You will need to enter your current password before setting a new one.
-
-{% callout type="info" %}
-When you are using external authentication (for example, Vikunja Cloud), password management is handled by the external provider and this section will be disabled. Change your password through that provider instead.
-{% /callout %}
-
-## Email
-
-Update the email address associated with your account.
+Update your account password or the email address associated with your account. When changing your password, you will need to enter the current one first.
 
 {% callout type="info" %}
-As with the password setting, this is disabled when your account uses external authentication. Manage your email through your authentication provider instead.
+When your account uses external authentication (for example, Vikunja Cloud), password and email management is handled by that provider. These sections will be disabled in Vikunja — make changes through your provider instead.
 {% /callout %}
 
 ## Avatar
