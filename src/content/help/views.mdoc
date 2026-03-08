@@ -68,11 +68,47 @@ The Kanban view organizes tasks into buckets (columns), which is great for workf
 
 ### Managing buckets
 
-- **Create a new bucket** by entering a title in the input field at the far right of the board.
-- **Collapse a bucket** to save screen space when you do not need to see its contents.
-- **Set a WIP (work-in-progress) limit** on a bucket to cap how many tasks it can hold. This aligns with Kanban methodology to avoid overloading a stage.
-- **Mark a bucket as "done bucket":** Any task dragged into this bucket will automatically be marked as done.
-- **Mark a bucket as "default bucket":** New tasks created from other views (such as list or table) will be placed in this bucket.
+To create a new bucket, enter a title in the input field at the far right of the board. You can rename a bucket by clicking its title and editing it inline.
+
+Each bucket has a three-dot menu in its header with options for configuring the bucket. From this menu you can set the WIP limit, mark it as the default or done bucket, collapse it, or delete it.
+
+You can reorder buckets by dragging and dropping them by their header.
+
+#### Deleting a bucket
+
+When you delete a bucket, all tasks in it are automatically moved to the default bucket. You cannot delete the last remaining bucket in a kanban view.
+
+#### WIP limits
+
+You can set a work-in-progress (WIP) limit on a bucket to cap how many tasks it should hold. This aligns with Kanban methodology to avoid overloading a stage.
+
+When a bucket reaches its limit:
+
+- The task count in the header turns red
+- The "Add a task" button in that bucket is disabled
+- Tasks cannot be dragged into the bucket from other buckets
+
+Tasks can still be dragged out of a full bucket or reordered within it.
+
+The bucket header shows the current task count alongside the limit (for example, "5/10"). You can enable an option in your [user settings](/help/settings) to always show the task count on buckets, even when no limit is set.
+
+#### Default bucket
+
+The default bucket is where new tasks are placed when they are created without a specific bucket, for example from the list or table view. It is also where tasks are moved when their original bucket is deleted.
+
+If no default bucket is explicitly set, the first bucket is used.
+
+#### Done bucket
+
+Marking a bucket as the "done bucket" creates a two-way link between the bucket and a task's done status:
+
+- When a task is dragged into the done bucket, it is automatically marked as done.
+- When a task is marked as done from anywhere else (for example, by checking it off in the list view), it is automatically moved into the done bucket.
+- When a task in the done bucket is marked as not done, it is moved back to the default bucket.
+
+#### Collapsing buckets
+
+Collapse a bucket to hide its contents and save screen space. Click the collapsed bucket to expand it again. The collapse state is saved in your browser and persists across page reloads.
 
 ### Cover images
 
