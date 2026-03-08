@@ -1,48 +1,65 @@
 ---
-title: "Help"
+title: Help
 layout: '../layouts/Help.astro'
-description: Learn how to use Vikunja to organize your tasks, projects, and teams. Find guides for all features including projects, labels, filters, sharing, and more.
+description: Learn how to use Vikunja day to day. Start with the basics, then jump to the feature you need.
 ---
 
-## New to Vikunja? Start here.
+## Start here
 
-This page walks you through the basics so you can get productive fast. For everything else, browse the topics in the sidebar.
+If you're new to Vikunja, these are the pieces to learn first:
 
-### How do I capture a task quickly?
+1. Create a task.
+2. Put it in the right project.
+3. Pick the view that fits your workflow.
+4. Use filters, search, and reminders to stay on top of it.
 
-Click the **quick-add bar** at the top of your [Dashboard](/help/dashboard) and type what you need to do. You can add a due date, label, or priority right in the same line using [Quick Add Magic](/help/quick-add-magic) — for example, `Buy groceries tomorrow !3` creates a task due tomorrow with priority 3.
+The links below answer the questions most people have first.
 
-### Where do my tasks live?
+## Capture a task fast
 
-Every task belongs to a [Project](/help/projects). Think of projects as folders for related work — a shopping list, a work sprint, a trip plan. You can nest projects inside each other to keep things tidy.
+Use the input at the top of your [dashboard](/help/dashboard) or at the top of the [list view](/help/views). You can type plain text, or use [Quick Add Magic](/help/quick-add-magic) to set details while you type.
 
-### What view should I use?
+Example: `Buy groceries tomorrow !3`
 
-Each project can be displayed as a [list, table, kanban board, or Gantt chart](/help/views). Start with **List** for a simple checklist, or try **Kanban** if you like dragging cards between columns.
+That creates a task due tomorrow with priority 3.
 
-### How do I find upcoming work?
+## Understand where tasks go
 
-Your [Dashboard](/help/dashboard) shows tasks due soon. For a more focused look, use the **Upcoming** section in the sidebar, or create a [Saved Filter](/help/saved-filters) to build a custom view across all your projects.
+Every task belongs to a [project](/help/projects). Use projects to group related work such as personal errands, a client account, or a team backlog. If you want a cross-project view, use a [saved filter](/help/saved-filters) instead.
 
-### How do I share a project?
+## Pick a view
 
-Open a project and go to its sharing settings. You can invite specific people, create a [team](/help/sharing-and-teams), or generate a **link share** so anyone with the link can view or edit.
+Each project can be shown in different [views](/help/views):
 
-### What settings matter first?
+- **List** for a simple task list
+- **Kanban** for moving work through stages
+- **Table** for seeing lots of fields at once
+- **Gantt** for planning work on a timeline
 
-Head to [Settings](/help/settings) to set your preferred language, time zone, and default project. You can also connect Vikunja to your calendar app via [CalDAV](/help/caldav).
+If you're unsure, start with **List**.
 
----
+## Stay on top of work
 
-### Keep going
+For day-to-day planning, start with:
 
-Once you're comfortable with the basics, explore these topics:
+- [Dashboard](/help/dashboard) for recent and upcoming work
+- [Dates & Reminders](/help/dates-and-reminders) for due dates, repeats, and reminders
+- [Search & Navigation](/help/search-and-navigation) for global search and keyboard shortcuts
+- [Filters](/help/filters) and [Saved Filters](/help/saved-filters) for custom views
 
-- [Tasks](/help/tasks) — Descriptions, labels, priorities, assignees, checklists, and more
-- [Dates & Reminders](/help/dates-and-reminders) — Due dates, repeating tasks, and reminders
-- [Labels](/help/labels) — Tag and categorize tasks across projects
-- [Filters](/help/filters) — Narrow down any task list with powerful filter syntax
-- [Search & Navigation](/help/search-and-navigation) — Keyboard shortcuts and global search
-- [Import & Export](/help/import-and-export) — Bring your data from Todoist, Trello, and others
+## Share with other people
 
-Looking for server setup, API documentation, or development guides? Head over to the [technical documentation](/docs).
+To collaborate, open a project and use its sharing menu. You can share with a single user, a [team](/help/sharing-and-teams), or create a link share.
+
+## Browse help topics
+
+Use these pages as your main starting points:
+
+- [Tasks](/help/tasks) for task details, comments, labels, assignees, and attachments
+- [Projects](/help/projects) for project structure, backgrounds, archiving, and favorites
+- [Views](/help/views) for list, table, kanban, and Gantt
+- [Sharing & Teams](/help/sharing-and-teams) for collaboration and permissions
+- [Settings](/help/settings) for account preferences, reminders, tokens, and imports
+- [Import & Export](/help/import-and-export) for moving data in and out of Vikunja
+
+If you need server setup, API details, or development guides, go to the [technical documentation](/docs).

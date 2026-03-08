@@ -10,15 +10,16 @@ Tasks are the core building blocks in Vikunja. Every to-do item, action item, or
 
 ### Quick reference
 
-- **Edit task details:** Click any task to open its detail view. Everything is editable from there.
-- **Create a task:** Use the input field at the top of most [views](/help/views), or from the [dashboard](/help/dashboard).
-- **Set attributes while creating:** Use [Quick Add Magic](/help/quick-add-magic) to add dates, labels, priorities, and more as you type.
-- **Move a task:** Drag it to another project in the sidebar, or change the project in the detail view.
+- **Open a task:** Click it in any [view](/help/views). In Gantt, double-click.
+- **Create a task:** Use the input at the top of the list view or on the [dashboard](/help/dashboard).
+- **Set details while typing:** Use [Quick Add Magic](/help/quick-add-magic) for dates, labels, priorities, and more.
+- **Move a task:** Change its project in the detail view, or drag it to another project from list and Kanban views.
 
 ## Opening a task
 
-Click on any task from the list, Kanban, Gantt, or table [view](/help/views) to open the **task detail view**. This is where you can see and edit all of a task's properties.
-From the Gantt view, you need to double-click to open a task.
+Click any task in the list, Kanban, or table [view](/help/views) to open the **task detail view**. In the Gantt view, double-click the task instead.
+
+The detail view is where you edit the task title, description, dates, labels, assignees, attachments, and everything else.
 
 ## Title
 
@@ -26,16 +27,15 @@ The task title is displayed at the top of the detail view. Click on it to edit i
 
 ## Description
 
-Below the title is a text editor for the task description. If the description is empty, the editor opens in edit mode automatically so you can start typing right away.
+Below the title is the description editor. If the task does not have a description yet, the editor opens in edit mode so you can start typing immediately.
 
-The editor supports all usual ways to format text (Headings, **Bold**, *italic*, underline, etc.)
-Markdown shortcuts are also available, and you can paste markdown content in the editor and it will be formatted.
+The editor supports standard rich-text formatting such as headings, **bold**, *italic*, and lists. Markdown shortcuts also work, and pasted Markdown is converted automatically.
 
-You can upload attachments directly in the editor by dragging a file into it or using the upload button.
+You can upload attachments directly in the editor by dragging in a file or using the upload button.
 
 ## Right sidebar
 
-The right sidebar of the task detail view contains a set of buttons and fields for managing the task's properties. The sections below walk through each one.
+The right sidebar holds the task properties and actions.
 
 ### Marking a task as done
 
@@ -43,17 +43,17 @@ Click the **Done** button at the top of the right sidebar to mark the task as co
 
 ### Subscribing to a task
 
-Click **Subscribe** in the right sidebar to subscribe to the task. When subscribed, you will receive notifications about changes to the task, including new comments, edits, and triggered [reminders](/help/dates-and-reminders).
+Click **Subscribe** to follow changes on the task. Subscribers receive notifications for comments, edits, and triggered [reminders](/help/dates-and-reminders).
 
 You are always subscribed if you created the task.
 
 ### Favoriting a task
 
-Click **Favorite** in the right sidebar to mark the task as a favorite. Favorited tasks appear in the **Favorites** project in the left sidebar menu, giving you quick access to important tasks across all your projects.
+Click **Favorite** to add the task to the **Favorites** project in the sidebar. This is useful for tasks you need to return to often.
 
 ### Labels
 
-Add labels to a task to tag it with extra markers. Labels are useful for categorizing and filtering tasks later.
+Labels help you categorize tasks and build filters later.
 
 Click the labels field in the right sidebar to search for and add existing labels, or create new ones on the fly.
 
@@ -61,17 +61,17 @@ See [Labels](/help/labels) for more details on creating and managing labels.
 
 ### Priority
 
-Set a priority from **Unset** to **Do Now** to mark different urgency levels.
+Set a priority from **Unset** to **Do Now**.
 
-You can use the priority to filter tasks.
+You can also use priority in [filters](/help/filters).
 
 ### Progress
 
-Set a percentage between **0** and **100** to indicate how far along the task is. This is a manual value you can update as work progresses.
+Set a percentage between **0** and **100** to track progress manually.
 
 ### Color
 
-Assign a color to the task. The color is primarily visible in the **Kanban** and **Gantt** [views](/help/views), making it easy to visually distinguish tasks at a glance.
+Assign a color to make the task stand out, especially in **Kanban** and **Gantt** [views](/help/views).
 
 ### Assignees
 
@@ -81,47 +81,45 @@ Only users who already have access to the project can be assigned to a task. See
 
 ### Dates
 
-A task can have a start date, end date, and due date.
-See [Dates & Reminders](/help/dates-and-reminders) for details.
+A task can have a start date, end date, and due date. See [Dates & Reminders](/help/dates-and-reminders) for details.
 
 ### Attachments
 
-Upload files to the task using the attachments section in the right sidebar.
-You can also upload files directly inside the description editor (see above).
+Upload files in the attachments section of the sidebar, or directly from the description editor.
 
 ### Relations
 
-Create relationships between tasks. For example, you can mark a task as a subtask, parent task, blocking task, or related task.
+Use relations to link tasks together, for example as subtasks, parent tasks, blockers, or related work.
 
-Click **Add a relation** in the right sidebar, then search for the task you want to link and choose the relation type.
+Click **Add a relation**, find the other task, then choose the relation type.
 
 See [Task Relations](/help/task-relations) for the full list of available relation types and how to use them.
 
 ## Moving a task
 
-You can move a task to a different project in two ways:
+You can move a task to another project in two ways:
 
 - **From the detail view:** Use the project field in the right sidebar to select a different project.
-- **From the list or kanban view:** Drag and drop the task from the list into another project in the left sidebar.
+- **From the list or Kanban view:** Drag the task onto another project in the sidebar.
 
 ## Comments
 
-Comments appear below the task description. They use the same rich text editor as the description, so you can format text as needed.
+Comments are shown below the task description and use the same editor.
 
 You can **mention other users** by typing `@` followed by their username. Mentioned users will receive a [notification](/help/search-and-navigation#notifications).
 
-Comment sort order can be toggled between oldest-first and newest-first. The sort toggle appears once the task has at least one comment.
+You can switch comment order between oldest-first and newest-first once the task has comments.
 
 ## Checklists
 
-To create a checklist, use the checkbox list feature in the description editor. Each checkbox item can be checked off independently.
+Use the checkbox list option in the description editor to create a checklist.
 
-The progress of checklist items is shown on the task card in the list view, giving you a quick overview of how many items are completed without opening the task.
+Checklist progress appears on the task card in the list view, so you can see completion at a glance.
 
 ## Quick Add Magic
 
-You can set many task attributes like due dates, labels, priorities, and assignees directly while creating a task using special syntax. See [Quick Add Magic](/help/quick-add-magic) for the full list of shortcuts.
+You can set dates, labels, priorities, assignees, and more while typing a task title. See [Quick Add Magic](/help/quick-add-magic) for the full syntax.
 
 ## Hover preview
 
-In the list view, hovering over a task shows a small popup preview. This preview includes the task title, description, creator, labels, and other key details, so you can get a quick summary without opening the full detail view.
+In the list view, hovering over a task opens a small preview with the title, description, creator, labels, and other key details.
