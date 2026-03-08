@@ -10,7 +10,9 @@ description: >-
 > It works well with some clients while having issues with others.
 > If you encounter issues, please [report them](https://code.vikunja.io/api/issues/new?body=[caldav])
 
-Vikunja supports managing tasks via the [caldav VTODO](https://tools.ietf.org/html/rfc5545#section-3.6.2) extension.
+Vikunja supports managing [tasks](/help/tasks) via the [caldav VTODO](https://tools.ietf.org/html/rfc5545#section-3.6.2) extension.
+
+You can find your CalDAV connection details in your [Settings](/help/settings) under the CalDAV tab.
 
 ## URLs
 
@@ -19,7 +21,7 @@ All URLs are located under the `/dav` subspace.
 URLs are:
 
 * `/principals/<username>/`: Returns URLs for project discovery. *Use this URL to initially make connections to new clients.*
-* `/projects/`: Used to manage projects
+* `/projects/`: Used to manage [projects](/help/projects)
 * `/projects/<Project ID>/`: Used to manage a single project
 * `/projects/<Project ID>/<Task UID>`: Used to manage a task on a project
 
@@ -34,7 +36,7 @@ Vikunja currently supports the following properties:
 * `CATEGORIES`
 * `COMPLETED`
 * `CREATED` (only Vikunja → Client)
-* `DUE`
+* `DUE` ([Due date](/help/dates-and-reminders))
 * `DURATION`
 * `DTSTAMP`
 * `DTSTART`
@@ -42,7 +44,7 @@ Vikunja currently supports the following properties:
 * `RELATED-TO` (parent/child relations)
 * `RRULE` (Recurrence) (only Vikunja → Client)
 * `STATUS` (only `COMPLETED` status, used to mark tasks as done)
-* `VALARM` (Reminders)
+* `VALARM` ([Reminders](/help/dates-and-reminders))
 
 Vikunja **currently does not** support these properties:
 
