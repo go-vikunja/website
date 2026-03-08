@@ -22,23 +22,13 @@ In the sharing settings, you can search for users by their username. If the othe
 
 Once you find the user, select the permission level you want to grant them (see [Permission levels](#permission-levels) below) and add the share.
 
+Available permission levels are the same for users, teams, and link shares.
+
 ## Sharing with teams
 
 You can share a project with any team you are a member of. In the sharing settings, search for the team by name, select the permission level, and add the share. All members of that team will then have access to the project at the specified permission level.
 
-## Permission levels
-
-Every sharing method (user, team, or link share) lets you set one of three permission levels:
-
-| Permission     | What it allows                                                                                     |
-|----------------|----------------------------------------------------------------------------------------------------|
-| **Read**       | View only. The user or team can see the project and its tasks but cannot edit anything.             |
-| **Read & Write** | Can read and edit tasks in the project, including creating new tasks and modifying existing ones. |
-| **Admin**      | Everything Read & Write allows, plus the ability to manage sharing settings -- add or remove other shares. |
-
-{% callout type="info" %}
-For technical details on how permissions are represented in the API, see [Permissions](/help/permissions).
-{% /callout %}
+Available permission levels are the same for users, teams, and link shares.
 
 ## Link shares
 
@@ -48,25 +38,43 @@ When creating a link share, you can configure the following options:
 
 - **Name** (optional): Give the link share a name. This name is displayed when the link share user writes comments on tasks, so others can identify where the comment came from.
 - **Password** (optional): Protect the link with a password. Anyone who opens the link will need to enter the password before they can access the project.
-- **Permission level**: Choose from the same Read, Read & Write, or Admin permission levels described above.
+- **Permission level**: Choose from the same Read, Read & Write, or Admin permission levels described below.
 
 Once created, copy the generated link and share it with whoever needs access.
+
+## Permission levels
+
+Every sharing method (user, team, or link share) lets you set one of three permission levels:
+
+| Permission     | What it allows                                                                                     |
+|----------------|----------------------------------------------------------------------------------------------------|
+| **Read**       | View only. The user or team can see the project and its tasks but cannot edit anything.             |
+| **Read & Write** | Can read and edit tasks in the project, including creating new tasks and modifying existing ones. |
+| **Admin**      | Everything Read & Write allows, plus the ability to manage sharing settings. |
+
+{% callout type="info" %}
+For technical details on how permissions are represented in the API, see [Permissions](/help/permissions).
+{% /callout %}
 
 ## Teams
 
 Teams let you group multiple users together so you can share projects with the whole group at once instead of adding each person individually.
 
-### Accessing teams
-
-You can access teams from the left sidebar menu.
+You can access all teams from the left sidebar menu.
 
 ### Creating a team
 
-To create a new team, go to the teams section and click the button to create a team. Give it a name and it will be created right away.
+To create a team, go to the teams section and click the button to create a team. Give it a name and it will be created right away.
+
+A team can also have a description.
 
 ### Managing team members
 
-Once a team is created, you can add new members by searching for their username and removing existing members from the team settings.
+Once a team is created, you can add new members by searching for them and removing existing members from the team settings.
+
+Searching for a team member requires the user's privacy settings to allow searching.
+You can always find a user by its exact username, and if they have it enabled by email or name.
+This is the same for sharing a project with an individual user.
 
 ### Team admin role
 
@@ -81,4 +89,6 @@ Being a team admin is about managing the team itself. Project-level permissions 
 
 ### Sharing projects with teams
 
-To share a project with a team, open the project sharing settings (three-dot menu next to the project title, then **Share**), switch to the teams tab, and search for the team. Select the desired permission level and add the share. All current and future members of that team will have access to the project.
+To share a project with a team, open the project sharing settings (three-dot menu next to the project title, then **Share**), in the team section.
+Select the desired permission level and add the share.
+All current and future members of that team will have access to the project.
