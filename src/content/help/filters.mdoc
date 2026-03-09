@@ -19,8 +19,8 @@ Copy any of these into a filter field to try it out:
 | `dueDate > now && dueDate < now+7d`     | Tasks due in the next 7 days              |
 | `done = false && priority >= 3`         | Undone tasks with high priority (3+)      |
 | `assignees in currentUser`              | Tasks assigned to you                     |
-| `labels in bug`                         | Tasks with the "bug" label                |
-| `labels in bug, urgent`                 | Tasks labeled "bug" or "urgent"           |
+| `labels in urgent`                      | Tasks with the "urgent" label             |
+| `labels in urgent, logistics`           | Tasks labeled "urgent" or "logistics"     |
 | `done = false && dueDate < now`         | Undone overdue tasks                      |
 
 You can combine any of these patterns. For example, undone high-priority tasks due this week:
@@ -38,7 +38,7 @@ done = false && priority >= 3 && dueDate > now && dueDate < now+7d
 - **[Dashboard](/help/dashboard):** Set a saved filter to control which tasks appear on your home screen.
 
 {% callout type="info" %}
-**"Include Tasks which don't have a value set"** is on by default. A filter like `assignees in user1` will also return tasks with *no* assignee. Disable this toggle in the filter settings if you only want tasks that have a value.
+**"Include Tasks which don't have a value set"** is on by default. A filter like `assignees in sarah` will also return tasks with *no* assignee. Disable this toggle in the filter settings if you only want tasks that have a value.
 {% /callout %}
 
 ![Include nulls toggle in filter settings](../../assets/images/help/filters-include-nulls.png)
@@ -89,7 +89,7 @@ The filter editor offers autocomplete for field names, label names, usernames, a
 | `created`     | When the task was created                                                                     |
 | `updated`     | When the task was last updated                                                                |
 
-Strings with spaces or special characters must be wrapped in quotes: `"2024-03-11"`, `"my label"`.
+Strings with spaces or special characters must be wrapped in quotes: `"2024-03-11"`, `"waiting on others"`.
 
 ### Operators
 
