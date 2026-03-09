@@ -1,5 +1,5 @@
 import {defineConfig, envField} from 'astro/config'
-import markdoc from '@astrojs/markdoc'
+import mdx from '@astrojs/mdx'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import sitemap from '@astrojs/sitemap'
@@ -16,15 +16,25 @@ export default defineConfig({
 		],
 	},
 	integrations: [
-		markdoc(),
+		mdx(),
 		sitemap(),
 	],
 	adapter: cloudflare(),
 	markdown: {
+		shikiConfig: {
+			themes: {
+				light: 'github-light',
+				dark: 'github-dark',
+			},
+			colorReplacements: {
+				'min-light': {
+					'#c2c3c5': '#808080',
+				},
+			},
+		},
 		rehypePlugins: [
 			rehypeSlug,
 			[
-				// When changing content here, also change in Heading component for mdoc files
 				rehypeAutolinkHeadings,
 				{
 					behavior: 'append',
