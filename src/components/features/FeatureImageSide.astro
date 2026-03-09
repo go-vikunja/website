@@ -3,11 +3,12 @@ import Screenshot from '../Screenshot.astro'
 
 interface Props {
 	image: any,
+	darkImage?: any,
 	orientation?: 'right' | 'left'
     alt: string
 }
 
-const {image, orientation: origOrientation, alt} = Astro.props
+const {image, darkImage, orientation: origOrientation, alt} = Astro.props
 
 const orientation = origOrientation ?? 'right'
 ---
@@ -16,6 +17,7 @@ const orientation = origOrientation ?? 'right'
             <div class="w-full md:w-1/2 mt-4 md:mt-0">
                 <Screenshot
                     src={image}
+                    darkSrc={darkImage}
                     class="object-contain object-top w-full"
                     alt={alt}
                 />
@@ -27,6 +29,7 @@ const orientation = origOrientation ?? 'right'
             <div class="w-full md:w-1/2 mt-4 md:mt-0">
                 <Screenshot
                     src={image}
+                    darkSrc={darkImage}
                     class="object-contain object-top w-full"
                     alt={alt}
                 />

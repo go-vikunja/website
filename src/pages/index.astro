@@ -4,14 +4,21 @@ import Screenshot from '../components/Screenshot.astro'
 import LinkCard from '../components/LinkCard.astro'
 
 import VikunjaTaskOverview from '../assets/images/vikunja/01-task-overview.png'
+import VikunjaTaskOverviewDark from '../assets/images/vikunja/01-task-overview-dark.png'
 import VikunjaTaskList from '../assets/images/vikunja/02-task-list.png'
+import VikunjaTaskListDark from '../assets/images/vikunja/02-task-list-dark.png'
 import VikunjaTaskGantt from '../assets/images/vikunja/03-task-gantt.png'
+import VikunjaTaskGanttDark from '../assets/images/vikunja/03-task-gantt-dark.png'
 import VikunjaTaskTable from '../assets/images/vikunja/04-task-table.png'
+import VikunjaTaskTableDark from '../assets/images/vikunja/04-task-table-dark.png'
 import VikunjaTaskKanban from '../assets/images/vikunja/05-task-kanban.png'
+import VikunjaTaskKanbanDark from '../assets/images/vikunja/05-task-kanban-dark.png'
 import VikunjaTaskDetail from '../assets/images/vikunja/06-task-detail.png'
+import VikunjaTaskDetailDark from '../assets/images/vikunja/06-task-detail-dark.png'
 import VikunjaQuickAdd from '../assets/images/vikunja/07-quick-add.png'
+import VikunjaQuickAddDark from '../assets/images/vikunja/07-quick-add-dark.png'
 import VikunjaTaskKanbanBackground from '../assets/images/vikunja/08-task-kanban-background.png'
-import VikunjaTaskDetailDark from '../assets/images/vikunja/09-task-detail-dark.png'
+import VikunjaTaskKanbanBackgroundDark from '../assets/images/vikunja/08-task-kanban-background-dark.png'
 
 import HeroLlama1 from '../assets/images/hero-llamas-small.jpg'
 import HeroLlama2 from '../assets/images/hero-llamas-2-small.jpg'
@@ -20,15 +27,14 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
 import FAQSection from '../components/FAQSection.astro'
 
 const carouselImages = [
-	{src: VikunjaTaskOverview, alt: 'Overview dashboard showing recently viewed projects and current tasks with due dates and labels.'},
-	{src: VikunjaTaskList, alt: 'Task management interface showing a list view with various task details and options.'},
-	{src: VikunjaTaskGantt, alt: 'Gantt view of task management system displaying tasks across June and July 2023.'},
-	{src: VikunjaTaskTable, alt: 'Table view of tasks with sortable columns for task details and status.'},
-	{src: VikunjaTaskKanban, alt: 'Kanban board view of tasks organized into Backlog, Doing, and Done columns.'},
-	{src: VikunjaTaskDetail, alt: 'Detailed task view with description, attached image of llamas, and task management options.'},
-	{src: VikunjaQuickAdd, alt: 'Command search interface overlay for quick task and project management.'},
-	{src: VikunjaTaskKanbanBackground, alt: 'Kanban board view of tasks overlaid on an aerial forest image background.'},
-	{src: VikunjaTaskDetailDark, alt: 'Detailed task view in dark mode with description, attached image of llamas, and task management options.'},
+	{src: VikunjaTaskOverview, darkSrc: VikunjaTaskOverviewDark, alt: 'Overview dashboard showing recently viewed projects and current tasks with due dates and labels.'},
+	{src: VikunjaTaskList, darkSrc: VikunjaTaskListDark, alt: 'Task management interface showing a list view with various task details and options.'},
+	{src: VikunjaTaskGantt, darkSrc: VikunjaTaskGanttDark, alt: 'Gantt view of task management system displaying tasks across June and July 2023.'},
+	{src: VikunjaTaskTable, darkSrc: VikunjaTaskTableDark, alt: 'Table view of tasks with sortable columns for task details and status.'},
+	{src: VikunjaTaskKanban, darkSrc: VikunjaTaskKanbanDark, alt: 'Kanban board view of tasks organized into Backlog, Doing, and Done columns.'},
+	{src: VikunjaTaskDetail, darkSrc: VikunjaTaskDetailDark, alt: 'Detailed task view with description, attached image of llamas, and task management options.'},
+	{src: VikunjaQuickAdd, darkSrc: VikunjaQuickAddDark, alt: 'Command search interface overlay for quick task and project management.'},
+	{src: VikunjaTaskKanbanBackground, darkSrc: VikunjaTaskKanbanBackgroundDark, alt: 'Kanban board view of tasks overlaid on an aerial forest image background.'},
 ]
 ---
 <Layout title="Vikunja: The open-source, self-hostable to-do app" description="Discover Vikunja, the open-source, self-hostable to-do app. Stay organized, collaborate with peers, and plan projects with elegance and privacy in mind.">
@@ -70,9 +76,10 @@ const carouselImages = [
 
             <div class="w-full max-w-6xl">
                 <div class="slider aspect-w-16 aspect-h-9 relative mt-8">
-					{carouselImages.map(({src, alt}) => (
+					{carouselImages.map(({src, darkSrc, alt}) => (
                             <Screenshot
                                     src={src}
+                                    darkSrc={darkSrc}
                                     class=""
                                     alt={alt}
                             />
