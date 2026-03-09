@@ -48,7 +48,7 @@ test.describe('Projects screenshots', () => {
   })
 
   test('Project overview page', async ({authenticatedPage: page, screenshot}) => {
-    // Create multiple projects
+    // Create multiple projects — don't visit any first so there are no "last viewed" entries
     const projects = await ProjectFactory.create(4, {
       title: (i: number) => ['Office Move', 'Team Retreat Planning', 'Personal', 'Shared Documents'][i - 1],
     })
@@ -57,6 +57,7 @@ test.describe('Projects screenshots', () => {
       await createDefaultViews(projects[i].id as number, i * 4 + 1, i === 0)
     }
 
+    // Go directly to project overview without visiting any project first
     await page.goto('/projects')
     await page.waitForLoadState('networkidle')
 

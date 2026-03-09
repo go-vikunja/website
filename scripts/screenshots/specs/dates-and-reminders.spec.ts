@@ -6,68 +6,100 @@ import {createDefaultViews} from '../support/seed-helpers'
 
 test.describe('Dates and reminders screenshots', () => {
   test('Reminder configuration UI', async ({authenticatedPage: page, screenshot}) => {
-    const {tasks} = await createPopulatedProject({withDueDates: true})
+    // Create a minimal task with just a due date — no labels, assignees, etc.
+    const projects = await ProjectFactory.create(1, {title: 'Office Move'})
+    const project = projects[0]
+    await createDefaultViews(project.id as number)
 
-    await page.goto(`/tasks/${tasks[0].id}`)
+    const now = new Date()
+    const dueDate = new Date(now)
+    dueDate.setDate(dueDate.getDate() + 5)
+
+    await TaskFactory.create(1, {
+      project_id: project.id,
+      title: 'Get quotes from moving companies',
+      due_date: dueDate.toISOString(),
+    })
+
+    await page.goto(`/tasks/1`)
     await page.waitForLoadState('networkidle')
 
-    // Click the reminders section in the right sidebar to expand it
-    const reminderSection = page.locator('.reminders .detail-content, .reminders').first()
-    if (await reminderSection.isVisible()) {
-      await reminderSection.click()
+    // Click the reminders section to expand it
+    const reminderHeading = page.getByText('Reminders').first()
+    if (await reminderHeading.isVisible()) {
+      await reminderHeading.click()
       await page.waitForTimeout(300)
-    } else {
-      // Try clicking the "Reminders" heading to expand
-      const reminderHeading = page.getByText('Reminders').first()
-      if (await reminderHeading.isVisible()) {
-        await reminderHeading.click()
-        await page.waitForTimeout(300)
-      }
     }
 
-    // Click the "Add a new reminder" or similar button to show the actual config
+    // Click "Add a new reminder" to open the popup
     const addButton = page.locator('.reminders .add').or(page.locator('.reminders button')).or(page.getByText('Add a new reminder')).first()
     if (await addButton.isVisible()) {
       await addButton.click()
-      await page.waitForTimeout(300)
+      await page.waitForTimeout(500)
     }
 
-    // Capture the reminder configuration area
-    const reminderArea = page.locator('.reminders').first()
-    if (await reminderArea.isVisible()) {
-      await screenshot('dates-reminder-config', reminderArea, {padding: 30})
+    // Try to capture the reminder popup/modal
+    const popup = page.locator('.reminder-options-popup, .popup, .modal-content, .card.reminder').first()
+    if (await popup.isVisible()) {
+      await screenshot('dates-reminder-config', popup, {padding: 20})
     } else {
-      const sidebar = page.locator('.task-view .action-buttons, .task-view .details').last()
-      await screenshot('dates-reminder-config', sidebar)
+      // Fallback: capture the reminders area
+      const reminderArea = page.locator('.reminders').first()
+      if (await reminderArea.isVisible()) {
+        await screenshot('dates-reminder-config', reminderArea, {padding: 30})
+      } else {
+        const sidebar = page.locator('.task-view .action-buttons, .task-view .details').last()
+        await screenshot('dates-reminder-config', sidebar)
+      }
     }
   })
 
   test('Repeating task configuration', async ({authenticatedPage: page, screenshot}) => {
-    const {tasks} = await createPopulatedProject({withDueDates: true})
+    // Create a minimal task with just a due date
+    const projects = await ProjectFactory.create(1, {title: 'Office Move'})
+    const project = projects[0]
+    await createDefaultViews(project.id as number)
 
-    await page.goto(`/tasks/${tasks[0].id}`)
+    const now = new Date()
+    const dueDate = new Date(now)
+    dueDate.setDate(dueDate.getDate() + 5)
+
+    await TaskFactory.create(1, {
+      project_id: project.id,
+      title: 'Send weekly status update',
+      due_date: dueDate.toISOString(),
+    })
+
+    await page.goto(`/tasks/1`)
     await page.waitForLoadState('networkidle')
 
-    // Click the repeat section to expand it
-    const repeatSection = page.locator('.repeat-after .detail-content, .repeat-after').first()
-    if (await repeatSection.isVisible()) {
-      await repeatSection.click()
+    // Click the repeat section to expand/open it
+    const repeatHeading = page.getByText('Repeat').first()
+    if (await repeatHeading.isVisible()) {
+      await repeatHeading.click()
       await page.waitForTimeout(300)
-    } else {
-      const repeatHeading = page.getByText('Repeat').first()
-      if (await repeatHeading.isVisible()) {
-        await repeatHeading.click()
-        await page.waitForTimeout(300)
-      }
     }
 
-    // Look for repeat mode selector or configuration inputs
-    const repeatConfig = page.locator('.repeat-after').first()
-    if (await repeatConfig.isVisible()) {
-      await screenshot('dates-repeating-task', repeatConfig, {padding: 30})
+    // Click to open the repeat configuration popup
+    const repeatTrigger = page.locator('.repeat-after .detail-content').or(page.locator('.repeat-after button')).or(page.locator('.repeat-after .add')).first()
+    if (await repeatTrigger.isVisible()) {
+      await repeatTrigger.click()
+      await page.waitForTimeout(500)
+    }
+
+    // Try to capture the repeat popup/modal
+    const popup = page.locator('.repeat-options-popup, .popup, .modal-content, .card.repeat').first()
+    if (await popup.isVisible()) {
+      await screenshot('dates-repeating-task', popup, {padding: 20})
     } else {
-      const sidebar = page.locator('.task-view .action-buttons, .task-view .details').last()
-      await screenshot('dates-repeating-task', sidebar)
+      // Fallback: capture the repeat area
+      const repeatConfig = page.locator('.repeat-after').first()
+      if (await repeatConfig.isVisible()) {
+        await screenshot('dates-repeating-task', repeatConfig, {padding: 30})
+      } else {
+        const sidebar = page.locator('.task-view .action-buttons, .task-view .details').last()
+        await screenshot('dates-repeating-task', sidebar)
+      }
     }
   })
 

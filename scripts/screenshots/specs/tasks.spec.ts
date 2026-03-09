@@ -1,6 +1,8 @@
 import {test, expect} from '../support/fixtures'
 import {createPopulatedProject, createDefaultViews} from '../support/seed-helpers'
 import {ProjectFactory} from '../factories/project'
+import {TaskCommentFactory} from '../factories/task_comment'
+import {UserFactory} from '../factories/user'
 
 test.describe('Task screenshots', () => {
   test('Task detail view', async ({authenticatedPage: page, screenshot}) => {
@@ -28,6 +30,9 @@ test.describe('Task screenshots', () => {
       withDueDates: true,
     })
 
+    // Increase viewport height to show the full right sidebar
+    await page.setViewportSize({width: 1280, height: 1400})
+
     await page.goto(`/tasks/${tasks[0].id}`)
     await page.waitForLoadState('networkidle')
 
@@ -35,6 +40,9 @@ test.describe('Task screenshots', () => {
     const sidebar = page.locator('.task-view .action-buttons').first()
     await expect(sidebar).toBeVisible()
     await screenshot('tasks-right-sidebar', sidebar, {padding: 10})
+
+    // Reset viewport
+    await page.setViewportSize({width: 1280, height: 900})
   })
 
   test('Hover preview popup', async ({authenticatedPage: page, screenshot}) => {
@@ -50,27 +58,49 @@ test.describe('Task screenshots', () => {
     const taskElement = page.locator('.tasks .task').first()
     await expect(taskElement).toBeVisible()
 
-    // Move mouse to the center of the task to trigger the preview (not the due date)
+    // Move mouse to the center of the task to trigger the preview
     const taskBox = await taskElement.boundingBox()
     if (taskBox) {
       await page.mouse.move(taskBox.x + taskBox.width / 3, taskBox.y + taskBox.height / 2)
     }
 
-    // Wait for the popup to appear
-    await page.waitForTimeout(1000)
+    // Wait longer for the popup to fully appear (avoid half-transparent state)
+    await page.waitForTimeout(2000)
 
-    // Try to capture the popup element
+    // Try to capture the popup element itself
     const popup = page.locator('.popup.is-open, .task-preview-popup, .tippy-content, .tippy-box').first()
     if (await popup.isVisible()) {
-      await screenshot('tasks-hover-preview', popup, {padding: 10})
+      await screenshot('tasks-hover-preview', popup, {padding: 20})
     } else {
-      // Fallback: capture the task and surrounding area
+      // Fallback: capture the task and surrounding area, focused on the overlay
       await screenshot('tasks-hover-preview', taskElement, {padding: 150})
     }
   })
 
   test('Comment section', async ({authenticatedPage: page, screenshot}) => {
-    const {tasks} = await createPopulatedProject({withComments: true})
+    // Create project with extra users but handle comments manually for realistic timestamps
+    const {tasks, extraUsers} = await createPopulatedProject({withComments: false})
+
+    // Create comments with realistic timestamps (not "a few seconds ago")
+    const now = new Date()
+    const twoDaysAgo = new Date(now)
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)
+    twoDaysAgo.setHours(14, 23, 0, 0)
+
+    const oneDayAgo = new Date(now)
+    oneDayAgo.setDate(oneDayAgo.getDate() - 1)
+    oneDayAgo.setHours(9, 45, 0, 0)
+
+    await TaskCommentFactory.create(2, {
+      task_id: tasks[0].id,
+      author_id: (i: number) => [extraUsers[0].id, 1][i - 1],
+      comment: (i: number) => [
+        'I got three quotes — the one from CityMovers looks best. Can you review?',
+        'Looks good, let\'s go with that. I\'ll send them the confirmation.',
+      ][i - 1],
+      created: (i: number) => [twoDaysAgo.toISOString(), oneDayAgo.toISOString()][i - 1],
+      updated: (i: number) => [twoDaysAgo.toISOString(), oneDayAgo.toISOString()][i - 1],
+    })
 
     await page.goto(`/tasks/${tasks[0].id}`)
     await page.waitForLoadState('networkidle')
@@ -84,27 +114,34 @@ test.describe('Task screenshots', () => {
   })
 
   test('Comment editor with @mention autocomplete', async ({authenticatedPage: page, screenshot}) => {
-    const {tasks} = await createPopulatedProject({withComments: true})
+    const {tasks, extraUsers} = await createPopulatedProject({withComments: true})
 
     await page.goto(`/tasks/${tasks[0].id}`)
     await page.waitForLoadState('networkidle')
 
-    // Click into the comment input and type @ to trigger autocomplete
+    // Increase viewport height so comment area is visible for screenshot clipping
+    await page.setViewportSize({width: 1280, height: 1400})
+
+    // Click into the comment input and type @ followed by a name to trigger autocomplete
     const commentInput = page.locator('.comments-container .tiptap, .comment-form .tiptap').first()
     await commentInput.scrollIntoViewIfNeeded()
+    await page.waitForTimeout(300)
     await commentInput.click()
-    await page.keyboard.type('@')
+    await page.keyboard.type('@sar')
 
-    // Wait for autocomplete dropdown
-    await page.waitForTimeout(500)
+    // Wait for autocomplete dropdown to appear
+    await page.waitForTimeout(800)
 
-    // Capture just the comment editor area with the autocomplete
+    // Capture the comment editor area with autocomplete
     const editor = page.locator('.comment-form, .comment-input').first()
     if (await editor.isVisible()) {
-      await screenshot('tasks-comments-mention', editor, {padding: 30})
+      await screenshot('tasks-comments-mention', editor, {padding: 50})
     } else {
       await screenshot('tasks-comments-mention', commentInput, {padding: 60})
     }
+
+    // Reset viewport
+    await page.setViewportSize({width: 1280, height: 900})
   })
 
   test('Drag task to project in sidebar', async ({authenticatedPage: page, screenshot}) => {

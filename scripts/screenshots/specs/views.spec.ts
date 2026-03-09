@@ -54,16 +54,22 @@ test.describe('Views screenshots', () => {
         'Create new seating chart',
       ][i - 1],
       start_date: (i: number) => {
+        // Tasks 2 and 5 have no start date (end-date only)
+        if (i === 2 || i === 5) return null
         const d = new Date(now)
         d.setDate(d.getDate() + (i * 3) - 8)
         return d.toISOString()
       },
       end_date: (i: number) => {
+        // Tasks 3 and 6 have no end date (start-date only)
+        if (i === 3 || i === 6) return null
         const d = new Date(now)
         d.setDate(d.getDate() + (i * 3) - 8 + 4 + i) // Each task spans 4-10 days
         return d.toISOString()
       },
       due_date: (i: number) => {
+        // Only set due_date for tasks that have an end_date
+        if (i === 3 || i === 6) return null
         const d = new Date(now)
         d.setDate(d.getDate() + (i * 3) - 8 + 4 + i)
         return d.toISOString()

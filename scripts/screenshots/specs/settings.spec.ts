@@ -29,13 +29,6 @@ test.describe('Settings screenshots', () => {
     await screenshot('settings-general', page)
   })
 
-  test('API token creation form', async ({authenticatedPage: page, screenshot}) => {
-    await page.goto('/user/settings/api-tokens')
-    await page.waitForLoadState('networkidle')
-
-    await screenshot('settings-api-tokens', page)
-  })
-
   test('Avatar style options', async ({authenticatedPage: page, screenshot}) => {
     await page.goto('/user/settings/avatar')
     await page.waitForLoadState('networkidle')
@@ -47,6 +40,12 @@ test.describe('Settings screenshots', () => {
     await page.goto('/user/settings/deletion')
     await page.waitForLoadState('networkidle')
 
-    await screenshot('settings-delete-account', page)
+    // Focus on the deletion card
+    const card = page.locator('.card').first()
+    if (await card.isVisible()) {
+      await screenshot('settings-delete-account', card)
+    } else {
+      await screenshot('settings-delete-account', page)
+    }
   })
 })
