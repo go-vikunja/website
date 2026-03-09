@@ -25,7 +25,10 @@ export const test = base.extend<{
   },
 
   currentUser: async ({apiContext}, use) => {
-    const [user] = await UserFactory.create(1)
+    const [user] = await UserFactory.create(1, {
+      username: 'lisa',
+      name: 'Lisa Chen',
+    })
     await use(user)
   },
 

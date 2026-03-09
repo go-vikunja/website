@@ -95,7 +95,7 @@ export async function createPopulatedProject(opts: {
   if (withLabels) {
     labels = await LabelFactory.create(4, {
       created_by_id: 1,
-      title: (i: number) => ['Urgent', 'Waiting on others', 'Completed', 'Needs approval'][i - 1],
+      title: (i: number) => ['Urgent', 'Waiting on others', 'On hold', 'Needs approval'][i - 1],
       hex_color: (i: number) => ['e8445a', '1973ff', '4caf50', 'ff9800'][i - 1],
     })
     // Assign labels to some tasks (first call truncates the table)
@@ -121,11 +121,14 @@ export async function createPopulatedProject(opts: {
     }
   }
 
+  // Always create extra users so they are available for comments, assignees, etc.
+  const extraUsers = await UserFactory.create(3, {
+    id: (i: number) => 100 + i,
+    username: (i: number) => ['sarah', 'david', 'emma'][i - 1],
+    name: (i: number) => ['Sarah Miller', 'David Park', 'Emma Thompson'][i - 1],
+  }, false)
+
   if (withAssignees) {
-    const extraUsers = await UserFactory.create(2, {
-      id: (i: number) => 100 + i,
-      username: (i: number) => ['sarah', 'david'][i - 1],
-    }, false)
     await TaskAssigneeFactory.create(1, {task_id: tasks[0].id, user_id: extraUsers[0].id})
     await TaskAssigneeFactory.create(1, {id: 2, task_id: tasks[1].id, user_id: extraUsers[1].id}, false)
   }
@@ -133,6 +136,7 @@ export async function createPopulatedProject(opts: {
   if (withComments) {
     await TaskCommentFactory.create(2, {
       task_id: tasks[0].id,
+      author_id: (i: number) => [extraUsers[0].id, 1][i - 1],
       comment: (i: number) => [
         'I got three quotes — the one from CityMovers looks best. Can you review?',
         'Looks good, let\'s go with that. I\'ll send them the confirmation.',
@@ -140,5 +144,5 @@ export async function createPopulatedProject(opts: {
     })
   }
 
-  return {project, views, tasks, labels}
+  return {project, views, tasks, labels, extraUsers}
 }
