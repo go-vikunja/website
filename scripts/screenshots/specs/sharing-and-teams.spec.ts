@@ -1,6 +1,7 @@
 import {test, expect} from '../support/fixtures'
 import {createPopulatedProject} from '../support/seed-helpers'
 import {LinkShareFactory} from '../factories/link_sharing'
+import {ProjectUserFactory} from '../factories/project_user'
 import {TeamFactory} from '../factories/team'
 import {TeamMemberFactory} from '../factories/team_member'
 import {UserFactory} from '../factories/user'
@@ -12,14 +13,12 @@ test.describe('Sharing and teams screenshots', () => {
     await page.goto(`/projects/${project.id}/${views.list.id}`)
     await page.waitForLoadState('networkidle')
 
-    // Click the project title dropdown trigger / three-dot menu to open it
     const menuTrigger = page.locator('.project-title-dropdown, .dropdown-trigger, [data-cy="project-menu"]').first()
     if (await menuTrigger.isVisible()) {
       await menuTrigger.click()
       await page.waitForTimeout(300)
     }
 
-    // Capture the open dropdown
     const dropdown = page.locator('.dropdown.is-active, .dropdown:has(.dropdown-menu.is-active)').first()
     if (await dropdown.isVisible()) {
       await screenshot('sharing-three-dot-menu', dropdown)
@@ -34,50 +33,76 @@ test.describe('Sharing and teams screenshots', () => {
   })
 
   test('Sharing settings panel', async ({authenticatedPage: page, screenshot}) => {
-    const {project} = await createPopulatedProject()
+    const {project, extraUsers} = await createPopulatedProject()
 
-    await page.goto(`/projects/${project.id}/settings/share`)
-    await page.waitForLoadState('networkidle')
+    // Share the project with some users so the sharing table has entries
+    await ProjectUserFactory.create(1, {user_id: extraUsers[0].id, project_id: project.id, permission: 1})
+    await ProjectUserFactory.create(1, {id: 2, user_id: extraUsers[1].id, project_id: project.id, permission: 0}, false)
 
-    // Focus on the modal/card content
-    const card = page.locator('.card').first()
-    if (await card.isVisible()) {
-      await screenshot('sharing-settings-panel', card)
-    } else {
-      const content = page.locator('.app-content').first()
-      await screenshot('sharing-settings-panel', content)
-    }
-  })
-
-  test('Link share creation form', async ({authenticatedPage: page, screenshot}) => {
-    const {project} = await createPopulatedProject()
-
-    // Use taller viewport so the link share section is fully visible
     await page.setViewportSize({width: 1280, height: 1400})
 
     await page.goto(`/projects/${project.id}/settings/share`)
     await page.waitForLoadState('networkidle')
 
-    // Scroll to and focus on the link share section heading
-    const linkShareHeading = page.getByText('Share Links').or(page.getByText('Link Shares')).first()
-    if (await linkShareHeading.isVisible()) {
-      await linkShareHeading.scrollIntoViewIfNeeded()
-      await page.waitForTimeout(300)
+    // Crop from top of modal-content down to end of "Shared with these users" section
+    // (just before "Shared with these teams")
+    const modalContent = page.locator('.modal-content').first()
+    const teamsHeading = page.locator('.has-text-weight-bold').filter({hasText: 'Shared with these teams'}).first()
+
+    const modalBox = await modalContent.boundingBox()
+    const teamsBox = await teamsHeading.boundingBox()
+
+    if (modalBox && teamsBox) {
+      await screenshot('sharing-settings-panel', page, {
+        clip: {
+          x: modalBox.x - 10,
+          y: modalBox.y - 10,
+          width: modalBox.width + 20,
+          height: teamsBox.y - modalBox.y,  // Stop just before the teams section
+        },
+      })
+    } else {
+      await screenshot('sharing-settings-panel', modalContent)
     }
 
-    // Capture the link share form area — find the section from the heading downward
-    // The link share area is typically a distinct section within the card
-    const linkShareSection = page.locator('.link-shares, .link-sharing').first()
-    if (await linkShareSection.isVisible()) {
-      await screenshot('sharing-link-create', linkShareSection, {padding: 20})
+    await page.setViewportSize({width: 1280, height: 900})
+  })
+
+  test('Link share creation form', async ({authenticatedPage: page, screenshot}) => {
+    const {project} = await createPopulatedProject()
+
+    await page.setViewportSize({width: 1280, height: 1400})
+
+    await page.goto(`/projects/${project.id}/settings/share`)
+    await page.waitForLoadState('networkidle')
+
+    // Click "Create a link share" to show the creation form
+    const createButton = page.getByText('Create a link share').first()
+    if (await createButton.isVisible()) {
+      await createButton.scrollIntoViewIfNeeded()
+      await createButton.click()
+      await page.waitForTimeout(500)
+    }
+
+    // Crop from "Share Links" heading down to the bottom of the modal
+    const shareLinksHeading = page.locator('.has-text-weight-bold').filter({hasText: 'Share Links'}).first()
+    const modalContent = page.locator('.modal-content').first()
+
+    const headingBox = await shareLinksHeading.boundingBox()
+    const modalBox = await modalContent.boundingBox()
+
+    if (headingBox && modalBox) {
+      const modalBottom = modalBox.y + modalBox.height
+      await screenshot('sharing-link-create', page, {
+        clip: {
+          x: modalBox.x - 10,
+          y: headingBox.y - 10,
+          width: modalBox.width + 20,
+          height: modalBottom - headingBox.y + 10,
+        },
+      })
     } else {
-      // Fallback: capture from the heading with generous padding
-      if (await linkShareHeading.isVisible()) {
-        await screenshot('sharing-link-create', linkShareHeading, {padding: 200})
-      } else {
-        const card = page.locator('.card').first()
-        await screenshot('sharing-link-create', card)
-      }
+      await screenshot('sharing-link-create', modalContent)
     }
 
     await page.setViewportSize({width: 1280, height: 900})
@@ -92,30 +117,35 @@ test.describe('Sharing and teams screenshots', () => {
       shared_by_id: 1,
     })
 
-    // Use taller viewport so the link share section is fully visible
     await page.setViewportSize({width: 1280, height: 1400})
 
     await page.goto(`/projects/${project.id}/settings/share`)
     await page.waitForLoadState('networkidle')
 
-    // Scroll to the link share section
-    const linkShareHeading = page.getByText('Share Links').or(page.getByText('Link Shares')).first()
-    if (await linkShareHeading.isVisible()) {
-      await linkShareHeading.scrollIntoViewIfNeeded()
-      await page.waitForTimeout(300)
+    // Crop from "Share Links" heading down to the bottom of the modal
+    const shareLinksHeading = page.locator('.has-text-weight-bold').filter({hasText: 'Share Links'}).first()
+    const modalContent = page.locator('.modal-content').first()
+
+    if (await shareLinksHeading.isVisible()) {
+      await shareLinksHeading.scrollIntoViewIfNeeded()
+      await page.waitForTimeout(200)
     }
 
-    // Capture the link share section
-    const linkShareSection = page.locator('.link-shares, .link-sharing').first()
-    if (await linkShareSection.isVisible()) {
-      await screenshot('sharing-link-list', linkShareSection, {padding: 20})
+    const headingBox = await shareLinksHeading.boundingBox()
+    const modalBox = await modalContent.boundingBox()
+
+    if (headingBox && modalBox) {
+      const modalBottom = modalBox.y + modalBox.height
+      await screenshot('sharing-link-list', page, {
+        clip: {
+          x: modalBox.x - 10,
+          y: headingBox.y - 10,
+          width: modalBox.width + 20,
+          height: modalBottom - headingBox.y + 10,
+        },
+      })
     } else {
-      if (await linkShareHeading.isVisible()) {
-        await screenshot('sharing-link-list', linkShareHeading, {padding: 200})
-      } else {
-        const card = page.locator('.card').first()
-        await screenshot('sharing-link-list', card)
-      }
+      await screenshot('sharing-link-list', modalContent)
     }
 
     await page.setViewportSize({width: 1280, height: 900})
@@ -138,14 +168,33 @@ test.describe('Sharing and teams screenshots', () => {
     await TeamMemberFactory.create(1, {team_id: teams[0].id, user_id: extraUsers[1].id}, false)
     await TeamMemberFactory.create(1, {team_id: teams[0].id, user_id: extraUsers[2].id}, false)
 
-    // Increase viewport so all team members and cards are fully visible
     await page.setViewportSize({width: 1280, height: 1400})
 
     await page.goto(`/teams/${teams[0].id}/edit`)
     await page.waitForLoadState('networkidle')
 
+    // Crop from top of content down to the "Leave team" button
     const content = page.locator('.app-content').first()
-    await screenshot('sharing-team-settings', content)
+    const leaveButton = page.getByText('Leave team').last()
+    const contentBox = await content.boundingBox()
+
+    if (await leaveButton.isVisible() && contentBox) {
+      const leaveBox = await leaveButton.boundingBox()
+      if (leaveBox) {
+        await screenshot('sharing-team-settings', page, {
+          clip: {
+            x: contentBox.x - 10,
+            y: contentBox.y - 10,
+            width: contentBox.width + 20,
+            height: leaveBox.y + leaveBox.height - contentBox.y + 30,
+          },
+        })
+      } else {
+        await screenshot('sharing-team-settings', content)
+      }
+    } else {
+      await screenshot('sharing-team-settings', content)
+    }
 
     await page.setViewportSize({width: 1280, height: 900})
   })
