@@ -17,7 +17,7 @@ function getClasses(): string {
 			break
 	}
 
-	return classNames + ' callout rounded-sm px-4 py-3 ' + suffix
+	return classNames + ' callout callout-' + type + ' rounded-sm px-4 py-3 ' + suffix
 }
 ---
 
@@ -32,16 +32,24 @@ function getClasses(): string {
 		@apply m-0;
 	}
 
-	.callout :global(strong),
-	.callout :global(b) {
+	.callout :global(a) {
+		@apply underline;
+	}
+
+	.callout-info :global(a) {
+		@apply text-white!;
+	}
+
+	.callout-warning :global(strong),
+	.callout-warning :global(b) {
 		@apply dark:text-black!;
 	}
 
-	.callout :global(a) {
-		@apply dark:text-gray-800! underline;
+	.callout-warning :global(a) {
+		@apply dark:text-gray-800!;
 	}
 
-	.callout :global(code) {
+	.callout-warning :global(code) {
 		@apply dark:text-gray-800!;
 	}
 </style>
