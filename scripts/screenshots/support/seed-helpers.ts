@@ -46,6 +46,8 @@ export async function createPopulatedProject(opts: {
   withComments?: boolean,
   withDueDates?: boolean,
   withKanban?: boolean,
+  taskCreatedDate?: string,
+  taskDueDateFn?: (i: number) => string,
 } = {}) {
   const {
     taskCount = 8,
@@ -54,6 +56,8 @@ export async function createPopulatedProject(opts: {
     withComments = false,
     withDueDates = true,
     withKanban = true,
+    taskCreatedDate,
+    taskDueDateFn,
   } = opts
 
   const projects = await ProjectFactory.create(1, {title: 'Office Move'})
@@ -82,13 +86,17 @@ export async function createPopulatedProject(opts: {
     title: (i: number) => taskTitles[(i - 1) % taskTitles.length],
     done: (i: number) => i === 3, // One task marked done
     priority: (i: number) => [0, 1, 2, 3, 4, 5][i % 6],
-    due_date: withDueDates
-      ? (i: number) => {
-          const d = new Date(now)
-          d.setDate(d.getDate() + (i * 2) - 4) // Some past, some future
-          return d.toISOString()
-        }
-      : undefined,
+    created: taskCreatedDate || new Date().toISOString(),
+    updated: taskCreatedDate || new Date().toISOString(),
+    due_date: taskDueDateFn
+      ? taskDueDateFn
+      : withDueDates
+        ? (i: number) => {
+            const d = new Date(now)
+            d.setDate(d.getDate() + (i * 2) - 4) // Some past, some future
+            return d.toISOString()
+          }
+        : undefined,
   })
 
   let labels: Record<string, unknown>[] = []

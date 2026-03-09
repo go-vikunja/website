@@ -46,9 +46,22 @@ test.describe('Task screenshots', () => {
   })
 
   test('Hover preview popup', async ({authenticatedPage: page, screenshot}) => {
-    const {project, views, tasks} = await createPopulatedProject({
+    const now = new Date()
+    const tenDaysAgo = new Date(now)
+    tenDaysAgo.setDate(tenDaysAgo.getDate() - 10)
+    const twoDaysAgo = new Date(now)
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)
+
+    const {project, views} = await createPopulatedProject({
       withLabels: true,
       withAssignees: true,
+      taskCreatedDate: tenDaysAgo.toISOString(),
+      taskDueDateFn: (i: number) => {
+        // First task due 2 days ago, rest spread out
+        const d = new Date(now)
+        d.setDate(d.getDate() + (i * 2) - 4)
+        return d.toISOString()
+      },
     })
 
     await page.goto(`/projects/${project.id}/${views.list.id}`)
@@ -67,15 +80,17 @@ test.describe('Task screenshots', () => {
     // Wait for the popup to fully appear and transition to complete
     await page.waitForTimeout(3000)
 
-    // Capture the tooltip and the hovered task together
+    // Capture the tooltip card with the hovered task visible below it
+    // Use the popup width as the primary reference, not the full task row width
     const popup = page.locator('.task-glance-tooltip').first()
     if (await popup.isVisible()) {
       const popupBox = await popup.boundingBox()
       if (popupBox && taskBox) {
         const top = Math.min(popupBox.y, taskBox.y) - 10
-        const bottom = Math.max(popupBox.y + popupBox.height, taskBox.y + taskBox.height) + 50
-        const left = Math.min(popupBox.x, taskBox.x) - 10
-        const right = Math.max(popupBox.x + popupBox.width, taskBox.x + taskBox.width) + 10
+        const bottom = Math.max(popupBox.y + popupBox.height, taskBox.y + taskBox.height) + 20
+        // Center on the popup width with some extra margin
+        const left = popupBox.x - 20
+        const right = popupBox.x + popupBox.width + 20
         await screenshot('tasks-hover-preview', page, {
           clip: {
             x: Math.max(0, left),
