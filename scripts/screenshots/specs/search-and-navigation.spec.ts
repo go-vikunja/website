@@ -15,7 +15,7 @@ test.describe('Search and navigation screenshots', () => {
     // Type a search query
     const searchInput = page.locator('.modal-content input, [data-cy="searchInput"]').first()
     if (await searchInput.isVisible()) {
-      await searchInput.fill('Review')
+      await searchInput.fill('moving')
       await page.waitForTimeout(500)
     }
 
