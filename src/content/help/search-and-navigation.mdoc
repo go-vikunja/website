@@ -1,0 +1,86 @@
+---
+title: Search & Navigation
+slug: search-and-navigation
+description: >-
+  Find tasks and projects with global search, keyboard shortcuts, and
+  notifications.
+---
+
+Use global search to find things quickly, keyboard shortcuts to move faster, and notifications to keep up with changes.
+
+## Global Search
+
+![Global search dialog with results](../../assets/images/help/search-global-dialog.png)
+
+Open global search with `Ctrl+K` or `Cmd+K`, or click the search icon in the top right.
+
+Search works across your projects and tasks. Results are grouped by type, so projects and tasks appear separately.
+
+Use the arrow keys to move through results and press `Enter` to open one.
+
+### Scoped Searching
+
+You can narrow results by typing prefixes for projects, labels, assignees, or priorities directly into the search box. The prefixes depend on your [Quick Add Magic mode](/help/settings#quick-add-magic-mode):
+
+**Vikunja mode (default):**
+
+- `+ProjectName` scopes to a project
+- `*LabelName` scopes to a label
+- `@AssigneeName` scopes to an assignee
+- `!3` scopes to a priority level
+
+**Todoist mode:**
+
+- `#ProjectName` scopes to a project
+- `@LabelName` scopes to a label
+- `+AssigneeName` scopes to an assignee
+- `!3` scopes to a priority level
+
+For example, `+"Office Move" packing schedule` finds tasks matching "packing schedule" inside the project named "Office Move". Typing `*urgent` finds tasks with the label "urgent".
+
+### Quick Actions
+
+![Quick actions menu for creating tasks, projects, and teams](../../assets/images/help/search-quick-actions.png)
+
+From the search dialog, you can also:
+
+- Create a new [task](/help/tasks)
+- Create a new [project](/help/projects)
+- Create a new [team](/help/sharing-and-teams)
+
+{% callout type="info" %}
+The search dialog also works as a command palette, so you can create new items without leaving the page you're on.
+{% /callout %}
+
+## Keyboard Shortcuts
+
+![Keyboard shortcuts overlay](../../assets/images/help/navigation-keyboard-shortcuts.png)
+
+Vikunja supports keyboard shortcuts throughout the interface.
+
+To see the shortcuts available in your current view, click the small icon in the bottom right corner of the UI.
+
+### Context-Dependent Shortcuts
+
+Shortcuts depend on where you are in the app:
+
+- **General shortcuts** work on every page.
+- **Task-specific shortcuts** only work when a task is open.
+
+The shortcut popup always reflects your current context.
+
+## Notifications
+
+![Notifications panel showing recent updates](../../assets/images/help/navigation-notifications.png)
+
+The bell icon in the top right shows your notifications.
+
+You receive notifications when:
+
+- **Someone mentions you** with `@` in a comment on a task.
+- **Changes are made** to a task or project you are subscribed to.
+- **A [reminder](/help/dates-and-reminders) triggers** that you previously set on a task.
+
+### Subscribing to Tasks and Projects
+
+You can [subscribe to tasks](/help/tasks#subscribing-to-a-task) or entire [projects](/help/projects) if you want updates even when work is not directly assigned to you.

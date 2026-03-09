@@ -1,0 +1,109 @@
+---
+title: Webhooks
+slug: webhooks
+description: >-
+  Send automatic notifications to external services when tasks are created,
+  completed, or changed.
+---
+
+Webhooks let Vikunja send automatic notifications to other services whenever something happens in your projects, like when a task is created, completed, or commented on. This is useful for connecting Vikunja to chat tools, automation platforms, or custom scripts.
+
+## Types of webhooks
+
+Vikunja has two types of webhooks:
+
+- **Project webhooks:** Trigger when something happens in a specific project (e.g., a task is created or a comment is added). Set these up from the project settings.
+- **User webhooks:** Trigger for events directed at you personally, such as task reminders firing or tasks becoming overdue. Set these up from your account settings.
+
+## Creating a webhook
+
+### Project webhooks
+
+![Webhooks section in project settings](../../assets/images/help/webhooks-settings-section.png)
+
+1. Open the [project](/help/projects) where you want the webhook.
+2. Go to the project settings and select **Webhooks**.
+![Webhook creation form with URL, events, and secret fields](../../assets/images/help/webhooks-create-form.png)
+
+3. Fill in the form:
+   - **Target URL** (required): The URL that Vikunja will send data to (must start with `http://` or `https://`).
+   - **Events** (required): Choose which events should trigger the webhook.
+   - **Secret** (optional): A shared secret for verifying that requests really come from Vikunja. See [Signing](#signing) below.
+   - **Basic Auth** (optional): Click **Use Basic Auth?** to enter a username and password if the target URL requires it.
+4. Click **Save**.
+
+### User webhooks
+
+1. Open your **[Settings](/help/settings)** and go to the **Webhooks** section.
+2. Fill in the same form as above. User webhooks only allow user-directed events (reminders and overdue notifications).
+
+## Available events
+
+### Project events
+
+These events are available for project webhooks:
+
+|                            |                                                    |
+|----------------------------|----------------------------------------------------|
+| `task.created`             | A task was created                                 |
+| `task.updated`             | A task was updated                                 |
+| `task.deleted`             | A task was deleted                                 |
+| `task.assignee.created`    | An assignee was added to a task                    |
+| `task.assignee.deleted`    | An assignee was removed from a task                |
+| `task.comment.created`     | A comment was added to a task                      |
+| `task.comment.edited`      | A comment was edited                               |
+| `task.comment.deleted`     | A comment was deleted                              |
+| `task.attachment.created`  | An attachment was added to a task                  |
+| `task.attachment.deleted`  | An attachment was removed from a task              |
+| `task.relation.created`    | A relation between tasks was created               |
+| `task.relation.deleted`    | A relation between tasks was removed               |
+| `project.updated`          | The project was updated                            |
+| `project.deleted`          | The project was deleted                            |
+| `project.shared.user`      | The project was shared with a user                 |
+| `project.shared.team`      | The project was shared with a team                 |
+
+### User events
+
+These events are available for user webhooks:
+
+|                            |                                                    |
+|----------------------------|----------------------------------------------------|
+| `task.reminder.fired`      | A reminder for a task fired                        |
+| `task.overdue`             | A task became overdue                              |
+| `tasks.overdue`            | Multiple tasks became overdue                      |
+
+## Editing and deleting webhooks
+
+To edit or delete a webhook, go to the same settings page where you created it (project settings for project webhooks, account settings for user webhooks). Your existing webhooks are listed there with options to modify or remove them.
+
+## Signing
+
+If you set a **secret** when creating the webhook, Vikunja includes an `X-Vikunja-Signature` header in every request. This header contains an HMAC-SHA256 signature of the request body, which lets the receiving service verify that the request genuinely came from Vikunja.
+
+See [webhooks.fyi](https://webhooks.fyi/security/hmac) for details on how to validate HMAC signatures.
+
+## Payload format
+
+Every webhook request sends a JSON body with this structure:
+
+```json
+{
+  "event_name": "task.created",
+  "time": "2023-10-17T19:39:32.924194436+02:00",
+  "data": {}
+}
+```
+
+- `event_name`: Which event triggered the webhook.
+- `time`: When the webhook was sent, in ISO 8601 format.
+- `data`: The event data, containing the relevant objects (task, project, user, etc.) depending on the event type.
+
+## API reference
+
+To create and manage webhooks programmatically, see the [Webhooks API Reference](/docs/webhooks). You can create [API tokens](/help/settings#api-tokens) in your settings to authenticate with the API.
+
+## Notes
+
+- Webhooks are sent once. If delivery fails (e.g., the target URL is unreachable), Vikunja does not retry.
+- Webhooks cannot be created via link shares. You need a user account.
+- Instance administrators can configure webhook timeouts and proxy settings. See the [webhook configuration options](/docs/config-options#0--webhooks) for details.
