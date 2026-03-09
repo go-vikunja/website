@@ -33,7 +33,7 @@ test.describe('Projects screenshots', () => {
   test('Project overview page', async ({authenticatedPage: page, screenshot}) => {
     // Create multiple projects
     const projects = await ProjectFactory.create(4, {
-      title: (i: number) => ['Website Redesign', 'Backend API', 'Mobile App', 'DevOps'][i - 1],
+      title: (i: number) => ['Office Move', 'Team Retreat Planning', 'Personal', 'Shared Documents'][i - 1],
     })
 
     for (let i = 0; i < projects.length; i++) {
