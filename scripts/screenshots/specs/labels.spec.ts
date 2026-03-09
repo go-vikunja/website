@@ -6,7 +6,7 @@ test.describe('Labels screenshots', () => {
   test('Label overview page', async ({authenticatedPage: page, screenshot}) => {
     await LabelFactory.create(5, {
       created_by_id: 1,
-      title: (i: number) => ['Bug', 'Feature', 'Documentation', 'Enhancement', 'Urgent'][i - 1],
+      title: (i: number) => ['Urgent', 'Waiting on others', 'Completed', 'Needs approval', 'Logistics'][i - 1],
       hex_color: (i: number) => ['e8445a', '1973ff', '4caf50', 'ff9800', 'f44336'][i - 1],
     })
 
