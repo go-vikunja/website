@@ -1,0 +1,49 @@
+---
+import { Picture } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+
+interface Props {
+  src: ImageMetadata | string
+  alt: string
+  class?: string
+  [key: string]: unknown
+}
+
+const { src, alt, class: className, ...rest } = Astro.props
+
+// Eagerly load all auto-generated screenshot PNGs for string-based lookups (MDX files)
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/images/**/*.png',
+  { eager: true }
+)
+
+let image: ImageMetadata
+
+if (typeof src === 'string') {
+  // String src: resolve from help directory by filename
+  const imagePath = `/src/assets/images/help/${src}.png`
+  const resolved = images[imagePath]?.default
+  if (!resolved) {
+    throw new Error(`Screenshot: image not found: ${imagePath}`)
+  }
+  image = resolved
+} else {
+  // ImageMetadata src: use directly (from ESM imports in .astro files)
+  image = src
+}
+
+// Screenshots are captured at 2x DPR, so natural width is 2x display width
+const displayWidth = Math.round(image.width / 2)
+---
+
+<Picture
+  src={image}
+  width={displayWidth}
+  formats={['avif', 'webp']}
+  fallbackFormat="png"
+  quality={95}
+  densities={[1, 2]}
+  alt={alt}
+  class={className}
+  {...rest}
+/>
