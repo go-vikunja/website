@@ -1,0 +1,86 @@
+---
+title: Webhooks API
+slug: webhooks
+description: >-
+  Technical reference for Vikunja webhooks: API usage, payload structure,
+  signature verification, and hosting security.
+---
+
+This page covers the technical details of working with Vikunja webhooks programmatically. For an introduction to what webhooks are and how to set them up in the UI, see the [Webhooks help page](/help/webhooks).
+
+## API endpoints
+
+You can create and manage webhooks through the API. Full endpoint documentation is available in the [Swagger docs](https://try.vikunja.io/api/v1/docs#tag/webhooks).
+
+### Project webhooks
+
+- `GET /api/v1/projects/{id}/webhooks` -- List all webhooks for a project
+- `PUT /api/v1/projects/{id}/webhooks` -- Create a webhook for a project
+- `DELETE /api/v1/projects/{id}/webhooks/{webhookID}` -- Delete a webhook
+- `POST /api/v1/projects/{id}/webhooks/{webhookID}` -- Update a webhook
+
+### User webhooks
+
+- `GET /api/v1/user/settings/webhooks` -- List all webhooks for the current user
+- `PUT /api/v1/user/settings/webhooks` -- Create a user webhook
+- `DELETE /api/v1/user/settings/webhooks/{webhookID}` -- Delete a user webhook
+- `POST /api/v1/user/settings/webhooks/{webhookID}` -- Update a user webhook
+
+Authenticate with an [API token](/docs/api-documentation) or JWT. Link share tokens cannot create or manage webhooks.
+
+## Payload structure
+
+Every webhook delivery sends a `POST` request with a JSON body:
+
+```json
+{
+  "event_name": "task.created",
+  "time": "2023-10-17T19:39:32.924194436+02:00",
+  "data": {
+    "task": { ... },
+    "doer": { ... }
+  }
+}
+```
+
+| Field        | Description                                                                 |
+|--------------|-----------------------------------------------------------------------------|
+| `event_name` | The event that triggered the webhook (e.g., `task.created`)                 |
+| `time`       | ISO 8601 timestamp with timezone offset                                     |
+| `data`       | Event-specific payload containing the relevant objects (task, project, etc.) |
+
+The contents of `data` depend on the event type. Task events include the full task object and the user who performed the action (`doer`). Comment, attachment, and relation events include the relevant sub-object as well.
+
+## Signature verification
+
+If you set a secret when creating the webhook, Vikunja signs every outgoing request. The signature is sent in the `X-Vikunja-Signature` HTTP header as an HMAC-SHA256 hash of the raw JSON request body.
+
+To verify a webhook delivery:
+
+1. Read the raw request body (before parsing JSON).
+2. Compute the HMAC-SHA256 of the body using your secret as the key.
+3. Compare your computed signature with the value of `X-Vikunja-Signature`.
+
+See [webhooks.fyi](https://webhooks.fyi/security/hmac) for detailed implementation examples in various languages.
+
+## Hosting security
+
+If your Vikunja instance is used by multiple people, outgoing webhook requests could be used to probe internal network services (SSRF). Vikunja supports using [mole](https://github.com/frain-dev/mole) as a proxy for outgoing webhook requests to prevent this.
+
+Configure the proxy in your Vikunja config:
+
+```yaml
+webhooks:
+  proxyurl: "http://mole:8080"
+  proxypassword: "your-proxy-password"
+```
+
+See the [webhook configuration options](/docs/config-options#0--webhooks) for all available settings, including timeout configuration.
+
+See [webhooks.fyi](https://webhooks.fyi/best-practices/webhook-providers#implement-security-on-egress-communication) for more on why egress security matters.
+
+## Delivery behavior
+
+- Webhooks are delivered once. Failed deliveries (HTTP status >= 400 or timeout) are not retried.
+- The default timeout for webhook delivery is 30 seconds, configurable via `webhooks.timeoutseconds`.
+- Webhooks must be enabled globally via the `webhooks.enabled` config option (enabled by default).
