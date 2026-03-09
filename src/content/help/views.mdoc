@@ -1,0 +1,158 @@
+---
+title: Views
+slug: views
+description: >-
+  Configure how tasks are displayed: List, Table, Gantt, and Kanban views, each
+  with optional filters.
+---
+
+Views control how [tasks](/help/tasks) are shown inside a [project](/help/projects). Every project starts with four default views, and you switch between them using the tabs at the top of the project.
+
+![View tabs at the top of a project](../../assets/images/help/views-tabs.png)
+
+### Which view should I use?
+
+| View | Best for | Key feature |
+|------|----------|-------------|
+| **[List](#list-view)** | Simple task lists, quick entry | Drag to reorder, [Quick Add Magic](/help/quick-add-magic) |
+| **[Table](#table-view)** | Comparing many task attributes | Configurable columns, spreadsheet-like |
+| **[Kanban](#kanban-view)** | Workflow stages (To Do / In Progress / Done) | Drag tasks between buckets |
+| **[Gantt](#gantt-view)** | Scheduling by date | Timeline with drag-to-reschedule |
+
+You can choose the default project view in your [user settings](/help/settings).
+
+## Managing views
+
+To manage views, open the three-dot menu next to the project title and select **Views**.
+
+From here you can:
+
+- **Create a new view:** Give it a title, choose the type (list, table, kanban), and optionally set a filter.
+- **Edit a view:** Change its title, type, or filter.
+- **Delete a view:** Remove views you no longer need.
+- **Reorder views:** Drag and drop using the handle on the right side of each view in the list.
+
+Each view can have its own filter. Only matching tasks appear in that view. See [Filters](/help/filters) for the filter syntax.
+
+## List view
+
+![List view showing tasks in a flat list](../../assets/images/help/views-list.png)
+
+The list view shows tasks in a flat list. It is the simplest view and a good default for most projects.
+
+- **Drag and drop** tasks to reorder them within the project.
+- **Move tasks to another project** by dragging them onto a project in the sidebar.
+- **Hover** over a task to see a preview with the title, description, creator, and labels.
+- **Quick-add input** at the top lets you create tasks and use [Quick Add Magic](/help/quick-add-magic).
+
+By default, done tasks are hidden in the list view. You can change that by editing the view filter.
+
+## Gantt view
+
+![Gantt view showing tasks on a timeline](../../assets/images/help/views-gantt.png)
+
+The Gantt view places tasks on a timeline using their [start and end dates](/help/dates-and-reminders). Use it when scheduling matters more than a simple list.
+
+- **Set the date range** with the controls in the top left.
+- **Show tasks without dates:** Use the option to include tasks that have no start or end date set.
+- **Adjust dates visually:** Drag a task on the timeline to change its start and end dates.
+- **Open task details:** Double-click a task on the timeline to open its full detail view.
+- **Create tasks** from the input at the bottom left.
+
+Filtering is not available in the Gantt view.
+
+## Table view
+
+![Table view showing tasks in a spreadsheet-like layout](../../assets/images/help/views-table.png)
+
+The table view shows tasks in a spreadsheet-like layout.
+
+- **Configurable columns:** Show only the fields you care about.
+- **Filtering:** Use the filter option in the top right to narrow down the displayed tasks.
+
+Use table view when you want to compare many task fields side by side.
+
+## Kanban view
+
+![Kanban view with tasks organized into buckets](../../assets/images/help/views-kanban.png)
+
+The Kanban view organizes tasks into buckets. It works well for workflows such as **To Do**, **Doing**, and **Done**.
+
+### Working with tasks
+
+- **Drag and drop** tasks between buckets to change their status.
+- **Click a card** to open the full task detail view.
+- Task cards show details such as color, due date, comment count, labels, and other status icons.
+
+### Managing buckets
+
+To create a bucket, enter a title in the field at the far right of the board. To rename one, click its title and edit it inline.
+
+Each bucket has a three-dot menu where you can set a WIP limit, mark it as the default or done bucket, collapse it, or delete it.
+
+![Kanban bucket three-dot menu with options](../../assets/images/help/views-kanban-bucket-menu.png)
+
+You can reorder buckets by dragging and dropping them by their header.
+
+#### Deleting a bucket
+
+When you delete a bucket, its tasks are moved to the default bucket. You cannot delete the last bucket in a Kanban view.
+
+#### WIP limits
+
+![Kanban bucket with a WIP limit indicator](../../assets/images/help/views-kanban-wip-limit.png)
+
+You can set a work-in-progress (WIP) limit to cap how many tasks a bucket should hold.
+
+When a bucket reaches its limit:
+
+- The task count in the header turns red
+- The "Add a task" button is disabled
+- Tasks cannot be dragged in from other buckets
+
+Tasks can still be dragged out of a full bucket or reordered inside it.
+
+The bucket header shows the current task count alongside the limit (for example, "5/10"). You can enable an option in your [user settings](/help/settings) to always show the task count on buckets, even when no limit is set.
+
+#### Default bucket
+
+The default bucket is where new tasks go when they are created without a specific bucket, for example from the list or table view. It is also where tasks go if their current bucket is deleted.
+
+If no default bucket is explicitly set, the first bucket is used.
+
+#### Done bucket
+
+Marking a bucket as the "done bucket" links that bucket to task completion:
+
+- When a task is dragged into the done bucket, it is automatically marked as done.
+- When a task is marked as done from anywhere else (for example, by checking it off in the list view), it is automatically moved into the done bucket.
+- When a task in the done bucket is marked as not done, it is moved back to the default bucket.
+
+#### Collapsing buckets
+
+Collapse a bucket to hide its contents and save space. Click it again to expand it. The collapsed state is saved in your browser.
+
+### Cover images
+
+You can add a cover image to a task card:
+
+1. Upload an image as an attachment on the task.
+2. Click the icon on the attachment to set it as the cover image.
+
+The image will appear on the Kanban card.
+
+### Filter-based buckets
+
+Kanban buckets can work in two ways:
+
+- **Manual bucket management (default):** You move tasks yourself.
+- **Filter-based buckets:** Buckets are filled automatically from filter queries. In this mode, tasks cannot be dragged between buckets.
+
+## Saved filters vs. views
+
+Vikunja has two different ways to change how tasks appear:
+
+- **Views** are per-project display configurations. They determine how tasks in a specific project are shown and can be shared with everyone who has access to the project.
+- **[Saved Filters](/help/saved-filters)** are personal, cross-project filter queries. They appear in your sidebar and let you create custom filtered lists across all your projects using the [filter syntax](/help/filters). Saved Filters cannot be shared with other users.
+
+See [Saved Filters](/help/saved-filters) for full details on creating and managing them.

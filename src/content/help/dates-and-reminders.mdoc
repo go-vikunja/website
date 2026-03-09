@@ -1,0 +1,58 @@
+---
+title: Dates & Reminders
+slug: dates-and-reminders
+description: Due dates, start and end dates, reminders, and repeating tasks.
+---
+
+Tasks can have due dates, start and end dates, reminders, and repeating schedules. Here's how each one works.
+
+## Due Date
+
+The due date is when a task must be finished. Once the due date passes, the task is considered overdue. Overdue tasks are highlighted so you can quickly spot what needs attention.
+
+![Overdue task highlighted in the task list](../../assets/images/help/dates-overdue-highlight.png)
+
+If you've enabled it in the settings, you'll receive an email each morning with a list of the tasks that are overdue.
+
+Due dates are also used for sorting in the **Upcoming** view and on the **[dashboard](/help/dashboard)**, making it easy to see what is coming up next.
+
+## Start and End Date
+
+Start and end dates define the window during which you plan to work on a task. For example, a report due March 31 (due date) might have a start date of March 20 and an end date of March 28, meaning you plan to do the work during that week.
+
+These dates are primarily used in the **[Gantt](/help/views#gantt-view)** view, where each task appears as a bar spanning from its start date to its end date on the timeline.
+
+## Reminders
+
+![Reminder configuration with absolute and relative options](../../assets/images/help/dates-reminder-config.png)
+
+You can set one or more reminders on any task. When a reminder triggers, you receive a [notification](/help/search-and-navigation#notifications) in the Vikunja UI. If you have email notifications enabled in your [settings](/help/settings), you will also receive an email.
+
+Reminders come in two types:
+
+- **Absolute reminders**: Set for a specific date and time (e.g. "remind me on March 5th at 9:00 AM").
+- **Relative reminders**: Set relative to one of the task's date fields (due date, start date, or end date). For example, "remind me 1 hour before the due date" or "remind me 2 days before the start date".
+
+{% callout type="info" %}
+Relative reminders require the corresponding date field to be set on the task. For example, a reminder relative to the due date will not trigger if no due date is set.
+{% /callout %}
+
+## Repeating Tasks
+
+![Repeating task configuration](../../assets/images/help/dates-repeating-task.png)
+
+Tasks can repeat on a schedule. Vikunja supports the same kind of recurrence rules you know from calendar applications. Some examples:
+
+- Every day
+- Every week
+- Every month
+- Every 2 weeks on Tuesday
+- First Tuesday of the month
+
+When a repeating task is marked as done, Vikunja automatically creates the next occurrence based on the recurrence rule.
+
+## Quick Add Magic
+
+Due dates, reminders, and repeating schedules can all be set directly when creating a task using Quick Add Magic. Instead of filling in fields manually, you can type everything in natural language right in the task title.
+
+For the full list of supported keywords and date formats, see [Quick Add Magic](/help/quick-add-magic).

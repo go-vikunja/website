@@ -1,0 +1,107 @@
+---
+title: Quick Add Magic
+slug: quick-add-magic
+description: Create tasks faster by typing labels, dates, priorities, and more directly into the task title.
+---
+
+Quick Add Magic lets you set task details like due dates, labels, and priorities while typing the task title. Instead of creating a task and then editing its fields one by one, you can do it all in one step.
+
+For example, typing:
+
+```
+Order packing supplies *logistics !3 tomorrow at 5pm
+```
+
+creates a task called "Order packing supplies" with the label `logistics`, priority 3, and a due date of tomorrow at 5pm.
+
+![Quick Add Magic parsing a task title into structured fields](../../assets/images/help/quick-add-magic-parsed.png)
+
+Quick Add Magic is available in the web UI. It uses the **default mode** described below. If you're coming from Todoist, you can switch to [Todoist-compatible shortcuts](#todoist-mode) in your settings.
+
+## Labels
+
+Add a label by typing `*` followed by the label name. If the label doesn't exist yet, Vikunja creates it for you.
+
+- `*logistics` adds the label "logistics"
+- `*"waiting on others"` wraps the name in quotes for multi-word labels
+- You can add multiple labels: `*urgent *logistics`
+
+## Assignees
+
+Assign the task to someone by typing `@` followed by their username. You can assign multiple people.
+
+- `@sarah` assigns the task to sarah
+- `@sarah @david` assigns to both
+
+## Project
+
+Move the task into a specific [project](/help/projects) by typing `+` followed by the project name. The project must already exist.
+
+- `+Personal` puts the task in the "Personal" project
+- `+"Office Move"` wraps the name in quotes for multi-word projects
+
+## Priority
+
+Set a priority by typing `!` followed by a number from 1 (low) to 5 (urgent).
+
+- `!1` low priority
+- `!5` urgent
+
+## Dates and times
+
+Type a date anywhere in the task title to set it as the due date. Vikunja understands many natural formats:
+
+- **Relative:** today, tonight, tomorrow, next monday, this weekend, later this week, next week, next month, end of month, in 5 days
+- **Weekdays:** tuesday (uses the next occurrence)
+- **Specific dates:** 17/02/2025, Feb 17, 17th (current month)
+
+Add a time with `at`: `tomorrow at 5pm`, `next monday at 17:00`.
+
+## Repeating tasks
+
+Make a task [repeat](/help/dates-and-reminders) by adding `every` followed by an interval:
+
+- `every day`
+- `every 3 days`
+- `every week`
+- `every 2 weeks`
+- `every month`
+
+## Creating multiple tasks at once
+
+![Creating multiple tasks with multiline input](../../assets/images/help/quick-add-magic-multiline.png)
+
+To create several tasks in one go, enter each task on its own line. Press `Shift + Enter` to add a new line, or paste multiline text from another document.
+
+### Subtasks
+
+When entering multiple tasks, indent a line to make it a subtask of the line above. You can use spaces or tabs for indentation, just be consistent within one batch.
+
+```
+Plan moving day
+  Reserve loading dock
+  Notify all departments
+    Print department labels
+```
+
+This creates "Plan moving day" as the parent task, with "Reserve loading dock" and "Notify all departments" as subtasks. "Print department labels" becomes a subtask of "Notify all departments".
+
+## Putting it all together
+
+```
+Moving check-in +"Office Move" *urgent every week monday at 10am
+```
+
+Creates a repeating weekly task called "Moving check-in" in the "Office Move" project, labeled "urgent", due every Monday at 10am.
+
+```
+Finalize seating chart *urgent *logistics @david in 5 days
+```
+
+Creates a task assigned to david, with two labels, due in 5 days.
+
+## Todoist mode
+
+If you're used to [Todoist's quick-add shortcuts](https://todoist.com/help/articles/use-task-quick-add-in-todoist-va4Lhpzz), you can switch Vikunja to use those keywords instead.
+
+Go to [Settings](/help/settings), scroll to "Quick Add Magic Mode", and select "Todoist".

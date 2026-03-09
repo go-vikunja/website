@@ -1,0 +1,102 @@
+---
+title: Projects
+slug: projects
+description: >-
+  Create and organize projects, nest sub-projects, set backgrounds, archive,
+  duplicate, and more.
+---
+
+A project is the main place where [tasks](/help/tasks) live in Vikunja. You can create as many projects as you need and arrange them in a hierarchy.
+
+### What you can do with projects
+
+- **Create projects** to group related tasks.
+- **Nest sub-projects** to build a hierarchy such as `Office Move > Packing & Logistics > Floor 3`.
+- **Share projects** with other users or teams. See [Sharing & Teams](/help/sharing-and-teams).
+- **Choose how tasks are displayed** using [views](/help/views) (list, kanban, gantt, table).
+
+{% callout type="info" %}
+**Projects vs. saved filters:** A project holds tasks. A [saved filter](/help/saved-filters) is a personal view that shows matching tasks from across all your projects. If you want to group tasks, use a project. If you want to see tasks from multiple projects in one place, use a saved filter.
+{% /callout %}
+
+## The inbox project
+
+Every user has an **Inbox** project. When you create a task from the [dashboard](/help/dashboard) without choosing a project, it goes there.
+
+Use Inbox as a quick capture space, then move tasks into other projects later.
+
+## Creating a project
+
+Open **Projects** in the sidebar, then use the button in the top right to create a new project.
+
+![Project overview page showing all projects](../../assets/images/help/projects-overview.png)
+
+## Project settings
+
+To open project settings, click the **three-dot menu** next to the project title and select **Edit**.
+
+![Project context menu with available actions](../../assets/images/help/projects-context-menu.png)
+
+![Project settings form](../../assets/images/help/projects-settings-form.png)
+
+You can change:
+
+- **Title:** The display name of the project.
+- **Parent project:** Assign this project as a sub-project of another project. You can also change this by dragging and dropping the project in the sidebar.
+- **Description:** An optional text description for the project.
+- **Identifier:** A short code (e.g. `MOVE`) that is combined with task numbers to create unique task references like `MOVE-42`. These references appear in the task detail view and make it easier to refer to specific tasks in conversations or comments. They are globally unique across all projects.
+- **Color:** Shown in the sidebar and on the project overview page.
+
+## Sub-projects
+
+You can nest projects to create a hierarchy. There are two ways to move a project under another one:
+
+- **Drag and drop** the project in the sidebar to place it under a parent project.
+- **Edit the project settings** and set the desired parent project.
+
+To create a sub-project directly, open the **three-dot menu** next to a project and choose **Create sub-project**.
+
+## Background images
+
+![Background image dialog with upload and Unsplash options](../../assets/images/help/projects-background-dialog.png)
+
+You can set a background image for any project from the **three-dot menu**.
+
+- **Upload** an image from your device.
+- **Search Unsplash** for a photo.
+
+{% callout type="info" %}
+The Unsplash integration requires an API key configured on the instance. If you are using Vikunja Cloud, this works out of the box.
+{% /callout %}
+
+## Archiving a project
+
+Archiving hides a project from the main working views and makes it read-only.
+
+Open the **three-dot menu** and select **Archive**. You can unarchive it later from the same menu.
+
+## Duplicating a project
+
+To copy a project, open the **three-dot menu** and select **Duplicate**. Vikunja creates a new project with copies of its tasks, views, sub-projects, and settings.
+
+## Favoriting a project
+
+![Star icon for favoriting a project](../../assets/images/help/projects-favorite-icon.png)
+
+To favorite a project, hover over it in the **sidebar** or on the **project overview** page and click the **star** icon. Favorited projects appear at the top of the sidebar.
+
+## Deleting a project
+
+To delete a project, open the **three-dot menu** and select **Delete**. This permanently removes the project and all of its tasks.
+
+{% callout type="info" %}
+Deleting a project cannot be undone. Make sure you no longer need the project or its tasks before deleting it.
+{% /callout %}
+
+## Related features
+
+Related pages:
+
+- [Sharing and Teams](/help/sharing-and-teams) - Share projects with other users or teams.
+- [Views](/help/views) - Configure how tasks are displayed within a project (list, kanban, gantt, table).
+- [Webhooks](/help/webhooks) - Set up webhooks to notify external services of events in a project.

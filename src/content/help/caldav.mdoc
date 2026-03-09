@@ -1,0 +1,78 @@
+---
+title: CalDAV
+slug: caldav
+description: >-
+  Sync tasks with external apps using CalDAV. Covers supported properties,
+  URLs, and client compatibility.
+---
+
+> **Warning:** The CalDAV integration is in an early alpha stage and has bugs.
+> It works well with some clients while having issues with others.
+> If you encounter issues, please [report them](https://code.vikunja.io/api/issues/new?body=[caldav])
+
+Vikunja supports managing [tasks](/help/tasks) via the [caldav VTODO](https://tools.ietf.org/html/rfc5545#section-3.6.2) extension.
+
+You can find your CalDAV connection details in your [Settings](/help/settings) under the CalDAV tab.
+
+![CalDAV connection details in settings](../../assets/images/help/caldav-connection-details.png)
+
+## URLs
+
+All URLs are located under the `/dav` subspace.
+
+URLs are:
+
+* `/principals/<username>/`: Returns URLs for project discovery. *Use this URL when connecting a new client.*
+* `/projects/`: Used to manage [projects](/help/projects)
+* `/projects/<Project ID>/`: Used to manage a single project
+* `/projects/<Project ID>/<Task UID>`: Used to manage a task on a project
+
+## Supported properties
+
+Vikunja currently supports the following properties:
+
+* `UID`
+* `SUMMARY`
+* `DESCRIPTION`
+* `PRIORITY`
+* `CATEGORIES`
+* `COMPLETED`
+* `CREATED` (only Vikunja → Client)
+* `DUE` ([Due date](/help/dates-and-reminders))
+* `DURATION`
+* `DTSTAMP`
+* `DTSTART`
+* `LAST-MODIFIED` (only Vikunja → Client)
+* `RELATED-TO` (parent/child relations)
+* `RRULE` (Recurrence) (only Vikunja → Client)
+* `STATUS` (only `COMPLETED` status, used to mark tasks as done)
+* `VALARM` ([Reminders](/help/dates-and-reminders))
+
+Vikunja **currently does not** support these properties:
+
+* `ATTACH`
+* `CLASS`
+* `COMMENT`
+* `CONTACT`
+* `GEO`
+* `LOCATION`
+* `ORGANIZER` (disabled)
+* `PERCENT-COMPLETE`
+* `RECURRENCE-ID`
+* `RESOURCES`
+* `SEQUENCE`
+* `URL`
+
+## Tested Clients
+
+### Working
+
+* [Evolution](https://wiki.gnome.org/Apps/Evolution/)
+* [OpenTasks](https://opentasks.app/) & [DAVx⁵](https://www.davx5.com/)
+* [Tasks (Android)](https://tasks.org/)
+* [Korganizer](https://apps.kde.org/korganizer/)
+
+### Not working
+
+* [Thunderbird (68)](https://www.thunderbird.net/)
+* iOS CalDAV Sync (See [#753](https://kolaente.dev/vikunja/vikunja/issues/753))
