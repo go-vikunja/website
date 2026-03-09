@@ -9,10 +9,10 @@ Quick Add Magic lets you set task details like due dates, labels, and priorities
 For example, typing:
 
 ```
-Buy groceries *shopping !3 tomorrow at 5pm
+Order packing supplies *logistics !3 tomorrow at 5pm
 ```
 
-creates a task called "Buy groceries" with the label `shopping`, priority 3, and a due date of tomorrow at 5pm.
+creates a task called "Order packing supplies" with the label `logistics`, priority 3, and a due date of tomorrow at 5pm.
 
 ![Quick Add Magic parsing a task title into structured fields](../../assets/images/help/quick-add-magic-parsed.png)
 
@@ -22,23 +22,23 @@ Quick Add Magic is available in the web UI. It uses the **default mode** describ
 
 Add a label by typing `*` followed by the label name. If the label doesn't exist yet, Vikunja creates it for you.
 
-- `*shopping` adds the label "shopping"
-- `*"Label with spaces"` wraps the name in quotes for multi-word labels
-- You can add multiple labels: `*urgent *work`
+- `*logistics` adds the label "logistics"
+- `*"waiting on others"` wraps the name in quotes for multi-word labels
+- You can add multiple labels: `*urgent *logistics`
 
 ## Assignees
 
 Assign the task to someone by typing `@` followed by their username. You can assign multiple people.
 
-- `@john` assigns the task to john
-- `@john @mary` assigns to both
+- `@sarah` assigns the task to sarah
+- `@sarah @david` assigns to both
 
 ## Project
 
 Move the task into a specific [project](/help/projects) by typing `+` followed by the project name. The project must already exist.
 
-- `+Errands` puts the task in the "Errands" project
-- `+"Work Projects"` wraps the name in quotes for multi-word projects
+- `+Personal` puts the task in the "Personal" project
+- `+"Office Move"` wraps the name in quotes for multi-word projects
 
 ## Priority
 
@@ -78,27 +78,27 @@ To create several tasks in one go, enter each task on its own line. Press `Shift
 When entering multiple tasks, indent a line to make it a subtask of the line above. You can use spaces or tabs for indentation, just be consistent within one batch.
 
 ```
-Plan birthday party
-  Book venue
-  Send invitations
-    Design invitation card
+Plan moving day
+  Reserve loading dock
+  Notify all departments
+    Print department labels
 ```
 
-This creates "Plan birthday party" as the parent task, with "Book venue" and "Send invitations" as subtasks. "Design invitation card" becomes a subtask of "Send invitations".
+This creates "Plan moving day" as the parent task, with "Reserve loading dock" and "Notify all departments" as subtasks. "Print department labels" becomes a subtask of "Notify all departments".
 
 ## Putting it all together
 
 ```
-Team meeting +"Work Projects" *important every week monday at 10am
+Moving check-in +"Office Move" *urgent every week monday at 10am
 ```
 
-Creates a repeating weekly task called "Team meeting" in the "Work Projects" project, labeled "important", due every Monday at 10am.
+Creates a repeating weekly task called "Moving check-in" in the "Office Move" project, labeled "urgent", due every Monday at 10am.
 
 ```
-Prepare presentation *work *deadline @sarah in 5 days
+Finalize seating chart *urgent *logistics @david in 5 days
 ```
 
-Creates a task assigned to sarah, with two labels, due in 5 days.
+Creates a task assigned to david, with two labels, due in 5 days.
 
 ## Todoist mode
 
