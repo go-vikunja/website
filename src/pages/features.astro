@@ -5,11 +5,17 @@ import FeatureCenter from '../components/features/FeatureCenter.astro'
 import FeatureImageSide from '../components/features/FeatureImageSide.astro'
 
 import VikunjaTaskOverview from '../assets/images/vikunja/01-task-overview.png'
+import VikunjaTaskOverviewDark from '../assets/images/vikunja/01-task-overview-dark.png'
 import VikunjaFeatureTask from '../assets/images/vikunja/features/task.png'
+import VikunjaFeatureTaskDark from '../assets/images/vikunja/features/task-dark.png'
 import VikunjaFeatureList from '../assets/images/vikunja/features/list.png'
+import VikunjaFeatureListDark from '../assets/images/vikunja/features/list-dark.png'
 import VikunjaFeatureGantt from '../assets/images/vikunja/features/gantt.png'
+import VikunjaFeatureGanttDark from '../assets/images/vikunja/features/gantt-dark.png'
 import VikunjaFeatureKanban from '../assets/images/vikunja/features/kanban.png'
+import VikunjaFeatureKanbanDark from '../assets/images/vikunja/features/kanban-dark.png'
 import VikunjaFeatureTable from '../assets/images/vikunja/features/table.png'
+import VikunjaFeatureTableDark from '../assets/images/vikunja/features/table-dark.png'
 import FeatureSmall from '../components/features/FeatureSmall.astro'
 import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
 import Plans from '../components/partials/Plans.astro'
@@ -83,6 +89,7 @@ import Plans from '../components/partials/Plans.astro'
         <div class="shadow-lg rounded-sm mb-16">
             <Screenshot
                 src={VikunjaTaskOverview}
+                darkSrc={VikunjaTaskOverviewDark}
                 class="object-contain object-top w-full"
                 alt="Vikunja Task Overview"
             />
@@ -99,7 +106,7 @@ import Plans from '../components/partials/Plans.astro'
             Because a productive tool should not get in your way.
         </FeatureCenter>
 
-        <FeatureImageSide orientation="left" image={VikunjaFeatureTask} alt="The image shows a minimalist task management interface with a numbered header, breadcrumb navigation, description field, and an embedded colorful abstract image.">
+        <FeatureImageSide orientation="left" image={VikunjaFeatureTask} darkImage={VikunjaFeatureTaskDark} alt="The image shows a minimalist task management interface with a numbered header, breadcrumb navigation, description field, and an embedded colorful abstract image.">
             <h2 class="font-display text-2xl mt-4 md:mt-0 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
                      viewBox="0 0 24 24" stroke="currentColor">
@@ -143,7 +150,7 @@ import Plans from '../components/partials/Plans.astro'
             Vikunja allows you to view tasks in four different views - use whatever works best for you.
         </p>
 
-        <FeatureImageSide image={VikunjaFeatureList} alt='A task management interface displaying an input field to add new tasks, followed by a list of sample tasks with checkboxes, due dates, assignments, labels, and a "Quick Add Magic" feature.'>
+        <FeatureImageSide image={VikunjaFeatureList} darkImage={VikunjaFeatureListDark} alt='A task management interface displaying an input field to add new tasks, followed by a list of sample tasks with checkboxes, due dates, assignments, labels, and a "Quick Add Magic" feature.'>
             <h2 class="font-display text-2xl flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
                      viewBox="0 0 24 24"
@@ -160,7 +167,7 @@ import Plans from '../components/partials/Plans.astro'
             </p>
         </FeatureImageSide>
 
-        <FeatureImageSide orientation="left" image={VikunjaFeatureGantt} alt='Calendar view for July 2022 showing three blue task cards scheduled across different dates and a "Create a new task" button at the bottom.'>
+        <FeatureImageSide orientation="left" image={VikunjaFeatureGantt} darkImage={VikunjaFeatureGanttDark} alt='Calendar view for July 2022 showing three blue task cards scheduled across different dates and a "Create a new task" button at the bottom.'>
             <h2 class="font-display text-2xl flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
                      viewBox="0 0 24 24" stroke="currentColor">
@@ -175,7 +182,7 @@ import Plans from '../components/partials/Plans.astro'
             </p>
         </FeatureImageSide>
 
-        <FeatureImageSide image={VikunjaFeatureKanban} alt='A Kanban-style task board showing two columns, "Backlog" and "Doing", with various numbered task cards containing descriptions, labels, and status indicators.'>
+        <FeatureImageSide image={VikunjaFeatureKanban} darkImage={VikunjaFeatureKanbanDark} alt='A Kanban-style task board showing two columns, "Backlog" and "Doing", with various numbered task cards containing descriptions, labels, and status indicators.'>
             <h2 class="font-display text-2xl flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
                      viewBox="0 0 24 24" stroke="currentColor">
@@ -196,7 +203,7 @@ import Plans from '../components/partials/Plans.astro'
             </p>
         </FeatureImageSide>
 
-        <FeatureImageSide orientation="left" image={VikunjaFeatureTable} alt="A task list interface showing numbered tasks with titles, completion status, and labels in a sortable table format.">
+        <FeatureImageSide orientation="left" image={VikunjaFeatureTable} darkImage={VikunjaFeatureTableDark} alt="A task list interface showing numbered tasks with titles, completion status, and labels in a sortable table format.">
             <h2 class="font-display text-2xl flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
                      viewBox="0 0 24 24"
