@@ -9,11 +9,12 @@ interface Props {
     heading: Heading
 }
 const { heading } = Astro.props;
+const text = heading.text.replace(/#$/, '').trimEnd();
 ---
 
 <li>
     <a href={'#' + heading.slug} class="transition hover:text-primary w-full block py-1">
-		{heading.text}
+		{text}
     </a>
 	{
 		heading.subheadings.length > 0 && (
