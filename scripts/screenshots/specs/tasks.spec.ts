@@ -67,12 +67,24 @@ test.describe('Task screenshots', () => {
     // Wait for the popup to fully appear and transition to complete
     await page.waitForTimeout(3000)
 
-    // Capture the popup card itself with tight padding
+    // Capture the popup card with custom clip: more top padding, narrower width, less bottom
     const popup = page.locator('.popup.is-open, .task-preview-popup, .tippy-content, .tippy-box').first()
     if (await popup.isVisible()) {
-      await screenshot('tasks-hover-preview', popup, {padding: 10})
+      const box = await popup.boundingBox()
+      if (box) {
+        const padTop = 30
+        const padBottom = -90
+        const padX = 5
+        await screenshot('tasks-hover-preview', page, {
+          clip: {
+            x: Math.max(0, box.x - padX),
+            y: Math.max(0, box.y - padTop),
+            width: box.width + padX * 2,
+            height: box.height + padTop + padBottom,
+          },
+        })
+      }
     } else {
-      // Fallback: capture area around the task
       await screenshot('tasks-hover-preview', taskElement, {padding: 150})
     }
   })
