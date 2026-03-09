@@ -29,9 +29,6 @@ pnpm screenshots:headed
 
 # Run with Playwright inspector for debugging
 pnpm screenshots:debug
-
-# Run all and optimize images
-pnpm all
 ```
 
 ## Output
