@@ -33,7 +33,12 @@ test.describe('Settings screenshots', () => {
     await page.goto('/user/settings/avatar')
     await page.waitForLoadState('networkidle')
 
-    await screenshot('settings-avatar-options', page)
+    const card = page.locator('.card').first()
+    if (await card.isVisible()) {
+      await screenshot('settings-avatar-options', card)
+    } else {
+      await screenshot('settings-avatar-options', page)
+    }
   })
 
   test('Delete account section', async ({authenticatedPage: page, screenshot}) => {

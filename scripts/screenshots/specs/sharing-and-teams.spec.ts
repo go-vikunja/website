@@ -52,23 +52,35 @@ test.describe('Sharing and teams screenshots', () => {
   test('Link share creation form', async ({authenticatedPage: page, screenshot}) => {
     const {project} = await createPopulatedProject()
 
+    // Use taller viewport so the link share section is fully visible
+    await page.setViewportSize({width: 1280, height: 1400})
+
     await page.goto(`/projects/${project.id}/settings/share`)
     await page.waitForLoadState('networkidle')
 
-    // Look for the link share section and click to create
-    const linkShareSection = page.locator('text=Share Links, text=Link Shares').first()
-    if (await linkShareSection.isVisible()) {
-      await linkShareSection.scrollIntoViewIfNeeded()
+    // Scroll to and focus on the link share section heading
+    const linkShareHeading = page.getByText('Share Links').or(page.getByText('Link Shares')).first()
+    if (await linkShareHeading.isVisible()) {
+      await linkShareHeading.scrollIntoViewIfNeeded()
+      await page.waitForTimeout(300)
     }
 
-    // Focus on the card
-    const card = page.locator('.card').first()
-    if (await card.isVisible()) {
-      await screenshot('sharing-link-create', card)
+    // Capture the link share form area — find the section from the heading downward
+    // The link share area is typically a distinct section within the card
+    const linkShareSection = page.locator('.link-shares, .link-sharing').first()
+    if (await linkShareSection.isVisible()) {
+      await screenshot('sharing-link-create', linkShareSection, {padding: 20})
     } else {
-      const content = page.locator('.app-content').first()
-      await screenshot('sharing-link-create', content)
+      // Fallback: capture from the heading with generous padding
+      if (await linkShareHeading.isVisible()) {
+        await screenshot('sharing-link-create', linkShareHeading, {padding: 200})
+      } else {
+        const card = page.locator('.card').first()
+        await screenshot('sharing-link-create', card)
+      }
     }
+
+    await page.setViewportSize({width: 1280, height: 900})
   })
 
   test('Link share management list', async ({authenticatedPage: page, screenshot}) => {
@@ -80,17 +92,33 @@ test.describe('Sharing and teams screenshots', () => {
       shared_by_id: 1,
     })
 
+    // Use taller viewport so the link share section is fully visible
+    await page.setViewportSize({width: 1280, height: 1400})
+
     await page.goto(`/projects/${project.id}/settings/share`)
     await page.waitForLoadState('networkidle')
 
-    // Focus on the card
-    const card = page.locator('.card').first()
-    if (await card.isVisible()) {
-      await screenshot('sharing-link-list', card)
-    } else {
-      const content = page.locator('.app-content').first()
-      await screenshot('sharing-link-list', content)
+    // Scroll to the link share section
+    const linkShareHeading = page.getByText('Share Links').or(page.getByText('Link Shares')).first()
+    if (await linkShareHeading.isVisible()) {
+      await linkShareHeading.scrollIntoViewIfNeeded()
+      await page.waitForTimeout(300)
     }
+
+    // Capture the link share section
+    const linkShareSection = page.locator('.link-shares, .link-sharing').first()
+    if (await linkShareSection.isVisible()) {
+      await screenshot('sharing-link-list', linkShareSection, {padding: 20})
+    } else {
+      if (await linkShareHeading.isVisible()) {
+        await screenshot('sharing-link-list', linkShareHeading, {padding: 200})
+      } else {
+        const card = page.locator('.card').first()
+        await screenshot('sharing-link-list', card)
+      }
+    }
+
+    await page.setViewportSize({width: 1280, height: 900})
   })
 
   test('Team settings with member list', async ({authenticatedPage: page, screenshot}) => {
@@ -110,12 +138,15 @@ test.describe('Sharing and teams screenshots', () => {
     await TeamMemberFactory.create(1, {team_id: teams[0].id, user_id: extraUsers[1].id}, false)
     await TeamMemberFactory.create(1, {team_id: teams[0].id, user_id: extraUsers[2].id}, false)
 
+    // Increase viewport so all team members and cards are fully visible
+    await page.setViewportSize({width: 1280, height: 1400})
+
     await page.goto(`/teams/${teams[0].id}/edit`)
     await page.waitForLoadState('networkidle')
 
-    // Focus on the cards with team info and members
-    const cards = page.locator('.card')
     const content = page.locator('.app-content').first()
     await screenshot('sharing-team-settings', content)
+
+    await page.setViewportSize({width: 1280, height: 900})
   })
 })

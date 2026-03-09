@@ -57,7 +57,10 @@ test.describe('Projects screenshots', () => {
       await createDefaultViews(projects[i].id as number, i * 4 + 1, i === 0)
     }
 
-    // Go directly to project overview without visiting any project first
+    // Clear localStorage to remove any "last viewed" projects
+    await page.goto('/')
+    await page.evaluate(() => localStorage.clear())
+
     await page.goto('/projects')
     await page.waitForLoadState('networkidle')
 

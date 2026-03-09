@@ -64,15 +64,15 @@ test.describe('Task screenshots', () => {
       await page.mouse.move(taskBox.x + taskBox.width / 3, taskBox.y + taskBox.height / 2)
     }
 
-    // Wait longer for the popup to fully appear (avoid half-transparent state)
-    await page.waitForTimeout(2000)
+    // Wait for the popup to fully appear and transition to complete
+    await page.waitForTimeout(3000)
 
-    // Try to capture the popup element itself
+    // Capture the popup card itself with tight padding
     const popup = page.locator('.popup.is-open, .task-preview-popup, .tippy-content, .tippy-box').first()
     if (await popup.isVisible()) {
-      await screenshot('tasks-hover-preview', popup, {padding: 20})
+      await screenshot('tasks-hover-preview', popup, {padding: 10})
     } else {
-      // Fallback: capture the task and surrounding area, focused on the overlay
+      // Fallback: capture area around the task
       await screenshot('tasks-hover-preview', taskElement, {padding: 150})
     }
   })
@@ -116,23 +116,25 @@ test.describe('Task screenshots', () => {
   test('Comment editor with @mention autocomplete', async ({authenticatedPage: page, screenshot}) => {
     const {tasks, extraUsers} = await createPopulatedProject({withComments: true})
 
-    await page.goto(`/tasks/${tasks[0].id}`)
-    await page.waitForLoadState('networkidle')
-
     // Increase viewport height so comment area is visible for screenshot clipping
     await page.setViewportSize({width: 1280, height: 1400})
 
-    // Click into the comment input and type @ followed by a name to trigger autocomplete
+    await page.goto(`/tasks/${tasks[0].id}`)
+    await page.waitForLoadState('networkidle')
+
+    // Click into the comment input, type some text with a @mention
     const commentInput = page.locator('.comments-container .tiptap, .comment-form .tiptap').first()
     await commentInput.scrollIntoViewIfNeeded()
     await page.waitForTimeout(300)
     await commentInput.click()
-    await page.keyboard.type('@sar')
-
-    // Wait for autocomplete dropdown to appear
+    await page.keyboard.type('Can you check with ')
+    await page.keyboard.type('@')
+    await page.waitForTimeout(500)
+    // Type partial name to filter the autocomplete
+    await page.keyboard.type('sar')
     await page.waitForTimeout(800)
 
-    // Capture the comment editor area with autocomplete
+    // Capture the comment editor area with the mention autocomplete visible
     const editor = page.locator('.comment-form, .comment-input').first()
     if (await editor.isVisible()) {
       await screenshot('tasks-comments-mention', editor, {padding: 50})

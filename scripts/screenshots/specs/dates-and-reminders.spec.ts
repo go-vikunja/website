@@ -73,29 +73,23 @@ test.describe('Dates and reminders screenshots', () => {
     await page.goto(`/tasks/1`)
     await page.waitForLoadState('networkidle')
 
-    // Click the repeat section to expand/open it
-    const repeatHeading = page.getByText('Repeat').first()
-    if (await repeatHeading.isVisible()) {
-      await repeatHeading.click()
-      await page.waitForTimeout(300)
-    }
-
-    // Click to open the repeat configuration popup
-    const repeatTrigger = page.locator('.repeat-after .detail-content').or(page.locator('.repeat-after button')).or(page.locator('.repeat-after .add')).first()
-    if (await repeatTrigger.isVisible()) {
-      await repeatTrigger.click()
+    // The repeat config is an inline expansion in the sidebar.
+    // Click the "Repeat" action button to activate/expand the repeat-after field.
+    const repeatButton = page.locator('.action-buttons button, .action-buttons .detail-button').filter({hasText: /repeat/i}).first()
+    if (await repeatButton.isVisible()) {
+      await repeatButton.click()
       await page.waitForTimeout(500)
     }
 
-    // Try to capture the repeat popup/modal
-    const popup = page.locator('.repeat-options-popup, .popup, .modal-content, .card.repeat').first()
-    if (await popup.isVisible()) {
-      await screenshot('dates-repeating-task', popup, {padding: 20})
+    // Capture the inline repeat-after configuration panel
+    const repeatInput = page.locator('.repeat-after-input').first()
+    if (await repeatInput.isVisible()) {
+      await screenshot('dates-repeating-task', repeatInput, {padding: 20})
     } else {
-      // Fallback: capture the repeat area
-      const repeatConfig = page.locator('.repeat-after').first()
-      if (await repeatConfig.isVisible()) {
-        await screenshot('dates-repeating-task', repeatConfig, {padding: 30})
+      // Fallback: capture the repeat-after section
+      const repeatSection = page.locator('.repeat-after').first()
+      if (await repeatSection.isVisible()) {
+        await screenshot('dates-repeating-task', repeatSection, {padding: 30})
       } else {
         const sidebar = page.locator('.task-view .action-buttons, .task-view .details').last()
         await screenshot('dates-repeating-task', sidebar)
