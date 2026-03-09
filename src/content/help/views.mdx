@@ -5,10 +5,12 @@ description: >-
   Configure how tasks are displayed: List, Table, Gantt, and Kanban views, each
   with optional filters.
 ---
+import Screenshot from '../../components/Screenshot.astro'
+
 
 Views control how [tasks](/help/tasks) are shown inside a [project](/help/projects). Every project starts with four default views, and you switch between them using the tabs at the top of the project.
 
-![View tabs at the top of a project](../../assets/images/help/views-tabs.png)
+<Screenshot src="views-tabs" alt="View tabs at the top of a project" />
 
 ### Which view should I use?
 
@@ -36,7 +38,7 @@ Each view can have its own filter. Only matching tasks appear in that view. See 
 
 ## List view
 
-![List view showing tasks in a flat list](../../assets/images/help/views-list.png)
+<Screenshot src="views-list" alt="List view showing tasks in a flat list" />
 
 The list view shows tasks in a flat list. It is the simplest view and a good default for most projects.
 
@@ -49,7 +51,7 @@ By default, done tasks are hidden in the list view. You can change that by editi
 
 ## Gantt view
 
-![Gantt view showing tasks on a timeline](../../assets/images/help/views-gantt.png)
+<Screenshot src="views-gantt" alt="Gantt view showing tasks on a timeline" />
 
 The Gantt view places tasks on a timeline using their [start and end dates](/help/dates-and-reminders). Use it when scheduling matters more than a simple list.
 
@@ -63,7 +65,7 @@ Filtering is not available in the Gantt view.
 
 ## Table view
 
-![Table view showing tasks in a spreadsheet-like layout](../../assets/images/help/views-table.png)
+<Screenshot src="views-table" alt="Table view showing tasks in a spreadsheet-like layout" />
 
 The table view shows tasks in a spreadsheet-like layout.
 
@@ -74,7 +76,7 @@ Use table view when you want to compare many task fields side by side.
 
 ## Kanban view
 
-![Kanban view with tasks organized into buckets](../../assets/images/help/views-kanban.png)
+<Screenshot src="views-kanban" alt="Kanban view with tasks organized into buckets" />
 
 The Kanban view organizes tasks into buckets. It works well for workflows such as **To Do**, **Doing**, and **Done**.
 
@@ -90,7 +92,7 @@ To create a bucket, enter a title in the field at the far right of the board. To
 
 Each bucket has a three-dot menu where you can set a WIP limit, mark it as the default or done bucket, collapse it, or delete it.
 
-![Kanban bucket three-dot menu with options](../../assets/images/help/views-kanban-bucket-menu.png)
+<Screenshot src="views-kanban-bucket-menu" alt="Kanban bucket three-dot menu with options" />
 
 You can reorder buckets by dragging and dropping them by their header.
 
@@ -100,7 +102,7 @@ When you delete a bucket, its tasks are moved to the default bucket. You cannot 
 
 #### WIP limits
 
-![Kanban bucket with a WIP limit indicator](../../assets/images/help/views-kanban-wip-limit.png)
+<Screenshot src="views-kanban-wip-limit" alt="Kanban bucket with a WIP limit indicator" />
 
 You can set a work-in-progress (WIP) limit to cap how many tasks a bucket should hold.
 

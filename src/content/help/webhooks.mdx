@@ -5,6 +5,8 @@ description: >-
   Send automatic notifications to external services when tasks are created,
   completed, or changed.
 ---
+import Screenshot from '../../components/Screenshot.astro'
+
 
 Webhooks let Vikunja send automatic notifications to other services whenever something happens in your projects, like when a task is created, completed, or commented on. This is useful for connecting Vikunja to chat tools, automation platforms, or custom scripts.
 
@@ -19,11 +21,11 @@ Vikunja has two types of webhooks:
 
 ### Project webhooks
 
-![Webhooks section in project settings](../../assets/images/help/webhooks-settings-section.png)
+<Screenshot src="webhooks-settings-section" alt="Webhooks section in project settings" />
 
 1. Open the [project](/help/projects) where you want the webhook.
 2. Go to the project settings and select **Webhooks**.
-![Webhook creation form with URL, events, and secret fields](../../assets/images/help/webhooks-create-form.png)
+<Screenshot src="webhooks-create-form" alt="Webhook creation form with URL, events, and secret fields" />
 
 3. Fill in the form:
    - **Target URL** (required): The URL that Vikunja will send data to (must start with `http://` or `https://`).
