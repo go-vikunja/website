@@ -17,10 +17,19 @@ export default defineConfig({
   },
   projects: [
     {
-      name: 'screenshots',
+      name: 'screenshots-light',
       use: {
         ...devices['Desktop Chrome'],
         deviceScaleFactor: 2,
+        colorScheme: 'light',
+      },
+    },
+    {
+      name: 'screenshots-dark',
+      use: {
+        ...devices['Desktop Chrome'],
+        deviceScaleFactor: 2,
+        colorScheme: 'dark',
       },
     },
   ],
