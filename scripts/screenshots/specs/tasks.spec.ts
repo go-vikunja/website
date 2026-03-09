@@ -67,10 +67,26 @@ test.describe('Task screenshots', () => {
     // Wait for the popup to fully appear and transition to complete
     await page.waitForTimeout(3000)
 
-    // Capture the task-glance-tooltip popup
+    // Capture the tooltip and the hovered task together
     const popup = page.locator('.task-glance-tooltip').first()
     if (await popup.isVisible()) {
-      await screenshot('tasks-hover-preview', popup, {padding: 10})
+      const popupBox = await popup.boundingBox()
+      if (popupBox && taskBox) {
+        const top = Math.min(popupBox.y, taskBox.y) - 10
+        const bottom = Math.max(popupBox.y + popupBox.height, taskBox.y + taskBox.height) + 50
+        const left = Math.min(popupBox.x, taskBox.x) - 10
+        const right = Math.max(popupBox.x + popupBox.width, taskBox.x + taskBox.width) + 10
+        await screenshot('tasks-hover-preview', page, {
+          clip: {
+            x: Math.max(0, left),
+            y: Math.max(0, top),
+            width: right - left,
+            height: bottom - top,
+          },
+        })
+      } else {
+        await screenshot('tasks-hover-preview', popup, {padding: 10})
+      }
     } else {
       await screenshot('tasks-hover-preview', taskElement, {padding: 150})
     }
