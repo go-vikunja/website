@@ -15,8 +15,13 @@ test.describe('Permissions screenshots', () => {
       await page.waitForTimeout(300)
     }
 
-    // Capture the sharing form area
-    const shareForm = page.locator('.card, .share-form, .app-content').first()
-    await screenshot('permissions-dropdown', shareForm)
+    // Capture the full modal/card
+    const modal = page.locator('.modal-content .card, .modal-content, .card.has-overflow').first()
+    if (await modal.isVisible()) {
+      await screenshot('permissions-dropdown', modal)
+    } else {
+      const content = page.locator('.app-content').first()
+      await screenshot('permissions-dropdown', content)
+    }
   })
 })

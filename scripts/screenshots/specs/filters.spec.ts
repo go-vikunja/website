@@ -22,12 +22,13 @@ test.describe('Filters screenshots', () => {
       }
     }
 
-    // Capture the filter popup/modal
-    const filterPopup = page.locator('.filter-popup, .modal-container, .filters').first()
-    if (await filterPopup.isVisible()) {
-      await screenshot('filters-editor-autocomplete', filterPopup)
+    // Capture the filter popup/modal card
+    const filterCard = page.locator('.card.filters, .card:has(.filter-input), .card:has(.filter-editor)').first()
+    if (await filterCard.isVisible()) {
+      await screenshot('filters-editor-autocomplete', filterCard)
     } else {
-      await screenshot('filters-editor-autocomplete', page)
+      const filterPopup = page.locator('.filter-popup, .modal-content .card, .filters').first()
+      await screenshot('filters-editor-autocomplete', filterPopup.isVisible() ? filterPopup : page)
     }
   })
 
@@ -50,11 +51,12 @@ test.describe('Filters screenshots', () => {
       await includeNulls.scrollIntoViewIfNeeded()
     }
 
-    const filterPopup = page.locator('.filter-popup, .modal-container, .filters').first()
-    if (await filterPopup.isVisible()) {
-      await screenshot('filters-include-nulls', filterPopup)
+    const filterCard = page.locator('.card.filters, .card:has(.filter-input), .card:has(.filter-editor)').first()
+    if (await filterCard.isVisible()) {
+      await screenshot('filters-include-nulls', filterCard)
     } else {
-      await screenshot('filters-include-nulls', page)
+      const filterPopup = page.locator('.filter-popup, .modal-content .card, .filters').first()
+      await screenshot('filters-include-nulls', filterPopup.isVisible() ? filterPopup : page)
     }
   })
 
@@ -78,6 +80,11 @@ test.describe('Filters screenshots', () => {
       }
     }
 
-    await screenshot('filters-active', page)
+    const filterCard = page.locator('.card.filters, .card:has(.filter-input), .card:has(.filter-editor)').first()
+    if (await filterCard.isVisible()) {
+      await screenshot('filters-active', filterCard)
+    } else {
+      await screenshot('filters-active', page)
+    }
   })
 })

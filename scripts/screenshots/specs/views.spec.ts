@@ -3,6 +3,7 @@ import {createPopulatedProject, createDefaultViews} from '../support/seed-helper
 import {BucketFactory} from '../factories/bucket'
 import {TaskFactory} from '../factories/task'
 import {TaskBucketFactory} from '../factories/task_buckets'
+import {ProjectFactory} from '../factories/project'
 
 test.describe('Views screenshots', () => {
   test('View tabs at the top', async ({authenticatedPage: page, screenshot}) => {
@@ -11,13 +12,14 @@ test.describe('Views screenshots', () => {
     await page.goto(`/projects/${project.id}/${views.list.id}`)
     await page.waitForLoadState('networkidle')
 
-    // Capture the view tabs bar
+    // Capture the view switcher tabs
     const tabBar = page.locator('.project-view-tabs, .views-tabs, [data-cy="viewTabs"]').first()
     if (await tabBar.isVisible()) {
-      await screenshot('views-tabs', tabBar)
+      await screenshot('views-tabs', tabBar, {padding: 5})
     } else {
-      // Fallback: crop top portion of page
-      await screenshot('views-tabs', page, {clip: {x: 0, y: 0, width: 1280, height: 120}})
+      // Fallback: crop top portion of content area
+      const content = page.locator('.app-content').first()
+      await screenshot('views-tabs', content)
     }
   })
 
@@ -28,18 +30,55 @@ test.describe('Views screenshots', () => {
     await page.waitForLoadState('networkidle')
 
     await expect(page.locator('.tasks')).toBeVisible()
-    await screenshot('views-list', page)
+
+    // Capture the content area (view with switcher, no sidebar/header)
+    const content = page.locator('.app-content').first()
+    await screenshot('views-list', content)
   })
 
   test('Gantt chart view', async ({authenticatedPage: page, screenshot}) => {
-    const {project, views} = await createPopulatedProject({withDueDates: true})
+    // Create a custom project with start and end dates for gantt
+    const projects = await ProjectFactory.create(1, {title: 'Office Move'})
+    const project = projects[0]
+    const views = await createDefaultViews(project.id as number)
+
+    const now = new Date()
+    await TaskFactory.create(6, {
+      project_id: project.id,
+      title: (i: number) => [
+        'Get quotes from moving companies',
+        'Notify building management',
+        'Order new desk furniture',
+        'Set up meeting rooms',
+        'Transfer phone and internet lines',
+        'Create new seating chart',
+      ][i - 1],
+      start_date: (i: number) => {
+        const d = new Date(now)
+        d.setDate(d.getDate() + (i * 3) - 8)
+        return d.toISOString()
+      },
+      end_date: (i: number) => {
+        const d = new Date(now)
+        d.setDate(d.getDate() + (i * 3) - 8 + 4 + i) // Each task spans 4-10 days
+        return d.toISOString()
+      },
+      due_date: (i: number) => {
+        const d = new Date(now)
+        d.setDate(d.getDate() + (i * 3) - 8 + 4 + i)
+        return d.toISOString()
+      },
+    })
 
     await page.goto(`/projects/${project.id}/${views.gantt.id}`)
     await page.waitForLoadState('networkidle')
 
     // Wait for gantt content to render
     await page.waitForTimeout(1000)
-    await screenshot('views-gantt', page)
+
+    // Capture the content area (no sidebar/header)
+    const content = page.locator('.app-content').first()
+    await screenshot('views-gantt', content)
   })
 
   test('Table view', async ({authenticatedPage: page, screenshot}) => {
@@ -48,7 +87,9 @@ test.describe('Views screenshots', () => {
     await page.goto(`/projects/${project.id}/${views.table.id}`)
     await page.waitForLoadState('networkidle')
 
-    await screenshot('views-table', page)
+    // Capture the content area (no sidebar/header)
+    const content = page.locator('.app-content').first()
+    await screenshot('views-table', content)
   })
 
   test('Kanban board', async ({authenticatedPage: page, screenshot}) => {
@@ -59,7 +100,10 @@ test.describe('Views screenshots', () => {
 
     // Wait for kanban to render
     await page.waitForTimeout(500)
-    await screenshot('views-kanban', page)
+
+    // Capture the content area (no sidebar/header)
+    const content = page.locator('.app-content').first()
+    await screenshot('views-kanban', content)
   })
 
   test('Kanban bucket three-dot menu', async ({authenticatedPage: page, screenshot}) => {
@@ -130,16 +174,9 @@ test.describe('Views screenshots', () => {
       }
     }
 
-    await screenshot('views-kanban-wip-limit', page)
-  })
-
-  test('Filter-based bucket configuration', async ({authenticatedPage: page, screenshot}) => {
-    const {project, views} = await createPopulatedProject({withKanban: true})
-
-    // Navigate to the kanban view management/config
-    await page.goto(`/projects/${project.id}/${views.kanban.id}`)
-    await page.waitForLoadState('networkidle')
-
-    await screenshot('views-filter-bucket', page)
+    // Focus on the top of the bucket showing the WIP limit indicator
+    const bucket = page.locator('.bucket').first()
+    const bucketTop = page.locator('.bucket-header').first()
+    await screenshot('views-kanban-wip-limit', bucketTop, {padding: 30})
   })
 })

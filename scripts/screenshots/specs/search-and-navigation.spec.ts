@@ -19,7 +19,13 @@ test.describe('Search and navigation screenshots', () => {
       await page.waitForTimeout(500)
     }
 
-    await screenshot('search-global-dialog', page.locator('.modal-container, .quick-actions').first())
+    // Focus on the modal card
+    const modal = page.locator('.modal-content .card, .modal-content').first()
+    if (await modal.isVisible()) {
+      await screenshot('search-global-dialog', modal)
+    } else {
+      await screenshot('search-global-dialog', page.locator('.modal-container, .quick-actions').first())
+    }
   })
 
   test('Quick actions for creating', async ({authenticatedPage: page, screenshot}) => {
@@ -39,7 +45,13 @@ test.describe('Search and navigation screenshots', () => {
       await page.waitForTimeout(500)
     }
 
-    await screenshot('search-quick-actions', page.locator('.modal-container, .quick-actions').first())
+    // Focus on the modal card
+    const modal = page.locator('.modal-content .card, .modal-content').first()
+    if (await modal.isVisible()) {
+      await screenshot('search-quick-actions', modal)
+    } else {
+      await screenshot('search-quick-actions', page.locator('.modal-container, .quick-actions').first())
+    }
   })
 
   test('Keyboard shortcuts popup', async ({authenticatedPage: page, screenshot}) => {
@@ -55,7 +67,13 @@ test.describe('Search and navigation screenshots', () => {
     }
     await page.waitForTimeout(300)
 
-    await screenshot('navigation-keyboard-shortcuts', page.locator('.modal-container, .keyboard-shortcuts').first())
+    // Focus on the modal card
+    const modal = page.locator('.modal-content .card, .modal-content').first()
+    if (await modal.isVisible()) {
+      await screenshot('navigation-keyboard-shortcuts', modal)
+    } else {
+      await screenshot('navigation-keyboard-shortcuts', page.locator('.modal-container, .keyboard-shortcuts').first())
+    }
   })
 
   test('Notifications dropdown', async ({authenticatedPage: page, screenshot}) => {

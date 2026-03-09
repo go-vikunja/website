@@ -87,13 +87,14 @@ test.describe('Dashboard screenshots', () => {
     await page.goto('/')
     await page.waitForLoadState('networkidle')
 
-    // Scroll to and capture the recently viewed section
+    // Capture the recently viewed section
     const recentSection = page.locator('.recently-viewed, [data-cy="recentlyViewed"]').first()
     if (await recentSection.isVisible()) {
       await screenshot('dashboard-recent-projects', recentSection)
     } else {
-      // Fallback: capture the lower half of the dashboard
-      await screenshot('dashboard-recent-projects', page)
+      // Fallback: capture the app content area
+      const content = page.locator('.app-content').first()
+      await screenshot('dashboard-recent-projects', content)
     }
   })
 })

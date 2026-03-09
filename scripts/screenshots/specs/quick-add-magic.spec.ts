@@ -17,7 +17,9 @@ test.describe('Quick-add magic screenshots', () => {
     // Wait for the parsed preview to show
     await page.waitForTimeout(500)
 
-    await screenshot('quick-add-magic-parsed', page)
+    // Focus on the task input area with its parsed preview
+    const taskAddArea = page.locator('.task-add, [data-cy="taskAdd"]').first()
+    await screenshot('quick-add-magic-parsed', taskAddArea, {padding: 10})
   })
 
   test('Multiline subtask creation', async ({authenticatedPage: page, screenshot}) => {
@@ -38,6 +40,8 @@ test.describe('Quick-add magic screenshots', () => {
 
     await page.waitForTimeout(300)
 
-    await screenshot('quick-add-magic-multiline', page)
+    // Focus on the task input area
+    const taskAddArea = page.locator('.task-add, [data-cy="taskAdd"]').first()
+    await screenshot('quick-add-magic-multiline', taskAddArea, {padding: 10})
   })
 })

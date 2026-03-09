@@ -12,15 +12,25 @@ test.describe('Sharing and teams screenshots', () => {
     await page.goto(`/projects/${project.id}/${views.list.id}`)
     await page.waitForLoadState('networkidle')
 
-    // Click the project title dropdown trigger / three-dot menu
+    // Click the project title dropdown trigger / three-dot menu to open it
     const menuTrigger = page.locator('.project-title-dropdown, .dropdown-trigger, [data-cy="project-menu"]').first()
     if (await menuTrigger.isVisible()) {
       await menuTrigger.click()
-      await page.waitForTimeout(200)
+      await page.waitForTimeout(300)
     }
 
-    const dropdown = page.locator('.dropdown:has(.dropdown-menu)').first()
-    await screenshot('sharing-three-dot-menu', dropdown)
+    // Capture the open dropdown
+    const dropdown = page.locator('.dropdown.is-active, .dropdown:has(.dropdown-menu.is-active)').first()
+    if (await dropdown.isVisible()) {
+      await screenshot('sharing-three-dot-menu', dropdown)
+    } else {
+      const menu = page.locator('.dropdown-menu').first()
+      if (await menu.isVisible()) {
+        await screenshot('sharing-three-dot-menu', menu, {padding: 40})
+      } else {
+        await screenshot('sharing-three-dot-menu', page)
+      }
+    }
   })
 
   test('Sharing settings panel', async ({authenticatedPage: page, screenshot}) => {
@@ -29,7 +39,14 @@ test.describe('Sharing and teams screenshots', () => {
     await page.goto(`/projects/${project.id}/settings/share`)
     await page.waitForLoadState('networkidle')
 
-    await screenshot('sharing-settings-panel', page)
+    // Focus on the modal/card content
+    const card = page.locator('.card').first()
+    if (await card.isVisible()) {
+      await screenshot('sharing-settings-panel', card)
+    } else {
+      const content = page.locator('.app-content').first()
+      await screenshot('sharing-settings-panel', content)
+    }
   })
 
   test('Link share creation form', async ({authenticatedPage: page, screenshot}) => {
@@ -44,7 +61,14 @@ test.describe('Sharing and teams screenshots', () => {
       await linkShareSection.scrollIntoViewIfNeeded()
     }
 
-    await screenshot('sharing-link-create', page)
+    // Focus on the card
+    const card = page.locator('.card').first()
+    if (await card.isVisible()) {
+      await screenshot('sharing-link-create', card)
+    } else {
+      const content = page.locator('.app-content').first()
+      await screenshot('sharing-link-create', content)
+    }
   })
 
   test('Link share management list', async ({authenticatedPage: page, screenshot}) => {
@@ -59,29 +83,14 @@ test.describe('Sharing and teams screenshots', () => {
     await page.goto(`/projects/${project.id}/settings/share`)
     await page.waitForLoadState('networkidle')
 
-    await screenshot('sharing-link-list', page)
-  })
-
-  test('Teams page', async ({authenticatedPage: page, screenshot}) => {
-    // Create teams with members
-    const teams = await TeamFactory.create(2, {
-      name: (i: number) => ['Facilities Team', 'Move Coordinators'][i - 1],
-      created_by_id: 1,
-    })
-
-    const extraUsers = await UserFactory.create(3, {
-      id: (i: number) => 300 + i,
-      username: (i: number) => ['sarah', 'david', 'emma'][i - 1],
-    }, false)
-
-    await TeamMemberFactory.create(1, {team_id: teams[0].id, user_id: extraUsers[0].id})
-    await TeamMemberFactory.create(1, {team_id: teams[0].id, user_id: extraUsers[1].id}, false)
-    await TeamMemberFactory.create(1, {team_id: teams[1].id, user_id: extraUsers[2].id}, false)
-
-    await page.goto('/teams')
-    await page.waitForLoadState('networkidle')
-
-    await screenshot('sharing-teams-page', page)
+    // Focus on the card
+    const card = page.locator('.card').first()
+    if (await card.isVisible()) {
+      await screenshot('sharing-link-list', card)
+    } else {
+      const content = page.locator('.app-content').first()
+      await screenshot('sharing-link-list', content)
+    }
   })
 
   test('Team settings with member list', async ({authenticatedPage: page, screenshot}) => {
@@ -90,18 +99,23 @@ test.describe('Sharing and teams screenshots', () => {
       created_by_id: 1,
     })
 
-    const extraUsers = await UserFactory.create(2, {
+    const extraUsers = await UserFactory.create(3, {
       id: (i: number) => 400 + i,
-      username: (i: number) => ['sarah', 'david'][i - 1],
+      username: (i: number) => ['sarah', 'david', 'emma'][i - 1],
+      name: (i: number) => ['Sarah Miller', 'David Park', 'Emma Thompson'][i - 1],
     }, false)
 
     await TeamMemberFactory.create(1, {team_id: teams[0].id, user_id: 1, admin: true})
     await TeamMemberFactory.create(1, {team_id: teams[0].id, user_id: extraUsers[0].id}, false)
     await TeamMemberFactory.create(1, {team_id: teams[0].id, user_id: extraUsers[1].id}, false)
+    await TeamMemberFactory.create(1, {team_id: teams[0].id, user_id: extraUsers[2].id}, false)
 
     await page.goto(`/teams/${teams[0].id}/edit`)
     await page.waitForLoadState('networkidle')
 
-    await screenshot('sharing-team-settings', page)
+    // Focus on the cards with team info and members
+    const cards = page.locator('.card')
+    const content = page.locator('.app-content').first()
+    await screenshot('sharing-team-settings', content)
   })
 })

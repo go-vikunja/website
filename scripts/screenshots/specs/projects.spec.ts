@@ -9,16 +9,26 @@ test.describe('Projects screenshots', () => {
     await page.goto(`/projects/${project.id}/${views.list.id}`)
     await page.waitForLoadState('networkidle')
 
-    // Click the three-dot menu on the project
+    // Click the three-dot menu on the project to open the dropdown
     const menuTrigger = page.locator('.project-title-dropdown, .dropdown-trigger, [data-cy="project-menu"]').first()
     if (await menuTrigger.isVisible()) {
       await menuTrigger.click()
-      await page.waitForTimeout(200)
+      await page.waitForTimeout(300)
     }
 
-    // Capture the dropdown menu with its trigger
-    const dropdown = page.locator('.dropdown:has(.dropdown-menu)').first()
-    await screenshot('projects-context-menu', dropdown)
+    // Capture the open dropdown menu
+    const dropdown = page.locator('.dropdown.is-active, .dropdown:has(.dropdown-menu.is-active)').first()
+    if (await dropdown.isVisible()) {
+      await screenshot('projects-context-menu', dropdown)
+    } else {
+      // Fallback: try capturing any visible dropdown menu
+      const menu = page.locator('.dropdown-menu').first()
+      if (await menu.isVisible()) {
+        await screenshot('projects-context-menu', menu, {padding: 40})
+      } else {
+        await screenshot('projects-context-menu', page)
+      }
+    }
   })
 
   test('Project settings form', async ({authenticatedPage: page, screenshot}) => {
@@ -27,7 +37,14 @@ test.describe('Projects screenshots', () => {
     await page.goto(`/projects/${project.id}/settings/edit`)
     await page.waitForLoadState('networkidle')
 
-    await screenshot('projects-settings-form', page)
+    // Focus on the settings card/form
+    const card = page.locator('.card').first()
+    if (await card.isVisible()) {
+      await screenshot('projects-settings-form', card)
+    } else {
+      const content = page.locator('.app-content').first()
+      await screenshot('projects-settings-form', content)
+    }
   })
 
   test('Project overview page', async ({authenticatedPage: page, screenshot}) => {
@@ -74,6 +91,13 @@ test.describe('Projects screenshots', () => {
     await page.goto(`/projects/${project.id}/settings/background`)
     await page.waitForLoadState('networkidle')
 
-    await screenshot('projects-background-dialog', page)
+    // Focus on the card
+    const card = page.locator('.card').first()
+    if (await card.isVisible()) {
+      await screenshot('projects-background-dialog', card)
+    } else {
+      const content = page.locator('.app-content').first()
+      await screenshot('projects-background-dialog', content)
+    }
   })
 })

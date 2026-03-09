@@ -1,6 +1,5 @@
 import {test, expect} from '../support/fixtures'
 import {createPopulatedProject, createDefaultViews} from '../support/seed-helpers'
-import {UserFactory} from '../factories/user'
 import {ProjectFactory} from '../factories/project'
 
 test.describe('Task screenshots', () => {
@@ -32,14 +31,17 @@ test.describe('Task screenshots', () => {
     await page.goto(`/tasks/${tasks[0].id}`)
     await page.waitForLoadState('networkidle')
 
-    // Capture just the sidebar/action area
-    const sidebar = page.locator('.task-view .action-buttons, .task-view .details').last()
+    // Capture the whole right sidebar/action area
+    const sidebar = page.locator('.task-view .action-buttons').first()
     await expect(sidebar).toBeVisible()
-    await screenshot('tasks-right-sidebar', sidebar)
+    await screenshot('tasks-right-sidebar', sidebar, {padding: 10})
   })
 
   test('Hover preview popup', async ({authenticatedPage: page, screenshot}) => {
-    const {project, views} = await createPopulatedProject()
+    const {project, views, tasks} = await createPopulatedProject({
+      withLabels: true,
+      withAssignees: true,
+    })
 
     await page.goto(`/projects/${project.id}/${views.list.id}`)
     await page.waitForLoadState('networkidle')
@@ -47,29 +49,28 @@ test.describe('Task screenshots', () => {
     // Hover over a task to trigger the preview popup
     const taskElement = page.locator('.tasks .task').first()
     await expect(taskElement).toBeVisible()
-    await taskElement.hover()
+
+    // Move mouse to the center of the task to trigger the preview (not the due date)
+    const taskBox = await taskElement.boundingBox()
+    if (taskBox) {
+      await page.mouse.move(taskBox.x + taskBox.width / 3, taskBox.y + taskBox.height / 2)
+    }
 
     // Wait for the popup to appear
-    await page.waitForTimeout(500)
+    await page.waitForTimeout(1000)
 
     // Try to capture the popup element
-    const popup = page.locator('.popup.is-open, .task-preview-popup, .tippy-content').first()
+    const popup = page.locator('.popup.is-open, .task-preview-popup, .tippy-content, .tippy-box').first()
     if (await popup.isVisible()) {
-      await screenshot('tasks-hover-preview', popup)
+      await screenshot('tasks-hover-preview', popup, {padding: 10})
     } else {
       // Fallback: capture the task and surrounding area
-      await screenshot('tasks-hover-preview', taskElement, {padding: 100})
+      await screenshot('tasks-hover-preview', taskElement, {padding: 150})
     }
   })
 
   test('Comment section', async ({authenticatedPage: page, screenshot}) => {
     const {tasks} = await createPopulatedProject({withComments: true})
-
-    // Create additional users for @mention
-    await UserFactory.create(2, {
-      id: (i: number) => 200 + i,
-      username: (i: number) => ['sarah', 'david'][i - 1],
-    }, false)
 
     await page.goto(`/tasks/${tasks[0].id}`)
     await page.waitForLoadState('networkidle')
@@ -82,13 +83,8 @@ test.describe('Task screenshots', () => {
     await screenshot('tasks-comments', commentSection)
   })
 
-  test('Comment section with @mention autocomplete', async ({authenticatedPage: page, screenshot}) => {
+  test('Comment editor with @mention autocomplete', async ({authenticatedPage: page, screenshot}) => {
     const {tasks} = await createPopulatedProject({withComments: true})
-
-    await UserFactory.create(2, {
-      id: (i: number) => 200 + i,
-      username: (i: number) => ['sarah', 'david'][i - 1],
-    }, false)
 
     await page.goto(`/tasks/${tasks[0].id}`)
     await page.waitForLoadState('networkidle')
@@ -102,9 +98,13 @@ test.describe('Task screenshots', () => {
     // Wait for autocomplete dropdown
     await page.waitForTimeout(500)
 
-    // Capture the comment area with the autocomplete dropdown
-    const commentArea = page.locator('.comments-container, .task-view .comments').first()
-    await screenshot('tasks-comments-mention', commentArea, {padding: 40})
+    // Capture just the comment editor area with the autocomplete
+    const editor = page.locator('.comment-form, .comment-input').first()
+    if (await editor.isVisible()) {
+      await screenshot('tasks-comments-mention', editor, {padding: 30})
+    } else {
+      await screenshot('tasks-comments-mention', commentInput, {padding: 60})
+    }
   })
 
   test('Drag task to project in sidebar', async ({authenticatedPage: page, screenshot}) => {

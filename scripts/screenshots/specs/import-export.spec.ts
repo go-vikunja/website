@@ -5,13 +5,22 @@ test.describe('Import/Export screenshots', () => {
     await page.goto('/user/settings/data-export')
     await page.waitForLoadState('networkidle')
 
-    await screenshot('import-export-data-export', page)
+    const card = page.locator('.card').first()
+    await expect(card).toBeVisible()
+    await screenshot('import-export-data-export', card)
   })
 
   test('Import tab', async ({authenticatedPage: page, screenshot}) => {
     await page.goto('/user/settings/migrate')
     await page.waitForLoadState('networkidle')
 
-    await screenshot('import-export-import-tab', page)
+    const card = page.locator('.card').first()
+    if (await card.isVisible()) {
+      await screenshot('import-export-import-tab', card)
+    } else {
+      // Fallback: capture the content area
+      const content = page.locator('.app-content').first()
+      await screenshot('import-export-import-tab', content)
+    }
   })
 })

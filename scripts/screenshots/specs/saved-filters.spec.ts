@@ -3,22 +3,20 @@ import {createPopulatedProject} from '../support/seed-helpers'
 import {SavedFilterFactory} from '../factories/saved_filter'
 
 test.describe('Saved filters screenshots', () => {
-  test('New saved filter button on project overview', async ({authenticatedPage: page, screenshot}) => {
-    await createPopulatedProject()
-
-    await page.goto('/projects')
-    await page.waitForLoadState('networkidle')
-
-    await screenshot('saved-filters-new-button', page)
-  })
-
   test('Saved filter creation form', async ({authenticatedPage: page, screenshot}) => {
     await createPopulatedProject()
 
     await page.goto('/filters/new')
     await page.waitForLoadState('networkidle')
 
-    await screenshot('saved-filters-create-form', page)
+    // Focus on the form card
+    const card = page.locator('.card').first()
+    if (await card.isVisible()) {
+      await screenshot('saved-filters-create-form', card)
+    } else {
+      const content = page.locator('.app-content').first()
+      await screenshot('saved-filters-create-form', content)
+    }
   })
 
   test('Saved filter in sidebar', async ({authenticatedPage: page, screenshot}) => {
@@ -33,19 +31,20 @@ test.describe('Saved filters screenshots', () => {
     await page.goto('/')
     await page.waitForLoadState('networkidle')
 
-    // Capture the sidebar showing the saved filter
-    const sidebar = page.locator('.menu-container, .navigation, [data-cy="navigation"]').first()
-    if (await sidebar.isVisible()) {
-      await screenshot('saved-filters-sidebar', sidebar)
+    // Capture the sidebar area showing the filter alongside projects
+    const menuList = page.locator('.menu-list').first()
+    if (await menuList.isVisible()) {
+      await screenshot('saved-filters-sidebar', menuList)
     } else {
-      await screenshot('saved-filters-sidebar', page)
+      const sidebar = page.locator('.menu-container, .navigation, [data-cy="navigation"]').first()
+      await screenshot('saved-filters-sidebar', sidebar)
     }
   })
 
   test('Three-dot menu with Edit option', async ({authenticatedPage: page, screenshot}) => {
     await createPopulatedProject()
 
-    const filters = await SavedFilterFactory.create(1, {
+    await SavedFilterFactory.create(1, {
       title: 'My Open Tasks',
       filters: '{"done":false}',
       owner_id: 1,
@@ -69,11 +68,14 @@ test.describe('Saved filters screenshots', () => {
       }
     }
 
+    // Capture the context menu
     const dropdown = page.locator('.dropdown:has(.dropdown-menu)').first()
     if (await dropdown.isVisible()) {
       await screenshot('saved-filters-edit-menu', dropdown)
     } else {
-      await screenshot('saved-filters-edit-menu', page)
+      // Fallback: capture the sidebar area showing the filter
+      const sidebar = page.locator('.menu-container, .navigation').first()
+      await screenshot('saved-filters-edit-menu', sidebar)
     }
   })
 })

@@ -5,6 +5,8 @@ test.describe('CalDAV screenshots', () => {
     await page.goto('/user/settings/caldav')
     await page.waitForLoadState('networkidle')
 
-    await screenshot('caldav-connection-details', page)
+    const card = page.locator('.card').first()
+    await expect(card).toBeVisible()
+    await screenshot('caldav-connection-details', card)
   })
 })

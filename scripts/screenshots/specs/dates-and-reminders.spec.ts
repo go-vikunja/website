@@ -11,17 +11,31 @@ test.describe('Dates and reminders screenshots', () => {
     await page.goto(`/tasks/${tasks[0].id}`)
     await page.waitForLoadState('networkidle')
 
-    // Click the reminder button/section
-    const reminderButton = page.locator('text=Reminders, text=Add a reminder, [data-cy="reminders"]').first()
-    if (await reminderButton.isVisible()) {
-      await reminderButton.click()
+    // Click the reminders section in the right sidebar to expand it
+    const reminderSection = page.locator('.reminders .detail-content, .reminders').first()
+    if (await reminderSection.isVisible()) {
+      await reminderSection.click()
+      await page.waitForTimeout(300)
+    } else {
+      // Try clicking the "Reminders" heading to expand
+      const reminderHeading = page.getByText('Reminders').first()
+      if (await reminderHeading.isVisible()) {
+        await reminderHeading.click()
+        await page.waitForTimeout(300)
+      }
+    }
+
+    // Click the "Add a new reminder" or similar button to show the actual config
+    const addButton = page.locator('.reminders .add').or(page.locator('.reminders button')).or(page.getByText('Add a new reminder')).first()
+    if (await addButton.isVisible()) {
+      await addButton.click()
       await page.waitForTimeout(300)
     }
 
-    // Capture the popup or the task sidebar area
-    const popup = page.locator('.popup.is-open, .reminder-options-popup').first()
-    if (await popup.isVisible()) {
-      await screenshot('dates-reminder-config', popup, {padding: 40})
+    // Capture the reminder configuration area
+    const reminderArea = page.locator('.reminders').first()
+    if (await reminderArea.isVisible()) {
+      await screenshot('dates-reminder-config', reminderArea, {padding: 30})
     } else {
       const sidebar = page.locator('.task-view .action-buttons, .task-view .details').last()
       await screenshot('dates-reminder-config', sidebar)
@@ -34,17 +48,23 @@ test.describe('Dates and reminders screenshots', () => {
     await page.goto(`/tasks/${tasks[0].id}`)
     await page.waitForLoadState('networkidle')
 
-    // Click the repeat/recurring section
-    const repeatButton = page.locator('text=Repeat, text=Repeating, [data-cy="repeatMode"]').first()
-    if (await repeatButton.isVisible()) {
-      await repeatButton.click()
+    // Click the repeat section to expand it
+    const repeatSection = page.locator('.repeat-after .detail-content, .repeat-after').first()
+    if (await repeatSection.isVisible()) {
+      await repeatSection.click()
       await page.waitForTimeout(300)
+    } else {
+      const repeatHeading = page.getByText('Repeat').first()
+      if (await repeatHeading.isVisible()) {
+        await repeatHeading.click()
+        await page.waitForTimeout(300)
+      }
     }
 
-    // Capture the popup or the task sidebar area
-    const popup = page.locator('.popup.is-open, .repeat-options-popup').first()
-    if (await popup.isVisible()) {
-      await screenshot('dates-repeating-task', popup, {padding: 40})
+    // Look for repeat mode selector or configuration inputs
+    const repeatConfig = page.locator('.repeat-after').first()
+    if (await repeatConfig.isVisible()) {
+      await screenshot('dates-repeating-task', repeatConfig, {padding: 30})
     } else {
       const sidebar = page.locator('.task-view .action-buttons, .task-view .details').last()
       await screenshot('dates-repeating-task', sidebar)
@@ -77,6 +97,9 @@ test.describe('Dates and reminders screenshots', () => {
     await page.goto(`/projects/${project.id}/${views.list.id}`)
     await page.waitForLoadState('networkidle')
 
-    await screenshot('dates-overdue-highlight', page)
+    // Focus on just the task list, not the input
+    const taskList = page.locator('.tasks').first()
+    await expect(taskList).toBeVisible()
+    await screenshot('dates-overdue-highlight', taskList)
   })
 })
