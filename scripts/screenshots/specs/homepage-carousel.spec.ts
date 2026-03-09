@@ -8,8 +8,12 @@ import {fileURLToPath} from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const dir = 'vikunja'
+const API_URL = (process.env.BASE_URL || 'http://127.0.0.1:3456') + '/api/v1'
+
 
 test.describe('Homepage carousel screenshots', () => {
+  test.use({viewport: {width: 1400, height: 850}})
+
   test('01 - Dashboard overview', async ({authenticatedPage: page, screenshot}) => {
     const projects = await ProjectFactory.create(3, {
       title: (i: number) => ['Office Move', 'Team Retreat Planning', 'Personal'][i - 1],
@@ -123,7 +127,7 @@ test.describe('Homepage carousel screenshots', () => {
     await screenshot('05-task-kanban', page, {dir})
   })
 
-  test('06 - Task detail with image', async ({authenticatedPage: page, apiContext, userToken, screenshot}) => {
+  test('06 - Task detail', async ({authenticatedPage: page, apiContext, userToken, screenshot}) => {
     const {tasks} = await createPopulatedProject({
       withLabels: true,
       withAssignees: true,
@@ -132,7 +136,7 @@ test.describe('Homepage carousel screenshots', () => {
 
     const task = tasks[0]
 
-    // Upload a test image as attachment via API
+    // Upload a test image as attachment
     const imagePath = join(__dirname, '..', 'support', 'test-image.jpg')
     const imageBuffer = readFileSync(imagePath)
     const uploadResponse = await apiContext.put(`tasks/${task.id}/attachments`, {
@@ -145,19 +149,20 @@ test.describe('Homepage carousel screenshots', () => {
         },
       },
     })
-    const attachment = await uploadResponse.json()
+    const attachmentId = (await uploadResponse.json()).success[0].id
 
-    // Update task description to include the image
     await apiContext.post(`tasks/${task.id}`, {
       headers: {Authorization: `Bearer ${userToken}`},
       data: {
-        description: `<p>And it has an <em>important</em> description!</p><p>And a nice image:</p><img src="/api/v1/tasks/${task.id}/attachments/${attachment.id}" alt="Office move reference"/>`,
+        description: `<p>We need to compare at least three different moving companies. Key criteria:</p><ul><li>Price for full-service move (packing + transport)</li><li>Insurance coverage for office equipment</li><li>Weekend availability to minimize disruption</li></ul><p>Sarah already reached out to <strong>CityMovers</strong> — waiting on their quote. Please contact <em>QuickShift</em> and <em>OfficePro Relocations</em> as well.</p><p>Reference photo:</p><img src="${API_URL}/tasks/${task.id}/attachments/${attachmentId}" alt="Office move reference"/>`,
       },
     })
 
     await page.goto(`/tasks/${task.id}`)
     await page.waitForLoadState('networkidle')
     await expect(page.locator('.task-view')).toBeVisible()
+    // Wait for TipTap to async-load the attachment image blob
+    await page.waitForTimeout(2000)
 
     await screenshot('06-task-detail', page, {dir})
   })
