@@ -1,7 +1,6 @@
 ---
-import {Picture} from 'astro:assets'
-
 import Layout from '../layouts/Layout.astro'
+import Screenshot from '../components/Screenshot.astro'
 import FeatureCenter from '../components/features/FeatureCenter.astro'
 import FeatureImageSide from '../components/features/FeatureImageSide.astro'
 
@@ -82,9 +81,8 @@ import Plans from '../components/partials/Plans.astro'
         </FeatureCenter>
 
         <div class="shadow-lg rounded-sm mb-16">
-            <Picture
+            <Screenshot
                 src={VikunjaTaskOverview}
-                formats={['avif', 'webp']}
                 class="object-contain object-top w-full"
                 alt="Vikunja Task Overview"
             />
