@@ -12,7 +12,7 @@ test.describe('Quick-add magic screenshots', () => {
     const quickAdd = page.locator('.task-add textarea, [data-cy="taskAdd"] textarea').first()
     await expect(quickAdd).toBeVisible()
     await quickAdd.click()
-    await quickAdd.fill('Buy groceries tomorrow p1 +Shopping')
+    await quickAdd.fill('Order packing supplies tomorrow !3 *logistics')
 
     // Wait for the parsed preview to show
     await page.waitForTimeout(500)
@@ -30,11 +30,11 @@ test.describe('Quick-add magic screenshots', () => {
     const quickAdd = page.locator('.task-add textarea, [data-cy="taskAdd"] textarea').first()
     await expect(quickAdd).toBeVisible()
     await quickAdd.click()
-    await quickAdd.fill('Plan team meeting')
+    await quickAdd.fill('Plan moving day')
     await page.keyboard.press('Shift+Enter')
-    await page.keyboard.type('Book conference room')
+    await page.keyboard.type('Reserve loading dock')
     await page.keyboard.press('Shift+Enter')
-    await page.keyboard.type('Send agenda to team')
+    await page.keyboard.type('Notify all departments')
 
     await page.waitForTimeout(300)
 
