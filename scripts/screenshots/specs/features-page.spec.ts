@@ -8,6 +8,7 @@ import {fileURLToPath} from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const dir = 'vikunja/features'
+const API_URL = (process.env.BASE_URL || 'http://127.0.0.1:3456') + '/api/v1'
 
 test.describe('Features page screenshots', () => {
   test('Task detail content area', async ({authenticatedPage: page, apiContext, userToken, screenshot}) => {
@@ -18,7 +19,7 @@ test.describe('Features page screenshots', () => {
 
     const task = tasks[0]
 
-    // Upload attachment and set description with image
+    // Upload a test image as attachment
     const imagePath = join(__dirname, '..', 'support', 'test-image.jpg')
     const imageBuffer = readFileSync(imagePath)
     const uploadResponse = await apiContext.put(`tasks/${task.id}/attachments`, {
@@ -31,40 +32,25 @@ test.describe('Features page screenshots', () => {
         },
       },
     })
-    const attachment = await uploadResponse.json()
+    const attachmentId = (await uploadResponse.json()).success[0].id
 
+    // Use the full API URL so the frontend's TipTap CustomImage extension
+    // recognizes it and fetches the image with authentication
     await apiContext.post(`tasks/${task.id}`, {
       headers: {Authorization: `Bearer ${userToken}`},
       data: {
-        description: `<p>And it has an <em>important</em> description!</p><p>And a nice image:</p><img src="/api/v1/tasks/${task.id}/attachments/${attachment.id}" alt="Office move reference"/>`,
+        description: `<p>We need to compare at least three different moving companies. Key criteria:</p><ul><li>Price for full-service move (packing + transport)</li><li>Insurance coverage for office equipment</li><li>Weekend availability to minimize disruption</li></ul><p>Sarah already reached out to <strong>CityMovers</strong> — waiting on their quote. Please contact <em>QuickShift</em> and <em>OfficePro Relocations</em> as well.</p><p>Reference photo:</p><img src="${API_URL}/tasks/${task.id}/attachments/${attachmentId}" alt="Office move reference"/>`,
       },
     })
 
     await page.goto(`/tasks/${task.id}`)
     await page.waitForLoadState('networkidle')
+    // Wait for the TipTap editor to async-load the attachment image blob
+    await page.waitForTimeout(2000)
 
-    // Crop to just the task content area
-    const taskContent = page.locator('.task-view .detail-content, .task-view .heading').first()
-    if (await taskContent.isVisible()) {
-      const titleEl = page.locator('.task-view h1, .task-view .heading').first()
-      const descEl = page.locator('.task-view .description, .task-view .ProseMirror').first()
-      const titleBox = await titleEl.boundingBox()
-      const descBox = await descEl.boundingBox()
-      if (titleBox && descBox) {
-        await screenshot('task', page, {
-          dir,
-          clip: {
-            x: titleBox.x - 20,
-            y: titleBox.y - 20,
-            width: Math.max(titleBox.width, descBox.width) + 40,
-            height: (descBox.y + descBox.height) - titleBox.y + 40,
-          },
-        })
-      }
-    } else {
-      const content = page.locator('.app-content').first()
-      await screenshot('task', content, {dir})
-    }
+    // Crop to just the detail content column (excludes action-buttons sidebar)
+    const detailContent = page.locator('.detail-content')
+    await screenshot('task', detailContent, {dir})
   })
 
   test('List view content', async ({authenticatedPage: page, screenshot}) => {
@@ -77,25 +63,28 @@ test.describe('Features page screenshots', () => {
     await page.waitForLoadState('networkidle')
     await expect(page.locator('.tasks')).toBeVisible()
 
-    // Crop to the task list content
+    // Crop to the task list content area including add-task input
+    const taskAdd = page.locator('.task-add, [data-cy="taskAdd"]').first()
     const taskList = page.locator('.tasks').first()
-    const addInput = page.locator('.add-task-input, [data-cy="newTaskInput"]').first()
-    const addBox = await addInput.boundingBox().catch(() => null)
+    const addBox = await taskAdd.boundingBox().catch(() => null)
     const listBox = await taskList.boundingBox()
 
     if (addBox && listBox) {
+      const top = Math.min(addBox.y, listBox.y)
+      const bottom = Math.max(addBox.y + addBox.height, listBox.y + listBox.height)
       await screenshot('list', page, {
         dir,
         clip: {
-          x: addBox.x - 20,
-          y: addBox.y - 20,
-          width: Math.max(addBox.width, listBox.width) + 40,
-          height: (listBox.y + listBox.height) - addBox.y + 40,
+          x: Math.min(addBox.x, listBox.x) - 20,
+          y: top - 20,
+          width: Math.max(addBox.x + addBox.width, listBox.x + listBox.width) - Math.min(addBox.x, listBox.x) + 40,
+          height: bottom - top + 40,
         },
       })
+    } else if (listBox) {
+      await screenshot('list', taskList, {dir})
     } else {
-      const content = page.locator('.app-content').first()
-      await screenshot('list', content, {dir})
+      await screenshot('list', page.locator('.app-content').first(), {dir})
     }
   })
 
@@ -136,8 +125,8 @@ test.describe('Features page screenshots', () => {
     await page.waitForLoadState('networkidle')
     await page.waitForTimeout(1000)
 
-    // Crop to just the gantt chart area
-    const ganttEl = page.locator('.gantt-chart, .app-content').first()
+    // Crop to just the gantt chart itself
+    const ganttEl = page.locator('.gantt-chart-container')
     await screenshot('gantt', ganttEl, {dir})
   })
 
@@ -148,8 +137,8 @@ test.describe('Features page screenshots', () => {
     await page.waitForLoadState('networkidle')
     await page.waitForTimeout(500)
 
-    // Crop to just the bucket area
-    const kanbanEl = page.locator('.kanban, .app-content').first()
+    // Crop to just the kanban bucket container
+    const kanbanEl = page.locator('.kanban')
     await screenshot('kanban', kanbanEl, {dir})
   })
 
@@ -159,8 +148,8 @@ test.describe('Features page screenshots', () => {
     await page.goto(`/projects/${project.id}/${views.table.id}`)
     await page.waitForLoadState('networkidle')
 
-    // Crop to the table content
-    const tableEl = page.locator('.table-view table, .app-content').first()
+    // Crop to just the table element
+    const tableEl = page.locator('.project-table table')
     await screenshot('table', tableEl, {dir})
   })
 })
