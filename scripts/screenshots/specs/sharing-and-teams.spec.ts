@@ -65,13 +65,13 @@ test.describe('Sharing and teams screenshots', () => {
   test('Teams page', async ({authenticatedPage: page, screenshot}) => {
     // Create teams with members
     const teams = await TeamFactory.create(2, {
-      name: (i: number) => ['Design Team', 'Engineering Team'][i - 1],
+      name: (i: number) => ['Facilities Team', 'Move Coordinators'][i - 1],
       created_by_id: 1,
     })
 
     const extraUsers = await UserFactory.create(3, {
       id: (i: number) => 300 + i,
-      username: (i: number) => ['alice', 'bob', 'charlie'][i - 1],
+      username: (i: number) => ['sarah', 'david', 'emma'][i - 1],
     }, false)
 
     await TeamMemberFactory.create(1, {team_id: teams[0].id, user_id: extraUsers[0].id})
@@ -86,13 +86,13 @@ test.describe('Sharing and teams screenshots', () => {
 
   test('Team settings with member list', async ({authenticatedPage: page, screenshot}) => {
     const teams = await TeamFactory.create(1, {
-      name: 'Development Team',
+      name: 'Office Admins',
       created_by_id: 1,
     })
 
     const extraUsers = await UserFactory.create(2, {
       id: (i: number) => 400 + i,
-      username: (i: number) => ['alice', 'bob'][i - 1],
+      username: (i: number) => ['sarah', 'david'][i - 1],
     }, false)
 
     await TeamMemberFactory.create(1, {team_id: teams[0].id, user_id: 1, admin: true})
