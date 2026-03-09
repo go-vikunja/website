@@ -68,7 +68,7 @@ test.describe('Task screenshots', () => {
     // Create additional users for @mention
     await UserFactory.create(2, {
       id: (i: number) => 200 + i,
-      username: (i: number) => ['alice', 'bob'][i - 1],
+      username: (i: number) => ['sarah', 'david'][i - 1],
     }, false)
 
     await page.goto(`/tasks/${tasks[0].id}`)
@@ -87,7 +87,7 @@ test.describe('Task screenshots', () => {
 
     await UserFactory.create(2, {
       id: (i: number) => 200 + i,
-      username: (i: number) => ['alice', 'bob'][i - 1],
+      username: (i: number) => ['sarah', 'david'][i - 1],
     }, false)
 
     await page.goto(`/tasks/${tasks[0].id}`)
@@ -111,7 +111,7 @@ test.describe('Task screenshots', () => {
     const {project, views} = await createPopulatedProject()
 
     // Create a second project for the drag target
-    const project2 = (await ProjectFactory.create(1, {id: 100, title: 'Other Project'}, false))[0]
+    const project2 = (await ProjectFactory.create(1, {id: 100, title: 'New Office Setup'}, false))[0]
     await createDefaultViews(project2.id as number, 20, false)
 
     await page.goto(`/projects/${project.id}/${views.list.id}`)
@@ -119,7 +119,7 @@ test.describe('Task screenshots', () => {
 
     // Start dragging a task toward the sidebar
     const taskElement = page.locator('.tasks .task').first()
-    const sidebarProject = page.locator('.menu-list .list-menu-link').filter({hasText: 'Other Project'})
+    const sidebarProject = page.locator('.menu-list .list-menu-link').filter({hasText: 'New Office Setup'})
 
     await expect(taskElement).toBeVisible()
     await expect(sidebarProject).toBeVisible()
