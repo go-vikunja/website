@@ -57,9 +57,10 @@ test.describe('Projects screenshots', () => {
       await createDefaultViews(projects[i].id as number, i * 4 + 1, i === 0)
     }
 
-    // Clear localStorage to remove any "last viewed" projects
+    // Clear the projectHistory from localStorage to remove "last viewed" section
+    // Must be on the app origin to access localStorage
     await page.goto('/')
-    await page.evaluate(() => localStorage.clear())
+    await page.evaluate(() => localStorage.removeItem('projectHistory'))
 
     await page.goto('/projects')
     await page.waitForLoadState('networkidle')
