@@ -52,7 +52,7 @@ test.describe('Dates and reminders screenshots', () => {
   })
 
   test('Overdue task highlighting in list', async ({authenticatedPage: page, screenshot}) => {
-    const projects = await ProjectFactory.create(1, {title: 'Deadline Tracker'})
+    const projects = await ProjectFactory.create(1, {title: 'Moving Deadlines'})
     const project = projects[0]
     const views = await createDefaultViews(project.id as number)
 
@@ -61,11 +61,11 @@ test.describe('Dates and reminders screenshots', () => {
     await TaskFactory.create(5, {
       project_id: project.id,
       title: (i: number) => [
-        'Overdue report submission',
-        'Missed client meeting',
-        'Late code review',
-        'Past deadline deployment',
-        'Upcoming feature release',
+        'Return signed lease',
+        'Submit parking applications',
+        'Order business cards with new address',
+        'Confirm internet installation date',
+        'Final walkthrough of new office',
       ][i - 1],
       due_date: (i: number) => {
         const d = new Date(now)
