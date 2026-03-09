@@ -49,3 +49,13 @@
 /blog/2020/07/vikunja-0.14.0-is-released/                              /changelog/vikunja-0.14.0-is-released                           301
 /blog/2020/05/vikunja-0.13.0-is-released                               /changelog/vikunja-0.13.0-is-released                               301
 /blog/2020/05/vikunja-0.13.0-is-released/                              /changelog/vikunja-0.13.0-is-released                               301
+
+# docs/usage pages moved to help section
+/docs/caldav                                                           /help/caldav                                                        301
+/docs/caldav/                                                          /help/caldav                                                        301
+/docs/quick-add-magic                                                  /help/quick-add-magic                                               301
+/docs/quick-add-magic/                                                 /help/quick-add-magic                                               301
+/docs/task-relation-kinds                                              /help/task-relations                                                301
+/docs/task-relation-kinds/                                             /help/task-relations                                                301
+/docs/rights                                                           /help/permissions                                                   301
+/docs/rights/                                                          /help/permissions                                                   301
