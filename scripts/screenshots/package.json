@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "screenshots": "playwright test",
+    "screenshots": "playwright test && npx tsx copy-flathub.ts",
     "screenshots:headed": "playwright test --headed",
     "screenshots:debug": "playwright test --debug"
   },
