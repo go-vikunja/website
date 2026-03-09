@@ -21,6 +21,14 @@ let lastFocusedElement: HTMLElement | null = null
 let searchTimeout: ReturnType<typeof setTimeout> | null = null
 const SEARCH_DEBOUNCE_MS = 150
 
+// Determine search scope from current URL path
+function getSearchPathPrefix(): string | undefined {
+  const path = window.location.pathname
+  if (path.startsWith('/help')) return '/help/'
+  if (path.startsWith('/docs')) return '/docs/'
+  return undefined
+}
+
 // Focusable elements selector
 const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
@@ -170,7 +178,7 @@ function handleSearchInput(e: Event): void {
 
   // Debounce search
   searchTimeout = setTimeout(() => {
-    currentResults = search(query)
+    currentResults = search(query, getSearchPathPrefix())
     selectedIndex = -1
     renderResults()
 
