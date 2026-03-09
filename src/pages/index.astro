@@ -1,7 +1,6 @@
 ---
-import {Picture} from 'astro:assets'
-
 import Layout from '../layouts/Layout.astro'
+import Screenshot from '../components/Screenshot.astro'
 import LinkCard from '../components/LinkCard.astro'
 
 import VikunjaTaskOverview from '../assets/images/vikunja/01-task-overview.png'
@@ -72,9 +71,8 @@ const carouselImages = [
             <div class="w-full max-w-6xl">
                 <div class="slider aspect-w-16 aspect-h-9 relative mt-8">
 					{carouselImages.map(({src, alt}) => (
-                            <Picture
+                            <Screenshot
                                     src={src}
-                                    formats={['avif', 'webp']}
                                     class=""
                                     alt={alt}
                             />
