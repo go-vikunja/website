@@ -6,12 +6,13 @@ description: >-
   Follow step-by-step instructions for setting up the Todoist integration and 
   importing your data.
 ---
+import Callout from '../../../components/Callout.astro';
 
 This guide explains how to migrate your tasks and projects from Todoist to Vikunja.
 
-{% callout type="warning" %}
+<Callout type="warning">
 Your Vikunja installation needs to be publicly accessible for the Todoist migration to work.
-{% /callout %}
+</Callout>
 
 ## Setting up the Todoist Integration
 
@@ -50,9 +51,9 @@ To enable the Todoist migration in Vikunja, you need to change your config. You 
 
 For information about the specific migration configuration options, see the [config documentation](/docs/config-options#1-migration-todoist).
 
-{% callout type="note" %}
+<Callout type="note">
 If you don't plan on migrating again, you can remove the settings from your configuration after the migration is complete.
-{% /callout %}
+</Callout>
 
 ### Restart Vikunja
 

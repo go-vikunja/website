@@ -5,6 +5,7 @@ description: >-
   All user settings: general preferences, password, email, avatar, data export,
   import, CalDAV, API tokens, and account deletion.
 ---
+import Callout from '../../components/Callout.astro';
 
 To open your settings, click your username in the top right corner and select **Settings**.
 
@@ -32,9 +33,9 @@ The General tab contains most everyday account preferences.
 
 Change the display name shown to other users throughout Vikunja.
 
-{% callout type="info" %}
+<Callout type="info">
 When you are logged in via an external authentication provider (for example, Vikunja Cloud), your display name is managed by that provider. You will need to change it there instead.
-{% /callout %}
+</Callout>
 
 ### Default project
 
@@ -103,9 +104,9 @@ If both are disabled, other users can only find you by your exact username. On s
 
 Update your password or the email address on your account. To change your password, enter your current password first.
 
-{% callout type="info" %}
+<Callout type="info">
 When your account uses external authentication (for example, Vikunja Cloud), password and email management is handled by that provider. These sections will be disabled in Vikunja. Make changes through your provider instead.
-{% /callout %}
+</Callout>
 
 ## Avatar
 
@@ -142,9 +143,9 @@ When creating a token, you can:
 - Give it a descriptive **title**
 - Choose **specific permissions** to limit what the token is allowed to do
 
-{% callout type="info" %}
+<Callout type="info">
 The token value is only shown once, immediately after creation. Vikunja does not store the token in plaintext, so you must copy and save it right away. If you lose it, you will need to create a new token.
-{% /callout %}
+</Callout>
 
 For more information on using the API, see the [API documentation](/docs/api).
 
@@ -154,6 +155,6 @@ For more information on using the API, see the [API documentation](/docs/api).
 
 At the bottom of the settings page, you can permanently delete your account. This cannot be undone.
 
-{% callout type="info" %}
+<Callout type="info">
 When your account is managed by an external authentication provider (for example, Vikunja Cloud), account deletion may be disabled in Vikunja. You will need to delete your account through that provider instead.
-{% /callout %}
+</Callout>

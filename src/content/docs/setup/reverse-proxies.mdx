@@ -5,6 +5,7 @@ description: >-
   Learn how to configure reverse proxies for Vikunja using NGINX, NGINX Proxy
   Manager, Apache, and Caddy.
 ---
+import Callout from '../../../components/Callout.astro';
 
 These examples assume you have an instance of Vikunja running on your server listening on port `3456`.
 If you've changed this setting, you need to update the server configurations accordingly.
@@ -25,9 +26,9 @@ server {
 }
 ```
 
-{% callout type="warning" %}
+<Callout type="warning">
 **NOTE:** If you change the max upload size in Vikunja's settings, you'll need to also change the `client_max_body_size` in the nginx proxy config.
-{% /callout %}
+</Callout>
 
 ## NGINX Proxy Manager (NPM)
 

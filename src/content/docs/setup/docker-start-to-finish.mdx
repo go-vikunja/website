@@ -5,6 +5,8 @@ description: >-
   Learn how to set up Vikunja using Docker Compose. This beginner-friendly guide
   covers installation, configuration, and troubleshooting for quick deployment.
 ---
+import Callout from '../../../components/Callout.astro';
+import CloudHostingAffiliate from '../../../components/partials/CloudHostingAffiliate.astro';
 
 This tutorial assumes basic knowledge of Docker.
 It is aimed at beginners and should get you up and running quickly.
@@ -13,8 +15,7 @@ We'll use [docker compose](https://docs.docker.com/compose/) to make handling th
 
 > If you have any issues setting up Vikunja, please don't hesitate to reach out to us via [matrix](https://riot.im/app/#/room/!dCRiCiLaCCFVNlDnYs:matrix.org?via=matrix.org), the [community forum](https://community.vikunja.io/) or even [email](mailto:hello@vikunja.io).
 
-{% cloudHostingAffiliate %}
-{% /cloudHostingAffiliate %}
+<CloudHostingAffiliate />
 
 ## Preparations (optional)
 
@@ -86,13 +87,12 @@ chown 1000 $PWD/files
 
 If you're using [rootless Docker](/docs/full-docker-example#rootless-docker), see the dedicated section about file permissions in that setup.
 
-{% callout type="warning" %}
+<Callout type="warning">
 Vikunja's Docker image is based on a `scratch` image. This means:
-
-- **There is no shell inside the container.** Commands like `docker exec -it vikunja sh` will not work. Use `docker logs vikunja` to check for errors instead.
-- **`PUID` and `PGID` environment variables are not supported.** These are conventions from other images (like LinuxServer.io) but have no effect on the Vikunja container. To change the user the container runs as, use Docker's [`user:` directive](https://docs.docker.com/compose/how-tos/user/) in your compose file.
-- **The `/tmp` directory must be writable** for data exports to work. If you use a custom user, ensure `/tmp` is accessible or mount a writable volume at `/tmp`.
-{% /callout %}
+<p>**There is no shell inside the container.** Commands like `docker exec -it vikunja sh` will not work. Use `docker logs vikunja` to check for errors instead.</p>
+<p>**`PUID` and `PGID` environment variables are not supported.** These are conventions from other images (like LinuxServer.io) but have no effect on the Vikunja container. To change the user the container runs as, use Docker's [`user:` directive](https://docs.docker.com/compose/how-tos/user/) in your compose file.</p>
+<p>**The `/tmp` directory must be writable** for data exports to work. If you use a custom user, ensure `/tmp` is accessible or mount a writable volume at `/tmp`.</p>
+</Callout>
 
 ## Run it
 

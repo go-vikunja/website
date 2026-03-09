@@ -4,12 +4,13 @@ slug: plugins
 description: >-
   Learn how to install, configure, and use plugins as an end user.
 ---
+import Callout from '../../../components/Callout.astro';
 
 The plugin system allows you to extend the core functionality with custom features through Go plugins. This guide covers how to install, configure, and use plugins as a Vikunja system admin.
 
-{% callout type="warning" %}
+<Callout type="warning">
 **Experimental Feature**: The plugin system is still experimental and the API may change in future versions. Additionally, plugins currently only support backend functionality - there is no frontend plugin support yet.
-{% /callout %}
+</Callout>
 
 ## Overview
 
@@ -69,9 +70,9 @@ docker restart <vikunja container name>
 
 ### Compatibility Requirements
 
-{% callout type="warning" %}
+<Callout type="warning">
 Plugins must be compiled with the **exact same Go version** as your Vikunja binary. Mismatched versions will cause loading failures.
-{% /callout %}
+</Callout>
 
 - Check your Vikunja Go version: Look at build info or release notes
 - Ensure plugin `.so` files match this version

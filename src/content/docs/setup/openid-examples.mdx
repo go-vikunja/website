@@ -5,17 +5,16 @@ description: >-
   Learn how to set up Vikunja with OAuth 2.0 providers using OpenID Connect.
   Examples for Authelia, Google, Keycloak, Authentik, and Azure AD included.
 ---
+import Callout from '../../../components/Callout.astro';
 
 On this page you will find examples about how to set up Vikunja with a third-party OAuth 2.0 provider using OpenID Connect.
 To add another example, please [edit this document](https://github.com/go-vikunja/website/blob/main/src/content/docs/setup/openid-examples.mdoc) and send a PR.
 
-{% callout type="info" %}
+<Callout type="info">
 **Important: Redirect URL Format**
-
 The redirect URL format is: `https://vikunja.mydomain.com/auth/openid/<provider-id>`
-
 Use the provider ID (the key in your config) as the identifier. For example, if your config uses `authentiklogin:` as the provider key, the redirect URL would be `/auth/openid/authentiklogin`.
-{% /callout %}
+</Callout>
 
 ## Authelia
 

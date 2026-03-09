@@ -5,6 +5,7 @@ description: >-
   Learn how to set up OpenID Connect authentication in Vikunja, including
   configuring providers, required claims, and automatic team assignment.
 ---
+import Callout from '../../../components/Callout.astro';
 
 Vikunja allows for authentication with an external identity source such as Authentik, Keycloak or similar via the
 [OpenID Connect](https://openid.net/developers/specs/) standard.
@@ -99,9 +100,9 @@ auth:
     enabled: false
 ```
 
-{% callout type="warning" %}
+<Callout type="warning">
 Migration from versions before 1.0
-{% /callout %}
+</Callout>
 
 Version 1.0 introduced a new syntax to declare providers. If you're upgrading from a pre-1.0 version, the conversion is straightforward:
 
@@ -174,11 +175,10 @@ auth:
         clientsecret: xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-{% callout type="warning" %}
+<Callout type="warning">
 When using SSO authentication, Vikunja will create a new SSO user if no matching local user is found. If you misconfigure the matching parameters, this could result in duplicate accounts that prevent logging into the intended local account via SSO until the duplicate SSO user is deleted.
-
 Additionally, this feature introduces potential security risks, as it allows third-party providers to authenticate as local users if they can control the username or email claims. Only enable this feature with trusted identity providers.
-{% /callout %}
+</Callout>
 
 ## Automatically login with specified provider
 
