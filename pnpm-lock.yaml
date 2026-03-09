@@ -108,9 +108,6 @@ importers:
       '@playwright/test':
         specifier: ^1.58.0
         version: 1.58.2
-      sharp:
-        specifier: ^0.33.0
-        version: 0.33.5
 
 packages:
 
