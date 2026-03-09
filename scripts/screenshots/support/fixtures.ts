@@ -44,12 +44,14 @@ export const test = base.extend<{
     await page.goto('about:blank').catch(() => {})
   },
 
-  screenshot: async ({}, use) => {
+  screenshot: async ({}, use, testInfo) => {
     const PADDING = 20
+    const isDark = testInfo.project.use.colorScheme === 'dark'
     const fn = async (name: string, target: Page | Locator, options: Record<string, unknown> = {}) => {
       const dir = (options.dir as string) ?? 'help'
       delete options.dir
-      const path = join(baseDir, dir, `${name}.png`)
+      const fileName = isDark ? `${name}-dark` : name
+      const path = join(baseDir, dir, `${fileName}.png`)
       mkdirSync(dirname(path), {recursive: true})
       const padding = (options.padding as number) ?? PADDING
       delete options.padding
