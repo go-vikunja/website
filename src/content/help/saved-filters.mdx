@@ -5,6 +5,8 @@ description: >-
   Saved filters are personal, cross-project task views built from filter
   queries.
 ---
+import Screenshot from '../../components/Screenshot.astro'
+
 import Callout from '../../components/Callout.astro';
 
 Saved filters let you create personal, cross-project task views based on a [filter query](/help/filters). Unlike [views](/help/views), which are tied to a single project and shared with its members, saved filters are private to your account and pull tasks from all your projects at once.
@@ -19,7 +21,7 @@ To create a saved filter, go to the project overview page and click **New saved 
 - **Description** (optional): a longer explanation of what the filter is for, with rich text formatting
 - **Filter query**: the [filter expression](/help/filters) that determines which tasks are shown
 
-![Saved filter creation form with title, description, and filter query](../../assets/images/help/saved-filters-create-form.png)
+<Screenshot src="saved-filters-create-form" alt="Saved filter creation form with title, description, and filter query" />
 
 The filter query uses the same syntax as project view filters. You can use all available [filter fields](/help/filters#fields), including the `project` field, which is only available in saved filters and lets you limit results to specific projects.
 
@@ -37,7 +39,7 @@ Open the filter's edit page and click **Delete** at the bottom. You will be aske
 
 ## Sidebar and navigation
 
-![Saved filters shown in the left sidebar](../../assets/images/help/saved-filters-sidebar.png)
+<Screenshot src="saved-filters-sidebar" alt="Saved filters shown in the left sidebar" />
 
 Saved filters appear in the left sidebar alongside your projects, marked with a filter icon. You can also find them through the quick actions menu (Ctrl+K or Cmd+K on macOS).
 

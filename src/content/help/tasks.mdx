@@ -5,6 +5,8 @@ description: >-
   Everything about tasks: the detail view, descriptions, labels, priorities,
   assignees, comments, checklists, and more.
 ---
+import Screenshot from '../../components/Screenshot.astro'
+
 
 Tasks are the core building blocks in Vikunja. Every to-do item, action item, or piece of work lives as a task inside a [project](/help/projects).
 
@@ -21,7 +23,7 @@ Click any task in the list, Kanban, or table [view](/help/views) to open the **t
 
 The detail view is where you edit the task title, description, dates, labels, assignees, attachments, and everything else.
 
-![Task detail view showing title, description, and sidebar fields](../../assets/images/help/tasks-detail-view.png)
+<Screenshot src="tasks-detail-view" alt="Task detail view showing title, description, and sidebar fields" />
 
 ## Title
 
@@ -37,7 +39,7 @@ You can upload attachments directly in the editor by dragging in a file or using
 
 ## Right sidebar
 
-![Task right sidebar with properties and action buttons](../../assets/images/help/tasks-right-sidebar.png)
+<Screenshot src="tasks-right-sidebar" alt="Task right sidebar with properties and action buttons" />
 
 The right sidebar holds the task properties and actions.
 
@@ -106,17 +108,17 @@ You can move a task to another project in two ways:
 - **From the detail view:** Use the project field in the right sidebar to select a different project.
 - **From the list or Kanban view:** Drag the task onto another project in the sidebar.
 
-![Dragging a task to another project in the sidebar](../../assets/images/help/tasks-drag-to-project.png)
+<Screenshot src="tasks-drag-to-project" alt="Dragging a task to another project in the sidebar" />
 
 ## Comments
 
-![Task comments section](../../assets/images/help/tasks-comments.png)
+<Screenshot src="tasks-comments" alt="Task comments section" />
 
 Comments are shown below the task description and use the same editor.
 
 You can **mention other users** by typing `@` followed by their username. Mentioned users will receive a [notification](/help/search-and-navigation#notifications).
 
-![Mentioning a user with @ in a comment](../../assets/images/help/tasks-comments-mention.png)
+<Screenshot src="tasks-comments-mention" alt="Mentioning a user with @ in a comment" />
 
 You can switch comment order between oldest-first and newest-first once the task has comments.
 
@@ -132,6 +134,6 @@ You can set dates, labels, priorities, assignees, and more while typing a task t
 
 ## Hover preview
 
-![Task hover preview showing title, description, and labels](../../assets/images/help/tasks-hover-preview.png)
+<Screenshot src="tasks-hover-preview" alt="Task hover preview showing title, description, and labels" />
 
 In the list view, hovering over a task opens a small preview with the title, description, creator, labels, and other key details.

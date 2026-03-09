@@ -5,6 +5,8 @@ description: >-
   Link tasks together with relations like subtask, blocking, related, and
   more.
 ---
+import Screenshot from '../../components/Screenshot.astro'
+
 import Callout from '../../components/Callout.astro';
 
 Task relations let you create links between [tasks](/help/tasks) to express dependencies, hierarchies, or other connections. You can add relations from the right sidebar of the task detail view.
@@ -16,7 +18,7 @@ Task relations let you create links between [tasks](/help/tasks) to express depe
 3. Search for the task you want to link to.
 4. Choose the relation type from the dropdown.
 
-![Relation type dropdown with available options](../../assets/images/help/relations-type-dropdown.png)
+<Screenshot src="relations-type-dropdown" alt="Relation type dropdown with available options" />
 
 The relation is applied immediately. The linked task will show the opposite relation automatically. For example, if you mark "Order new furniture" as **blocking** "Set up meeting rooms", "Set up meeting rooms" will show that it is **blocked by** "Order new furniture".
 
