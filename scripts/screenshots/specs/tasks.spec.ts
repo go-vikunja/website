@@ -134,24 +134,45 @@ test.describe('Task screenshots', () => {
     await page.goto(`/tasks/${tasks[0].id}`)
     await page.waitForLoadState('networkidle')
 
-    // Click into the comment input, type some text with a @mention
-    const commentInput = page.locator('.comments-container .tiptap, .comment-form .tiptap').first()
-    await commentInput.scrollIntoViewIfNeeded()
+    // Click into the comment editor's ProseMirror contenteditable area (last one on the page)
+    const commentEditor = page.locator('.ProseMirror[contenteditable="true"]').last()
+    await commentEditor.scrollIntoViewIfNeeded()
     await page.waitForTimeout(300)
-    await commentInput.click()
+    await commentEditor.click()
     await page.keyboard.type('Can you check with ')
     await page.keyboard.type('@')
-    await page.waitForTimeout(500)
-    // Type partial name to filter the autocomplete
-    await page.keyboard.type('sar')
     await page.waitForTimeout(800)
 
+    // The mention dropdown (.mention-items) should now be visible with all users
+    // Don't type further — the full list is more useful for the screenshot
+
     // Capture the comment editor area with the mention autocomplete visible
+    const mentionDropdown = page.locator('.mention-items').first()
     const editor = page.locator('.comment-form, .comment-input').first()
-    if (await editor.isVisible()) {
+    if (await mentionDropdown.isVisible() && await editor.isVisible()) {
+      // Get bounding boxes to include both the editor and the dropdown
+      const editorBox = await editor.boundingBox()
+      const dropdownBox = await mentionDropdown.boundingBox()
+      if (editorBox && dropdownBox) {
+        const top = Math.min(editorBox.y, dropdownBox.y) - 20
+        const bottom = Math.max(editorBox.y + editorBox.height, dropdownBox.y + dropdownBox.height) + 20
+        const left = Math.min(editorBox.x, dropdownBox.x) - 20
+        const right = Math.max(editorBox.x + editorBox.width, dropdownBox.x + dropdownBox.width) + 20
+        await screenshot('tasks-comments-mention', page, {
+          clip: {
+            x: Math.max(0, left),
+            y: Math.max(0, top),
+            width: right - left,
+            height: bottom - top,
+          },
+        })
+      } else {
+        await screenshot('tasks-comments-mention', editor, {padding: 50})
+      }
+    } else if (await editor.isVisible()) {
       await screenshot('tasks-comments-mention', editor, {padding: 50})
     } else {
-      await screenshot('tasks-comments-mention', commentInput, {padding: 60})
+      await screenshot('tasks-comments-mention', commentEditor, {padding: 60})
     }
 
     // Reset viewport
