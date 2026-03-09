@@ -6,6 +6,7 @@ description: >-
   Discover supported formats, file locations, and default settings for optimal
   setup.
 ---
+import ConfigOptions from '../../../components/partials/ConfigOptions.astro';
 
 You can either use a `config.yml` file in the root directory of Vikunja or set almost all config options with environment variables. If you have both, the value set in the config file is used.
 Right now it is not possible to configure openid authentication via environment variables.
@@ -122,5 +123,4 @@ For example, the `interface` config variable is a child of the `service` key.
 The docs below aim to reflect that leveling, but please also have a look at [the default config](https://dl.vikunja.io/vikunja/unstable/config.yml.sample) file
 to better grasp what the nesting looks like.
 
-{% configOptions %}
-{% /configOptions %}
+<ConfigOptions />

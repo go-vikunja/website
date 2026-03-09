@@ -5,6 +5,7 @@ description: >-
   Saved filters are personal, cross-project task views built from filter
   queries.
 ---
+import Callout from '../../components/Callout.astro';
 
 Saved filters let you create personal, cross-project task views based on a [filter query](/help/filters). Unlike [views](/help/views), which are tied to a single project and shared with its members, saved filters are private to your account and pull tasks from all your projects at once.
 
@@ -22,9 +23,9 @@ To create a saved filter, go to the project overview page and click **New saved 
 
 The filter query uses the same syntax as project view filters. You can use all available [filter fields](/help/filters#fields), including the `project` field, which is only available in saved filters and lets you limit results to specific projects.
 
-{% callout type="info" %}
+<Callout type="info">
 The default filter for new saved filters is `done = false`, which shows only incomplete tasks.
-{% /callout %}
+</Callout>
 
 ## Editing a saved filter
 

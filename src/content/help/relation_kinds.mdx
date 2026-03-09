@@ -5,6 +5,7 @@ description: >-
   Link tasks together with relations like subtask, blocking, related, and
   more.
 ---
+import Callout from '../../components/Callout.astro';
 
 Task relations let you create links between [tasks](/help/tasks) to express dependencies, hierarchies, or other connections. You can add relations from the right sidebar of the task detail view.
 
@@ -43,8 +44,8 @@ When adding a relation, Vikunja uses a default relation type. You can change thi
 | **Copied from** | The task was copied from the other task. | Copied to |
 | **Copied to** | The task was copied to the other task. | Copied from |
 
-{% callout type="info" %}
+<Callout type="info">
 The **Related** type is symmetric and reads the same from both sides. All other types have a directional opposite that is set automatically on the linked task.
-{% /callout %}
+</Callout>
 
 You can also create subtask relations using indented [Quick Add Magic](/help/quick-add-magic) input.

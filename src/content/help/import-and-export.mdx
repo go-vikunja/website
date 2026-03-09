@@ -5,6 +5,7 @@ description: >-
   Export your Vikunja data or import tasks from TickTick, Todoist, Trello, and
   Microsoft To Do.
 ---
+import Callout from '../../components/Callout.astro';
 
 Vikunja lets you export all of your data and import tasks from other services, making it easy to back up your work or migrate from another tool.
 
@@ -19,9 +20,9 @@ To start an export:
 1. Open your **[Settings](/help/settings)** and navigate to the **Data Export** section.
 2. Confirm your password to proceed.
 
-{% callout type="info" %}
+<Callout type="info">
 If you are using third-party authentication (for example, through Vikunja Cloud), you will see a confirmation step instead of a password prompt.
-{% /callout %}
+</Callout>
 
 Once confirmed, Vikunja will generate a ZIP file containing all of your data. You can download this file and keep it as a backup or use it to re-import your data into Vikunja later.
 

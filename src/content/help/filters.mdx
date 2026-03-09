@@ -5,6 +5,8 @@ description: >-
   Filter tasks by due date, priority, labels, assignees, and more using
   Vikunja's query syntax.
 ---
+import Callout from '../../components/Callout.astro';
+import DateMathExamples from '../../components/partials/DateMathExamples.astro';
 
 Filters let you narrow down your task list so you only see what matters right now. Instead of scrolling through everything, you write a short query and Vikunja shows only the matching tasks.
 
@@ -37,9 +39,9 @@ done = false && priority >= 3 && dueDate > now && dueDate < now+7d
 - **[Saved filters](/help/saved-filters):** Create a reusable filter that appears in your sidebar and works across all your projects.
 - **[Dashboard](/help/dashboard):** Set a saved filter to control which tasks appear on your home screen.
 
-{% callout type="info" %}
+<Callout type="info">
 **"Include Tasks which don't have a value set"** is on by default. A filter like `assignees in sarah` will also return tasks with *no* assignee. Disable this toggle in the filter settings if you only want tasks that have a value.
-{% /callout %}
+</Callout>
 
 ![Include nulls toggle in filter settings](../../assets/images/help/filters-include-nulls.png)
 
@@ -126,8 +128,7 @@ Use `/d` to round down to the start of the day, which is useful for "today" or "
 | `now/d`            | Start of today                   |
 | `now+7d/d`         | Start of the day, 7 days from now |
 
-{% dateMathExamples %}
-{% /dateMathExamples %}
+<DateMathExamples />
 
 ### All time units
 

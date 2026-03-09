@@ -5,6 +5,7 @@ description: >-
   Learn how to deploy Vikunja using Docker Compose with various database options
   and proxy configurations. Includes examples for popular reverse proxies.
 ---
+import Callout from '../../../components/Callout.astro';
 
 This docker compose configuration will run Vikunja with a postgres database.
 It uses a proxy configuration to make it available under a domain.
@@ -13,11 +14,11 @@ For all available configuration options, see [configuration](/docs/config-option
 
 After registering all your users, you might also want to [disable the user registration](/docs/config-options#1-service-enableregistration).
 
-{% callout type="warning" %}
+<Callout type="warning">
 If you intend to run Vikunja with MySQL or MariaDB and/or to use non-latin characters
 [make sure your db is utf-8 compatible](/docs/utf-8-settings).
 All examples on this page use postgres and do not require additional work.
-{% /callout %}
+</Callout>
 
 ## File permissions
 
@@ -56,10 +57,10 @@ services:
 This is safe because rootless Docker maps the container root user (UID 0) to your unprivileged host user.
 The process will not have any elevated privileges on the host.
 
-{% callout type="info" %}
+<Callout type="info">
 You can use [`vikunja doctor`](/docs/cli#doctor) to check if your Vikunja instance is affected by this issue.
 It will detect user namespace problems and suggest the fix.
-{% /callout %}
+</Callout>
 
 ## MySQL / MariaDB
 
@@ -123,9 +124,9 @@ mkdir $PWD/files $PWD/db
 chown 1000 $PWD/files $PWD/db
 ```
 
-{% callout type="warning" %}
+<Callout type="warning">
 If you'll use your instance with more than a handful of users, we recommend using mysql or postgres.
-{% /callout %}
+</Callout>
 
 ## Example without any proxy
 
@@ -136,10 +137,10 @@ If you want to make Vikunja available on a domain or need tls termination, check
 Note that you need to change the [`VIKUNJA_SERVICE_PUBLICURL`](/docs/config-options#1-service-publicurl) environment variable to the public ip or hostname including the port (the docker host you're running this on) is reachable at, prefixed with `http://`.
 Because the browser you'll use to access the Vikunja frontend uses that url to make the requests, it has to be able to reach it from the outside.
 
-{% callout type="warning" %}
+<Callout type="warning">
 You must ensure Vikunja has write permissions on the `files` directory before starting the stack.
 To do this, [check out the related commands here](#file-permissions).
-{% /callout %}
+</Callout>
 
 ```yaml
 services:
@@ -185,10 +186,10 @@ We also make a few assumptions here which you'll most likely need to adjust for 
 * The entrypoint you want to make Vikunja available from is called `https`
 * The tls cert resolver is called `acme`
 
-{% callout type="warning" %}
+<Callout type="warning">
 You must ensure Vikunja has write permissions on the `files` directory before starting the stack.
 To do this, [check out the related commands here](#file-permissions).
-{% /callout %}
+</Callout>
 
 ```yaml
 services:
@@ -248,10 +249,10 @@ vikunja.example.com {
 Note that you need to change the [`VIKUNJA_SERVICE_PUBLICURL`](/docs/config-options#1-service-publicurl) environment variable to the ip (the docker host you're running this on) is reachable at.
 Because the browser you'll use to access the Vikunja frontend uses that url to make the requests, it has to be able to reach that ip + port from the outside.
 
-{% callout type="warning" %}
+<Callout type="warning">
 You must ensure Vikunja has write permissions on the `files` directory before starting the stack.
 To do this, [check out the related commands here](#file-permissions).
-{% /callout %}
+</Callout>
 
 Docker Compose config:
 
@@ -332,10 +333,10 @@ You may want to change the volumes to match the rest of your setup.
 
 After registering all your users, you might also want to [disable the user registration](/docs/config-options#1-service-enableregistration).
 
-{% callout type="warning" %}
+<Callout type="warning">
 You must ensure Vikunja has write permissions on the `files` directory before starting the stack.
 To do this, [check out the related commands here](#file-permissions).
-{% /callout %}
+</Callout>
 
 ## Redis
 

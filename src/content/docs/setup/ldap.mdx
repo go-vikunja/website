@@ -3,6 +3,7 @@ title: LDAP Authentication
 slug: ldap
 description: Learn how to configure LDAP authentication with Vikunja.
 ---
+import Callout from '../../../components/Callout.astro';
 
 Vikunja supports authentication through LDAP (Lightweight Directory Access Protocol), using LDAP Bind authentication to
 authorize users. This allows you to integrate Vikunja with existing directory services.
@@ -38,9 +39,9 @@ While the examples here use a config file, you can configure all of it via envir
  
 ## Security Settings
 
-{% callout type="warning" %}
+<Callout type="warning">
 If possible, you should only connect to the LDAP server via TLS. Only disable this if you absolutely know what you're doing.
-{% /callout %}
+</Callout>
 
 By default, Vikunja will try to connect to the server using TLS. If you absolutely need it, you can disable this:
 

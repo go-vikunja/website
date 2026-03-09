@@ -3,6 +3,7 @@ title: Dates & Reminders
 slug: dates-and-reminders
 description: Due dates, start and end dates, reminders, and repeating tasks.
 ---
+import Callout from '../../components/Callout.astro';
 
 Tasks can have due dates, start and end dates, reminders, and repeating schedules. Here's how each one works.
 
@@ -33,9 +34,9 @@ Reminders come in two types:
 - **Absolute reminders**: Set for a specific date and time (e.g. "remind me on March 5th at 9:00 AM").
 - **Relative reminders**: Set relative to one of the task's date fields (due date, start date, or end date). For example, "remind me 1 hour before the due date" or "remind me 2 days before the start date".
 
-{% callout type="info" %}
+<Callout type="info">
 Relative reminders require the corresponding date field to be set on the task. For example, a reminder relative to the due date will not trigger if no due date is set.
-{% /callout %}
+</Callout>
 
 ## Repeating Tasks
 
