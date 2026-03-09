@@ -1,5 +1,5 @@
 import { getCollection } from 'astro:content'
-import { mdocToPlainText } from '../../helpers/mdoc-to-text'
+import { mdxToPlainText } from '../../helpers/mdx-to-text'
 import { extractHeadings } from '../../helpers/extract-headings'
 
 export interface SearchIndexItem {
@@ -15,7 +15,7 @@ async function buildIndex(collection: 'docs' | 'help', prefix: string): Promise<
 
   return Promise.all(
     entries.map(async (entry) => {
-      const { text, ast } = await mdocToPlainText(entry.body || '')
+      const { text, ast } = await mdxToPlainText(entry.body || '')
       const headings = extractHeadings(ast)
 
       return {
