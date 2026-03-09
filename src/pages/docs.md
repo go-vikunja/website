@@ -4,18 +4,18 @@ layout: '../layouts/Docs.astro'
 description: Explore Vikunja's comprehensive documentation. Learn about its features, installation process, configuration options, and how to contribute to development.
 ---
 
-Welcome to the Vikunja documentation!
+Welcome to the Vikunja technical documentation!
 
-On the left, you'll find a menu with all our available articles.
+Looking for help using Vikunja? Head to the **[Help Center](/help)** for guides on tasks, projects, sharing, and all other features.
 
-## About
+## Setup
 
-Curious about what Vikunja is, why it's awesome, and how it works? Check out our [features page](/features) for all the details.
+Ready to set up Vikunja on your own server? Begin with our [install documentation](/docs/installing) and explore the [configuration options](/docs/config-options) to customize it just the way you like.
 
-## Start
+## API & Integrations
 
-Ready to dive in and set up Vikunja on your own server? Begin with our [install documentation](/docs/installing) and explore the [configuration options](/docs/config-options) to customize it just the way you like.
+Learn about the [API](/docs/api), [CLI](/docs/cli), and [third-party integrations](/docs/integrations).
 
-## Developing
+## Development
 
-Interested in contributing to Vikunja? We'd love your help! Take a peek at our [development docs](/docs/development) to get started.
+Interested in contributing to Vikunja? Take a look at our [development docs](/docs/development) to get started.
