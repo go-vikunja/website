@@ -56,24 +56,24 @@ export async function createPopulatedProject(opts: {
     withKanban = true,
   } = opts
 
-  const projects = await ProjectFactory.create(1, {title: 'My Project'})
+  const projects = await ProjectFactory.create(1, {title: 'Office Move'})
   const project = projects[0]
   const views = await createDefaultViews(project.id as number)
 
   // Create tasks with realistic titles
   const taskTitles = [
-    'Review pull request',
-    'Update documentation',
-    'Fix login page layout',
-    'Add dark mode support',
-    'Write unit tests for auth module',
-    'Refactor database queries',
-    'Design new landing page',
-    'Set up CI/CD pipeline',
-    'Migrate to new API version',
-    'Optimize image loading',
-    'Add email notifications',
-    'Create user onboarding flow',
+    'Get quotes from moving companies',
+    'Notify building management',
+    'Update company address on website',
+    'Order new desk furniture',
+    'Set up meeting rooms',
+    'Pack shared kitchen supplies',
+    'Label boxes by department',
+    'Schedule elevator for moving day',
+    'Transfer phone and internet lines',
+    'Hand in old office keys',
+    'Create new seating chart',
+    'Send moving day instructions to staff',
   ]
 
   const now = new Date()
@@ -95,7 +95,7 @@ export async function createPopulatedProject(opts: {
   if (withLabels) {
     labels = await LabelFactory.create(4, {
       created_by_id: 1,
-      title: (i: number) => ['Bug', 'Feature', 'Documentation', 'Enhancement'][i - 1],
+      title: (i: number) => ['Urgent', 'Waiting on others', 'Completed', 'Needs approval'][i - 1],
       hex_color: (i: number) => ['e8445a', '1973ff', '4caf50', 'ff9800'][i - 1],
     })
     // Assign labels to some tasks (first call truncates the table)
@@ -124,7 +124,7 @@ export async function createPopulatedProject(opts: {
   if (withAssignees) {
     const extraUsers = await UserFactory.create(2, {
       id: (i: number) => 100 + i,
-      username: (i: number) => ['alice', 'bob'][i - 1],
+      username: (i: number) => ['sarah', 'david'][i - 1],
     }, false)
     await TaskAssigneeFactory.create(1, {task_id: tasks[0].id, user_id: extraUsers[0].id})
     await TaskAssigneeFactory.create(1, {id: 2, task_id: tasks[1].id, user_id: extraUsers[1].id}, false)
@@ -134,8 +134,8 @@ export async function createPopulatedProject(opts: {
     await TaskCommentFactory.create(2, {
       task_id: tasks[0].id,
       comment: (i: number) => [
-        'I think we should approach this differently.',
-        'Good point, let me update the implementation.',
+        'I got three quotes — the one from CityMovers looks best. Can you review?',
+        'Looks good, let\'s go with that. I\'ll send them the confirmation.',
       ][i - 1],
     })
   }
