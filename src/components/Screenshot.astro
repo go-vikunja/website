@@ -46,7 +46,7 @@ const hasDarkVariant = darkImage !== null
 ---
 
 {hasDarkVariant ? (
-  <>
+  <span>
     <span class="dark:hidden">
       <Picture
         src={image}
@@ -73,7 +73,7 @@ const hasDarkVariant = darkImage !== null
         {...rest}
       />
     </span>
-  </>
+  </span>
 ) : (
   <Picture
     src={image}
