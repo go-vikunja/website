@@ -15,6 +15,8 @@ test.describe('Permissions screenshots', () => {
       await page.waitForTimeout(300)
     }
 
-    await screenshot('permissions-dropdown', page)
+    // Capture the sharing form area
+    const shareForm = page.locator('.card, .share-form, .app-content').first()
+    await screenshot('permissions-dropdown', shareForm)
   })
 })

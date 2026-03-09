@@ -69,6 +69,11 @@ test.describe('Saved filters screenshots', () => {
       }
     }
 
-    await screenshot('saved-filters-edit-menu', page)
+    const dropdown = page.locator('.dropdown:has(.dropdown-menu)').first()
+    if (await dropdown.isVisible()) {
+      await screenshot('saved-filters-edit-menu', dropdown)
+    } else {
+      await screenshot('saved-filters-edit-menu', page)
+    }
   })
 })

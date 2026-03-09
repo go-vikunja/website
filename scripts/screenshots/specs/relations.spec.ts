@@ -39,7 +39,15 @@ test.describe('Relations screenshots', () => {
       }
     }
 
-    await screenshot('relations-type-dropdown', page)
+    // Capture the relations area with the dropdown
+    const relationsArea = page.locator('.task-relations, .add-relation').first()
+    if (await relationsArea.isVisible()) {
+      await relationsArea.scrollIntoViewIfNeeded()
+      await page.waitForTimeout(200)
+      await screenshot('relations-type-dropdown', relationsArea, {padding: 40})
+    } else {
+      await screenshot('relations-type-dropdown', page)
+    }
   })
 
   test('Bidirectional relation', async ({authenticatedPage: page, screenshot}) => {

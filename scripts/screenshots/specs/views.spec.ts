@@ -75,7 +75,9 @@ test.describe('Views screenshots', () => {
       await page.waitForTimeout(200)
     }
 
-    await screenshot('views-kanban-bucket-menu', page)
+    // Capture just the bucket header with its open dropdown
+    const bucketWithMenu = page.locator('.bucket').first()
+    await screenshot('views-kanban-bucket-menu', bucketWithMenu)
   })
 
   test('Kanban WIP limit exceeded', async ({authenticatedPage: page, screenshot}) => {

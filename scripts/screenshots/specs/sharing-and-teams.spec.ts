@@ -19,7 +19,8 @@ test.describe('Sharing and teams screenshots', () => {
       await page.waitForTimeout(200)
     }
 
-    await screenshot('sharing-three-dot-menu', page)
+    const dropdown = page.locator('.dropdown:has(.dropdown-menu)').first()
+    await screenshot('sharing-three-dot-menu', dropdown)
   })
 
   test('Sharing settings panel', async ({authenticatedPage: page, screenshot}) => {

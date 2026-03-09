@@ -41,8 +41,31 @@ export const test = base.extend<{
   },
 
   screenshot: async ({}, use) => {
-    const fn = async (name: string, target: Page | Locator, options: object = {}) => {
+    const PADDING = 20
+    const fn = async (name: string, target: Page | Locator, options: Record<string, unknown> = {}) => {
       const path = join(outputDir, `${name}.png`)
+      const padding = (options.padding as number) ?? PADDING
+      delete options.padding
+
+      // For locators, capture via page.screenshot with clip for padding
+      if ('boundingBox' in target && typeof target.boundingBox === 'function') {
+        const locator = target as Locator
+        const box = await locator.boundingBox()
+        if (box) {
+          const ownerPage = locator.page()
+          const viewport = ownerPage.viewportSize()!
+          const clip = {
+            x: Math.max(0, box.x - padding),
+            y: Math.max(0, box.y - padding),
+            width: Math.min(viewport.width - Math.max(0, box.x - padding), box.width + padding * 2),
+            height: Math.min(viewport.height - Math.max(0, box.y - padding), box.height + padding * 2),
+          }
+          await ownerPage.screenshot({path, clip, ...options})
+          return
+        }
+      }
+
+      // For Page targets, just screenshot directly
       await target.screenshot({path, ...options})
     }
     await use(fn)

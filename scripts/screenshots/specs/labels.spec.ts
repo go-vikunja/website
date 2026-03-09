@@ -29,6 +29,12 @@ test.describe('Labels screenshots', () => {
       await page.waitForTimeout(300)
     }
 
-    await screenshot('labels-inline-create', page)
+    // Capture the label picker popup area
+    const popup = page.locator('.popup.is-open, .multiselect').first()
+    if (await popup.isVisible()) {
+      await screenshot('labels-inline-create', popup, {padding: 40})
+    } else {
+      await screenshot('labels-inline-create', labelSection, {padding: 40})
+    }
   })
 })

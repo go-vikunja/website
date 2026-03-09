@@ -16,7 +16,9 @@ test.describe('Projects screenshots', () => {
       await page.waitForTimeout(200)
     }
 
-    await screenshot('projects-context-menu', page)
+    // Capture the dropdown menu with its trigger
+    const dropdown = page.locator('.dropdown:has(.dropdown-menu)').first()
+    await screenshot('projects-context-menu', dropdown)
   })
 
   test('Project settings form', async ({authenticatedPage: page, screenshot}) => {

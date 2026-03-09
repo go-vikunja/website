@@ -6,13 +6,20 @@ test.describe('Settings screenshots', () => {
     await page.waitForLoadState('networkidle')
 
     // Click the username dropdown in the top right
-    const userMenu = page.locator('[data-cy="userMenu"], .user-menu, .navbar .dropdown-trigger').first()
+    const userMenu = page.locator('.username-dropdown-trigger, [data-cy="userMenu"], .navbar .dropdown-trigger').first()
     if (await userMenu.isVisible()) {
       await userMenu.click()
       await page.waitForTimeout(200)
     }
 
-    await screenshot('settings-entry-point', page)
+    // Capture the dropdown menu that appeared
+    const dropdownMenu = page.locator('.dropdown-menu .dropdown-content').last()
+    if (await dropdownMenu.isVisible()) {
+      await screenshot('settings-entry-point', dropdownMenu, {padding: 40})
+    } else {
+      // Fallback: capture top-right area of page
+      await screenshot('settings-entry-point', page, {clip: {x: 900, y: 0, width: 380, height: 300}})
+    }
   })
 
   test('General settings tab', async ({authenticatedPage: page, screenshot}) => {

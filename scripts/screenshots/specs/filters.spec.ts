@@ -22,7 +22,13 @@ test.describe('Filters screenshots', () => {
       }
     }
 
-    await screenshot('filters-editor-autocomplete', page)
+    // Capture the filter popup/modal
+    const filterPopup = page.locator('.filter-popup, .modal-container, .filters').first()
+    if (await filterPopup.isVisible()) {
+      await screenshot('filters-editor-autocomplete', filterPopup)
+    } else {
+      await screenshot('filters-editor-autocomplete', page)
+    }
   })
 
   test('Include nulls toggle', async ({authenticatedPage: page, screenshot}) => {
@@ -44,7 +50,12 @@ test.describe('Filters screenshots', () => {
       await includeNulls.scrollIntoViewIfNeeded()
     }
 
-    await screenshot('filters-include-nulls', page)
+    const filterPopup = page.locator('.filter-popup, .modal-container, .filters').first()
+    if (await filterPopup.isVisible()) {
+      await screenshot('filters-include-nulls', filterPopup)
+    } else {
+      await screenshot('filters-include-nulls', page)
+    }
   })
 
   test('Active filter applied to view', async ({authenticatedPage: page, screenshot}) => {

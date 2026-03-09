@@ -52,8 +52,14 @@ test.describe('Task screenshots', () => {
     // Wait for the popup to appear
     await page.waitForTimeout(500)
 
-    // Try to capture the popup and surrounding context
-    await screenshot('tasks-hover-preview', page)
+    // Try to capture the popup element
+    const popup = page.locator('.popup.is-open, .task-preview-popup, .tippy-content').first()
+    if (await popup.isVisible()) {
+      await screenshot('tasks-hover-preview', popup)
+    } else {
+      // Fallback: capture the task and surrounding area
+      await screenshot('tasks-hover-preview', taskElement, {padding: 100})
+    }
   })
 
   test('Comment section', async ({authenticatedPage: page, screenshot}) => {
@@ -96,7 +102,9 @@ test.describe('Task screenshots', () => {
     // Wait for autocomplete dropdown
     await page.waitForTimeout(500)
 
-    await screenshot('tasks-comments-mention', page)
+    // Capture the comment area with the autocomplete dropdown
+    const commentArea = page.locator('.comments-container, .task-view .comments').first()
+    await screenshot('tasks-comments-mention', commentArea, {padding: 40})
   })
 
   test('Drag task to project in sidebar', async ({authenticatedPage: page, screenshot}) => {

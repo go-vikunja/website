@@ -19,7 +19,7 @@ test.describe('Search and navigation screenshots', () => {
       await page.waitForTimeout(500)
     }
 
-    await screenshot('search-global-dialog', page)
+    await screenshot('search-global-dialog', page.locator('.modal-container, .quick-actions').first())
   })
 
   test('Quick actions for creating', async ({authenticatedPage: page, screenshot}) => {
@@ -39,7 +39,7 @@ test.describe('Search and navigation screenshots', () => {
       await page.waitForTimeout(500)
     }
 
-    await screenshot('search-quick-actions', page)
+    await screenshot('search-quick-actions', page.locator('.modal-container, .quick-actions').first())
   })
 
   test('Keyboard shortcuts popup', async ({authenticatedPage: page, screenshot}) => {
@@ -55,7 +55,7 @@ test.describe('Search and navigation screenshots', () => {
     }
     await page.waitForTimeout(300)
 
-    await screenshot('navigation-keyboard-shortcuts', page)
+    await screenshot('navigation-keyboard-shortcuts', page.locator('.modal-container, .keyboard-shortcuts').first())
   })
 
   test('Notifications dropdown', async ({authenticatedPage: page, screenshot}) => {
@@ -65,12 +65,13 @@ test.describe('Search and navigation screenshots', () => {
     await page.waitForLoadState('networkidle')
 
     // Click the notifications bell
-    const bell = page.locator('[data-cy="notifications"], .notifications-button, .notification-bell').first()
+    const bell = page.locator('.notifications .trigger-button').first()
     if (await bell.isVisible()) {
       await bell.click()
       await page.waitForTimeout(300)
     }
 
-    await screenshot('navigation-notifications', page)
+    // Capture the notifications container (trigger + dropdown list)
+    await screenshot('navigation-notifications', page.locator('.notifications').first())
   })
 })

@@ -18,7 +18,14 @@ test.describe('Dates and reminders screenshots', () => {
       await page.waitForTimeout(300)
     }
 
-    await screenshot('dates-reminder-config', page)
+    // Capture the popup or the task sidebar area
+    const popup = page.locator('.popup.is-open, .reminder-options-popup').first()
+    if (await popup.isVisible()) {
+      await screenshot('dates-reminder-config', popup, {padding: 40})
+    } else {
+      const sidebar = page.locator('.task-view .action-buttons, .task-view .details').last()
+      await screenshot('dates-reminder-config', sidebar)
+    }
   })
 
   test('Repeating task configuration', async ({authenticatedPage: page, screenshot}) => {
@@ -34,7 +41,14 @@ test.describe('Dates and reminders screenshots', () => {
       await page.waitForTimeout(300)
     }
 
-    await screenshot('dates-repeating-task', page)
+    // Capture the popup or the task sidebar area
+    const popup = page.locator('.popup.is-open, .repeat-options-popup').first()
+    if (await popup.isVisible()) {
+      await screenshot('dates-repeating-task', popup, {padding: 40})
+    } else {
+      const sidebar = page.locator('.task-view .action-buttons, .task-view .details').last()
+      await screenshot('dates-repeating-task', sidebar)
+    }
   })
 
   test('Overdue task highlighting in list', async ({authenticatedPage: page, screenshot}) => {
