@@ -2,12 +2,13 @@ import {test as base, type APIRequestContext, type Page, type Locator} from '@pl
 import {Factory} from './factory'
 import {login} from './auth'
 import {UserFactory} from '../factories/user'
-import {SCREENSHOT_DIR} from './constants'
+import {IMAGES_BASE_DIR} from './constants'
 import {join, dirname} from 'path'
+import {mkdirSync} from 'fs'
 import {fileURLToPath} from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const outputDir = join(__dirname, '..', SCREENSHOT_DIR)
+const baseDir = join(__dirname, '..', IMAGES_BASE_DIR)
 
 export const test = base.extend<{
   apiContext: APIRequestContext;
@@ -46,7 +47,10 @@ export const test = base.extend<{
   screenshot: async ({}, use) => {
     const PADDING = 20
     const fn = async (name: string, target: Page | Locator, options: Record<string, unknown> = {}) => {
-      const path = join(outputDir, `${name}.png`)
+      const dir = (options.dir as string) ?? 'help'
+      delete options.dir
+      const path = join(baseDir, dir, `${name}.png`)
+      mkdirSync(dirname(path), {recursive: true})
       const padding = (options.padding as number) ?? PADDING
       delete options.padding
 
