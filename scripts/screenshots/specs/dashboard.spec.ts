@@ -7,7 +7,7 @@ test.describe('Dashboard screenshots', () => {
   test.beforeEach(async ({authenticatedPage: page}) => {
     // Create multiple projects to show in "recently viewed"
     const projects = await ProjectFactory.create(3, {
-      title: (i: number) => ['Website Redesign', 'Backend API', 'Mobile App'][i - 1],
+      title: (i: number) => ['Office Move', 'Team Retreat Planning', 'Personal'][i - 1],
     })
 
     for (let i = 0; i < projects.length; i++) {
@@ -17,9 +17,9 @@ test.describe('Dashboard screenshots', () => {
     // Create tasks with various due dates
     const now = new Date()
     const titles = [
-      'Review homepage mockups', 'Fix responsive layout', 'Update color palette',
-      'Write API endpoint tests', 'Optimize database queries', 'Set up monitoring',
-      'Design onboarding screens', 'Implement push notifications',
+      'Get quotes from moving companies', 'Order new desk furniture', 'Update company address on website',
+      'Book retreat venue', 'Confirm catering for retreat', 'Send agenda to team',
+      'Schedule dentist appointment', 'Renew parking permit',
     ]
     const tasks = []
     for (let i = 0; i < titles.length; i++) {
