@@ -1,181 +1,284 @@
-# Vikunja Positioning Angles
+# Vikunja Positioning
 
-Last updated: 2026-03-05
-
----
-
-## Context
-
-This document presents 3-5 distinct positioning angles for Vikunja's audience-building efforts. Each angle targets a different audience segment, channel mix, and emotional hook. The goal is to identify the most effective lens through which to build following, grow content, and drive newsletter/social engagement -- while staying true to Vikunja's brand voice (technically confident, personally warm, principled pragmatist).
-
-### Competitive Landscape Summary
-
-| Competitor | Core Positioning | Weakness Vikunja Can Exploit |
-|-----------|-----------------|----------------------------|
-| Todoist | "Organize Your Work & Life" -- polished, cross-platform, 30M users, leaning into AI | Closed source, US-based, subscription required for filters/reminders, no self-hosting |
-| Trello | "Organize anything, together" -- simple Kanban, consumer-friendly, Atlassian-backed | Kanban-only paradigm, Atlassian lock-in, limited views, no self-hosting |
-| Asana | "Easiest way for teams to track work" -- enterprise-grade, structured workflows | Heavy, enterprise pricing, overkill for individuals/small teams, no self-hosting |
-| Notion | "All-in-one workspace" -- notes+tasks+wiki, template ecosystem, community-led | Bloated for pure task management, US-based, complex, no self-hosting, slow |
-| TickTick | All-in-one personal productivity (tasks + habits + Pomodoro) | Closed source, China-based (privacy concern), limited collaboration, no self-hosting |
-| Plane/OpenProject | Open-source project management (Jira/Linear alternatives) | Dev/PM-focused, not personal task management, heavier setup, less polished UX |
-
-### Vikunja's Differentiating Assets
-
-- Open-source (AGPLv3), fully self-hostable
-- Made and hosted in the EU (Germany)
-- Bootstrapped, solo-founder authenticity -- no VC, users are the priority
-- Lightweight and fast (<100ms interactions)
-- Multiple views (List, Kanban, Gantt, Table) in one tool
-- Import from Todoist, Trello, Microsoft To-Do
-- CalDAV integration
-- Affordable cloud pricing (4 EUR/month) with no free tier bait-and-switch
-- Distinctive brand personality (llama mascot, "fluffy" descriptor, dry humor)
-- Active development with transparent changelogs
+Last updated: 2026-03-10 by /positioning-angles
 
 ---
 
-## Angle 1: The Privacy-First Productivity Tool
+## Primary Positioning
 
-**Positioning statement:** Vikunja is the task manager that keeps your to-do list between you and your server -- open-source, self-hostable, and made in the EU, so your plans stay yours.
+**Angle: The Todoist Alternative You Actually Own**
 
-**Target audience:** Privacy-conscious professionals, GDPR-sensitive European businesses, self-hosting enthusiasts, and anyone uncomfortable with US SaaS providers having access to their task data.
+**Statement:** Vikunja gives you everything you love about Todoist -- lists, labels, reminders, quick add -- running on your own server. And when your team needs it too, it's already there: shared projects, multiple views, and enterprise features like SSO without needing 500 employees to unlock them.
 
-**Best channels:**
-- Privacy-focused communities (r/selfhosted, r/privacytoolsIO, r/degoogle, Lemmy instances)
-- Mastodon / Fediverse (strong privacy-first audience already engaged there)
-- Hacker News, Lobsters
-- EU-focused tech media and digital sovereignty directories (EUalternative.eu, souverainete-numerique.eu)
-- Newsletter content around data sovereignty trends
+**Psychology:** Self-hosters searching for a Todoist replacement have high intent and a known pain point. The "you actually own it" framing resonates specifically with the self-hosting audience -- ownership isn't just a feature, it's why they self-host in the first place. The growth story (personal tool that scales to your team) differentiates Vikunja from simpler self-hosted alternatives like Kanboard or WeKan that stay single-user or basic.
+
+**Headline direction:** "Your to-do list, your server. And when your team needs it -- enterprise features without the enterprise price tag."
+
+**Best for:** Website hero, SEO content, comparison posts, product directories, self-hosting community outreach.
+
+### How the angle layers
+
+The primary angle has three layers that surface in different contexts:
+
+**Layer 1 -- Lead: Self-hosted Todoist alternative**
+- Captures high-intent search traffic ("Todoist alternative", "self-hosted task manager", "open source to-do app")
+- Speaks directly to self-hosters comparing options for their stack
+- Framing: "Your to-do list, your server, your rules"
+
+**Layer 2 -- Secondary: Grows with your team**
+- Differentiates from other self-hosted to-do apps that stay single-user or basic
+- Tells a natural story: "Works for your grocery list AND your team's sprint board"
+- NOT enterprise-first language -- it's a natural extension of the personal tool
+- Surfaces when describing features, on the features page, in comparison content
+
+**Layer 3 -- When relevant: Enterprise features at any team size**
+- Surfaces on pricing pages, enterprise pages, and B2B content -- not the hero
+- Targets regulated SMEs who need SSO and audit logs but have 8 employees, not 800
+- Framing: "Your compliance requirements don't care how many employees you have"
+- Strongest differentiator against OpenProject (25-user minimum), Plane (Fortune 10 positioning), Planka (1,000-user enterprise minimum)
+
+---
+
+## Target Audience
+
+### Primary: Self-hosters and home-labbers
+
+People who already run Nextcloud, Gitea, Immich, and similar tools on their own infrastructure. They self-host by conviction, not convenience. They're looking for a proper task manager that fits their stack. They compare options in r/selfhosted, awesome-selfhosted lists, and homelab YouTube channels.
+
+**They won't pay for the product directly -- but they are the unpaid sales force.** Every home-labber who loves Vikunja is a potential advocate inside their workplace.
+
+### Secondary: Small tech companies (5-30 people)
+
+Companies that self-host by policy or preference. They need something between "personal to-do app" and "full Jira." They're the ones who actually buy the enterprise self-hosted tier. Often discovered Vikunja because someone on the team already runs it at home.
+
+### Tertiary: Individual Todoist/TickTick users discovering self-hosting
+
+People who find Vikunja through "Todoist alternative" searches. Some will use Cloud, some will start self-hosting. They expand the community and contribute to the reputation that makes SMEs comfortable buying.
+
+---
+
+## Go-to-Market: Home-labber to SME Revenue
+
+### The core insight
+
+Home-labbers are not a cost center. They are the distribution channel. The same go-to-market that built Docker, Tailscale, and GitLab: free self-hosted users create community, credibility, and workplace advocates.
+
+```
+Home-labber discovers Vikunja
+(r/selfhosted, awesome-selfhosted, Fediverse)
+        |
+        v
+Uses it personally, loves it
+(free, self-hosted, part of their stack)
+        |
+        v
++-------+--------+
+|                |
+v                v
+BOTTOM-UP        DIRECT SME
+(Trojan Horse)   (Separate funnel)
+|                |
+v                v
+Brings it to     IT lead / founder
+work, tells      searches for
+their boss       "self-hosted PM
+|                with SSO"
+v                |
+Company needs    v
+SSO, support,    Finds Vikunja,
+SLA              sees large community
+|                as proof it works
+v                |
+Buys enterprise  v
+self-hosted      Same buyer
+        |
+        v
+   ENTERPRISE REVENUE
+```
+
+### Conversion strategies
+
+**Strategy 1: Make the Trojan Horse frictionless**
+
+- Create a "Bring Vikunja to Work" page -- give home-labbers ammunition to pitch their boss. A one-pager they can forward: "You're already using Vikunja at home. Here's what the enterprise tier adds for your team."
+- Write up the existing success story as a case study: "How one developer brought Vikunja from their home lab to a 15-person team."
+- Make enterprise features visible to free users at the natural discovery point. When someone in a self-hosted instance tries to configure SSO or needs audit logs, show "Available in the Enterprise tier" with a clear path. The feature gate IS the marketing.
+
+**Strategy 2: Direct SME acquisition**
+
+- SEO for SME-specific queries: "self-hosted project management GDPR", "open source task manager SSO", "Jira alternative self-hosted small team"
+- EU software directories: EUalternative.eu, souverainete-numerique.eu, German public sector procurement lists
+- Enterprise landing page that speaks the buyer's language: compliance, SLA, SSO, data residency, DPA. Different buyer than the home page, different copy.
+
+**Strategy 3: Community size as social proof**
+
+- Every self-hosted instance -- even free ones -- is a credibility signal for SME buyers
+- Surface proof on the enterprise page: Docker pulls, community size, commit activity, contributor count
+- Active community = active development = safe to depend on
+
+**Strategy 4: Pricing that captures the transition**
+
+- Enterprise self-hosted pricing should be a single, easy-to-pitch number
+- Avoid per-user pricing that punishes growth (OpenProject's model)
+- The home-labber needs to be able to say one number to their boss
+- Consider flat-rate or tiered-flat pricing (e.g., "up to 25 users for X EUR/month")
+
+### What free users contribute (even if they never pay)
+
+- Bug reports and feature requests
+- Community forum activity (social proof for SME buyers)
+- Blog posts, "my homelab stack" videos, recommendations
+- SEO amplification through self-hosted guides mentioning Vikunja
+- Workplace advocacy (the Trojan Horse)
+
+---
+
+## Competitive Landscape
+
+### Consumer competitors (Layer 1 -- Todoist alternative)
+
+| Competitor | Core Positioning | Vikunja's Advantage |
+|-----------|-----------------|---------------------|
+| Todoist | "Organize Your Work & Life" -- 30M users, leaning into AI | No self-hosting, closed source, US-based, subscription for filters/reminders |
+| TickTick | All-in-one personal productivity (tasks + habits + Pomodoro) | Closed source, China-based (privacy concern), no self-hosting |
+| Notion | "All-in-one workspace" -- bloated, slow | Not a task manager, US-based, no self-hosting, complex |
+| Trello | "Organize anything, together" -- Kanban only, Atlassian-backed | Kanban-only, lock-in, no self-hosting |
+
+### Self-hosted competitors (Layer 2 -- grows with your team)
+
+| Competitor | Core Positioning | Vikunja's Advantage |
+|-----------|-----------------|---------------------|
+| OpenProject | Enterprise PM, "secure environment" | 25-user minimum on paid plans, overkill for personal use, heavy |
+| Plane | "PM for teams and agents", Fortune 10 references | Targeting upmarket, no personal productivity story, closed-source enterprise |
+| Leantime | "For non-project managers", neurodivergent-friendly | Plugin marketplace model, less established, narrow niche |
+| Taiga | "Free and open-source, for agile teams" | Agile-only, limited reporting/dashboards, stagnating |
+| Huly | "All-in-one Linear/Jira/Slack alternative" | Developer-focused, complex stack to self-host, no personal task story |
+| Worklenz | "All in one PM for efficient teams" | Less established, free tier reportedly limits to 5 members |
+| WeKan | "Open-Source Kanban" | Kanban only, no project management features |
+| Kanboard | Minimalist Kanban | Deliberately limited features, no team features |
+| Planka | "Self-hosted Kanban, battle-tested" | Kanban-focused, enterprise starts at 1,000 users |
+
+### Saturated claims (what NOT to lead with)
+
+These are non-differentiating -- every self-hosted PM tool says them:
+
+- "Open source"
+- "Self-hosted / own your data"
+- "Jira alternative" / "Trello alternative"
+- "For all teams" / "teams of any size"
+- "Easy to set up" / "deploy in minutes"
+- "Privacy / data sovereignty"
+- "Customizable workflows"
+- "Modern UI"
+
+### White space (what nobody claims)
+
+- **Nobody explicitly targets SMEs (5-50 people).** Positioning is either "for everyone" (generic) or "for enterprise" (excluding small teams).
+- **Enterprise features (SSO, audit logs) are locked behind 25-100+ user minimums.** Regulated SMEs can't access them.
+- **Nobody owns the personal-to-team transition.** "I outgrew Todoist but OpenProject is overkill" has no answer.
+- **EU-hosted + enterprise for SMEs has zero competition** in the self-hosted PM space.
+- **Flat-rate enterprise pricing for self-hosted** is almost nonexistent (only Worklenz at $99/month).
+
+---
+
+## Supporting Angles
+
+These support the primary angle in specific contexts. They are not separate campaigns -- they're facets of the same story.
+
+### The Bootstrapped Builder's Journal
+
+**Use for:** Newsletter, Indie Hackers, Hacker News, Bluesky, build-in-public content.
+
+**Statement:** Follow along as a solo founder builds sustainable open-source enterprise software -- funded by users, not VCs.
+
+**Why it matters:** Konrad's solo-founder voice is Vikunja's strongest brand asset. Build-in-public content creates deep audience loyalty and generates organic content that no competitor can replicate. The enterprise pivot makes the story more interesting: "Solo founder adds enterprise features and competes with VC-backed tools."
 
 **Content themes:**
-- "What your to-do app knows about you" (auditing what data Todoist/TickTick collect)
-- GDPR compliance for team task management
-- Self-hosting guides as privacy content
-- EU digital sovereignty and the CLOUD Act -- why server location matters
-- "Your grocery list is nobody's business" (riffing on existing Vikunja copy)
-
-**Why it works:** Data sovereignty is accelerating as a theme in 2025-2026, with 6.7B EUR in GDPR fines issued, new EU data regulations taking effect, and 45% of European organizations reporting increased interest in sovereign solutions due to geopolitical uncertainty. Vikunja is *already* positioned here ("Made and hosted in the EU", "We will never look at your tasks", open-source code audit) -- this angle sharpens and amplifies what already exists. The self-hosting community is a natural evangelism engine: these people build homelab setups, write blog posts about their stacks, and recommend tools to peers.
-
-**Risk:** Can attract a niche audience that is less likely to convert to Vikunja Cloud (they self-host by principle). Mitigate by using this angle for top-of-funnel awareness and brand building, not direct conversion.
-
----
-
-## Angle 2: The Todoist Alternative You Actually Own *(recommended)*
-
-**Positioning statement:** Vikunja gives you everything you love about Todoist -- lists, labels, reminders, quick add -- without the subscription lock-in, because it is open-source and you can run it yourself or let us host it.
-
-**Target audience:** Todoist/TickTick users frustrated by pricing changes, feature restrictions on free tiers, or vendor lock-in. Power users who want more control. People searching for "Todoist alternative" or "open source Todoist."
-
-**Best channels:**
-- SEO-driven blog content ("Todoist alternative", "open source to-do app", "self-hosted task manager")
-- YouTube / video comparisons and migration tutorials
-- Reddit (r/productivity, r/todoist, r/selfhosted, r/opensource)
-- Bluesky and X (engaging in conversations about Todoist pricing/changes)
-- Product Hunt (for major releases)
-- "Alternative to" directories (AlternativeTo, OpenAlternative, switching.software)
-
-**Content themes:**
-- Direct feature comparisons (Vikunja vs. Todoist, Vikunja vs. TickTick)
-- Migration guides ("How to move from Todoist to Vikunja in 5 minutes")
-- "What I gained by switching from Todoist to Vikunja" (encourage user stories)
-- Price comparison calculators (Todoist Pro at 4 EUR/month vs. Vikunja Cloud at 4 EUR/month with no artificial limits)
-- Feature parity updates ("Vikunja now does X that Todoist charges for")
-
-**Why it works:** This is the highest-intent, most conversion-ready angle. People actively searching for "Todoist alternative" have purchase intent and a known pain point. Vikunja already supports import from Todoist, making the switching cost low. Todoist's 30M+ user base represents a massive pool of potential switchers, and every Todoist pricing change or feature restriction creates a wave of "what else is out there?" searches. The existing press coverage (XDA Developers: "Vikunja is the open-source Todoist alternative that doesn't charge you a monthly fee", MakeUseOf: similar) validates this angle. The migration path is already built into the product.
-
-**Risk:** Being perceived as "just a cheaper Todoist clone" rather than a distinctive product. Mitigate by always pairing comparisons with Vikunja's unique strengths (self-hosting, open source, multiple views, EU hosting) rather than playing a pure feature-matching game.
-
----
-
-## Angle 3: The Bootstrapped Builder's Journal
-
-**Positioning statement:** Vikunja is built by one person, funded by its users, and developed in the open -- follow along as a solo founder builds a sustainable open-source business without VC money.
-
-**Target audience:** Indie hackers, bootstrapped founders, open-source maintainers, developers interested in building sustainable software businesses, and people who root for underdogs.
-
-**Best channels:**
-- Newsletter (primary vehicle -- build-in-public updates)
-- Indie Hackers community
-- Hacker News (Show HN, personal essays)
-- Bluesky and X (build-in-public threads)
-- LinkedIn (founder story content)
-- Podcasts (indie hacker / open source podcasts as a guest)
-
-**Content themes:**
-- Monthly revenue/growth transparency reports
+- Revenue/growth transparency
 - Technical deep-dives into architectural decisions
-- "What I learned building Vikunja for X years" retrospectives
-- The economics of running an open-source SaaS (server costs, support load, pricing decisions)
-- Honest reflections on what worked and what didn't
-- The decision-making process behind features (why Typesense was removed, why session management was rebuilt)
+- The economics of open-source SaaS
+- "Here's what your subscription funded this month"
 
-**Why it works:** Konrad's solo-founder voice is already Vikunja's strongest brand asset. The voice profile analysis shows that authenticity, honesty about imperfections, and first-person storytelling are core to how Vikunja communicates. Build-in-public content creates deep audience loyalty -- people follow *the person* and become invested in the project's success. This angle generates organic content that is impossible for competitors to replicate (Todoist has 30M users but no human founder story to tell). The indie hacker community is highly engaged: they share, comment, and amplify stories from peers. Every build-in-public post is also indirect marketing for Vikunja itself.
+### The Privacy-First / EU-Made Tool
 
-**Risk:** Requires Konrad to share business details (revenue, decisions, struggles) he may not be comfortable sharing. Can also attract an audience that admires the project but never becomes a paying user. Mitigate by tying updates to product improvements ("here's what your subscription funded this month") and by keeping a consistent publishing cadence.
+**Use for:** EU software directories, German tech media (Heise, Golem, t3n), GDPR-related content, privacy communities, public sector outreach.
 
----
+**Statement:** Task management built, hosted, and supported in Europe -- with enterprise features that don't require an enterprise budget or a US data transfer.
 
-## Angle 4: The EU-Made Productivity Tool
-
-**Positioning statement:** Vikunja is task management built and hosted in Europe -- for teams and individuals who need a GDPR-compliant, sovereign alternative to US-based productivity software.
-
-**Target audience:** European SMEs, public sector organizations, consultancies, and IT decision-makers evaluating compliant tooling. Also: European tech communities with a "buy European" ethos.
-
-**Best channels:**
-- LinkedIn (B2B decision-makers, EU tech community)
-- EU software directories (EuroStack, EUalternative.eu, souverainete-numerique.eu)
-- German/European tech media (Heise, Golem, t3n)
-- Trade events and EU open-source conferences (FOSDEM, Open Source Summit Europe)
-- Direct outreach to EU public sector procurement lists
-- Newsletter content focused on compliance and sovereignty
+**Why it matters:** Combines two former separate angles (Privacy-First and EU-Made) into one. EU digital sovereignty is accelerating, and Vikunja's "Made in Germany" + self-hostable + open source + enterprise features is a combination no competitor matches.
 
 **Content themes:**
-- "Why your task management tool should be EU-hosted" (CLOUD Act implications)
-- GDPR compliance checklist for productivity tools
+- GDPR compliance for task management
+- "What your to-do app knows about you"
+- EU digital sovereignty and the CLOUD Act
 - Case studies of European teams using Vikunja
-- Comparison with other EU-based tools (MeisterTask, OpenProject) -- positioning Vikunja as the lightweight, affordable option
-- The Enterprise plan and contract data processing (GDPR DPA) as a differentiator
 
-**Why it works:** The EU digital sovereignty movement is real and growing, with 45% of European organizations increasing their focus on sovereign solutions. Vikunja is already "Made and hosted in the EU" and offers a GDPR DPA in the Enterprise plan. Very few task management tools can credibly claim EU sovereignty -- MeisterTask (Germany) is the closest competitor, but it is not open-source. OpenProject is EU + open-source but positioned for heavyweight project management, not personal/team task management. Vikunja occupies a unique gap: EU-based, open-source, lightweight task management with an affordable cloud option. This angle also directly supports the commercial side of the business (Cloud and Enterprise plans).
+### The Flexible Workhorse
 
-**Risk:** Can feel dry or corporate, which clashes with Vikunja's warm, personal brand voice. Mitigate by maintaining the founder voice even in B2B content ("I built Vikunja in Germany because privacy matters to me personally") and by treating sovereignty as a practical benefit rather than a compliance checkbox.
+**Use for:** Video content, feature demos, productivity subreddits, visual social content.
 
----
+**Statement:** Four views of your work -- list, Kanban, Gantt, and table -- so you organize however your brain works.
 
-## Angle 5: The Flexible Workhorse (List + Kanban + Gantt + Table in One Tool)
-
-**Positioning statement:** Vikunja is the one task manager that gives you four views of your work -- list, Kanban, Gantt, and table -- so you can organize however your brain works, without paying for four separate tools.
-
-**Target audience:** Productivity enthusiasts, small team leads, freelancers, and project managers who use multiple tools (Trello for Kanban, a spreadsheet for tracking, a Gantt tool for timelines) and want to consolidate.
-
-**Best channels:**
-- YouTube (workflow demos, "how I organize my projects with Vikunja")
-- Productivity-focused subreddits (r/productivity, r/getdisciplined, r/projectmanagement)
-- Blog / SEO content ("best Kanban tool", "open source Gantt chart", "task management with multiple views")
-- X and Bluesky (sharing screenshots of different views, workflow tips)
-- Template sharing (shareable project setups for common use cases)
+**Why it matters:** Most competitors are associated with a single paradigm (Trello = Kanban, Todoist = lists). Vikunja's four views are visually demonstrable and immediately understandable. Best angle for video and screenshots.
 
 **Content themes:**
-- "One tool, four views" visual demos
-- Workflow showcases: how different professions use different views
-- "I replaced Trello + Google Sheets + [Gantt tool] with Vikunja"
-- Quick Add Magic tutorials and productivity tips
-- Comparison with Notion (Vikunja is focused and fast where Notion is bloated and slow)
-
-**Why it works:** Most competitors are associated with a single paradigm: Trello equals Kanban, Todoist equals lists, dedicated Gantt tools are separate purchases. Vikunja's ability to show the same tasks in four different views is a genuine differentiator that is visually demonstrable and immediately understandable. This angle works especially well for video content (showing the same project in four views is a compelling visual). It appeals to the practical "I just want to get organized" audience that may not care about open source or privacy but does care about having the right tool for the job.
-
-**Risk:** Risks being perceived as a "jack of all trades, master of none." Mitigate by emphasizing that each view is genuinely capable (not a toy implementation) and by showcasing real-world workflows that use multiple views together.
+- "One tool, four views" demos
+- Workflow showcases by profession
+- "I replaced Trello + Google Sheets + [Gantt tool]"
+- Comparison with Notion (focused and fast vs. bloated and slow)
 
 ---
 
-## Recommendation
+## Channel Strategy
 
-**Lead with Angle 2 (The Todoist Alternative You Actually Own)** as the primary positioning for audience growth. This is where the highest-intent search traffic lives, the switching cost is lowest (built-in migration), and the existing press coverage already validates this frame. Every piece of content created under this angle naturally incorporates elements from the other angles (privacy, EU hosting, multiple views, founder story).
+### Primary channels (self-hosting community)
 
-**Support with Angle 3 (The Bootstrapped Builder's Journal)** as the secondary angle for building a loyal, engaged following. This drives newsletter subscriptions and social follows, creates content that is uniquely Vikunja's, and turns the "one-person project" from a perceived weakness into a compelling narrative advantage.
+- r/selfhosted, r/homelab (core community, discovery)
+- awesome-selfhosted, selfh.st, noted.lol (directory listings)
+- Mastodon / Fediverse (strong self-host audience overlap)
+- Bluesky (growing tech community)
+- YouTube homelab channels
 
-**Deploy Angle 1 (Privacy-First) and Angle 4 (EU-Made) tactically** for specific channels and moments: privacy communities, EU directories, GDPR-related content, and when geopolitical events or regulatory changes create news hooks.
+### SEO targets
 
-**Use Angle 5 (Flexible Workhorse) for visual and video content** where the four-view capability can be demonstrated rather than described.
+- "self-hosted Todoist alternative"
+- "open source task manager"
+- "best homelab apps"
+- "Todoist alternative open source"
+- "self-hosted project management"
+- "open source task manager SSO" (enterprise layer)
+- "self-hosted project management GDPR" (enterprise layer)
+- "Jira alternative self-hosted small team" (enterprise layer)
 
-This layered approach ensures Vikunja captures both high-intent searchers (Angle 2) and builds a sticky community (Angle 3), while maintaining topical presence in privacy (Angle 1), EU sovereignty (Angle 4), and productivity (Angle 5) conversations.
+### B2B / enterprise channels
+
+- EU software directories (EUalternative.eu, souverainete-numerique.eu)
+- German/European tech media (Heise, Golem, t3n)
+- LinkedIn (for enterprise/SME content specifically)
+- FOSDEM, Open Source Summit Europe
+
+### Brand-building channels
+
+- Newsletter (build-in-public updates)
+- Indie Hackers, Hacker News
+- Podcasts (indie hacker / open source guests)
+
+---
+
+## Website Implications
+
+The website needs two paths for two audiences:
+
+**Home page / features page:** Speaks to the individual self-hoster. Leads with Todoist alternative positioning (Layer 1). Shows the product working for personal tasks. The growth story (Layer 2) appears naturally when describing team features. Does NOT lead with enterprise language.
+
+**Enterprise page:** Speaks to the IT lead or founder evaluating tools for their company. Leads with Layer 3: compliance, SSO, audit logs, support SLA, data residency, DPA. Shows community size as social proof. Includes the "Bring Vikunja to Work" framing. Different buyer, different conversation.
+
+---
+
+## Recommendation Summary
+
+Lead with **The Todoist Alternative You Actually Own** everywhere. It captures the highest-intent search traffic, speaks to the audience Vikunja already has (self-hosters), and naturally incorporates the growth story and enterprise differentiation as layers rather than separate pitches.
+
+The enterprise self-hosted tier changes the business model but should not change the front door. Home-labbers discover Vikunja through the Todoist alternative angle. Some of them bring it to work. The enterprise features are there when they need them -- not as the first thing they see.
+
+Support with **The Bootstrapped Builder's Journal** for community building, **Privacy-First / EU-Made** for European B2B and directories, and **The Flexible Workhorse** for visual content.
