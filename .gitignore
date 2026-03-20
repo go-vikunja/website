@@ -1,5 +1,6 @@
 # build output
 dist/
+.playwright-mcp/
 
 # generated types
 .astro/
