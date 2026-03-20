@@ -37,13 +37,13 @@ const carouselImages = [
 	{src: VikunjaTaskKanbanBackground, darkSrc: VikunjaTaskKanbanBackgroundDark, alt: 'Kanban board view of tasks overlaid on an aerial forest image background.'},
 ]
 ---
-<Layout title="Vikunja: The open-source, self-hostable to-do app" description="Discover Vikunja, the open-source, self-hostable to-do app. Stay organized, collaborate with peers, and plan projects with elegance and privacy in mind.">
+<Layout title="Vikunja: The task manager you actually own" description="Vikunja is open-source task management you can self-host. Lists, Kanban, Gantt, and more — on your server or ours. Made and hosted in the EU.">
     <Fragment slot="head">
         <script type="application/ld+json" set:html={JSON.stringify({
             "@context": "https://schema.org",
             "@type": "SoftwareApplication",
             "name": "Vikunja",
-            "description": "Open-source, self-hostable to-do app. Stay organized, collaborate with peers, and plan projects with elegance and privacy in mind.",
+            "description": "Open-source task management you can self-host. Lists, Kanban, Gantt, and more — on your server or ours. Made and hosted in the EU.",
             "applicationCategory": "ProjectManagement",
             "operatingSystem": "Web, Docker, Linux",
             "offers": {
@@ -59,16 +59,19 @@ const carouselImages = [
                 class="flex min-h-screen w-full flex-col items-center justify-center pb-8 text-center text-gray-700 dark:text-gray-300 md:px-0">
             <div class="mt-10 lg:mt-40 mb-20 font-display">
                 <h1 class="mb-4 text-5xl tracking-tight text-balance">
-                    Plan your projects with the elegance<br/>
-                    <span class="text-primary">of a sloth on a sunny day.</span>
+                    The task manager<br/>
+                    <span class="text-primary">you actually own.</span>
                 </h1>
                 <h2 class="mx-auto max-w-2xl text-2xl text-balance">
-                    Vikunja, the fluffy, open-source,
-                    <a href="/install" class="underline decoration-1 underline-offset-1">self-hostable</a>
-                    to-do app.
+                    Vikunja is open-source task management with lists, Kanban, Gantt, and more.
+                    <a href="/install" class="underline decoration-1 underline-offset-1">Self-host it</a>
+                    or let us run it for you.
                 </h2>
                 <p class="mt-4 text-xl">
                     Made and hosted in the EU.
+                </p>
+                <p class="mt-2 text-lg text-gray-400 dark:text-gray-500">
+                    Plan with the elegance of a sloth on a sunny day.
                 </p>
             </div>
 
@@ -103,11 +106,11 @@ const carouselImages = [
                                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                                 />
                             </svg>
-                            Stay organized
+                            Your data, your server
                         </h2>
                         <p class="pt-4">
-                            Organize all of your tasks in projects.
-                            Create subprojects to organize everything hierarchically and keep related stuff grouped together.
+                            Run Vikunja on your own infrastructure. Your tasks, your projects, your rules.
+                            Open-source under the AGPLv3 — you can read every line of code.
                         </p>
                     </div>
                     <div class="mt-4 md:mr-4 md:w-1/3">
@@ -126,12 +129,12 @@ const carouselImages = [
                                         d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
                                 />
                             </svg>
-                            Collaborate with peers
+                            Grows with your team
                         </h2>
                         <p class="pt-4">
-                            Vikunja lets you easily share a project with another user or
-                            a whole team! You can also assign tasks to people so everybody knows
-                            who's working on what.
+                            Start with your personal to-do list. When your team needs it too,
+                            share projects, assign tasks, and collaborate — without switching
+                            to a different tool.
                         </p>
                     </div>
                     <div class="mt-4 md:w-1/3">
@@ -150,16 +153,19 @@ const carouselImages = [
                                         d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
                                 />
                             </svg>
-                            Use it how you need it
+                            List, Kanban, Gantt, Table
                         </h2>
                         <p class="pt-4">
-                            You can show your tasks in the classic list view - each task underneath
-                            each other. Or you can use the Gantt view to get a time overview. Or
-                            Table view to show all details you need. Or Kanban if you want that
-                            birds-eye view of the status of all current tasks.
+                            Four ways to view your tasks. Use whatever fits how your brain
+                            works — or switch between views whenever you need to.
                         </p>
                     </div>
                 </div>
+
+                <p class="mt-16 text-center text-lg text-gray-500 dark:text-gray-400">
+                    Switching from Todoist, Trello, or Microsoft To-Do?
+                    <a href="/help/import-and-export/#import" class="underline underline-offset-2">Import your tasks in minutes.</a>
+                </p>
             </div>
         </section>
 
