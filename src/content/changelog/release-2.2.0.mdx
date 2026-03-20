@@ -1,0 +1,138 @@
+---
+title: 'Vikunja 2.2.0: Ten security fixes, Gantt overhaul, and task duplication'
+date: 2026-03-20T12:00:00.000Z
+slug: /vikunja-v2.2.0-was-released
+description: >-
+  Vikunja 2.2.0 fixes ten security vulnerabilities including three critical Desktop Electron issues,
+  adds task duplication, a Gantt chart overhaul with subtask hierarchy and relation arrows,
+  user-level webhooks, and many quality of life improvements.
+---
+
+It's been three weeks since the last release and there's a bunch to cover.
+This release contains 237 commits with ten security fixes, a bunch of new features, and a long list of bug fixes and improvements.
+
+Updating is highly reccomended!
+
+## Security
+
+This release fixes ten security vulnerabilities. Three affect the Desktop Electron wrapper, and seven affect the API.
+
+### Desktop: Electron hardening (CVE-2026-33336, CVE-2026-33334, CVE-2026-33335)
+
+The Vikunja Desktop app had three related security issues due to `nodeIntegration` being enabled without proper isolation. The most severe (CVE-2026-33336, Critical) allowed clicking a normal link in task content to execute arbitrary code on the user's machine. The other two allowed XSS to escalate to full RCE (CVE-2026-33334, High) and arbitrary local application invocation via unvalidated protocol handlers (CVE-2026-33335, High).
+
+All three have been fixed by disabling `nodeIntegration`, enabling `contextIsolation` and `sandbox`, validating URL schemes, and blocking same-window navigation to external origins.
+
+For more details, see the advisories for [CVE-2026-33336](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-83w9-9jf6-88vf), [CVE-2026-33334](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-xh67-63q3-hf7g), and [CVE-2026-33335](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-6q44-85gc-cjvf).
+
+### Password reset could re-enable disabled accounts (CVE-2026-33316)
+
+A disabled user could regain access by completing a password reset, which unconditionally set the account status back to "active". Password resets, token requests, and email confirmations are now all rejected for disabled accounts.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-vq4q-79hh-q767). Thanks to [@VashuVats](https://github.com/VashuVats) for reporting this!
+
+### DoS via image preview generation
+
+Uploading a highly compressed but extremely large image could exhaust CPU and memory during preview generation. The fix rejects images exceeding 50 million pixels before decoding.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-wc83-79hj-hpmq). Thanks to [@Aryma-f4](https://github.com/Aryma-f4) for reporting this!
+
+### IDOR in task comments (CVE-2026-33313)
+
+An authenticated user could read any task comment by substituting the task ID in the API URL with one they had access to. The comment is now verified to belong to the referenced task.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-mr3j-p26x-72x4).
+
+### Read-only users could delete project backgrounds (CVE-2026-33312)
+
+The delete endpoint for project backgrounds only checked read permission instead of write permission. It now correctly requires update access.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-564f-wx8x-878h).
+
+### 2FA bypass via CalDAV basic auth (CVE-2026-33315)
+
+CalDAV basic auth did not check for TOTP, allowing 2FA to be bypassed. The fix rejects basic auth when TOTP is enabled. Token-based CalDAV authentication still works.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-47cr-f226-r4pq). Thanks to [@alp1n3-dev](https://github.com/alp1n3-dev) for reporting this!
+
+### TOTP reuse during validity window (Medium)
+
+A valid TOTP code could be reused within its 30-second window to authenticate multiple sessions.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-p747-qc5p-773r). Thanks to [@alp1n3-dev](https://github.com/alp1n3-dev) for reporting this!
+
+### Rate limit bypass via spoofed headers (CVE-2026-29794)
+
+Unauthenticated rate limits could be bypassed by spoofing `X-Forwarded-For` or `X-Real-IP` headers. The fix adds `service.ipextractionmethod` and `service.trustedproxies` config options to control how the client IP is determined. Check out [the docs](/docs/config-options#ipextraction) for more info.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-m547-hp4w-j6jx). Thanks to [@alp1n3-dev](https://github.com/alp1n3-dev) for reporting this!
+
+## New features
+
+### Task duplication
+
+You can now duplicate a task directly from the task detail view. The duplicate includes all of the task's properties -- labels, assignees, attachments, relations, and the cover image. Check it out via the new "Duplicate" button in the task detail sidebar.
+
+### Gantt chart overhaul
+
+The Gantt chart got a major overhaul. It now shows subtask hierarchy with collapsible groups, parent summary bars with diamond endpoints, and dependency/relation arrows between tasks. The arrows update in real time during drag and resize operations.
+
+![The Gantt chart showing subtask hierarchy with collapsible groups, parent summary bars, and dependency arrows between tasks](../../assets/images/changelog/2.2.0-gantt-hierarchy.png)
+
+### User-level webhooks
+
+Webhooks are no longer limited to project-level events. You can now set up personal webhooks for events like task reminders and overdue tasks in your user settings. This makes it easy to integrate Vikunja with your own notification workflows.
+
+Originally contributed by [@lelemm](https://github.com/lelemm) in [#834](https://github.com/go-vikunja/vikunja/pull/834)!
+
+### Conversational email notifications
+
+Notification emails got a makeover. Instead of the old template-heavy style, emails now use a conversational format that's easier to read and feels more personal.
+
+### SSRF protection for webhooks
+
+Webhooks now include built-in SSRF protection to prevent requests to internal/non-routable IP addresses. If you need to allow webhooks to reach local services, you can set `webhooks.allownonroutableips` in your config. Check out [the docs](/docs/config-options#webhooks) for more info.
+
+### Overdue task highlighting
+
+Overdue tasks are now highlighted consistently across all views.
+
+Thanks to [@dpschen](https://github.com/dpschen) for contributing this in [#958](https://github.com/go-vikunja/vikunja/pull/958)!
+
+### View buttons collapse on small screens
+
+When there are too many view buttons to fit on screen, they now collapse into a dropdown instead of overflowing.
+
+Thanks to [@maggch97](https://github.com/maggch97) for contributing this in [#2306](https://github.com/go-vikunja/vikunja/pull/2306)!
+
+![View buttons collapsed into a dropdown when there are too many to fit on screen](../../assets/images/changelog/2.2.0-view-collapse.png)
+
+## Fixes and improvements
+
+- CalDAV now works with iOS and macOS Reminders. Thanks to [@hcuk94](https://github.com/hcuk94) for contributing this in [#2417](https://github.com/go-vikunja/vikunja/pull/2417)!
+- CalDAV timestamps are now parsed in the configured timezone
+- CalDAV inverse relations are preserved when the parent task has no RELATED-TO property
+- Fixed SQLite "database is locked" errors by switching to WAL mode and using immediate transaction locks
+- Events are now dispatched after the database transaction commits, fixing various race conditions with webhooks and notifications
+- The dropdown menu no longer closes when the cursor crosses the offset gap between the trigger and the menu
+- The TickTick importer now supports space-separated date formats
+- Fixed color picker saving a stale color due to debounce
+- Fixed an authenticated UI flash when the server rejects a JWT session
+- ParadeDB search updated to v2 fuzzy prefix matching for better search results
+- Added /tmp directory to the Docker image to fix data exports
+- Fixed S3 backend for user export downloads and file mime types
+- Validation errors are now surfaced on the registration form fields
+
+## How to Upgrade
+
+To get the upgrade, simply replace the Vikunja binary with the new release from the [downloads page](https://dl.vikunja.io/vikunja/v2.2.0/) or pull the `:latest` docker image.
+
+You can also check out [the update docs](/docs/installing#updating) for more information about the process.
+
+## Closing
+
+As usual, you can find the full changelogs [in the GitHub repo](https://github.com/go-vikunja/vikunja/blob/main/CHANGELOG.md#220---2026-03-20).
+
+If you have any questions about this release, please reach out either [in the community forum](https://community.vikunja.io), [Bluesky](https://bsky.app/profile/vikunja.io), or [Mastodon](https://social.linux.pizza/@vikunja).
+
+Thank you for using Vikunja, and I look forward to bringing you more enhancements in future updates!
