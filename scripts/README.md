@@ -32,8 +32,6 @@ The script:
 - Node.js 20+
 - [Claude CLI](https://docs.anthropic.com/en/docs/claude-cli) (`claude` must be on PATH)
 - [GitHub CLI](https://cli.github.com/) (`gh`) authenticated for GitHub Releases
-- `xclip` for copying LinkedIn text to clipboard (Linux)
-
 ### API setup
 
 Create a `.env` file in the project root (already gitignored) with the credentials for each platform. Platforms with missing credentials are skipped automatically.
