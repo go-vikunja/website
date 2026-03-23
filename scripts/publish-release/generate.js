@@ -21,21 +21,34 @@ export async function generateAndEdit(blogPostPath, version) {
 	// Build newsletter: blog post content with absolute image URLs from live site
 	const newsletter = await buildNewsletter(contentWithoutFrontmatter, blogUrl)
 
+	// Load brand voice guidelines
+	const brandDir = join(dirname(blogPostPath), '..', '..', '..', 'brand')
+	let voiceProfile = ''
+	try {
+		voiceProfile = readFileSync(join(brandDir, 'voice-profile.md'), 'utf-8')
+	} catch {
+		console.log('Warning: Could not load brand/voice-profile.md')
+	}
+
 	const prompt = `You are helping announce a Vikunja release (version ${version}).
 
-Here is the blog post content:
+${voiceProfile ? `## Brand Voice Guidelines\n\n${voiceProfile}\n\n` : ''}## Blog Post Content
 
 ${blogContent}
 
-Generate two content variants. Output them in EXACTLY this format with these exact section markers:
+## Instructions
+
+Generate two content variants following the brand voice guidelines above. Use emojis. Write in first person as Konrad, the solo founder. Be technically confident but personally warm. Avoid corporate jargon, buzzwords, and artificial urgency.
+
+Output them in EXACTLY this format with these exact section markers:
 
 ${SECTION_SHORT}
 
-[Write a tweet-style announcement, max 280 characters. Use emojis. Include the version number, 1-2 key highlights, and the blog post URL: ${blogUrl}]
+[Write a tweet-style announcement, max 280 characters. Use emojis. Include the version number, 1-2 key highlights, and the blog post URL: ${blogUrl}. Write as Konrad — casual, direct, enthusiastic but not hyperbolic.]
 
 ${SECTION_LINKEDIN}
 
-[Write a 2-3 paragraph LinkedIn post in a professional but approachable tone. Use emojis. Mention key features and improvements. Include the blog post URL.]`
+[Write a 2-3 paragraph LinkedIn post. Use emojis. Professional but approachable, written as Konrad (first person singular). Mention key features and improvements. Include the blog post URL. Use the "Bootstrapped Builder's Journal" supporting angle — share the update as a solo founder building sustainable open-source software.]`
 
 	console.log('Generating content variants with Claude...')
 	const claudeResult = spawnSync('claude', ['-p', prompt], {
