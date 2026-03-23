@@ -1,7 +1,7 @@
 import {spawnSync} from 'node:child_process'
 import {writeFileSync, readFileSync, unlinkSync} from 'node:fs'
 import {tmpdir} from 'node:os'
-import {join} from 'node:path'
+import {join, dirname} from 'node:path'
 
 const SECTION_SHORT = '=== SHORT (Mastodon, Bluesky, GitHub Release, Discourse, Matrix) ==='
 const SECTION_LINKEDIN = '=== LINKEDIN ==='
@@ -38,17 +38,17 @@ ${blogContent}
 
 ## Instructions
 
-Generate two content variants following the brand voice guidelines above. Use emojis. Write in first person as Konrad, the solo founder. Be technically confident but personally warm. Avoid corporate jargon, buzzwords, and artificial urgency.
+Generate two content variants following the brand voice guidelines above. Use emojis. Write in first person as the solo founder. Be technically confident but personally warm. Avoid corporate jargon, buzzwords, and artificial urgency.
 
 Output them in EXACTLY this format with these exact section markers:
 
 ${SECTION_SHORT}
 
-[Write a tweet-style announcement, max 280 characters. Use emojis. Include the version number, 1-2 key highlights, and the blog post URL: ${blogUrl}. Write as Konrad — casual, direct, enthusiastic but not hyperbolic.]
+[Write a tweet-style announcement, max 280 characters. Use emojis. Include the version number, 1-2 key highlights, and the blog post URL: ${blogUrl}. Write as the founder — casual, direct, enthusiastic but not hyperbolic.]
 
 ${SECTION_LINKEDIN}
 
-[Write a 2-3 paragraph LinkedIn post. Use emojis. Professional but approachable, written as Konrad (first person singular). Mention key features and improvements. Include the blog post URL. Use the "Bootstrapped Builder's Journal" supporting angle — share the update as a solo founder building sustainable open-source software.]`
+[Write a 2-3 paragraph LinkedIn post. Use emojis. Professional but approachable, written as the solo founder (first person singular). Mention key features and improvements. Include the blog post URL. Use the "Bootstrapped Builder's Journal" supporting angle — share the update as a solo founder building sustainable open-source software.]`
 
 	console.log('Generating content variants with Claude...')
 	const claudeResult = spawnSync('claude', ['-p', prompt], {
