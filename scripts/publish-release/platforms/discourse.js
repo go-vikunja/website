@@ -20,7 +20,7 @@ export async function postToDiscourse(text, version) {
 
 	const categoriesData = await categoriesResponse.json()
 	const releaseCategory = categoriesData.category_list.categories.find(
-		c => c.name.toLowerCase() === 'release',
+		c => c.name.toLowerCase() === 'releases',
 	)
 
 	if (!releaseCategory) {
