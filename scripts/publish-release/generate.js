@@ -31,11 +31,11 @@ Generate two content variants. Output them in EXACTLY this format with these exa
 
 ${SECTION_SHORT}
 
-[Write a tweet-style announcement, max 280 characters. Include the version number, 1-2 key highlights, and the blog post URL: ${blogUrl}]
+[Write a tweet-style announcement, max 280 characters. Use emojis. Include the version number, 1-2 key highlights, and the blog post URL: ${blogUrl}]
 
 ${SECTION_LINKEDIN}
 
-[Write a 2-3 paragraph LinkedIn post in a professional but approachable tone. Mention key features and improvements. Include the blog post URL.]`
+[Write a 2-3 paragraph LinkedIn post in a professional but approachable tone. Use emojis. Mention key features and improvements. Include the blog post URL.]`
 
 	console.log('Generating content variants with Claude...')
 	const claudeResult = spawnSync('claude', ['-p', prompt], {
