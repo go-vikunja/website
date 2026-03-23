@@ -69,4 +69,4 @@ LISTMONK_LIST_ID=
 
 GitHub Releases uses the `gh` CLI's existing authentication — no extra credentials needed. Run `gh auth status` to verify.
 
-LinkedIn has no API integration — the script copies the post text to clipboard and opens the browser.
+LinkedIn has no API integration — the script prints the post text for you to copy and post manually.
