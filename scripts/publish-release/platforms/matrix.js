@@ -18,7 +18,7 @@ export async function postToMatrix(text) {
 		},
 		body: JSON.stringify({
 			msgtype: 'm.text',
-			body: text,
+			body: '@room ' + text,
 			format: 'org.matrix.custom.html',
 			formatted_body: text.replace(/\n/g, '<br>'),
 		}),

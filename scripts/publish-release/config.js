@@ -27,7 +27,7 @@ export const discourseConfig = {
 export const matrixConfig = {
 	homeserver: process.env.MATRIX_HOMESERVER || 'https://matrix.org',
 	accessToken: process.env.MATRIX_ACCESS_TOKEN,
-	roomId: process.env.MATRIX_ROOM_ID,
+	roomId: process.env.MATRIX_ROOM_ID || '#vikunja:matrix.org',
 }
 
 export const listmonkConfig = {
