@@ -25,11 +25,8 @@ export async function generateAndEdit(blogPostPath, version) {
 		|| blogContent.match(/^---[\s\S]*?title:\s*(.+)[\s\S]*?---/m)
 	const blogTitle = titleMatch ? titleMatch[1].trim() : `Vikunja ${version} was released`
 
-	// Strip frontmatter for newsletter
-	const contentWithoutFrontmatter = blogContent.replace(/^---[\s\S]*?---\s*/, '')
-
-	// Build newsletter: blog post content with absolute image URLs from live site
-	const newsletter = await buildNewsletter(contentWithoutFrontmatter, blogUrl)
+	// Build newsletter from the live rendered page
+	const newsletter = await buildNewsletter(blogUrl)
 
 	// Load brand voice guidelines
 	const brandDir = join(dirname(blogPostPath), '..', '..', '..', 'brand')
@@ -96,39 +93,34 @@ ${SECTION_LINKEDIN}
 	return {short, linkedin, newsletter, blogTitle}
 }
 
-async function buildNewsletter(mdxContent, blogUrl) {
-	// Fetch the live page to get transformed image URLs
-	let imageMap = new Map()
-	try {
-		const response = await fetch(blogUrl)
-		if (response.ok) {
-			const html = await response.text()
-			const imgMatches = [...html.matchAll(/<img[^>]+src="([^"]+)"[^>]*alt="([^"]*)"[^>]*/g)]
-			for (const match of imgMatches) {
-				const src = match[1].startsWith('http') ? match[1] : `https://vikunja.io${match[1]}`
-				imageMap.set(match[2], src)
-			}
-		}
-	} catch {
-		console.log('Warning: Could not fetch live page for image URLs. Newsletter images may need manual fixing.')
+async function buildNewsletter(blogUrl) {
+	const response = await fetch(blogUrl)
+	if (!response.ok) {
+		throw new Error(`Failed to fetch live blog post at ${blogUrl}: ${response.status}`)
 	}
 
-	// Rewrite relative image paths to absolute URLs
-	let content = mdxContent
-	// Replace markdown images ![alt](path) with absolute URLs
-	content = content.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
-		if (src.startsWith('http')) return match
-		// Try to find the image URL from the live page by alt text
-		const liveUrl = imageMap.get(alt)
-		if (liveUrl) return `![${alt}](${liveUrl})`
-		// Fall back to absolute URL
-		return `![${alt}](https://vikunja.io${src.startsWith('/') ? '' : '/'}${src})`
-	})
+	const html = await response.text()
 
-	// Rewrite relative links to absolute
-	content = content.replace(/\[([^\]]*)\]\(\/([^)]+)\)/g, '[$1](https://vikunja.io/$2)')
+	// Extract content from the prose wrapper
+	const proseMatch = html.match(/<div\s+class="prose[^"]*">([\s\S]*?)<\/div>\s*<\/article>/i)
+		|| html.match(/<div\s+class="prose[^"]*">([\s\S]*?)<\/div>\s*<\/main>/i)
+		|| html.match(/<div\s+class="prose[^"]*">([\s\S]*?)<\/div>\s*<\/div>\s*<\/div>/i)
+	if (!proseMatch) {
+		throw new Error('Could not find prose content wrapper on the live page')
+	}
 
-	return content
+	let content = proseMatch[1].trim()
+
+	// Remove the h1 — Listmonk adds it from the campaign subject
+	content = content.replace(/<h1[^>]*>[\s\S]*?<\/h1>\s*/i, '')
+
+	// Rewrite relative URLs to absolute
+	content = content.replace(/(href|src)="\/([^"]+)"/g, '$1="https://vikunja.io/$2"')
+
+	// Prepend online version link
+	const onlineLink = `<p><em>You can find an online version of this post <a href="${blogUrl}">here</a>.</em></p>\n\n`
+
+	return onlineLink + content
 }
 
 function parseSections(content) {
