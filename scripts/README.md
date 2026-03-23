@@ -61,9 +61,11 @@ MATRIX_ROOM_ID=
 
 # Listmonk
 # Create an API user and token at: Admin -> Users
-LISTMONK_URL=
+# Required permissions: campaigns:manage
+LISTMONK_URL=https://your-listmonk-instance.example.com
 LISTMONK_API_USER=
 LISTMONK_API_TOKEN=
+# List ID to send the campaign to (find at Lists -> click list -> ID in URL)
 LISTMONK_LIST_ID=
 ```
 
