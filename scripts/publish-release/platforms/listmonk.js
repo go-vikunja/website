@@ -1,6 +1,6 @@
 import {listmonkConfig} from '../config.js'
 
-export async function postToListmonk(htmlContent, version) {
+export async function postToListmonk(htmlContent, version, title) {
 	if (!listmonkConfig.url || !listmonkConfig.apiUser || !listmonkConfig.apiToken) {
 		console.log('Skipping Listmonk: LISTMONK_URL, LISTMONK_API_USER, or LISTMONK_API_TOKEN not set')
 		return null
@@ -18,8 +18,8 @@ export async function postToListmonk(htmlContent, version) {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			name: `Vikunja ${version} Release`,
-			subject: `Vikunja ${version} was released`,
+			name: title,
+			subject: title,
 			lists: [listmonkConfig.listId],
 			type: 'regular',
 			content_type: 'html',

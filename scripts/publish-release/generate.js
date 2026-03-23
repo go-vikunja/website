@@ -15,6 +15,12 @@ export async function generateAndEdit(blogPostPath, version) {
 	const blogContent = readFileSync(blogPostPath, 'utf-8')
 	const blogUrl = `https://vikunja.io/changelog/vikunja-v${version}-was-released`
 
+	// Extract title from frontmatter
+	const titleMatch = blogContent.match(/^---[\s\S]*?title:\s*'([^']+)'[\s\S]*?---/m)
+		|| blogContent.match(/^---[\s\S]*?title:\s*"([^"]+)"[\s\S]*?---/m)
+		|| blogContent.match(/^---[\s\S]*?title:\s*(.+)[\s\S]*?---/m)
+	const blogTitle = titleMatch ? titleMatch[1].trim() : `Vikunja ${version} was released`
+
 	// Strip frontmatter for newsletter
 	const contentWithoutFrontmatter = blogContent.replace(/^---[\s\S]*?---\s*/, '')
 
@@ -83,7 +89,7 @@ ${SECTION_LINKEDIN}
 	unlinkSync(tmpFile)
 
 	const {short, linkedin} = parseSections(editedContent)
-	return {short, linkedin, newsletter}
+	return {short, linkedin, newsletter, blogTitle}
 }
 
 async function buildNewsletter(mdxContent, blogUrl) {

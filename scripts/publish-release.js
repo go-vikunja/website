@@ -51,7 +51,7 @@ async function main() {
 	console.log(`Found blog post: ${blogPostPath}`)
 
 	// 2. Generate content variants
-	const {short, linkedin, newsletter} = await generateAndEdit(blogPostPath, version)
+	const {short, linkedin, newsletter, blogTitle} = await generateAndEdit(blogPostPath, version)
 
 	// 3. Post to each platform
 	const results = []
@@ -90,7 +90,7 @@ async function main() {
 		{
 			name: 'Listmonk',
 			content: newsletter.slice(0, 200) + '...',
-			fn: () => postToListmonk(newsletter, version),
+			fn: () => postToListmonk(newsletter, version, blogTitle),
 		},
 	]
 
