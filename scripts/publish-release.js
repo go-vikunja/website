@@ -125,9 +125,19 @@ async function main() {
 	}
 
 	// 4. Summary
-	console.log('\n=== Summary ===')
+	console.log('\n🚀 Summary')
 	for (const {name, url} of results) {
-		console.log(`  ${name}: ${url}`)
+		let icon
+		if (url === 'skipped' || url === 'skipped (not configured)') {
+			icon = '⏭️'
+		} else if (url === 'dry-run') {
+			icon = '🧪'
+		} else if (url.startsWith('FAILED')) {
+			icon = '❌'
+		} else {
+			icon = '✅'
+		}
+		console.log(`  ${icon} ${name}: ${url}`)
 	}
 }
 
