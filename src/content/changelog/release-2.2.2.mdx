@@ -1,0 +1,83 @@
+---
+title: 'Vikunja 2.2.1 and 2.2.2: Nine security fixes, and quality of life improvements'
+date: 2026-03-23T12:00:00.000Z
+slug: /vikunja-v2.2.2-was-released
+description: >-
+  Vikunja 2.2.1 and 2.2.2 fix nine security vulnerabilities including a critical chain allowing
+  unauthenticated instance-wide data access, adds centralized SSRF protection,
+  and includes several bug fixes and improvements.
+---
+
+Yes, another security release. Three days after 2.2.0, here's 2.2.1 and 2.2.2 with nine security fixes and a number of bug fixes and improvements across 73 commits combined. 2.2.1 shipped the bulk of the fixes, but the fix for the link share hash disclosure (CVE-2026-33680) was incomplete, so 2.2.2 follows right behind it with the full fix. I promise the next one will have more fun stuff in it.
+
+In the meantime, please update as soon as you can!
+
+## Security
+
+This release fixes nine security vulnerabilities. Two of them can be chained together for critical impact, so updating quickly is important.
+
+In addition to the individual fixes, this release introduces a centralized SSRF protection layer with a shared HTTP client and new `outgoingrequests` config keys. This replaces the per-feature SSRF checks and covers all outgoing HTTP requests Vikunja makes, including webhooks, migrations, avatar downloads, and background image fetches. Check out [the docs](/docs/config-options#0--outgoingrequests) for more info.
+
+### Link share hash disclosure (CVE-2026-33680) and task attachment IDOR (CVE-2026-33678)
+
+This is the most severe issue in this release. Someone with just a read-only link share URL could escalate to admin access on that project and then download or delete any file attachment across the entire instance.
+
+It's two separate bugs that chain together: link share endpoints exposed admin-level share hashes to anyone with read access (CVE-2026-33680), and the attachment endpoint didn't verify that an attachment actually belonged to the task being accessed (CVE-2026-33678).
+
+For more details, see the advisories for [CVE-2026-33680](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-8hp8-9fhr-pfm9), [CVE-2026-33678](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-jfmm-mjcp-8wq2), and the [combined chain advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-2pv8-4c52-mf8j). Thanks to [@restriction](https://github.com/restriction) for reporting these!
+
+### Disabled/locked user accounts could still authenticate (CVE-2026-33668)
+
+If an admin disabled or locked a user account, that user could still access Vikunja through API tokens, CalDAV, or OpenID Connect. Only the regular login page actually enforced the block. All authentication paths now consistently reject disabled and locked accounts.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-94xm-jj8x-3cr4).
+
+### SSRF in OpenID Connect avatar download and migration file attachments (CVE-2026-33679, CVE-2026-33675)
+
+An attacker could make the Vikunja server send HTTP requests to internal services on your network. This was possible through a crafted OIDC profile picture URL (CVE-2026-33679) or through manipulated file attachment URLs during Todoist/Trello migrations (CVE-2026-33675). While exploiting the migration path would require a compromised third-party API, the OIDC vector is more direct. Both are now covered by a new centralized SSRF protection layer that filters all outgoing HTTP requests Vikunja makes.
+
+For more details, see the advisories for [CVE-2026-33679](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-g9xj-752q-xh63) and [CVE-2026-33675](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-g66v-54v9-52pr). Thanks to [@restriction](https://github.com/restriction) for reporting these!
+
+### Cross-project information disclosure via task relations (CVE-2026-33676)
+
+If a task had relations to tasks in other projects, anyone who could see that task would also get the full details of the related tasks -- even if they had no access to those projects. Related tasks are now filtered by project access.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-8cmm-j6c4-rr8v). Thanks to [@restriction](https://github.com/restriction) for reporting this!
+
+### Webhook BasicAuth credentials exposed to read-only collaborators (CVE-2026-33677)
+
+Anyone with read access to a project could see the BasicAuth username and password configured on that project's webhooks. These credentials are now stripped from API responses.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-7c2g-p23p-4jg3). Thanks to [@restriction](https://github.com/restriction) for reporting this!
+
+### Link share delete IDOR (CVE-2026-33700)
+
+Anyone with admin access to any project could delete link shares belonging to other projects. The share's project ownership is now verified before deletion.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-f95f-77jx-fcjc).
+
+### TOTP reuse during validity window (CVE-2026-33473)
+
+This fix was supposed to ship in 2.2.0 but the PR wasn't merged in time. A valid TOTP code could be reused within its 30-second validity window to log in multiple times. Used codes are now rejected on reuse.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-p747-qc5p-773r). Thanks to [@alp1n3-dev](https://github.com/alp1n3-dev) for reporting this!
+
+## Fixes and improvements
+
+- OpenID Connect now correctly merges `VikunjaGroups` and `ExtraSettingsLinks` from the userinfo endpoint. Thanks to [@mdrkrg](https://github.com/mdrkrg) for contributing this in [#2441](https://github.com/go-vikunja/vikunja/pull/2441)!
+- Fixed a bug where a child project's archived state was not checked, only the parent's
+- Quick Add Magic now skips parsing when the task text is wrapped in quotes, so you can type `"Buy milk tomorrow"` without it picking up "tomorrow" as a due date
+
+## How to Upgrade
+
+To get the upgrade, simply replace the Vikunja binary with the new release from the [downloads page](https://dl.vikunja.io/vikunja/v2.2.2/) or pull the `:latest` docker image.
+
+You can also check out [the update docs](/docs/installing#updating) for more information about the process.
+
+## Closing
+
+As usual, you can find the full changelogs for [2.2.1](https://github.com/go-vikunja/vikunja/blob/main/CHANGELOG.md#221---2026-03-23) and [2.2.2](https://github.com/go-vikunja/vikunja/blob/main/CHANGELOG.md#222---2026-03-23) in the GitHub repo.
+
+If you have any questions about this release, please reach out either [in the community forum](https://community.vikunja.io), [Bluesky](https://bsky.app/profile/vikunja.io), or [Mastodon](https://social.linux.pizza/@vikunja).
+
+Thank you for using Vikunja, and I look forward to bringing you more enhancements in future updates!

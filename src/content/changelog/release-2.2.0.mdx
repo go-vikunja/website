@@ -57,7 +57,7 @@ For more details, see the [security advisory](https://github.com/go-vikunja/viku
 
 ### TOTP reuse during validity window (CVE-2026-33473)
 
-A valid TOTP code could be reused within its 30-second window to authenticate multiple sessions.
+A valid TOTP code could be reused within its 30-second window to authenticate multiple sessions. Note: the fix for this issue was not merged in time for 2.2.0 and actually shipped in [2.2.1](/vikunja-v2.2.1-was-released).
 
 For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-p747-qc5p-773r). Thanks to [@alp1n3-dev](https://github.com/alp1n3-dev) for reporting this!
 
