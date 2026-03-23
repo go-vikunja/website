@@ -13,7 +13,11 @@ const SECTION_LINKEDIN = '=== LINKEDIN ==='
  */
 export async function generateAndEdit(blogPostPath, version) {
 	const blogContent = readFileSync(blogPostPath, 'utf-8')
-	const blogUrl = `https://vikunja.io/changelog/vikunja-v${version}-was-released`
+
+	// Extract slug from frontmatter
+	const slugMatch = blogContent.match(/^---[\s\S]*?slug:\s*(\S+)[\s\S]*?---/m)
+	const slug = slugMatch ? slugMatch[1].replace(/^\//, '') : `vikunja-v${version}-was-released`
+	const blogUrl = `https://vikunja.io/changelog/${slug}`
 
 	// Extract title from frontmatter
 	const titleMatch = blogContent.match(/^---[\s\S]*?title:\s*'([^']+)'[\s\S]*?---/m)
