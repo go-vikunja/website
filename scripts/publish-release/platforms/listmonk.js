@@ -1,8 +1,8 @@
 import {listmonkConfig} from '../config.js'
 
 export async function postToListmonk(htmlContent, version) {
-	if (!listmonkConfig.url || !listmonkConfig.apiUser || !listmonkConfig.apiPassword) {
-		console.log('Skipping Listmonk: LISTMONK_URL, LISTMONK_API_USER, or LISTMONK_API_PASSWORD not set')
+	if (!listmonkConfig.url || !listmonkConfig.apiUser || !listmonkConfig.apiToken) {
+		console.log('Skipping Listmonk: LISTMONK_URL, LISTMONK_API_USER, or LISTMONK_API_TOKEN not set')
 		return null
 	}
 
@@ -11,12 +11,10 @@ export async function postToListmonk(htmlContent, version) {
 		return null
 	}
 
-	const auth = Buffer.from(`${listmonkConfig.apiUser}:${listmonkConfig.apiPassword}`).toString('base64')
-
 	const response = await fetch(`${listmonkConfig.url}/api/campaigns`, {
 		method: 'POST',
 		headers: {
-			'Authorization': `Basic ${auth}`,
+			'Authorization': `token ${listmonkConfig.apiUser}:${listmonkConfig.apiToken}`,
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({

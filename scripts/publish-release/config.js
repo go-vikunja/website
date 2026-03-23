@@ -33,7 +33,7 @@ export const matrixConfig = {
 export const listmonkConfig = {
 	url: process.env.LISTMONK_URL,
 	apiUser: process.env.LISTMONK_API_USER,
-	apiPassword: process.env.LISTMONK_API_PASSWORD,
+	apiToken: process.env.LISTMONK_API_TOKEN,
 	listId: process.env.LISTMONK_LIST_ID ? Number(process.env.LISTMONK_LIST_ID) : undefined,
 }
 

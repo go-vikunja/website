@@ -60,10 +60,10 @@ MATRIX_HOMESERVER=https://matrix.org
 MATRIX_ROOM_ID=
 
 # Listmonk
-# Uses basic auth — the same credentials you log in with
+# Create an API user and token at: Admin -> Users
 LISTMONK_URL=
 LISTMONK_API_USER=
-LISTMONK_API_PASSWORD=
+LISTMONK_API_TOKEN=
 LISTMONK_LIST_ID=
 ```
 
