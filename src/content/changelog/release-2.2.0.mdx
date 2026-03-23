@@ -31,7 +31,7 @@ A disabled user could regain access by completing a password reset, which uncond
 
 For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-vq4q-79hh-q767). Thanks to [@VashuVats](https://github.com/VashuVats) for reporting this!
 
-### DoS via image preview generation
+### DoS via image preview generation (CVE-2026-33474)
 
 Uploading a highly compressed but extremely large image could exhaust CPU and memory during preview generation. The fix rejects images exceeding 50 million pixels before decoding.
 
@@ -55,7 +55,7 @@ CalDAV basic auth did not check for TOTP, allowing 2FA to be bypassed. The fix r
 
 For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-47cr-f226-r4pq). Thanks to [@alp1n3-dev](https://github.com/alp1n3-dev) for reporting this!
 
-### TOTP reuse during validity window (Medium)
+### TOTP reuse during validity window (CVE-2026-33473)
 
 A valid TOTP code could be reused within its 30-second window to authenticate multiple sessions.
 
