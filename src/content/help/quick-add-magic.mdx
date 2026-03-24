@@ -107,3 +107,13 @@ Creates a task assigned to david, with two labels, due in 5 days.
 If you're used to [Todoist's quick-add shortcuts](https://todoist.com/help/articles/use-task-quick-add-in-todoist-va4Lhpzz), you can switch Vikunja to use those keywords instead.
 
 Go to [Settings](/help/settings), scroll to "Quick Add Magic Mode", and select "Todoist".
+
+## Skipping parsing
+
+If your task title contains words that Quick Add Magic would normally interpret (like "tomorrow" or "monday"), wrap the entire title in quotes to disable parsing:
+
+```
+"Buy milk tomorrow"
+```
+
+This creates a task with the literal title "Buy milk tomorrow" without setting a due date.
