@@ -1,0 +1,178 @@
+---
+title: OAuth 2.0 Authorization Server
+slug: oauth-server
+description: >-
+  Use Vikunja as an OAuth 2.0 Authorization Server to authenticate users from
+  native apps and third-party integrations via the Authorization Code flow with
+  PKCE.
+---
+
+import Callout from '../../../components/Callout.astro'
+
+<Callout type="info">
+This feature is available from Vikunja **2.3.0** onwards (or unstable builds).
+</Callout>
+
+Vikunja can act as an OAuth 2.0 Authorization Server, implementing the [Authorization Code flow](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1) with mandatory [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) (Proof Key for Code Exchange, S256 only).
+This allows native apps and third-party integrations to authenticate users and obtain access tokens without handling user credentials directly.
+
+**Key characteristics:**
+
+- PKCE is mandatory (S256 method only).
+- No client registration is required. The `client_id` can be any string chosen by the integrator; it must be consistent between the authorization and token exchange steps.
+- Redirect URIs must use a custom scheme starting with `vikunja-` (for example, `vikunja-flutter://callback`).
+- All request and response bodies use JSON. Form-encoded requests are not supported.
+- There is no consent screen. Authorization is granted automatically once the user is authenticated.
+
+## Relevant specifications
+
+- [RFC 6749 -- The OAuth 2.0 Authorization Framework](https://datatracker.ietf.org/doc/html/rfc6749)
+- [RFC 7636 -- Proof Key for Code Exchange (PKCE)](https://datatracker.ietf.org/doc/html/rfc7636)
+
+## Endpoints
+
+| Endpoint | Method | Authentication | Purpose |
+|---|---|---|---|
+| `/oauth/authorize` | Browser navigation | None (frontend route) | User-facing authorization page |
+| `/api/v1/oauth/authorize` | POST | JWT Bearer | Creates an authorization code |
+| `/api/v1/oauth/token` | POST | None | Exchanges a code for tokens or refreshes tokens |
+
+## Authorization flow
+
+The complete flow consists of four steps:
+
+### 1. Redirect the user to the authorization page
+
+Open a browser or webview to the Vikunja instance's authorization endpoint with the following query parameters:
+
+```
+https://<vikunja-host>/oauth/authorize
+  ?response_type=code
+  &client_id=<your-client-id>
+  &redirect_uri=vikunja-flutter://callback
+  &code_challenge=<challenge>
+  &code_challenge_method=S256
+  &state=<random-string>
+```
+
+| Parameter | Required | Description |
+|---|---|---|
+| `response_type` | Yes | Must be `code`. |
+| `client_id` | Yes | Any string that identifies your application. Must match at token exchange. |
+| `redirect_uri` | Yes | Where Vikunja redirects after authorization. Must use a `vikunja-` scheme. |
+| `code_challenge` | Yes | Base64url-encoded SHA-256 hash of the `code_verifier` (see [RFC 7636 Section 4.2](https://datatracker.ietf.org/doc/html/rfc7636#section-4.2)). |
+| `code_challenge_method` | Yes | Must be `S256`. |
+| `state` | Recommended | An opaque value to prevent CSRF. Your app should verify it when receiving the callback. |
+
+Vikunja's frontend handles user login if the user is not already authenticated.
+
+### 2. Receive the authorization code
+
+After the user authenticates, Vikunja redirects to your `redirect_uri` with the authorization code and state:
+
+```
+vikunja-flutter://callback?code=<authorization-code>&state=<state>
+```
+
+Your application should verify that the returned `state` matches the one you sent.
+
+The authorization code is single-use and expires after **10 minutes**.
+
+### 3. Exchange the code for tokens
+
+Make a POST request to the token endpoint with a JSON body:
+
+```bash
+curl -X POST https://<vikunja-host>/api/v1/oauth/token \
+  -H "Content-Type: application/json" \
+  -d '{
+    "grant_type": "authorization_code",
+    "code": "<authorization-code>",
+    "client_id": "<your-client-id>",
+    "redirect_uri": "vikunja-flutter://callback",
+    "code_verifier": "<original-code-verifier>"
+  }'
+```
+
+| Field | Required | Description |
+|---|---|---|
+| `grant_type` | Yes | Must be `authorization_code`. |
+| `code` | Yes | The authorization code received in step 2. |
+| `client_id` | Yes | Must match the `client_id` used in step 1. |
+| `redirect_uri` | Yes | Must match the `redirect_uri` used in step 1. |
+| `code_verifier` | Yes | The original random string used to generate the `code_challenge`. |
+
+**Response:**
+
+```json
+{
+  "access_token": "<jwt-access-token>",
+  "token_type": "bearer",
+  "expires_in": 600,
+  "refresh_token": "<refresh-token>"
+}
+```
+
+The `expires_in` value is configured server-side via the `service.jwtttlshort` setting (default: 600 seconds).
+
+### 4. Refresh the access token
+
+When the access token expires, use the refresh token to obtain a new one:
+
+```bash
+curl -X POST https://<vikunja-host>/api/v1/oauth/token \
+  -H "Content-Type: application/json" \
+  -d '{
+    "grant_type": "refresh_token",
+    "refresh_token": "<refresh-token>"
+  }'
+```
+
+**Response:**
+
+The response has the same format as the token exchange response, including a new `refresh_token`. Refresh tokens are rotated on each use -- the previous refresh token becomes invalid after a successful refresh.
+
+## Generating the PKCE code challenge
+
+If your OAuth library does not handle PKCE automatically, here is how to generate the values:
+
+1. Create a `code_verifier`: a cryptographically random string between 43 and 128 characters, using characters `[A-Z] / [a-z] / [0-9] / - / . / _ / ~`.
+2. Compute the `code_challenge`: take the SHA-256 hash of the `code_verifier`, then base64url-encode it (without padding).
+
+**Example (Python):**
+
+```python
+import hashlib
+import base64
+import secrets
+
+code_verifier = secrets.token_urlsafe(64)[:128]
+code_challenge = base64.urlsafe_b64encode(
+    hashlib.sha256(code_verifier.encode()).digest()
+).rstrip(b"=").decode()
+```
+
+**Example (JavaScript / Node.js):**
+
+```javascript
+import { randomBytes, createHash } from 'crypto'
+
+const codeVerifier = randomBytes(64).toString('base64url').slice(0, 128)
+const codeChallenge = createHash('sha256')
+  .update(codeVerifier)
+  .digest('base64url')
+```
+
+## Error codes
+
+All errors are returned as HTTP 400 responses with a JSON body. The `code` field identifies the specific error:
+
+| Code | Meaning |
+|---|---|
+| 17001 | `client_id` at token exchange does not match the one used during authorization. |
+| 17002 | `redirect_uri` was rejected or does not match the one used during authorization. |
+| 17003 | Missing `code_challenge` or wrong `code_challenge_method` (must be S256). |
+| 17004 | Authorization code is invalid or has already been used. |
+| 17005 | Authorization code has expired (codes are valid for 10 minutes). |
+| 17006 | `code_verifier` does not match the `code_challenge`. |
+| 17007 | Unsupported `grant_type` (must be `authorization_code` or `refresh_token`). |
