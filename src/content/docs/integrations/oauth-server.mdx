@@ -20,7 +20,7 @@ This allows native apps and third-party integrations to authenticate users and o
 
 - PKCE is mandatory (S256 method only).
 - No client registration is required. The `client_id` can be any string chosen by the integrator; it must be consistent between the authorization and token exchange steps.
-- Redirect URIs must use a custom scheme starting with `vikunja-` (for example, `vikunja-flutter://callback`).
+- Redirect URIs must use a custom scheme starting with `vikunja-` (for example, `vikunja-flutter://callback`). Standard `http://` and `https://` URLs are not supported.
 - All request and response bodies use JSON. Form-encoded requests are not supported.
 - There is no consent screen. Authorization is granted automatically once the user is authenticated.
 
@@ -139,40 +139,8 @@ If your OAuth library does not handle PKCE automatically, here is how to generat
 1. Create a `code_verifier`: a cryptographically random string between 43 and 128 characters, using characters `[A-Z] / [a-z] / [0-9] / - / . / _ / ~`.
 2. Compute the `code_challenge`: take the SHA-256 hash of the `code_verifier`, then base64url-encode it (without padding).
 
-**Example (Python):**
-
-```python
-import hashlib
-import base64
-import secrets
-
-code_verifier = secrets.token_urlsafe(64)[:128]
-code_challenge = base64.urlsafe_b64encode(
-    hashlib.sha256(code_verifier.encode()).digest()
-).rstrip(b"=").decode()
-```
-
-**Example (JavaScript / Node.js):**
-
-```javascript
-import { randomBytes, createHash } from 'crypto'
-
-const codeVerifier = randomBytes(64).toString('base64url').slice(0, 128)
-const codeChallenge = createHash('sha256')
-  .update(codeVerifier)
-  .digest('base64url')
-```
+See [RFC 7636 Section 4.1](https://datatracker.ietf.org/doc/html/rfc7636#section-4.1) and [Section 4.2](https://datatracker.ietf.org/doc/html/rfc7636#section-4.2) for the full specification.
 
 ## Error codes
 
-All errors are returned as HTTP 400 responses with a JSON body. The `code` field identifies the specific error:
-
-| Code | Meaning |
-|---|---|
-| 17001 | `client_id` at token exchange does not match the one used during authorization. |
-| 17002 | `redirect_uri` was rejected or does not match the one used during authorization. |
-| 17003 | Missing `code_challenge` or wrong `code_challenge_method` (must be S256). |
-| 17004 | Authorization code is invalid or has already been used. |
-| 17005 | Authorization code has expired (codes are valid for 10 minutes). |
-| 17006 | `code_verifier` does not match the `code_challenge`. |
-| 17007 | Unsupported `grant_type` (must be `authorization_code` or `refresh_token`). |
+All errors are returned as HTTP 400 responses with a JSON body containing a `code` field. See the [OAuth section of the error codes reference](/integrations/errors/#oauth) for the full list.
