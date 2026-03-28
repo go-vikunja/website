@@ -170,3 +170,15 @@ This document describes the different errors Vikunja can return.
 | ErrorCode | HTTP Status Code | Description                                |
 |-----------|------------------|--------------------------------------------|
 | 14001     | 400              | The provided file is not a valid zip file. |
+
+## OAuth
+
+| ErrorCode | HTTP Status Code | Description                                                                       |
+|-----------|------------------|-----------------------------------------------------------------------------------|
+| 17001     | 400              | The client_id at token exchange does not match the one used during authorization. |
+| 17002     | 400              | The redirect_uri was rejected or does not match the one used during authorization.|
+| 17003     | 400              | Missing code_challenge or wrong code_challenge_method (must be S256).             |
+| 17004     | 400              | The authorization code is invalid or has already been used.                       |
+| 17005     | 400              | The authorization code has expired (codes are valid for 10 minutes).              |
+| 17006     | 400              | The code_verifier does not match the code_challenge.                              |
+| 17007     | 400              | Unsupported grant_type (must be authorization_code or refresh_token).             |
