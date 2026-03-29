@@ -1,0 +1,247 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Button from '../components/Button.astro'
+---
+<Layout title="Convince Your Boss" description="Everything you need to bring Vikunja to your team at work. Cost comparison, security posture, deployment options, and a one-pager you can forward.">
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0">
+        <div class="pt-32 pb-8 px-4 text-center">
+            <h1 class="text-4xl font-display">
+                Bring Vikunja to work.
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-balance">
+                You already use Vikunja at home. Here's everything you need to make the case for your team.
+            </p>
+        </div>
+
+        <section class="max-w-4xl mx-auto mt-16">
+            <h2 class="font-display text-3xl mb-6">The pitch in 30 seconds</h2>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-sm p-8 text-lg text-gray-700 dark:text-gray-300">
+                <p>
+                    Vikunja is open-source task management that runs on your infrastructure.
+                    It replaces Todoist, Trello, or Asana for teams that need full control over their data.
+                </p>
+                <p class="mt-4">
+                    Your team gets lists, Kanban boards, Gantt charts, and table views &mdash;
+                    with shared projects, assignments, and real-time collaboration.
+                    Enterprise features like a dedicated instance, admin tools,
+                    and a GDPR data processing agreement are available at any team size &mdash; no minimum seat count.
+                </p>
+                <p class="mt-4">
+                    It's made and hosted in the EU, openly licensed under the AGPLv3,
+                    and completely bootstrapped &mdash; funded by users, not VCs.
+                </p>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">Why switch from what we already use?</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <h3 class="font-display text-xl mb-3">Your data stays yours</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        Self-host on your own infrastructure or use our EU-hosted cloud.
+                        No data leaves your control. No US cloud provider in the chain.
+                        Full GDPR compliance with a data processing agreement available.
+                    </p>
+                </div>
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <h3 class="font-display text-xl mb-3">No vendor lock-in</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        Open-source under the AGPLv3 means you can read every line of code,
+                        export your data anytime, and switch hosting providers without losing anything.
+                        You're never locked into a contract you can't leave.
+                    </p>
+                </div>
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <h3 class="font-display text-xl mb-3">Enterprise features without the enterprise price tag</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        Dedicated instances, admin user management, and GDPR contracts
+                        don't require 25+ users or a six-figure budget.
+                        Your compliance requirements don't care how many employees you have &mdash;
+                        neither does Vikunja's pricing.
+                    </p>
+                </div>
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <h3 class="font-display text-xl mb-3">One tool, four views</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        List, Kanban, Gantt, and Table &mdash; your team doesn't have to pick one workflow.
+                        Developers can use Kanban while project managers use Gantt,
+                        all looking at the same data.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">Cost comparison</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">
+                For a team of 15 people, billed yearly:
+            </p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th class="py-3 px-4 font-display text-lg"></th>
+                            <th class="py-3 px-4 font-display text-lg">Vikunja Self-Hosted</th>
+                            <th class="py-3 px-4 font-display text-lg">Vikunja Cloud (Org)</th>
+                            <th class="py-3 px-4 font-display text-lg">Todoist Business</th>
+                            <th class="py-3 px-4 font-display text-lg">Asana Premium</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700 dark:text-gray-300">
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Annual cost</td>
+                            <td class="py-3 px-4 font-display text-xl">0 &euro;</td>
+                            <td class="py-3 px-4 font-display text-xl">750 &euro;</td>
+                            <td class="py-3 px-4 text-gray-500">~1,440 &euro;</td>
+                            <td class="py-3 px-4 text-gray-500">~1,978 &euro;</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Self-hostable</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Open source</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">EU data residency</td>
+                            <td class="py-3 px-4">Your choice</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">Vendor lock-in</td>
+                            <td class="py-3 px-4">None</td>
+                            <td class="py-3 px-4">None</td>
+                            <td class="py-3 px-4">High</td>
+                            <td class="py-3 px-4">High</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                Competitor prices based on published pricing pages as of April 2026. Your actual cost may vary.
+            </p>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">Security and compliance</h2>
+            <div class="grid md:grid-cols-2 gap-6 text-gray-700 dark:text-gray-300">
+                <div>
+                    <h3 class="font-display text-lg mb-2">Open source</h3>
+                    <p>
+                        Every line of Vikunja's code is publicly auditable under the AGPLv3.
+                        No hidden telemetry, no proprietary black boxes.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-lg mb-2">Made and hosted in the EU</h3>
+                    <p>
+                        Vikunja is built in Germany and hosted on EU infrastructure.
+                        No data transfers to the US. No CLOUD Act exposure.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-lg mb-2">GDPR-ready</h3>
+                    <p>
+                        Data processing agreements are available on the Enterprise plan.
+                        Self-hosted instances give you complete control over data residency.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-lg mb-2">Responsible disclosure</h3>
+                    <p>
+                        Security vulnerabilities are handled through a
+                        <a href="/security" class="underline">responsible disclosure process</a>
+                        with published advisories and CVEs.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">Deployment options</h2>
+            <p class="text-gray-700 dark:text-gray-300 mb-6">
+                Pick what fits your team's infrastructure:
+            </p>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <h3 class="font-display text-xl mb-2">Docker</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        Single container, one command. The fastest way to get running.
+                        Works on any server with Docker installed.
+                    </p>
+                </div>
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <h3 class="font-display text-xl mb-2">Kubernetes</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        Helm chart available for production Kubernetes clusters.
+                        Scale horizontally as your team grows.
+                    </p>
+                </div>
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <h3 class="font-display text-xl mb-2">Vikunja Cloud</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        Don't want to manage infrastructure? We'll host it for you
+                        on EU servers. Enterprise plans get a dedicated instance.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">Run a team pilot</h2>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-sm p-8">
+                <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                    The best way to evaluate Vikunja is to use it with your team for two weeks. Here's how:
+                </p>
+                <ol class="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300">
+                    <li>
+                        <strong>Pick 5&ndash;10 people</strong> &mdash;
+                        a mix of roles that represent how your team actually works.
+                    </li>
+                    <li>
+                        <strong>Set up a test instance</strong> &mdash;
+                        <a href="/install" class="underline">self-host with Docker</a> in 5 minutes,
+                        or start a <a href="https://vikunja.cloud" class="underline">free 14-day Cloud trial</a>.
+                    </li>
+                    <li>
+                        <strong>Import existing tasks</strong> &mdash;
+                        bring in your data from Todoist, Trello, or Microsoft To-Do.
+                    </li>
+                    <li>
+                        <strong>Use it for real work</strong> &mdash;
+                        run your actual sprint, project, or team tasks through Vikunja for two weeks.
+                    </li>
+                    <li>
+                        <strong>Evaluate</strong> &mdash;
+                        does it cover your workflow? Is your team using it without being reminded?
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20 mb-20 text-center">
+            <h2 class="font-display text-3xl mb-4">Ready to get started?</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                Have questions about Enterprise pricing or need help scoping a pilot?
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Button href="mailto:hello@vikunja.io">
+                    Get in touch
+                </Button>
+                <Button href="/pricing" class="bg-gray-200! text-gray-800! dark:bg-gray-700! dark:text-gray-200!">
+                    See pricing
+                </Button>
+            </div>
+        </section>
+    </main>
+</Layout>
