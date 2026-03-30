@@ -127,10 +127,10 @@ mailer:
 
 Any environment variable in the path (e.g. `$CREDENTIALS_DIRECTORY`, `$HOME`) will be expanded to its value before reading the file.
 
-:::caution[Security note]
+<Callout type="warning">
 All environment variables available to the Vikunja process will be expanded in the file path.
 Make sure that untrusted users cannot set environment variables in the Vikunja process environment, as this could cause Vikunja to read unintended files from disk.
-:::
+</Callout>
 
 ## Default configuration with explanations
 
