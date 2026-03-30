@@ -57,6 +57,7 @@
 		turndown.addRule('headingLinks', {
 			filter(node) {
 				return node.nodeName === 'A' &&
+					!(node as HTMLElement).classList.contains('anchor-link') &&
 					!!(node as HTMLElement).closest('h1, h2, h3, h4, h5, h6')
 			},
 			replacement(content) {
