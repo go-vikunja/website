@@ -46,10 +46,21 @@
 		turndown.addRule('skipAnchorLinks', {
 			filter(node) {
 				return node.nodeName === 'A' &&
-					(node as HTMLElement).classList.contains('autolink-header')
+					(node as HTMLElement).classList.contains('anchor-link')
 			},
 			replacement() {
 				return ''
+			},
+		})
+
+		// Strip links inside headings so they render as plain text
+		turndown.addRule('headingLinks', {
+			filter(node) {
+				return node.nodeName === 'A' &&
+					!!(node as HTMLElement).closest('h1, h2, h3, h4, h5, h6')
+			},
+			replacement(content) {
+				return content
 			},
 		})
 
