@@ -5,16 +5,26 @@ description: >-
   Learn how to develop, build, and deploy plugins for Vikunja.
   This guide covers plugin interfaces, event system integration, API routes, database migrations, and configuration.
 ---
+import Callout from '../../../components/Callout.astro';
 
 This guide covers everything you need to implement and deploy plugins for Vikunja.
 
 Plugins can extend the api in different ways, for example add new routes or integrate with the [events system](/docs/events-and-listeners).
 
-Plugins use [Go's core plugin system](https://pkg.go.dev/plugin) to load and manage plugins.
+Vikunja supports two plugin loaders:
+
+- **Yaegi** (recommended): Interprets Go source files at runtime using [Yaegi](https://github.com/traefik/yaegi). No compilation step needed.
+- **Native** (deprecated): Uses [Go's native plugin system](https://pkg.go.dev/plugin) to load compiled `.so` shared libraries.
+
+<Callout type="info">
+Yaegi plugin support is only available from Vikunja **2.3.0** onwards.
+</Callout>
 
 ## Quick Start
 
 ### 1. Create Your Plugin
+
+Create a directory for your plugin with a `main.go` file:
 
 ```go
 package main
@@ -39,24 +49,32 @@ func (p *MyPlugin) Shutdown() error {
     return nil
 }
 
-// Required: Export function for plugin loading
+// Required: Export factory function for plugin loading
 func NewPlugin() plugins.Plugin {
     return &MyPlugin{}
 }
 ```
 
-### 2. Build and Deploy
+### 2. Deploy
 
-```bash
-# Build plugin
-mage plugins:build path/to/your/plugin
+For yaegi plugins, simply copy your plugin directory into the configured plugins directory — no compilation needed:
 
-# Enable in config
+```
+plugins/
+└── my-plugin/
+    └── main.go
+```
+
+Enable in your Vikunja config and restart:
+
+```yaml
 plugins:
   enabled: true
   dir: "plugins"
+  loader: yaegi
+```
 
-# Restart Vikunja
+```bash
 systemctl restart vikunja
 
 # Or with docker
@@ -84,6 +102,36 @@ type Plugin interface {
 - `Init()` is called once during startup - register event listeners and initialize resources here
 - `Shutdown()` is called during graceful shutdown - clean up resources here
 - Must export a `NewPlugin()` function that returns your plugin instance
+
+### Typed Factory Functions (Yaegi)
+
+<Callout type="info">
+This section applies to yaegi plugins only (available from Vikunja **2.3.0** onwards).
+</Callout>
+
+Yaegi wraps interpreted values per their declared return type, which means sub-interface type assertions don't work the way they do with native Go plugins. Because of this, yaegi plugins must export **separate typed factory functions** for each capability they implement:
+
+```go
+// Required
+func NewPlugin() plugins.Plugin { return &MyPlugin{} }
+
+// Optional — export only the ones your plugin implements
+func NewAuthenticatedRouterPlugin() plugins.AuthenticatedRouterPlugin { return &MyPlugin{} }
+func NewUnauthenticatedRouterPlugin() plugins.UnauthenticatedRouterPlugin { return &MyPlugin{} }
+func NewMigrationPlugin() plugins.MigrationPlugin { return &MyPlugin{} }
+```
+
+Only `NewPlugin()` is required. The other factory functions are optional and discovered by the loader. If a factory function is not exported, the corresponding capability is simply not registered.
+
+A common pattern is to use a singleton so that all factory functions return the same instance:
+
+```go
+var singleton = &MyPlugin{}
+
+func NewPlugin() plugins.Plugin                                          { return singleton }
+func NewAuthenticatedRouterPlugin() plugins.AuthenticatedRouterPlugin    { return singleton }
+func NewUnauthenticatedRouterPlugin() plugins.UnauthenticatedRouterPlugin { return singleton }
+```
 
 ## Optional Capabilities
 
@@ -123,7 +171,7 @@ Migrations work in the same way as [Vikunja core migrations](/docs/database-migr
 
 You can register api routes which are either authenticated or unauthenticated. Both work very similar to each other, but authenticated routes require a valid JWT/API token.
 
-All routes registered from a plugin are prefixed with `/api/v1/plugins/`.
+Authenticated routes are prefixed with `/api/v1/plugins/`, unauthenticated routes with `/plugins/`.
 
 #### Authenticated Routes
 
@@ -244,9 +292,13 @@ The plugin system is **disabled by default**. Enable it in your Vikunja config:
 
 ```yaml
 plugins:
-  enabled: dir
-  dir: "/path/to/plugins" # Directory containing .so files - by default this is the plugins/ directory next to the Vikunja binary
+  enabled: true
+  dir: "/path/to/plugins"  # Directory containing plugins - defaults to plugins/ next to the Vikunja binary
+  loader: yaegi             # "yaegi" (recommended) or "native" (deprecated)
 ```
+
+- **`yaegi`**: scans `plugins.dir` for subdirectories containing `.go` source files. Plugins are interpreted at runtime.
+- **`native`** (deprecated): scans `plugins.dir` for `.so` shared library files. Plugins must be compiled with the exact same Go version and dependencies as the Vikunja binary.
 
 ### Plugin Configuration
 
@@ -288,16 +340,27 @@ func (p *MyPlugin) Init() error {
 
 ## Building and Deployment
 
-### Using Mage
+### Yaegi Plugins (Recommended)
+
+<Callout type="info">
+Yaegi plugin support is only available from Vikunja **2.3.0** onwards.
+</Callout>
+
+No build step is required. Copy your plugin source directory into the configured plugins directory and restart Vikunja:
+
+```bash
+cp -r my-plugin/ /path/to/vikunja/plugins/
+systemctl restart vikunja
+```
+
+### Native Plugins (Deprecated)
 
 ```bash
 # Build single plugin
 mage plugins:build path/to/your/plugin
 ```
 
-This creates a .so file in the plugins/ directory
-
-### Deployment Steps
+This creates a `.so` file in the plugins/ directory.
 
 1. Build your plugin as a shared library (`.so` file)
 2. Copy the `.so` file to your configured plugins directory
@@ -312,12 +375,15 @@ If loading a plugin fails, an error message will be logged.
 
 ```
 my-plugin/
-├── main.go          # Plugin implementation
-├── go.mod           # Go module file
+├── main.go          # Plugin implementation (required)
 ├── handlers.go      # Route handlers (optional)
 ├── listeners.go     # Event listeners (optional)
 └── migrations.go    # Database migrations (optional)
 ```
+
+<Callout type="warning">
+**Yaegi limitation**: The yaegi loader currently evaluates `.go` files individually, so multi-file plugins may hit order-dependency issues if cross-file declarations depend on filename ordering. For now, keeping your plugin in a single `main.go` file is the safest approach.
+</Callout>
 
 ### Database Operations
 
@@ -347,11 +413,29 @@ func (p *MyPlugin) handleRequest(c echo.Context) error {
 }
 ```
 
+## Available Packages
+
+Yaegi plugins have access to the following Vikunja internals:
+
+| Package | Import Path | Description |
+|---|---|---|
+| `db` | `github.com/vikunja/vikunja/pkg/db` | Database sessions and operations |
+| `events` | `github.com/vikunja/vikunja/pkg/events` | Event dispatching and listener registration |
+| `log` | `github.com/vikunja/vikunja/pkg/log` | Logging |
+| `models` | `github.com/vikunja/vikunja/pkg/models` | All model types (tasks, projects, etc.) |
+| `plugins` | `github.com/vikunja/vikunja/pkg/plugins` | Plugin interfaces |
+| `user` | `github.com/vikunja/vikunja/pkg/user` | User-related functions |
+| Echo v5 | `github.com/labstack/echo/v5` | HTTP framework for route handlers |
+| Watermill | `github.com/ThreeDotsLabs/watermill/message` | Message handling for event listeners |
+
+The Go standard library is also available.
+
 ## Complete Example
 
 See [`examples/plugins/example/`](https://code.vikunja.io/vikunja/tree/main/examples/plugins/example) for a full working plugin that demonstrates:
 
 - Basic plugin structure and interfaces
+- Typed factory functions for yaegi compatibility
 - Event listener registration
 - Both authenticated and unauthenticated web routes
 - Proper error handling and logging
