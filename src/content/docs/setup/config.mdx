@@ -108,6 +108,25 @@ will load the content from the file at `/path/to/password` and set it as the con
 
 With an environment variable for the same config variable, you'd need to set the `VIKUNJA_DATABASE_PASSWORD_FILE` environment variable to `/path/to/password`.
 
+### Using environment variables in file paths
+
+The file path supports environment variable expansion. This is useful when integrating with secret management systems like systemd's [`LoadCredential`](https://systemd.io/CREDENTIALS/).
+
+For example:
+
+```yaml
+mailer:
+  password:
+    file: $CREDENTIALS_DIRECTORY/smtp.secret
+```
+
+Any environment variable in the path (e.g. `$CREDENTIALS_DIRECTORY`, `$HOME`) will be expanded to its value before reading the file.
+
+:::caution[Security note]
+All environment variables available to the Vikunja process will be expanded in the file path.
+Make sure that untrusted users cannot set environment variables in the Vikunja process environment, as this could cause Vikunja to read unintended files from disk.
+:::
+
 ## Default configuration with explanations
 
 The following explains all possible config variables and their defaults.
