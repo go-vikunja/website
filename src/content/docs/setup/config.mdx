@@ -7,6 +7,7 @@ description: >-
   setup.
 ---
 import ConfigOptions from '../../../components/partials/ConfigOptions.astro';
+import Callout from '../../../components/Callout.astro';
 
 You can either use a `config.yml` file in the root directory of Vikunja or set almost all config options with environment variables. If you have both, the value set in the config file is used.
 Right now it is not possible to configure openid authentication via environment variables.
@@ -110,7 +111,9 @@ With an environment variable for the same config variable, you'd need to set the
 
 ### Using environment variables in file paths
 
+<Callout type="info">
 This feature is available from Vikunja **2.3.0** onwards (or unstable builds).
+</Callout>
 
 The file path supports environment variable expansion. This is useful when integrating with secret management systems like systemd's [`LoadCredential`](https://systemd.io/CREDENTIALS/).
 
