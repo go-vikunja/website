@@ -7,6 +7,7 @@ import Prose from '../components/Prose.astro'
 import TableOfContentsHeading from '../components/TableOfContentsHeading.astro'
 import SearchButton from '../components/SearchButton.astro'
 import SearchModal from '../components/SearchModal.astro'
+import CopyMarkdownButton from '../components/CopyMarkdownButton.astro'
 
 interface Props {
 	title: string
@@ -129,6 +130,9 @@ const sidebarEntries = await getSidebarNavigation()
             </nav>
         </aside>
         <main class="w-full lg:w-3/5 p-4 pt-6 lg:pt-2 order-3 lg:order-2" id="main-content">
+            <div class="flex justify-end mb-2">
+                <CopyMarkdownButton />
+            </div>
             <Prose>
                 <h1>{title}</h1>
                 <slot/>

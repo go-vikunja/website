@@ -30,10 +30,12 @@
     "rehype-autolink-headings": "^7.1.0",
     "rehype-slug": "^6.0.0",
     "tailwindcss": "^4.1.6",
+    "turndown": "^7.2.2",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@anthropic-ai/sdk": "^0.71.0",
+    "@types/turndown": "^5.0.6",
     "@types/unist": "^3.0.3",
     "esbuild": "^0.27.0",
     "gray-matter": "^4.0.3",
