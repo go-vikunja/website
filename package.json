@@ -16,7 +16,7 @@
     "@astrojs/check": "^0.9.5",
     "@astrojs/cloudflare": "^12.6.13",
     "@astrojs/mdx": "^4.3.13",
-    "@astrojs/node": "^9.5.4",
+    "@astrojs/node": "^10.0.0",
     "@astrojs/rss": "^4.0.13",
     "@astrojs/sitemap": "^3.4.2",
     "@fontsource/open-sans": "^5.2.5",
