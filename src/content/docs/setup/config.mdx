@@ -7,6 +7,7 @@ description: >-
   setup.
 ---
 import ConfigOptions from '../../../components/partials/ConfigOptions.astro';
+import Callout from '../../../components/Callout.astro';
 
 You can either use a `config.yml` file in the root directory of Vikunja or set almost all config options with environment variables. If you have both, the value set in the config file is used.
 Right now it is not possible to configure openid authentication via environment variables.
@@ -107,6 +108,29 @@ database:
 will load the content from the file at `/path/to/password` and set it as the config value of `database.password`.
 
 With an environment variable for the same config variable, you'd need to set the `VIKUNJA_DATABASE_PASSWORD_FILE` environment variable to `/path/to/password`.
+
+### Using environment variables in file paths
+
+<Callout type="info">
+This feature is available from Vikunja **2.3.0** onwards (or unstable builds).
+</Callout>
+
+The file path supports environment variable expansion. This is useful when integrating with secret management systems like systemd's [`LoadCredential`](https://systemd.io/CREDENTIALS/).
+
+For example:
+
+```yaml
+mailer:
+  password:
+    file: $CREDENTIALS_DIRECTORY/smtp.secret
+```
+
+Any environment variable in the path (e.g. `$CREDENTIALS_DIRECTORY`, `$HOME`) will be expanded to its value before reading the file.
+
+<Callout type="warning">
+All environment variables available to the Vikunja process will be expanded in the file path.
+Make sure that untrusted users cannot set environment variables in the Vikunja process environment, as this could cause Vikunja to read unintended files from disk.
+</Callout>
 
 ## Default configuration with explanations
 
