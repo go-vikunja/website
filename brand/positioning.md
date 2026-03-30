@@ -14,6 +14,8 @@ Last updated: 2026-03-10 by /positioning-angles
 
 **Headline direction:** "Your to-do list, your server. And when your team needs it -- enterprise features without the enterprise price tag."
 
+**Sharpest hook:** "Dependence on somebody else's cloud is just technical debt with a login screen." -- Use when speaking to developers and self-hosters who understand tech debt viscerally. Works in blog intros, social posts, talk openers, and anywhere the audience needs a reason to question their current SaaS stack before you pitch the alternative.
+
 **Best for:** Website hero, SEO content, comparison posts, product directories, self-hosting community outreach.
 
 ### How the angle layers
