@@ -621,12 +621,8 @@ service vikunja start`
   function generateKubernetes(s) {
     const blocks = []
 
-    let cmds = `# Add the Vikunja Helm repo
-helm repo add vikunja https://go-vikunja.github.io/helm-chart/
-helm repo update
-
-# Install Vikunja
-helm install vikunja vikunja/vikunja`
+    let cmds = `# Install Vikunja
+helm install vikunja oci://ghcr.io/go-vikunja/helm-chart/vikunja`
 
     if (s.db !== 'sqlite' || hasSmtp(s)) {
       cmds += ` \\
