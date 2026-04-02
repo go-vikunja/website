@@ -1,31 +1,45 @@
 ---
-const faqs = [
+import {marked} from 'marked'
+
+interface Props {
+	faqs?: {question: string, answer: string}[]
+	showTitle?: boolean
+}
+
+const defaultFaqs = [
 	{
 		question: 'What is Vikunja?',
 		answer: 'Vikunja is an open-source, self-hostable to-do app. It helps you organize your tasks and projects with features like list, kanban, gantt, and table views — all while keeping your data under your control.',
 	},
 	{
 		question: 'Is Vikunja free and open source?',
-		answer: 'Yes. Vikunja is licensed under the AGPLv3 and completely free to self-host. If you prefer not to manage your own server, <a href="https://vikunja.cloud/register" class="underline decoration-1 underline-offset-1">Vikunja Cloud</a> offers a paid hosted option.',
+		answer: 'Yes. Vikunja is licensed under the AGPLv3 and completely free to self-host. If you prefer not to manage your own server, [Vikunja Cloud](https://vikunja.cloud/register) offers a paid hosted option.',
 	},
 	{
 		question: 'How do I install Vikunja?',
-		answer: 'You can install Vikunja using Docker, native binaries for your platform, or sign up for <a href="https://vikunja.cloud/register" class="underline decoration-1 underline-offset-1">Vikunja Cloud</a>. Use the <a href="/install" class="underline decoration-1 underline-offset-1">install wizard</a> for a guided setup.',
+		answer: 'You can install Vikunja using Docker, native binaries for your platform, or sign up for [Vikunja Cloud](https://vikunja.cloud/register). Use the [install wizard](/install) for a guided setup.',
 	},
 	{
 		question: 'Do I have to self-host Vikunja?',
-		answer: 'No. While self-hosting is a great option, <a href="https://vikunja.cloud/register" class="underline decoration-1 underline-offset-1">Vikunja Cloud</a> gives you a fully managed instance with automatic updates, backups, and zero maintenance. It\'s the easiest way to get started and directly supports the continued development of Vikunja.',
+		answer: 'No. While self-hosting is a great option, [Vikunja Cloud](https://vikunja.cloud/register) gives you a fully managed instance with automatic updates, backups, and zero maintenance. It\'s the easiest way to get started and directly supports the continued development of Vikunja.',
 	},
 	{
 		question: 'Can I import tasks from Todoist, Trello, or Microsoft To-Do?',
 		answer: 'Yes. Vikunja has built-in migration support for Todoist, Trello, Microsoft To-Do, and other platforms. You can import your existing tasks and projects directly from the Vikunja interface.',
 	},
 ]
+
+const {faqs = defaultFaqs, showTitle = true} = Astro.props
+
+const parsedFaqs = faqs.map(faq => ({
+	...faq,
+	answerHtml: marked.parseInline(faq.answer) as string,
+}))
 ---
 
 <section class="w-full max-w-3xl mt-16 mb-24 px-4 mx-auto">
-	<h2 class="text-3xl font-display mb-8">Frequently Asked Questions</h2>
-	{faqs.map((faq, index) => (
+	{showTitle && <h2 class="text-3xl font-display mb-8">Frequently Asked Questions</h2>}
+	{parsedFaqs.map((faq, index) => (
 		<details class:list={['faq-item group', index > 0 && 'border-t border-gray-200 dark:border-gray-700']}>
 			<summary class="flex cursor-pointer items-center justify-between py-5 text-lg font-display list-none [&::-webkit-details-marker]:hidden">
 				{faq.question}
@@ -35,7 +49,7 @@ const faqs = [
 			</summary>
 			<div class="faq-content grid">
 				<div class="overflow-hidden">
-					<p class="pb-5 text-gray-600 dark:text-gray-400" set:html={faq.answer} />
+					<p class="pb-5 text-gray-600 dark:text-gray-400 [&_a]:underline [&_a]:text-primary" set:html={faq.answerHtml} />
 				</div>
 			</div>
 		</details>
@@ -56,12 +70,12 @@ const faqs = [
 <script type="application/ld+json" set:html={JSON.stringify({
 	"@context": "https://schema.org",
 	"@type": "FAQPage",
-	"mainEntity": faqs.map(faq => ({
+	"mainEntity": parsedFaqs.map(faq => ({
 		"@type": "Question",
 		"name": faq.question,
 		"acceptedAnswer": {
 			"@type": "Answer",
-			"text": faq.answer.replace(/<[^>]*>/g, ''),
+			"text": faq.answerHtml.replace(/<[^>]*>/g, ''),
 		},
 	})),
 })}></script>

@@ -2,6 +2,34 @@
 import Layout from '../layouts/Layout.astro'
 import Plans from '../components/partials/Plans.astro'
 import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
+import FAQSection from '../components/FAQSection.astro'
+
+const pricingFaqs = [
+    {
+        question: 'Is the self-hosted version really free?',
+        answer: 'Yes. Vikunja is openly licensed under the [AGPLv3](https://code.vikunja.io/api/src/branch/main/LICENSE). You can self-host it for personal use or for your entire company at no cost. All core features are included.',
+    },
+    {
+        question: 'What does Vikunja Cloud give me that self-hosting doesn\'t?',
+        answer: 'The same features, minus the ops work. We handle hosting, backups, updates, and TLS. You get a managed instance hosted in the EU, so you can focus on your tasks instead of your infrastructure.',
+    },
+    {
+        question: 'Who is the Enterprise plan for?',
+        answer: 'Teams that need a dedicated instance, a GDPR data processing agreement, admin tools to manage users, or the option to run Vikunja on their own server with our support. You don\'t need 500 employees to unlock these features \u2014 they\'re available at any team size.',
+    },
+    {
+        question: 'Can I try before I buy?',
+        answer: 'Every Cloud plan comes with a free 14-day trial. Cancel anytime. You can also [try the live demo](https://try.vikunja.io/demo-account-create/) right now without signing up.',
+    },
+    {
+        question: 'Can I switch from self-hosted to Cloud (or the other way around)?',
+        answer: 'Yes. You can export your data and import it into another instance. If you need help migrating, [reach out](mailto:hello@vikunja.io) and we\'ll walk you through it.',
+    },
+    {
+        question: 'I\'m already self-hosting. How do I bring Vikunja to my team at work?',
+        answer: 'Check out the [Convince Your Boss](/convince) page \u2014 it has everything you need to make the case internally.',
+    },
+]
 ---
 <Layout title="Pricing" description="Vikunja pricing for individuals, teams, and enterprises. Self-host for free or let us run it for you. Enterprise features without the enterprise price tag.">
     <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0">
@@ -124,60 +152,7 @@ import CloudOrSelfHosted from '../components/partials/CloudOrSelfHosted.astro'
             </div>
         </section>
 
-        <section class="max-w-3xl mx-auto mb-24 text-left">
-            <h2 class="font-display text-3xl text-center mb-8">Frequently Asked Questions</h2>
-
-            <div class="space-y-8">
-                <div>
-                    <h3 class="font-display text-xl mb-2">Is the self-hosted version really free?</h3>
-                    <p class="text-gray-700 dark:text-gray-300">
-                        Yes. Vikunja is openly licensed under the <a href="https://code.vikunja.io/api/src/branch/main/LICENSE" class="underline" target="_blank" rel="noopener">AGPLv3</a>.
-                        You can self-host it for personal use or for your entire company at no cost. All core features are included.
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="font-display text-xl mb-2">What does Vikunja Cloud give me that self-hosting doesn't?</h3>
-                    <p class="text-gray-700 dark:text-gray-300">
-                        The same features, minus the ops work. We handle hosting, backups, updates, and TLS.
-                        You get a managed instance hosted in the EU, so you can focus on your tasks instead of your infrastructure.
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="font-display text-xl mb-2">Who is the Enterprise plan for?</h3>
-                    <p class="text-gray-700 dark:text-gray-300">
-                        Teams that need a dedicated instance, a GDPR data processing agreement, admin tools to manage users,
-                        or the option to run Vikunja on their own server with our support.
-                        You don't need 500 employees to unlock these features &mdash; they're available at any team size.
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="font-display text-xl mb-2">Can I try before I buy?</h3>
-                    <p class="text-gray-700 dark:text-gray-300">
-                        Every Cloud plan comes with a free 14-day trial. Cancel anytime. You can also
-                        <a href="https://try.vikunja.io/demo-account-create/" class="underline">try the live demo</a> right now without signing up.
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="font-display text-xl mb-2">Can I switch from self-hosted to Cloud (or the other way around)?</h3>
-                    <p class="text-gray-700 dark:text-gray-300">
-                        Yes. You can export your data and import it into another instance.
-                        If you need help migrating, <a href="mailto:hello@vikunja.io" class="underline">reach out</a> and we'll walk you through it.
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="font-display text-xl mb-2">I'm already self-hosting. How do I bring Vikunja to my team at work?</h3>
-                    <p class="text-gray-700 dark:text-gray-300">
-                        Check out the <a href="/convince" class="underline">Convince Your Boss</a> page &mdash;
-                        it has everything you need to make the case internally.
-                    </p>
-                </div>
-            </div>
-        </section>
+        <FAQSection faqs={pricingFaqs} />
 
         <div class="pb-20 flex items-center justify-center flex-col text-center">
             <h2 class="font-display text-3xl mb-8">Get Started</h2>
