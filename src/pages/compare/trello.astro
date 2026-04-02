@@ -1,0 +1,193 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import CloudOrSelfHosted from '../../components/partials/CloudOrSelfHosted.astro'
+import FAQSection from '../../components/FAQSection.astro'
+
+const faqs = [
+    {
+        question: 'Can I import my Trello boards?',
+        answer: 'Yes. Export your board as JSON from Trello, then [import it in Vikunja](/help/import-and-export/#import). Your cards, lists, and labels come over automatically.',
+    },
+    {
+        question: 'Does Vikunja have automations like Trello\'s Butler?',
+        answer: 'Vikunja supports [webhooks](/help/webhooks) that let you trigger external automations. It doesn\'t have a visual automation builder like Butler, but the webhook approach is more flexible if you\'re comfortable with tools like n8n or Zapier.',
+    },
+    {
+        question: 'Can I use Vikunja for free?',
+        answer: 'Self-host it for free with no limits on boards, tasks, or users. If you want managed hosting, [Vikunja Cloud](https://vikunja.cloud) starts at 4 EUR/month with a 14-day free trial.',
+    },
+]
+---
+<Layout title="Vikunja vs Trello: Self-Hosted Kanban and Beyond" description="Trello alternative with Kanban, Gantt, list, and table views. Self-host it or use our EU cloud. No Power-Up tax, no Atlassian lock-in.">
+    <Fragment slot="head">
+        <script type="application/ld+json" set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Vikunja vs Trello",
+            "description": "Side-by-side comparison of Vikunja and Trello for task and project management.",
+        })}></script>
+    </Fragment>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0">
+        <div class="pt-32 pb-8 px-4 text-center">
+            <h1 class="text-4xl font-display">
+                Vikunja vs Trello
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-balance">
+                Kanban boards that aren't owned by Atlassian.
+            </p>
+        </div>
+
+        <section class="max-w-3xl mx-auto mt-16 text-lg text-gray-700 dark:text-gray-300">
+            <p>
+                Trello popularized Kanban boards for everyone. Then Atlassian bought it,
+                and now you pay <a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">$10/user/month to unlock the calendar view</a>.
+            </p>
+            <p class="mt-4">
+                On the free plan, you get <a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">10 boards and 250 automation runs per month</a>.
+                Want more views? Premium. Custom fields? Standard plan.
+                <a href="https://support.atlassian.com/trello/docs/exporting-data-from-trello/" target="_blank" rel="nofollow noreferrer noopener" class="underline">Export to CSV? Premium.</a>
+                The free tier is a demo with guardrails.
+            </p>
+            <p class="mt-4">
+                Vikunja has Kanban boards. It also has
+                <a href="/help/views" class="underline">list, Gantt, and table views</a> of the same data.
+                All of them work on every plan, including the free self-hosted one. No Power-Ups required.
+            </p>
+            <p class="mt-4">
+                And because it's open-source, you can run it on your own server. Your project boards
+                don't live on Atlassian's US infrastructure. You can put them wherever you want.
+            </p>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">What Trello makes you pay for</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">
+                These are free in Vikunja. All of them.
+            </p>
+            <div class="max-w-3xl text-gray-700 dark:text-gray-300 space-y-4">
+                <p>
+                    <strong>Multiple views.</strong> Trello's calendar, timeline, table, and dashboard views
+                    are <a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">locked behind Premium</a> ($10/user/month). In Vikunja, you
+                    <a href="/help/views" class="underline">switch between list, Kanban, Gantt, and table</a>
+                    whenever you want.
+                </p>
+                <p>
+                    <strong>CSV export.</strong> Trello <a href="https://support.atlassian.com/trello/docs/exporting-data-from-trello/" target="_blank" rel="nofollow noreferrer noopener" class="underline">only lets Premium users export to CSV</a>.
+                    On the free plan, your only option is a JSON dump. Vikunja lets you export your data
+                    on any plan, because it's your data.
+                </p>
+                <p>
+                    <strong>Unlimited boards.</strong> Trello's free plan <a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">caps you at 10 boards</a> per workspace.
+                    Vikunja has no limits on projects.
+                </p>
+                <p>
+                    <strong>EU data residency.</strong> Trello doesn't support Atlassian's data residency feature.
+                    Your data is in the US, period. With Vikunja, self-host wherever you want, or use
+                    our Cloud on EU infrastructure.
+                </p>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-8">Side by side</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th class="py-3 px-4 font-display text-lg"></th>
+                            <th class="py-3 px-4 font-display text-lg">Vikunja</th>
+                            <th class="py-3 px-4 font-display text-lg">Trello</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700 dark:text-gray-300">
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Self-hostable</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Open source</td>
+                            <td class="py-3 px-4">AGPLv3</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Views</td>
+                            <td class="py-3 px-4">List, Kanban, Gantt, Table</td>
+                            <td class="py-3 px-4"><a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">Board only (rest is Premium)</a></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Boards/projects (free)</td>
+                            <td class="py-3 px-4">Unlimited</td>
+                            <td class="py-3 px-4"><a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">10</a></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Gantt chart</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4"><a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">No (Timeline on Premium)</a></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">File attachments (free)</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4"><a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">10 MB per file limit</a></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">CalDAV</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">EU data residency</td>
+                            <td class="py-3 px-4">Self-host anywhere, or Cloud (EU)</td>
+                            <td class="py-3 px-4">No (US only)</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">Enterprise minimum</td>
+                            <td class="py-3 px-4">No minimum</td>
+                            <td class="py-3 px-4"><a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">25 users</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">Pricing</h2>
+            <p class="text-gray-700 dark:text-gray-300">
+                Self-hosted Vikunja is free and always will be.
+                <a href="/pricing" class="underline">Vikunja Cloud</a> starts at 5&nbsp;&euro;/user/month for teams.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                For reference, <a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">Trello Standard is $5/user/month and Premium is $10/user/month</a> (billed yearly).
+                You need Premium for calendar, timeline, and table views.
+                Enterprise requires a minimum of 25 users.
+                Vikunja has no seat minimums on any plan.
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                Trello prices from trello.com as of April 2026.
+                See <a href="/pricing" class="underline">Vikunja pricing</a> for details.
+            </p>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">How to switch</h2>
+            <ol class="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300">
+                <li>
+                    <a href="/install" class="underline">Set up Vikunja</a> (Docker, binary, or
+                    <a href="https://vikunja.cloud" class="underline">Cloud trial</a>)
+                </li>
+                <li>Export your Trello board as JSON (Menu &rarr; More &rarr; Print and Export)</li>
+                <li>Import the JSON file in Vikunja's migration settings</li>
+            </ol>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                Your cards, lists, and labels come over. Try it for a week with real work.
+            </p>
+        </section>
+
+        <FAQSection faqs={faqs} />
+
+        <div class="pb-20 flex items-center justify-center flex-col text-center">
+            <h2 class="font-display text-3xl mb-8">Try it out</h2>
+            <CloudOrSelfHosted />
+        </div>
+    </main>
+</Layout>
