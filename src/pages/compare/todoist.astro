@@ -1,0 +1,228 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import CloudOrSelfHosted from '../../components/partials/CloudOrSelfHosted.astro'
+import FAQSection from '../../components/FAQSection.astro'
+
+const faqs = [
+    {
+        question: 'Can I import my Todoist tasks into Vikunja?',
+        answer: 'Yes. Vikunja has a [built-in Todoist importer](/help/import-and-export/#import). Connect your account, pick the projects you want, and your tasks, labels, and due dates come over automatically.',
+    },
+    {
+        question: 'Does Vikunja have Quick Add like Todoist?',
+        answer: 'Yes. [Quick Add Magic](/help/quick-add-magic) lets you type a task with a due date, labels, assignees, and priority inline, similar to Todoist\'s natural language input.',
+    },
+    {
+        question: 'Does Vikunja have reminders?',
+        answer: 'Yes, on all plans, including the free self-hosted version. Check out [how reminders work](/help/dates-and-reminders). Todoist paywalls reminders behind the Pro plan.',
+    },
+    {
+        question: 'What about mobile apps?',
+        answer: 'Vikunja works as a progressive web app on any device. Native apps are on the roadmap.',
+    },
+]
+---
+<Layout title="Vikunja vs Todoist: The Self-Hosted Alternative" description="Todoist alternative you can self-host. Lists, labels, reminders, Kanban, Gantt — on your server, not theirs. Open-source, EU-hosted, no task limits on the free plan.">
+    <Fragment slot="head">
+        <script type="application/ld+json" set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Vikunja vs Todoist",
+            "description": "Side-by-side comparison of Vikunja and Todoist for task management.",
+        })}></script>
+    </Fragment>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0">
+        <div class="pt-32 pb-8 px-4 text-center">
+            <h1 class="text-4xl font-display">
+                Vikunja vs Todoist
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-balance">
+                Your to-do list, your server.
+            </p>
+        </div>
+
+        <section class="max-w-3xl mx-auto mt-16 text-lg text-gray-700 dark:text-gray-300">
+            <p>
+                Todoist is a good task manager. Millions of people use it. But it's closed-source,
+                hosted in the US, and increasingly aggressive about what it locks behind a paywall.
+            </p>
+            <p class="mt-4">
+                <a href="https://www.todoist.com/help/articles/usage-limits-in-todoist-e5rcSY" target="_blank" rel="nofollow noreferrer noopener" class="underline">Reminders? Paid. More than 5 projects? Paid. More than 300 tasks in a project? Paid.
+                File attachments? Paid.</a> And your data sits on Doist's servers in San Francisco
+                whether you like it or not.
+            </p>
+            <p class="mt-4">
+                Vikunja gives you the same workflow you already know from Todoist:
+                lists, labels, due dates, reminders, quick add with natural language.
+                But it runs on your server. You can read every line of the code.
+                And the free self-hosted version has no limits on projects, tasks, or features.
+            </p>
+            <p class="mt-4">
+                If you don't want to manage a server, <a href="https://vikunja.cloud" class="underline">Vikunja Cloud</a>
+                runs it for you on EU infrastructure. Either way, your team's project planning
+                doesn't depend on a service you have zero control over.
+            </p>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">What you get that Todoist doesn't offer</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8">
+                Beyond the self-hosting, there are a few things Vikunja does that Todoist simply can't.
+            </p>
+            <div class="max-w-3xl text-gray-700 dark:text-gray-300 space-y-6">
+                <div>
+                    <h3 class="font-display text-xl">Four views, not one</h3>
+                    <p class="mt-2">
+                        Todoist is a list app. Vikunja shows the same tasks as a
+                        <a href="/help/views" class="underline">list, Kanban board, Gantt chart, or table</a>.
+                        Your project manager can use Gantt while your developers use Kanban.
+                        Same data, different lens.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">CalDAV built in</h3>
+                    <p class="mt-2">
+                        Vikunja speaks <a href="/help/caldav" class="underline">CalDAV</a>,
+                        so it works with the calendar and to-do apps you already use.
+                        Todoist has no CalDAV support at all.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">No artificial limits</h3>
+                    <p class="mt-2">
+                        Self-hosted Vikunja doesn't cap your projects at 5 or your tasks at 300.
+                        Unlimited <a href="/help/projects" class="underline">projects</a>,
+                        unlimited tasks, unlimited <a href="/help/saved-filters" class="underline">filters</a>,
+                        unlimited <a href="/help/labels" class="underline">labels</a>.
+                        No upgrade nags.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-8">Side by side</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th class="py-3 px-4 font-display text-lg"></th>
+                            <th class="py-3 px-4 font-display text-lg">Vikunja</th>
+                            <th class="py-3 px-4 font-display text-lg">Todoist</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700 dark:text-gray-300">
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Self-hostable</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Open source</td>
+                            <td class="py-3 px-4">AGPLv3</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Views</td>
+                            <td class="py-3 px-4">List, Kanban, Gantt, Table</td>
+                            <td class="py-3 px-4"><a href="https://www.todoist.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">List, Board (Calendar is paid)</a></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Reminders</td>
+                            <td class="py-3 px-4">All plans</td>
+                            <td class="py-3 px-4"><a href="https://www.todoist.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">Paid only</a></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Projects (free tier)</td>
+                            <td class="py-3 px-4">Unlimited</td>
+                            <td class="py-3 px-4"><a href="https://www.todoist.com/help/articles/usage-limits-in-todoist-e5rcSY" target="_blank" rel="nofollow noreferrer noopener" class="underline">5</a></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Tasks per project (free tier)</td>
+                            <td class="py-3 px-4">Unlimited</td>
+                            <td class="py-3 px-4"><a href="https://www.todoist.com/help/articles/usage-limits-in-todoist-e5rcSY" target="_blank" rel="nofollow noreferrer noopener" class="underline">300</a></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Saved filters</td>
+                            <td class="py-3 px-4">Unlimited</td>
+                            <td class="py-3 px-4"><a href="https://www.todoist.com/help/articles/usage-limits-in-todoist-e5rcSY" target="_blank" rel="nofollow noreferrer noopener" class="underline">3 on free, 150 on paid</a></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">File attachments</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4"><a href="https://www.todoist.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">Paid only</a></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Quick add (natural language)</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">Yes</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Repeating tasks</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">Yes</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">CalDAV</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">EU data residency</td>
+                            <td class="py-3 px-4">Self-host anywhere, or Cloud (EU)</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">Vendor lock-in</td>
+                            <td class="py-3 px-4">None (open source, export anytime)</td>
+                            <td class="py-3 px-4"><a href="https://www.todoist.com/help/articles/import-or-export-a-project-as-a-csv-file-in-todoist-YC8YvN" target="_blank" rel="nofollow noreferrer noopener" class="underline">CSV export only</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">Pricing</h2>
+            <p class="text-gray-700 dark:text-gray-300">
+                Self-hosted Vikunja is free and always will be. If you'd rather not manage
+                a server, <a href="/pricing" class="underline">Vikunja Cloud</a> starts at 4&nbsp;&euro;/month
+                (40&nbsp;&euro;/year) for personal use and 5&nbsp;&euro;/user/month for teams.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                For reference, <a href="https://www.todoist.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">Todoist Pro is $5/month and Business is $8/user/month</a> (billed yearly).
+                But the real difference isn't the price tag. It's that Vikunja doesn't paywall
+                basic features like reminders, attachments, and filters behind a paid plan.
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                Todoist prices from todoist.com as of April 2026.
+                See <a href="/pricing" class="underline">Vikunja pricing</a> for details.
+            </p>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">How to switch</h2>
+            <p class="text-gray-700 dark:text-gray-300">
+                Vikunja has a built-in Todoist importer. The whole process takes about 10 minutes:
+            </p>
+            <ol class="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300 mt-4">
+                <li>
+                    <a href="/install" class="underline">Set up Vikunja</a> (Docker, binary, or
+                    <a href="https://vikunja.cloud" class="underline">Cloud trial</a>)
+                </li>
+                <li>Go to Settings, connect your Todoist account, and pick the projects you want</li>
+                <li>Your tasks, labels, and due dates come over automatically</li>
+            </ol>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                Try it for a week with your real tasks. If it works, cancel Todoist.
+            </p>
+        </section>
+
+        <FAQSection faqs={faqs} />
+
+        <div class="pb-20 flex items-center justify-center flex-col text-center">
+            <h2 class="font-display text-3xl mb-8">Try it out</h2>
+            <CloudOrSelfHosted />
+        </div>
+    </main>
+</Layout>
