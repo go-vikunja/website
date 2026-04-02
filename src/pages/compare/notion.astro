@@ -1,0 +1,183 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import CloudOrSelfHosted from '../../components/partials/CloudOrSelfHosted.astro'
+import FAQSection from '../../components/FAQSection.astro'
+
+const faqs = [
+    {
+        question: 'Is Vikunja a Notion replacement?',
+        answer: 'Not really. Notion is a workspace with wikis, docs, and databases. Vikunja is a task manager. If your team uses Notion mainly for task tracking, Vikunja does that part better and faster. If you need the wiki and database features, you\'ll want to keep Notion or pair Vikunja with something like Outline or BookStack.',
+    },
+    {
+        question: 'Can I import from Notion?',
+        answer: 'There\'s no direct importer, but you can export Notion databases as CSV and restructure them in Vikunja. If you\'re also on Todoist or Trello, those have [built-in importers](/help/import-and-export/#import).',
+    },
+    {
+        question: 'Does Vikunja have docs or a wiki?',
+        answer: 'No. Every task has a rich-text description with markdown support, but Vikunja is a task manager, not a documentation tool.',
+    },
+]
+---
+<Layout title="Vikunja vs Notion: Fast Task Management You Can Self-Host" description="Notion alternative for teams that just need task management. Four views, sub-100ms speed, self-hostable. No bloat, no slow loading, no US-only data.">
+    <Fragment slot="head">
+        <script type="application/ld+json" set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Vikunja vs Notion",
+            "description": "Side-by-side comparison of Vikunja and Notion for task management.",
+        })}></script>
+    </Fragment>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0">
+        <div class="pt-32 pb-8 px-4 text-center">
+            <h1 class="text-4xl font-display">
+                Vikunja vs Notion
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-balance">
+                A task manager that loads in milliseconds, not seconds.
+            </p>
+        </div>
+
+        <section class="max-w-3xl mx-auto mt-16 text-lg text-gray-700 dark:text-gray-300">
+            <p>
+                Notion tries to be everything. Docs, wiki, database, project manager, AI assistant.
+                And if you need all of that, it's a reasonable choice.
+            </p>
+            <p class="mt-4">
+                But if what you actually need is a task manager?
+                Notion is slow. Pages take seconds to load. The mobile app is sluggish.
+                And you're paying <a href="https://www.notion.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">$10-18/user/month</a> for a tool where you mostly use one feature.
+            </p>
+            <p class="mt-4">
+                Vikunja does task management. That's it.
+                <a href="/help/views" class="underline">List view, Kanban, Gantt, table</a>.
+                Every interaction takes less than 100ms. It's fast because it's focused.
+            </p>
+            <p class="mt-4">
+                It's also open-source and self-hostable. Notion keeps your data on US servers
+                (<a href="https://www.notion.com/help/data-residency" target="_blank" rel="nofollow noreferrer noopener" class="underline">EU residency is Enterprise-only</a>). Vikunja lets you run it wherever you want,
+                or use our Cloud on EU infrastructure.
+            </p>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">Different tools, different jobs</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">
+                This isn't an apples-to-apples comparison. Notion does more things.
+                But for task management specifically, here's how they stack up.
+            </p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th class="py-3 px-4 font-display text-lg"></th>
+                            <th class="py-3 px-4 font-display text-lg">Vikunja</th>
+                            <th class="py-3 px-4 font-display text-lg">Notion</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700 dark:text-gray-300">
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">What it does</td>
+                            <td class="py-3 px-4">Task management</td>
+                            <td class="py-3 px-4">Everything (docs, wiki, databases, tasks)</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Speed</td>
+                            <td class="py-3 px-4">&lt;100ms interactions</td>
+                            <td class="py-3 px-4">Multi-second page loads</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Self-hostable</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Open source</td>
+                            <td class="py-3 px-4">AGPLv3</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Task views</td>
+                            <td class="py-3 px-4">List, Kanban, Gantt, Table</td>
+                            <td class="py-3 px-4">List, Board, Calendar, Timeline, Gallery</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Reminders</td>
+                            <td class="py-3 px-4">All plans</td>
+                            <td class="py-3 px-4">All plans</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">CalDAV</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Wiki / docs</td>
+                            <td class="py-3 px-4">No</td>
+                            <td class="py-3 px-4">Yes</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Databases</td>
+                            <td class="py-3 px-4">No</td>
+                            <td class="py-3 px-4">Yes</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">EU data residency</td>
+                            <td class="py-3 px-4">Self-host anywhere, or Cloud (EU)</td>
+                            <td class="py-3 px-4"><a href="https://www.notion.com/help/data-residency" target="_blank" rel="nofollow noreferrer noopener" class="underline">Enterprise only</a></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">Vendor lock-in</td>
+                            <td class="py-3 px-4">None (open source, export anytime)</td>
+                            <td class="py-3 px-4">High</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">Pricing</h2>
+            <p class="text-gray-700 dark:text-gray-300">
+                Self-hosted Vikunja is free. <a href="/pricing" class="underline">Vikunja Cloud</a>
+                starts at 4&nbsp;&euro;/month for personal use and 5&nbsp;&euro;/user/month for teams.
+                <a href="https://www.notion.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">Notion Plus starts at $10/user/month, Business at $18/user/month</a> (billed yearly).
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                But these are different tools solving different problems. If you need a full workspace
+                with docs, wikis, and databases, Notion's price covers a lot more surface area.
+                If you need a fast task manager you can self-host, Vikunja is the better fit
+                regardless of what it costs.
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                Notion prices from notion.com as of April 2026.
+                See <a href="/pricing" class="underline">Vikunja pricing</a> for details.
+            </p>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">When to pick which</h2>
+            <div class="text-gray-700 dark:text-gray-300">
+                <p>
+                    <strong>Pick Vikunja</strong> if you need a task manager that's fast, self-hostable,
+                    and respects your data. Especially if you're a team that's been using Notion
+                    for tasks but finds it slow, expensive, or overkill for what you actually do with it.
+                </p>
+                <p class="mt-4">
+                    <strong>Pick Notion</strong> if you genuinely need the wiki, docs, and database features.
+                    If your team lives in Notion for documentation and project context, adding task management
+                    on top makes sense even if it's slower.
+                </p>
+                <p class="mt-4">
+                    Some teams use both: Notion for docs and knowledge, Vikunja for the actual task tracking.
+                </p>
+            </div>
+        </section>
+
+        <FAQSection faqs={faqs} />
+
+        <div class="pb-20 flex items-center justify-center flex-col text-center">
+            <h2 class="font-display text-3xl mb-8">Try it out</h2>
+            <CloudOrSelfHosted />
+        </div>
+    </main>
+</Layout>
