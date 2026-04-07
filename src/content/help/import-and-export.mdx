@@ -2,8 +2,8 @@
 title: Import & Export
 slug: import-and-export
 description: >-
-  Export your Vikunja data or import tasks from TickTick, WeKan, Todoist, Trello,
-  and Microsoft To Do.
+  Export your Vikunja data or import tasks from CSV files, TickTick, WeKan,
+  Todoist, Trello, and Microsoft To Do.
 ---
 import Screenshot from '../../components/Screenshot.astro'
 
@@ -41,6 +41,7 @@ To import data into Vikunja:
 Vikunja supports importing from the following sources:
 
 - **Vikunja export:** Re-import a previously exported ZIP file.
+- **CSV:** Import tasks from any CSV file with custom column mapping.
 - **TickTick**
 - **WeKan** (available from version 2.3.0)
 - **Todoist**
@@ -48,6 +49,35 @@ Vikunja supports importing from the following sources:
 - **Microsoft To Do**
 
 You can also sync tasks with external apps using [CalDAV](/help/caldav).
+
+### Importing from CSV
+
+<Callout type="info">
+This feature is available from Vikunja **2.3.0** onwards (or unstable builds).
+</Callout>
+
+The CSV import lets you bring tasks into Vikunja from any spreadsheet or tool that can export CSV files. It works in three steps:
+
+1. **Upload your CSV file.** Select a `.csv` or `.txt` file. Vikunja will auto-detect the delimiter, date format, and column mappings.
+2. **Review and adjust the mapping.** Each column in your file can be mapped to a task attribute: title, description, due date, start date, end date, priority, labels, project, reminder, or set to "ignore". The preview below the mapping updates automatically as you change settings.
+3. **Import.** Once you're happy with the preview, click "Import Tasks" to create all tasks in Vikunja.
+
+#### Parsing options
+
+You can adjust these settings if the auto-detection didn't get it right:
+
+- **Delimiter:** Comma, semicolon, tab, or pipe.
+- **Date format:** Choose the format that matches dates in your file (e.g. YYYY-MM-DD, DD/MM/YYYY, MM/DD/YYYY, etc.).
+- **Skip rows:** Skip a number of rows at the top of the file if they contain metadata or headers that aren't part of your task data.
+
+#### Column mapping
+
+At least one column must be mapped to **Title** for the import to work. All other attributes are optional:
+
+- **Labels** are parsed as comma-separated values within a single column.
+- **Priority** accepts numbers (0–5) or text like "low", "medium", "high", "urgent".
+- **Done** accepts values like "true", "yes", "1", "done", or "completed".
+- **Project** groups tasks into sub-projects. If no project column is mapped, or all tasks have the same project value, they are imported into a single "Imported from CSV" project.
 
 ### Importing from WeKan
 
