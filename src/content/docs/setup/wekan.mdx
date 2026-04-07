@@ -1,0 +1,57 @@
+---
+title: WeKan Migration
+slug: setup-wekan-migration
+description: >-
+  Learn how to migrate your boards, tasks, and labels from WeKan to Vikunja
+  by importing a WeKan board JSON export.
+---
+import Callout from '../../../components/Callout.astro';
+
+<Callout type="info">
+This feature is available from Vikunja **2.3.0** onwards (or unstable builds).
+</Callout>
+
+This guide explains how to migrate your boards from WeKan to Vikunja using a JSON board export.
+
+## Export Your WeKan Board
+
+1. Open the board you want to export in WeKan
+2. Click the **hamburger menu** (three horizontal lines) at the top right of the board
+3. Click **Export board** and select **JSON**
+4. Save the downloaded `.json` file
+
+Repeat this for each board you want to migrate.
+
+## Import into Vikunja
+
+1. Log in to your Vikunja instance
+2. Click on your avatar in the top-right corner
+3. Click **Settings**
+4. Click **Import from other services**
+5. Click the **WeKan** icon
+6. Select the `.json` file you exported from WeKan
+7. Click **Import**
+
+The import will start in the background and should complete within seconds.
+
+## What Gets Imported
+
+| WeKan | Vikunja |
+|-------|---------|
+| Board | Project |
+| Lists | Kanban buckets |
+| Cards | Tasks |
+| Card descriptions (Markdown) | Task descriptions (converted to HTML) |
+| Labels | Labels (with colors) |
+| Checklists | Checklist in task description |
+| Comments | Task comments |
+| Archived cards | Tasks marked as done |
+| Start / due dates | Start / due dates |
+
+<Callout type="note">
+Swimlanes, attachments, card members, and custom fields are not imported.
+</Callout>
+
+## Importing Multiple Boards
+
+Each WeKan board export creates one Vikunja project. To import multiple boards, repeat the import process with each JSON file.
