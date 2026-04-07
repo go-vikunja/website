@@ -2,8 +2,8 @@
 title: Import & Export
 slug: import-and-export
 description: >-
-  Export your Vikunja data or import tasks from TickTick, Todoist, Trello, and
-  Microsoft To Do.
+  Export your Vikunja data or import tasks from TickTick, WeKan, Todoist, Trello,
+  and Microsoft To Do.
 ---
 import Screenshot from '../../components/Screenshot.astro'
 
@@ -42,8 +42,19 @@ Vikunja supports importing from the following sources:
 
 - **Vikunja export:** Re-import a previously exported ZIP file.
 - **TickTick**
+- **WeKan** (available from version 2.3.0)
 - **Todoist**
 - **Trello**
 - **Microsoft To Do**
 
 You can also sync tasks with external apps using [CalDAV](/help/caldav).
+
+### Importing from WeKan
+
+<Callout type="info">
+This feature is available from Vikunja **2.3.0** onwards (or unstable builds).
+</Callout>
+
+To import a WeKan board, first export it as JSON in WeKan (board menu > Export board > JSON), then select the WeKan icon on the import page and upload the file.
+
+Each board export creates one Vikunja project. Lists become kanban buckets, cards become tasks, and labels, checklists, comments, and dates are all preserved.
