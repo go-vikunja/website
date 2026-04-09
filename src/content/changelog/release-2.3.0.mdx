@@ -1,0 +1,181 @@
+---
+title: "What's new in Vikunja 2.3.0"
+date: 2026-04-09T12:00:00.000Z
+slug: /whats-new-in-vikunja-2.3.0
+description: >-
+  Vikunja 2.3.0 is out with 11 fixed CVEs, a new plugin system, a quick-entry window for the
+  desktop app, Vikunja as an OAuth 2.0 login provider, WeKan and generic CSV
+  imports, a sort popup for the list view, and eleven security fixes.
+---
+
+About two weeks after 2.2.2, we're back with 2.3.0. This one is the first proper feature release in a while: 277 commits, a pile of new things, and eleven security fixes that I want to call out up front. Please update as soon as you can.
+
+Because the security list is long, let's start there. Feature highlights come right after.
+
+## Security
+
+This release fixes eleven security vulnerabilities: two high-severity issues and nine medium-severity ones.
+
+Vikunja seems to be in the same bucket of getting [high-quality AI-generated security-reports](https://www.theregister.com/2026/04/06/ai_coding_tools_more_work/). The main difference to what made the curl project end its bug bounty-program is that these are genuine vulnerabilities that are worth fixing. I'm happy to get more reports like this, just when you're doing a more thorough investigation into it, please [reach out](/security#reporting-a-security-vulnerability) so that we can coordinate this a little more.
+
+### Privilege escalation via project reparenting (CVE-2026-35595)
+
+If someone had Write access to a shared project, they could quietly escalate themselves to full Admin by moving that project into one they already owned. Once the project was inside their own tree, Vikunja resolved them as the owner of it through the parent permissions cascading down, and they could then delete the project, manage its shares, and remove everybody else's access. Moving a project now requires Admin on both sides, not just Write.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-2vq4-854f-5c72). Thanks to [@adrgs](https://github.com/adrgs) for reporting this!
+
+### Two-factor bypass via OIDC login (CVE-2026-34727)
+
+If you had 2FA (TOTP) set up on a local Vikunja account and also used OIDC with email fallback, the OIDC login path completely skipped the second-factor check. Anyone who could sign in at your identity provider with a matching email address got straight into your Vikunja account without ever being asked for a code. The OIDC login now asks for and verifies your TOTP code when 2FA is enabled on the matched account.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-8jvc-mcx6-r4cg). Thanks to [@adrgs](https://github.com/adrgs) for reporting this!
+
+### Link share links still worked 72 hours after deletion (CVE-2026-35594)
+
+When you deleted a link share or lowered its permissions, the old share link could keep working for up to 72 hours with its original access level. Vikunja was trusting what the link claimed about itself instead of looking it up each time, so revoking a share didn't actually take effect until the link expired on its own. Link shares are now checked against the database on every request, so changing one revokes it immediately.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-96q5-xm3p-7m84). Thanks to [@axel-corsiez](https://github.com/axel-corsiez) for reporting this!
+
+### Reading other projects' tasks over CalDAV (CVE-2026-35598)
+
+The CalDAV endpoints that fetch a single task by its unique ID weren't checking whether the user making the request actually had access to the task's project. Any signed-in CalDAV user who knew or guessed a task's ID could read the full contents of tasks from any project on the instance, no matter what project they put in the URL. CalDAV task reads now enforce the same access checks as the rest of Vikunja.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-48ch-p4gq-x46x). Thanks to [@adrgs](https://github.com/adrgs) for reporting this!
+
+### Reading other projects' labels (CVE-2026-35596)
+
+A bug in the label permission check let any signed-in user read any label that was attached to at least one task, even labels belonging to projects they had no access to. This exposed label titles, colors, descriptions, and who created them. Label access is now correctly limited to labels attached to tasks you can actually see.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-hj5c-mhh2-g7jq). Thanks to [@adrgs](https://github.com/adrgs) for reporting this!
+
+### Unlimited 2FA brute-force attempts (CVE-2026-35597)
+
+The account lockout that was supposed to kick in after ten failed 2FA attempts never actually persisted — the "lock this account" write was always thrown away along with the failed login. The effect was that someone who already had your password could keep guessing your 6-digit TOTP code forever. Lockouts now stick around after a failed login.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-fgfv-pv97-6cmj). Thanks to [@adrgs](https://github.com/adrgs) for reporting this!
+
+### Repeating tasks could take the server down (CVE-2026-35599)
+
+Marking a repeating task as done used to advance the due date one interval at a time until it reached the current date. A task with a one-second interval and a due date from 1900 meant billions of tiny steps, locking up a CPU core for a full minute per request and eating database connections along the way. About a hundred of those running at once could make the whole instance unresponsive. The math is now instant, and `repeat_after` is capped at ten years as defense in depth.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-r4fg-73rc-hhh7). Thanks to [@adrgs](https://github.com/adrgs) for reporting this!
+
+### Calendar property injection via task titles over CalDAV (CVE-2026-35601)
+
+The CalDAV output wasn't escaping special characters in task titles. A task with certain line-break characters in its title could inject arbitrary calendar properties into other users' calendar clients when they synced — for example, a fake attachment link or a spoofed reminder that looked like it came from Vikunja. Task titles, categories, project names, and alarms are now all properly escaped on the way out.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-2g7h-7rqr-9p4r). Thanks to [@adrgs](https://github.com/adrgs) for reporting this!
+
+### Phishing links injected into overdue email notifications (CVE-2026-35600)
+
+Overdue email notifications dropped task titles straight into the email without enough escaping. A carefully crafted task title could sneak an extra link or a tracking pixel into the email, so recipients saw an attacker's link sitting inside an otherwise legitimate Vikunja notification from your own SMTP server. Task titles are now escaped before they make it into any notification email.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-45q4-x4r9-8fqj). Thanks to [@adrgs](https://github.com/adrgs) for reporting this!
+
+### File size limit bypass via import (CVE-2026-35602)
+
+The Vikunja-to-Vikunja import trusted the file size listed in the import's own metadata instead of checking the actual file. Setting that number to zero in the import while shipping a much larger file inside let you upload attachments well past the configured limit. The import now measures the real file size, and extraction is bounded by your configured `files.maxsize` per entry.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-qh78-rvg3-cv54). Thanks to [@adrgs](https://github.com/adrgs) for reporting this!
+
+### Scoped API token could delete project backgrounds (GHSA-v479-vf79-mg83)
+
+Scoped API tokens are supposed to only do what you scope them to. A mistake in the permission matcher meant that a token which was only supposed to read a project's background could also delete it. Scopes now pin both the path and the HTTP method, so read-only tokens stay read-only.
+
+This turned out to be much broader and not just affecting the reported project background endpoint but others as well. All are now fixed and properly protected.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-v479-vf79-mg83). Thanks to [@alecclyde](https://github.com/alecclyde) for reporting this!
+
+## Highlights
+
+With the security stuff out of the way, here's what's new.
+
+### A new plugin system
+
+Vikunja has had a plugin system for a while, but writing a plugin meant compiling Go code together with the Vikunja binary with the exact version and system libraries used in both cases. This is a limitation of the Go-native plugin api and makes it very impractical to use in real-world scenarios.
+
+This release adds a second plugin loader built on [yaegi](https://github.com/traefik/yaegi) that reads plugin source code at startup. You drop a plugin file into the plugins directory, restart Vikunja, and it shows up. No build step, no matching Go version, no recompiling the whole app.
+
+The old native loader still works and plugins written for it still load, but over time the yaegi loader will become the recommended way to write plugins. An example plugin ships in the repo so you can see what the interface looks like.
+
+If you want to try it, check out the [plugin setup docs](/docs/plugins) or the [plugin development guide](/docs/plugin-development). Contributed in [#2178](https://github.com/go-vikunja/vikunja/pull/2178).
+
+### Quick entry from the desktop app
+
+The desktop app now has a dedicated quick-entry window. Hit a configurable global shortcut from anywhere on your system, type a task title, and it goes straight into Vikunja without you having to open the main window first. Press `Ctrl`/`Cmd`+`Enter` while you're still in the popup and it'll jump you straight to the created task inside the main window.
+
+There's also a new system tray entry, a `--quick-entry` command-line flag for launching directly into the popup, and a refreshed set of application icons. The desktop login flow got a full rewrite along the way: you can now pick a server and sign in with the same kind of OAuth flow a browser would use, making login with third-party providers into Vikunja a lot easier than before.
+
+Contributed in [#2340](https://github.com/go-vikunja/vikunja/pull/2340) (quick entry) and [#2500](https://github.com/go-vikunja/vikunja/pull/2500) (desktop OAuth flow).
+
+### Vikunja is now a login provider
+
+To make the new desktop and app login flow work (and to open the door for other apps), Vikunja can now act as an OAuth 2.0 login provider. This means other apps can now send users to Vikunja to log in the same way you'd log into a third-party site with your Google or GitHub account. You approve the sign-in once, the other app gets a token, and that's it.
+
+The desktop app and [Android app](https://github.com/go-vikunja/app) are the first things to use this, but the same flow is available for anything else — scripts, third-party clients, integrations — as long as they can do OAuth.
+
+Check out the [OAuth authorization server docs](/docs/oauth-server) for the details. Contributed in [#2308](https://github.com/go-vikunja/vikunja/pull/2308).
+
+### WeKan and generic CSV imports
+
+Two new migration sources this release.
+
+**WeKan** boards can now be imported directly by uploading the board's JSON export. Projects, tasks, labels, buckets, and attachments all come across in one go. There's a WeKan entry on the migration page and a dedicated logo to go with it. Contributed in [#2548](https://github.com/go-vikunja/vikunja/pull/2548).
+
+Alongside that, there's a new **generic CSV import**. Upload a CSV, point each column at the Vikunja field it matches (title, description, due date, labels, and so on), optionally skip a few header rows, and Vikunja creates the tasks for you. It's the escape hatch for anything that doesn't have a dedicated migrator: export to CSV from whatever app you're leaving, map the columns, done. Contributed in [#1941](https://github.com/go-vikunja/vikunja/pull/1941).
+
+### A proper sort popup for the list view
+
+The list view finally has a proper sort popup. Click the sort button in the header, pick a field and a direction, and your choice gets saved to the URL, so you can bookmark or share a specific sort order with someone else. This was one of the longer-standing UX gaps for list-heavy projects.
+
+### Change the bucket from the task detail view
+
+If you've ever wanted to move a task to a different Kanban bucket without leaving the task detail view, you can now do exactly that: there's a bucket picker right below the task title.
+
+Thanks to [@larsderidder](https://github.com/larsderidder) for contributing this in [#2233](https://github.com/go-vikunja/vikunja/pull/2233)!
+
+## Other notable additions
+
+A few smaller things that are still worth calling out:
+
+- **API token expiry notifications.** Vikunja now warns you by email and in-app when an API token is about to expire, so you can rotate it before things start breaking. Contributed in [#2483](https://github.com/go-vikunja/vikunja/pull/2483).
+- **Inline PDF viewer for task attachments.** PDF attachments render right inside the task detail view instead of forcing a download-and-open round trip. Contributed in [#2541](https://github.com/go-vikunja/vikunja/pull/2541).
+- **Hide last-viewed projects on the overview page.** If the "last viewed projects" row on the overview isn't your thing, there's now a setting to hide it. Thanks to [@surfingbytes](https://github.com/surfingbytes) for contributing this in [#2429](https://github.com/go-vikunja/vikunja/pull/2429)!
+- **CalDAV access with API tokens.** You can now sign into CalDAV clients with a scoped API token instead of a dedicated CalDAV password. There's a new `caldav` permission group for API tokens and a small hint in the CalDAV settings page explaining how to use it. This will eventually replace the current CalDAV-Tokens. Contributed in [#2484](https://github.com/go-vikunja/vikunja/pull/2484).
+- **Clearer CalDAV token UX.** The wording around CalDAV tokens on the settings page got a rewrite to make it clearer what's going on and what you're supposed to do. Thanks to [@milzer](https://github.com/milzer) for contributing this in [#2476](https://github.com/go-vikunja/vikunja/pull/2476)!
+- **Rotating home greetings.** The greeting on the home page now rotates through a per-user daily pool, so you get a little more variety each day without the text changing every time you refresh. Contributed in [#2544](https://github.com/go-vikunja/vikunja/pull/2544).
+- **Real-time notification updates.** Notifications now come in over a WebSocket connection instead of polling every few seconds, so notifications show up in the list in browser as soon as they happen. This lays the groundwork for real-time task updates in the future. Stay tuned for that! Contributed in [#2199](https://github.com/go-vikunja/vikunja/pull/2199).
+
+## Fixes and improvements
+
+A handful of bug fixes worth calling out specifically:
+
+- **Repeating tasks on the Kanban board.** When you marked a repeating task as done on the Kanban board, the new copy would stay in whatever bucket the old one was in. Sometimes this was the doing bucket, which does not make much sense. Repeating tasks now go back to the default bucket when they respawn. Thanks to [@LegeDoos](https://github.com/LegeDoos) for [reporting this in #2573](https://github.com/go-vikunja/vikunja/issues/2573) and fixed in [#2574](https://github.com/go-vikunja/vikunja/pull/2574).
+- **Second webhooks never firing.** If a project had several webhooks and the first one failed, none of the others would ever fire. Each webhook is now delivered independently, so one broken endpoint can't silently take out the rest. Thanks to [@Maavrik](https://github.com/Maavrik) for [reporting this in #2569](https://github.com/go-vikunja/vikunja/issues/2569) and fixed in [#2572](https://github.com/go-vikunja/vikunja/pull/2572).
+- **Gantt chart reliability.** The Gantt chart got a batch of fixes: the date picker now renders above the chart instead of behind it ([#2525](https://github.com/go-vikunja/vikunja/pull/2525)), the chart fills the viewport width for narrow date ranges ([#2525](https://github.com/go-vikunja/vikunja/pull/2525)), and the date range no longer resets when you update a task ([#2524](https://github.com/go-vikunja/vikunja/pull/2524)). Closing the task modal from a Gantt view also preserves your query parameters, so the chart stays where you left it.
+- **Subtasks in saved filter views.** Subtasks now show up in saved filter views regardless of whether their parent matches the filter, so you stop losing track of children when the parent is hidden ([#2528](https://github.com/go-vikunja/vikunja/pull/2528)).
+- **Archived child projects.** A child project's archived state is now correctly checked and propagated from the parent, instead of being silently ignored ([#2407](https://github.com/go-vikunja/vikunja/pull/2407), [#2446](https://github.com/go-vikunja/vikunja/pull/2446)).
+- **CalDAV collection tags and sync tokens.** CalDAV collections now carry proper tags and sync tokens so sync-aware clients can do incremental syncs instead of fetching everything every time. Thanks to [@surfingbytes](https://github.com/surfingbytes) for contributing this in [#2482](https://github.com/go-vikunja/vikunja/pull/2482)!
+- On the configuration side, there's a new deprecation: the `service.jwtsecret` config key has been renamed to `service.secret`. The old key still works, so this is not a breaking change, but you'll see a deprecation warning in the logs until you rename it.
+
+## New to Vikunja?
+
+Vikunja is the open-source, self-hostable to-do app.
+It lets you organize all kinds of things, from your shopping list to a multi-month project with multiple team members.
+Different ways to view, filter and share your tasks make this a breeze.
+
+Check out [the features page](https://vikunja.io/features) to learn more about all of its features.
+
+## How to Upgrade
+
+To get the upgrade, simply replace the Vikunja binary with the new release from the [downloads page](https://dl.vikunja.io/vikunja/v2.3.0/) or pull the `:latest` docker image.
+
+You can also check out [the update docs](/docs/installing#updating) for more information about the process.
+
+## Closing
+
+As usual, you can find the full changelog [in the GitHub repo](https://github.com/go-vikunja/vikunja/blob/main/CHANGELOG.md#230---2026-04-09).
+
+If you have any questions about this release, please reach out either [in the community forum](https://community.vikunja.io), [Bluesky](https://bsky.app/profile/vikunja.io), or [Mastodon](https://social.linux.pizza/@vikunja).
+
+Thank you for using Vikunja, and I look forward to bringing you more enhancements in future updates!
