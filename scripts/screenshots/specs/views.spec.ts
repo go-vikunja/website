@@ -112,6 +112,47 @@ test.describe('Views screenshots', () => {
     await screenshot('views-kanban', content)
   })
 
+  test('List view sort popup', async ({authenticatedPage: page, screenshot}) => {
+    const {project, views} = await createPopulatedProject()
+
+    await page.goto(`/projects/${project.id}/${views.list.id}`)
+    await page.waitForLoadState('networkidle')
+    await expect(page.locator('.tasks')).toBeVisible()
+
+    // Open the sort popup by clicking the Sort button in the list header.
+    const sortButton = page.locator('.filter-container button').filter({hasText: 'Sort'}).first()
+    await expect(sortButton).toBeVisible()
+    await sortButton.click()
+
+    // Wait for the popup content to render.
+    const sortPopup = page.locator('.sort-popup').first()
+    await expect(sortPopup).toBeVisible()
+
+    // Capture a clip that includes the sort button and the popup beneath it.
+    const buttonBox = await sortButton.boundingBox()
+    const popupBox = await sortPopup.boundingBox()
+    if (buttonBox && popupBox) {
+      const viewport = page.viewportSize()!
+      const left = Math.max(0, Math.min(buttonBox.x, popupBox.x) - 20)
+      const top = Math.max(0, buttonBox.y - 20)
+      const right = Math.max(
+        buttonBox.x + buttonBox.width,
+        popupBox.x + popupBox.width,
+      ) + 20
+      const bottom = popupBox.y + popupBox.height + 20
+      await screenshot('views-list-sort-popup', page, {
+        clip: {
+          x: left,
+          y: top,
+          width: Math.min(viewport.width - left, right - left),
+          height: Math.min(viewport.height - top, bottom - top),
+        },
+      })
+    } else {
+      await screenshot('views-list-sort-popup', page)
+    }
+  })
+
   test('Kanban bucket three-dot menu', async ({authenticatedPage: page, screenshot}) => {
     const {project, views} = await createPopulatedProject({withKanban: true})
 
