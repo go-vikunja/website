@@ -44,33 +44,47 @@ test.describe('Desktop surface screenshots', () => {
   })
 
   test('Quick-entry window', async ({authenticatedPage: page, screenshot}) => {
-    // Match the real Electron quick-entry window dimensions. The frameless
-    // BrowserWindow starts at 680x56 and grows as content renders; a bit
-    // of extra height keeps the parsed preview and results visible.
-    await page.setViewportSize({width: 680, height: 420})
-
+    // The real Electron quick-entry window starts at 680x56 (see
+    // QUICK_ENTRY_COLLAPSED_HEIGHT in desktop/main.js) and then resizes to
+    // fit the content via a ResizeObserver on the .card.quick-actions
+    // element (see QuickActions.vue → window.quickEntry?.resize). In
+    // Playwright there's no IPC bridge, so we start with a slightly taller
+    // viewport, let the content render, measure the natural height of the
+    // .action-input row and then shrink the viewport to match.
+    await page.setViewportSize({width: 680, height: 400})
     await page.goto('/?mode=quick-add')
     await page.waitForLoadState('networkidle')
+    await page.waitForTimeout(1000)
 
-    // The overlay content is rendered inside a teleported modal dialog.
-    // The .quick-add-overlay div itself is an empty 0-size element, so
-    // target the .card.quick-actions inside the dialog instead.
     const overlay = page.locator('.card.quick-actions').first()
     await expect(overlay).toBeVisible()
 
-    // Type a task with Quick Add Magic so the parsed preview is visible.
-    // The input has class "input" but no explicit type attribute.
+    // Type a task with Quick Add Magic syntax. Use keyboard events so the
+    // input's @keyup handlers fire (input.fill() would bypass them).
     const input = page.locator('.card.quick-actions .action-input input.input').first()
     await expect(input).toBeVisible()
-    await input.fill('Buy groceries tomorrow !2')
+    await input.click()
+    await page.keyboard.type('Buy groceries tomorrow !2', {delay: 30})
     await page.waitForTimeout(400)
 
-    // Capture the overlay as a transparent PNG. The real Electron window
-    // is a frameless, transparent popup, so omitBackground matches what
-    // the user actually sees and lets the screenshot sit cleanly on any
-    // help-page background.
+    // Measure the natural content height (matches what Electron's
+    // ResizeObserver would send back to resize the BrowserWindow).
+    const contentHeight = await page.evaluate(() => {
+      const el = document.querySelector('.card.quick-actions .action-input') as HTMLElement | null
+      return el?.scrollHeight ?? 60
+    })
+
+    // Shrink the viewport to the natural content height (+ a small margin
+    // for the card's own padding) so the card is no longer stretched by
+    // the outer modal container.
+    await page.setViewportSize({width: 680, height: contentHeight + 12})
+    await page.waitForTimeout(300)
+
+    // Capture as a transparent PNG. The real Electron window is frameless
+    // and transparent, so omitBackground matches what the user actually
+    // sees and lets the screenshot sit cleanly on any help-page background.
     await screenshot('desktop-quick-entry', overlay, {
-      padding: 8,
+      padding: 0,
       omitBackground: true,
     })
   })
