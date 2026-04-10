@@ -52,11 +52,15 @@ test.describe('Desktop surface screenshots', () => {
     await page.goto('/?mode=quick-add')
     await page.waitForLoadState('networkidle')
 
-    const overlay = page.locator('.quick-add-overlay, .quick-actions').first()
+    // The overlay content is rendered inside a teleported modal dialog.
+    // The .quick-add-overlay div itself is an empty 0-size element, so
+    // target the .card.quick-actions inside the dialog instead.
+    const overlay = page.locator('.card.quick-actions').first()
     await expect(overlay).toBeVisible()
 
     // Type a task with Quick Add Magic so the parsed preview is visible.
-    const input = page.locator('.quick-actions input[type="text"]').first()
+    // The input has class "input" but no explicit type attribute.
+    const input = page.locator('.card.quick-actions .action-input input.input').first()
     await expect(input).toBeVisible()
     await input.fill('Buy groceries tomorrow !2')
     await page.waitForTimeout(400)
