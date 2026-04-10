@@ -132,9 +132,9 @@ Import data from other services. See [Import & Export](/help/import-and-export) 
 
 ## CalDAV
 
-This tab shows the CalDAV details you need to connect external calendar or task apps to Vikunja.
+This tab shows the CalDAV details you need to connect external calendar or task apps to Vikunja. You can either generate a dedicated CalDAV token here, or use an [API token](#api-tokens) that includes the **CalDAV** permission.
 
-See [CalDAV](/help/caldav) for full details on supported properties, URLs, and client compatibility.
+See [CalDAV](/help/caldav) for full details on supported properties, URLs, client compatibility, and how to authenticate with an API token.
 
 ## API Tokens
 
@@ -144,6 +144,8 @@ When creating a token, you can:
 
 - Give it a descriptive **title**
 - Choose **specific permissions** to limit what the token is allowed to do
+
+One of the available permission groups is **CalDAV > Access**. A token with this permission can be used as the password when connecting a [CalDAV](/help/caldav) client, as an alternative to generating a separate CalDAV token. Tokens with the CalDAV permission group can still be scoped to other permissions as well, so a single token can cover both API automation and CalDAV sync.
 
 <Callout type="info">
 The token value is only shown once, immediately after creation. Vikunja does not store the token in plaintext, so you must copy and save it right away. If you lose it, you will need to create a new token.
