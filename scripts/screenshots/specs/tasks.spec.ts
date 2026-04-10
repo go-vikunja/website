@@ -232,4 +232,47 @@ test.describe('Task screenshots', () => {
       await page.mouse.up()
     }
   })
+
+  test('Kanban bucket picker in task detail view', async ({authenticatedPage: page, screenshot}) => {
+    // The bucket picker only shows when the task's project has a manual
+    // Kanban view. createPopulatedProject seeds one by default.
+    const {tasks} = await createPopulatedProject({
+      withLabels: false,
+      withAssignees: false,
+      withKanban: true,
+    })
+
+    await page.goto(`/tasks/${tasks[0].id}`)
+    await page.waitForLoadState('networkidle')
+    await expect(page.locator('.task-view')).toBeVisible()
+
+    // The bucket picker renders inside the breadcrumb subtitle, as a
+    // BaseButton with the class .bucket-name.
+    const bucketButton = page.locator('.task-view h6.subtitle .bucket-name').first()
+    await expect(bucketButton).toBeVisible()
+    await bucketButton.click()
+
+    // Wait for the dropdown menu with bucket options to render.
+    const bucketDropdown = page.locator('.dropdown-menu .dropdown-content').filter({hasText: 'To Do'}).first()
+    await expect(bucketDropdown).toBeVisible()
+
+    // Capture a clip around the breadcrumb subtitle with room underneath so
+    // the open dropdown (which is positioned below the button) is included.
+    const subtitle = page.locator('.task-view h6.subtitle').first()
+    const subtitleBox = await subtitle.boundingBox()
+    if (subtitleBox) {
+      const viewport = page.viewportSize()!
+      const clipX = Math.max(0, subtitleBox.x - 20)
+      await screenshot('tasks-kanban-bucket-picker', page, {
+        clip: {
+          x: clipX,
+          y: Math.max(0, subtitleBox.y - 20),
+          width: Math.min(viewport.width - clipX, 720),
+          height: 260,
+        },
+      })
+    } else {
+      await screenshot('tasks-kanban-bucket-picker', page)
+    }
+  })
 })
