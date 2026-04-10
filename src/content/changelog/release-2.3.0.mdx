@@ -78,7 +78,7 @@ The Vikunja-to-Vikunja import trusted the file size listed in the import's own m
 
 For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-qh78-rvg3-cv54). Thanks to [@adrgs](https://github.com/adrgs) for reporting this!
 
-### Scoped API token could delete project backgrounds (GHSA-v479-vf79-mg83)
+### Scoped API token could delete project backgrounds (CVE-2026-40103)
 
 Scoped API tokens are supposed to only do what you scope them to. A mistake in the permission matcher meant that a token which was only supposed to read a project's background could also delete it. Scopes now pin both the path and the HTTP method, so read-only tokens stay read-only.
 
