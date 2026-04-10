@@ -1,0 +1,60 @@
+---
+title: Desktop App
+slug: desktop
+description: >-
+  Sign in, use the quick-entry window, the system tray, and command-line flags
+  in the Vikunja desktop app.
+---
+import Callout from '../../components/Callout.astro';
+
+Vikunja has a dedicated desktop application for Linux, macOS, and Windows. For download and installation instructions, see [Desktop Packages](/docs/setup/desktop).
+
+## Logging in
+
+<Callout type="info">
+The OAuth-based desktop login is available from Vikunja **2.3.0** onwards.
+</Callout>
+
+The first time you open the desktop app, you'll be asked to pick which server to connect to:
+
+- **Vikunja Cloud:** connect to the hosted [Vikunja Cloud](https://vikunja.cloud) service.
+- **Try Demo:** connect to `try.vikunja.io`, the public demo instance.
+- **Custom Server:** enter the URL of your own self-hosted Vikunja instance.
+
+After you pick a server, the desktop app opens your browser to sign in. If your instance uses an external login provider (for example a single sign-on system), you can sign in with it here as well. Once you approve the sign-in, the browser hands you back to the desktop app and you're signed in.
+
+## Quick-entry window
+
+<Callout type="info">
+The quick-entry window is available from Vikunja **2.3.0** onwards.
+</Callout>
+
+The desktop app has a dedicated **quick-entry window**: a small popup you can open from anywhere on your system to add a task without first switching to the main Vikunja window. It's the same quick-entry overlay you can already open from inside Vikunja with `Ctrl` / `Cmd` + `K` — the desktop app just makes it available as a standalone, always-on-top window so you can reach it even when Vikunja isn't focused.
+
+### Opening the popup
+
+Press the global shortcut to open the popup. The default is `Ctrl` + `Shift` + `A` (or `Cmd` + `Shift` + `A` on macOS).
+
+You can change the shortcut in **Settings > General**, under the Desktop section. Click the shortcut recorder and press the key combination you want to use.
+
+You can also open the popup from the [system tray](#system-tray) or by launching the app with the [`--quick-entry`](#command-line-flags) flag.
+
+### Creating a task
+
+The popup uses the same quick-entry interface as the [dashboard quick-add bar](/help/dashboard#quick-add-bar), so you can use [Quick Add Magic](/help/quick-add-magic) to set due dates, labels, priorities, assignees, and the target project while you type.
+
+- **Enter** creates the task and closes the popup.
+- **`Ctrl`** / **`Cmd`** + **Enter** creates the task and opens it in the main Vikunja window.
+- **Esc** closes the popup without creating a task.
+
+## System tray
+
+The desktop app places an icon in your system tray with these entries:
+
+- **Show Vikunja:** open or focus the main window.
+- **Quick Add Task:** open the [quick-entry window](#quick-entry-window). The current global shortcut is shown next to the menu item.
+- **Quit:** close the app entirely.
+
+## Command-line flags
+
+- `--quick-entry`: launch the app and immediately open the [quick-entry window](#quick-entry-window). If Vikunja is already running, this opens the popup in the existing instance instead of starting a second one. This is useful if you want to bind your own shortcut or launcher to the quick-entry window.
