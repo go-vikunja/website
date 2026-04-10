@@ -7,7 +7,7 @@ export default defineConfig({
   reporter: 'list',
   timeout: 60000,
   use: {
-    baseURL: process.env.BASE_URL || 'http://127.0.0.1:3456',
+    baseURL: process.env.BASE_URL || 'http://localhost:4173',
     screenshot: 'off',
     trace: 'off',
     // Use a consistent viewport for reproducible screenshots
