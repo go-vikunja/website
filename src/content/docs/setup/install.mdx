@@ -34,8 +34,10 @@ This document provides an overview and instructions for the different methods:
 * [Installing from binary (manual)](#install-from-binary)
 * [Build from source](/docs/build-from-sources)
 * [Docker](#docker)
-* [Debian](#debian-packages)
-* [RPM](#rpm)
+* [Debian/Ubuntu](#debian-packages)
+* [RPM (Fedora/RHEL)](#rpm)
+* [Arch Linux](#arch-linux)
+* [Alpine](#alpine)
 * [FreeBSD](#freebsd--freenas)
 * [Kubernetes](/docs/hosting-vikunja-with-k8s)
 * [Ansible](#ansible)
@@ -199,9 +201,26 @@ Check out the [docker examples](/docs/full-docker-example) for more advanced con
 
 ## Debian packages
 
-Vikunja is available as deb package for installation on debian-like systems.
+Vikunja is available as a deb package for installation on Debian-like systems.
 
-To install these, grab a `.deb` file from [the download page](https://dl.vikunja.io/vikunja/) and run
+### Via apt repository
+
+```sh
+# Import the GPG signing key
+curl -fsSL https://dl.vikunja.io/repos/gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/vikunja.gpg
+
+# Add the repository
+echo "deb [signed-by=/usr/share/keyrings/vikunja.gpg] https://dl.vikunja.io/repos/apt stable main" \
+  | sudo tee /etc/apt/sources.list.d/vikunja.list
+
+sudo apt update && sudo apt install vikunja
+```
+
+Replace `stable` with `unstable` to track builds from the main development branch.
+
+### Via direct download
+
+Grab a `.deb` file from [the download page](https://dl.vikunja.io/vikunja/) and run:
 
 ```sh
 dpkg -i vikunja.deb
@@ -217,13 +236,88 @@ You must either set [`service.publicurl`](/docs/config-options#1-service-publicu
 
 ## RPM
 
-Vikunja is available as rpm package for installation on Fedora, CentOS and others.
+Vikunja is available as an rpm package for installation on Fedora, CentOS, RHEL and others.
 
-To install these, grab a `.rpm` file from [the download page](https://dl.vikunja.io/vikunja) and run
+### Via dnf/yum repository
+
+```sh
+sudo tee /etc/yum.repos.d/vikunja.repo <<'EOF'
+[vikunja]
+name=Vikunja
+baseurl=https://dl.vikunja.io/repos/rpm/stable/$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://dl.vikunja.io/repos/gpg.key
+EOF
+
+sudo dnf install vikunja
+```
+
+Replace `stable` with `unstable` in the `baseurl` to track builds from the main development branch.
+
+### Via direct download
+
+Grab a `.rpm` file from [the download page](https://dl.vikunja.io/vikunja) and run:
 
 ```sh
 rpm -i vikunja.rpm
 ```
+
+To configure Vikunja, use the config file in `/etc/vikunja/config.yml`.
+
+<Callout type="warning">
+The default configuration has CORS enabled, which requires a public URL to be set.
+You must either set [`service.publicurl`](/docs/config-options#1-service-publicurl) in your config file to the URL where Vikunja will be reachable, or disable CORS by setting [`cors.enable`](/docs/config-options#1-cors-enable) to `false`.
+</Callout>
+
+## Arch Linux
+
+Vikunja provides a pacman repository for Arch Linux.
+
+Add the following to `/etc/pacman.conf`:
+
+```ini
+[vikunja]
+Server = https://dl.vikunja.io/repos/pacman/stable/$arch
+```
+
+Then import and locally sign the GPG key:
+
+```sh
+sudo pacman-key --recv-keys FF054DACD908493A
+sudo pacman-key --lsign-key FF054DACD908493A
+```
+
+Finally, install Vikunja:
+
+```sh
+sudo pacman -Sy vikunja
+```
+
+Replace `stable` with `unstable` to track builds from the main development branch.
+
+To configure Vikunja, use the config file in `/etc/vikunja/config.yml`.
+
+<Callout type="warning">
+The default configuration has CORS enabled, which requires a public URL to be set.
+You must either set [`service.publicurl`](/docs/config-options#1-service-publicurl) in your config file to the URL where Vikunja will be reachable, or disable CORS by setting [`cors.enable`](/docs/config-options#1-cors-enable) to `false`.
+</Callout>
+
+## Alpine
+
+Vikunja provides an Alpine package repository.
+
+```sh
+# Add the APK signing key
+wget -O /etc/apk/keys/vikunja.rsa.pub https://dl.vikunja.io/repos/apk/key.rsa.pub
+
+# Add the repository
+echo "https://dl.vikunja.io/repos/apk/stable/main" >> /etc/apk/repositories
+
+apk update && apk add vikunja
+```
+
+Replace `stable` with `unstable` to track builds from the main development branch.
 
 To configure Vikunja, use the config file in `/etc/vikunja/config.yml`.
 
