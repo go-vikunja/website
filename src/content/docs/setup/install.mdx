@@ -203,6 +203,10 @@ Check out the [docker examples](/docs/full-docker-example) for more advanced con
 
 Vikunja is available as a deb package for installation on Debian-like systems.
 
+<Callout type="info">
+Package repositories are only available from Vikunja **2.4.0** onwards. The `unstable` channel is available now.
+</Callout>
+
 ### Via apt repository
 
 ```sh
@@ -216,8 +220,7 @@ echo "deb [signed-by=/usr/share/keyrings/vikunja.gpg] https://dl.vikunja.io/repo
 sudo apt update && sudo apt install vikunja
 ```
 
-Replace `stable` with `unstable` to track builds from the main development branch. The `unstable` channel is available now; `stable` packages are published starting with Vikunja 2.4.0.
-
+Replace `stable` with `unstable` to track builds from the main development branch.
 ### Via direct download
 
 Grab a `.deb` file from [the download page](https://dl.vikunja.io/vikunja/) and run:
@@ -253,8 +256,7 @@ EOF
 sudo dnf install vikunja
 ```
 
-Replace `stable` with `unstable` in the `baseurl` to track builds from the main development branch. The `unstable` channel is available now; `stable` packages are published starting with Vikunja 2.4.0.
-
+Replace `stable` with `unstable` in the `baseurl` to track builds from the main development branch.
 ### Via direct download
 
 Grab a `.rpm` file from [the download page](https://dl.vikunja.io/vikunja) and run:
@@ -294,8 +296,7 @@ Finally, install Vikunja:
 sudo pacman -Sy vikunja
 ```
 
-Replace `stable` with `unstable` to track builds from the main development branch. The `unstable` channel is available now; `stable` packages are published starting with Vikunja 2.4.0.
-
+Replace `stable` with `unstable` to track builds from the main development branch.
 To configure Vikunja, use the config file in `/etc/vikunja/config.yml`.
 
 <Callout type="warning">
@@ -317,8 +318,7 @@ echo "https://dl.vikunja.io/repos/apk/stable/main" >> /etc/apk/repositories
 apk update && apk add vikunja
 ```
 
-Replace `stable` with `unstable` to track builds from the main development branch. The `unstable` channel is available now; `stable` packages are published starting with Vikunja 2.4.0.
-
+Replace `stable` with `unstable` to track builds from the main development branch.
 To configure Vikunja, use the config file in `/etc/vikunja/config.yml`.
 
 <Callout type="warning">
