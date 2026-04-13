@@ -120,7 +120,7 @@ Check out the [OAuth authorization server docs](/docs/oauth-server) for the deta
 
 Two new migration sources this release.
 
-**WeKan** boards can now be imported directly by uploading the board's JSON export. Projects, tasks, labels, buckets, and attachments all come across in one go. There's a WeKan entry on the migration page and a dedicated logo to go with it. Contributed in [#2548](https://github.com/go-vikunja/vikunja/pull/2548).
+**WeKan** boards can now be imported directly by uploading the board's JSON export. Tasks, labels, and buckets all come across in one go. There's a WeKan entry on the migration page and a dedicated logo to go with it. Contributed in [#2548](https://github.com/go-vikunja/vikunja/pull/2548).
 
 Alongside that, there's a new **generic CSV import**. Upload a CSV, point each column at the Vikunja field it matches (title, description, due date, labels, and so on), optionally skip a few header rows, and Vikunja creates the tasks for you. It's the escape hatch for anything that doesn't have a dedicated migrator: export to CSV from whatever app you're leaving, map the columns, done. Contributed in [#1941](https://github.com/go-vikunja/vikunja/pull/1941).
 
