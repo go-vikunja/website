@@ -14,8 +14,8 @@ const pricingFaqs = [
         answer: 'The same features, minus the ops work. We handle hosting, backups, updates, and TLS. You get a managed instance hosted in the EU, so you can focus on your tasks instead of your infrastructure.',
     },
     {
-        question: 'Who is the Enterprise plan for?',
-        answer: 'Teams that need a dedicated instance, a GDPR data processing agreement, admin tools to manage users, or the option to run Vikunja on their own server with our support. You don\'t need 500 employees to unlock these features \u2014 they\'re available at any team size.',
+        question: 'What is Vikunja Pro?',
+        answer: 'Pro adds features like an admin panel, audit logs, and time tracking to your Vikunja instance, self-hosted or cloud. Plans start at Family (up to 5 users) and go up to Enterprise (dedicated instance, GDPR data processing agreement, invoicing). [Learn more](/pro).',
     },
     {
         question: 'Can I try before I buy?',
@@ -45,7 +45,7 @@ const pricingFaqs = [
         <Plans />
 
         <section class="mt-24 mb-16">
-            <h2 class="font-display text-3xl text-center mb-12">Self-Hosted vs. Cloud vs. Enterprise</h2>
+            <h2 class="font-display text-3xl text-center mb-12">Self-Hosted vs. Cloud vs. Pro</h2>
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
@@ -53,7 +53,7 @@ const pricingFaqs = [
                             <th class="py-3 px-4 font-display text-lg"></th>
                             <th class="py-3 px-4 font-display text-lg">Self-Hosted (Free)</th>
                             <th class="py-3 px-4 font-display text-lg">Cloud</th>
-                            <th class="py-3 px-4 font-display text-lg">Enterprise</th>
+                            <th class="py-3 px-4 font-display text-lg"><a href="/pro" class="underline">Pro</a></th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-700 dark:text-gray-300">
@@ -109,43 +109,43 @@ const pricingFaqs = [
                             <td class="py-3 px-4 font-medium">Priority email support</td>
                             <td class="py-3 px-4">&mdash;</td>
                             <td class="py-3 px-4">Organization plan</td>
-                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">Business & Enterprise</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Admin panel</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4">All Pro plans</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Audit logs</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4">All Pro plans</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Time tracking</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4">All Pro plans</td>
                         </tr>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">Dedicated instance</td>
                             <td class="py-3 px-4">&mdash;</td>
                             <td class="py-3 px-4">&mdash;</td>
-                            <td class="py-3 px-4">Yes</td>
-                        </tr>
-                        <tr class="border-b border-gray-100 dark:border-gray-800">
-                            <td class="py-3 px-4 font-medium">Admin interface</td>
-                            <td class="py-3 px-4">&mdash;</td>
-                            <td class="py-3 px-4">&mdash;</td>
-                            <td class="py-3 px-4">Yes</td>
-                        </tr>
-                        <tr class="border-b border-gray-100 dark:border-gray-800">
-                            <td class="py-3 px-4 font-medium">Bring your own server</td>
-                            <td class="py-3 px-4">&mdash;</td>
-                            <td class="py-3 px-4">&mdash;</td>
-                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">Enterprise</td>
                         </tr>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">GDPR data processing agreement</td>
                             <td class="py-3 px-4">&mdash;</td>
                             <td class="py-3 px-4">&mdash;</td>
-                            <td class="py-3 px-4">Yes</td>
-                        </tr>
-                        <tr class="border-b border-gray-100 dark:border-gray-800">
-                            <td class="py-3 px-4 font-medium">Unlimited attachment storage</td>
-                            <td class="py-3 px-4">&mdash;</td>
-                            <td class="py-3 px-4">&mdash;</td>
-                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">Enterprise</td>
                         </tr>
                         <tr>
                             <td class="py-3 px-4 font-medium">Team training</td>
                             <td class="py-3 px-4">&mdash;</td>
                             <td class="py-3 px-4">&mdash;</td>
-                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">Enterprise</td>
                         </tr>
                     </tbody>
                 </table>
