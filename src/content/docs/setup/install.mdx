@@ -294,7 +294,7 @@ Server = https://dl.vikunja.io/repos/pacman/stable/$arch
 Then import and locally sign the GPG key:
 
 ```sh
-sudo pacman-key --recv-keys FF054DACD908493A
+curl -s https://dl.vikunja.io/repos/gpg.key | sudo pacman-key --add -
 sudo pacman-key --lsign-key FF054DACD908493A
 ```
 
