@@ -6,7 +6,7 @@ import FAQSection from '../components/FAQSection.astro'
 const enterpriseFaqs = [
     {
         question: 'Is this open core?',
-        answer: 'No. Everything is AGPLv3. There\'s no dual-licensing, no "community edition" with missing features, no source-available bait-and-switch. The code is the code.',
+        answer: 'No. The existing Vikunja stays exactly as it is — nothing is being taken away or locked behind a paywall. Enterprise adds new features (like audit logs and an admin panel) and services (support, SLAs, compliance) on top. All of it is AGPLv3.',
     },
     {
         question: 'What if I stop paying?',
@@ -30,7 +30,7 @@ const enterpriseFaqs = [
     },
     {
         question: 'How is this different from Vikunja Cloud?',
-        answer: 'Vikunja Cloud is shared hosting for individuals and small teams. Enterprise gives you a dedicated instance (managed by us or on your server), admin tooling, audit logs, granular permissions, an SLA, and a GDPR data processing agreement. Different needs, different offering.',
+        answer: 'Vikunja Cloud is shared hosting for individuals and small teams. Enterprise gives you a dedicated instance (managed by us or on your server), admin tooling, audit logs, time tracking, an SLA, and a GDPR data processing agreement. Different needs, different offering.',
     },
 ]
 ---
@@ -70,8 +70,9 @@ const enterpriseFaqs = [
                 </p>
                 <p class="mt-4">
                     That's what Vikunja Enterprise is.
-                    It's not a different product. It's the same Vikunja —
-                    with support, compliance, and admin tooling wrapped around it.
+                    The same Vikunja you already know — plus features like audit logs, an admin panel,
+                    and time tracking that companies need, along with support, compliance paperwork,
+                    and someone to call.
                 </p>
             </div>
         </section>
@@ -214,11 +215,10 @@ const enterpriseFaqs = [
                     </p>
                 </div>
                 <div>
-                    <h3 class="font-display text-lg mb-2">Same codebase</h3>
+                    <h3 class="font-display text-lg mb-2">Enterprise adds, it doesn't take away</h3>
                     <p class="text-gray-700 dark:text-gray-300">
-                        There's no separate enterprise fork.
-                        No features stripped out of the community version.
-                        It's the same Vikunja.
+                        The free version stays exactly as it is. Enterprise adds features
+                        on top — nothing is being removed or paywalled from what's already there.
                     </p>
                 </div>
                 <div>
