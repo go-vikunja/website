@@ -41,6 +41,10 @@ const proFaqs = [
         answer: 'Vikunja Cloud is managed hosting for individuals and small teams. Pro is a feature upgrade for self-hosted and dedicated instances. Cloud integration for Pro features is planned but not available at launch.',
     },
     {
+        question: 'Vikunja is built by one person. What if something happens?',
+        answer: 'Fair question. Vikunja is part of an IT business collective that can take over development and support if needed. And the code is AGPLv3, so even in the worst case, the community can continue the project independently.',
+    },
+    {
         question: 'Do you offer a non-profit discount?',
         answer: 'Yes. If you\'re a registered non-profit, [drop us an email](mailto:hello@vikunja.io) and we\'ll sort it out.',
     },
@@ -72,7 +76,7 @@ const proFaqs = [
                     <div class="mb-6">
                         <h2 class="font-display text-xl mb-1">Family</h2>
                         <p class="text-gray-500 dark:text-gray-400 text-balance">
-                            For households sharing a Vikunja instance.
+                            For homelabbers and households.
                         </p>
                     </div>
                     <div class="font-display text-3xl mb-6">
@@ -84,9 +88,9 @@ const proFaqs = [
                     <ul class="list-disc list-checkmark pl-4 mb-8 text-gray-700 dark:text-gray-300 space-y-1">
                         <li>All Pro features</li>
                         <li>Admin panel</li>
-                        <li>Audit logs</li>
                         <li>Time tracking</li>
                         <li>Up to 5 users</li>
+                        <li>Support the project</li>
                         <li>Email support</li>
                     </ul>
 
@@ -278,6 +282,14 @@ const proFaqs = [
 
         <!-- FAQ -->
         <FAQSection faqs={proFaqs} />
+
+        <!-- Convince link -->
+        <section class="max-w-3xl mx-auto mb-16 text-center px-4">
+            <p class="text-gray-600 dark:text-gray-400">
+                Already using Vikunja at home and want to bring it to work?
+                <a href="/convince" class="underline">Here's everything you need to make the case.</a>
+            </p>
+        </section>
 
         <!-- CTA -->
         <section class="max-w-3xl mx-auto mb-20 text-center px-4">
