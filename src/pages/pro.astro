@@ -1,0 +1,286 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Button from '../components/Button.astro'
+import FAQSection from '../components/FAQSection.astro'
+
+const proFaqs = [
+    {
+        question: 'Is this open core?',
+        answer: 'No. The existing Vikunja stays exactly as it is — nothing is being taken away or locked behind a paywall. Pro adds new features (like audit logs, an admin panel, and time tracking) on top. All of it is AGPLv3.',
+    },
+    {
+        question: 'What if I stop paying?',
+        answer: 'Vikunja itself keeps working — your tasks, projects, and data aren\'t going anywhere. The Pro features (audit logs, admin panel, time tracking) need an active subscription. The core app you use every day does not.',
+    },
+    {
+        question: 'What\'s the difference between Family, Business, and Enterprise?',
+        answer: 'They all include the same Pro features. Family is a flat fee for up to 5 users — for households sharing a Vikunja instance. Business is per-user pricing for companies. Enterprise is for organizations that need invoicing, a dedicated instance, a GDPR data processing agreement, or hands-on support.',
+    },
+    {
+        question: 'Can I self-host with a Pro plan?',
+        answer: 'Yes. All Pro plans work with self-hosted Vikunja. Sign up, get your license key, add it to your instance. That\'s it.',
+    },
+    {
+        question: 'I\'m already self-hosting Vikunja for free. What changes?',
+        answer: 'Nothing has to change. The free self-hosted version isn\'t going anywhere. Pro adds features on top of what\'s already there — it doesn\'t take anything away.',
+    },
+    {
+        question: 'Is this a sell-out?',
+        answer: 'No. This is how the project stays sustainable without VC money, ads, or selling your data. Every subscription funds continued development of the same open-source project everyone uses.',
+    },
+    {
+        question: 'How is this different from Vikunja Cloud?',
+        answer: 'Vikunja Cloud is managed hosting — we run Vikunja for you. Pro is a feature upgrade you can use on any Vikunja instance, including self-hosted. You can combine both: run Vikunja Cloud with a Pro plan.',
+    },
+]
+---
+<Layout title="Vikunja Pro" description="Pro features for Vikunja: audit logs, admin panel, time tracking. For families, teams, and companies. Self-hosted or cloud. AGPLv3 licensed.">
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0">
+
+        <!-- Hero -->
+        <div class="pt-32 pb-8 px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-display text-balance">
+                Vikunja Pro
+            </h1>
+            <p class="mt-6 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-balance">
+                Audit logs, an admin panel, and time tracking for your Vikunja instance.
+                For your family, your team, or your company — on your server or ours.
+            </p>
+            <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                Now in private beta.
+            </p>
+        </div>
+
+        <!-- Plan cards -->
+        <section class="max-w-5xl mx-auto mt-16 px-4">
+            <div class="grid md:grid-cols-3 gap-6">
+
+                <!-- Family -->
+                <article class="border border-gray-100 dark:border-gray-800 rounded-sm p-8 bg-white dark:bg-gray-800 flex flex-col">
+                    <div class="mb-6">
+                        <h2 class="font-display text-xl mb-1">Family</h2>
+                        <p class="text-gray-500 dark:text-gray-400">
+                            For households sharing a Vikunja instance.
+                        </p>
+                    </div>
+                    <div class="font-display text-3xl mb-6">
+                        Flat fee<span class="text-lg font-sans text-gray-500 dark:text-gray-400"> / up to 5 users</span>
+                    </div>
+
+                    <hr class="mb-6"/>
+
+                    <ul class="list-disc list-checkmark pl-4 mb-8 text-gray-700 dark:text-gray-300 space-y-1">
+                        <li>All Pro features</li>
+                        <li>Admin panel</li>
+                        <li>Audit logs</li>
+                        <li>Time tracking</li>
+                        <li>Up to 5 users</li>
+                        <li>Email support</li>
+                    </ul>
+
+                    <div class="mt-auto">
+                        <Button href="https://console.vikunja.io/register">
+                            Join the waitlist
+                        </Button>
+                    </div>
+                </article>
+
+                <!-- Business -->
+                <article class="border-2 border-primary rounded-sm p-8 bg-white dark:bg-gray-800 flex flex-col">
+                    <div class="mb-6">
+                        <h2 class="font-display text-xl mb-1">Business</h2>
+                        <p class="text-gray-500 dark:text-gray-400">
+                            For teams and companies.
+                        </p>
+                    </div>
+                    <div class="font-display text-3xl mb-6">
+                        Per user<span class="text-lg font-sans text-gray-500 dark:text-gray-400"> / month</span>
+                    </div>
+
+                    <hr class="mb-6"/>
+
+                    <ul class="list-disc list-checkmark pl-4 mb-8 text-gray-700 dark:text-gray-300 space-y-1">
+                        <li>All Pro features</li>
+                        <li>Admin panel</li>
+                        <li>Audit logs</li>
+                        <li>Time tracking</li>
+                        <li>Unlimited users</li>
+                        <li>Priority email support</li>
+                    </ul>
+
+                    <div class="mt-auto">
+                        <Button href="https://console.vikunja.io/register">
+                            Join the waitlist
+                        </Button>
+                    </div>
+                </article>
+
+                <!-- Enterprise -->
+                <article class="border border-gray-100 dark:border-gray-800 rounded-sm p-8 bg-white dark:bg-gray-800 flex flex-col">
+                    <div class="mb-6">
+                        <h2 class="font-display text-xl mb-1">Enterprise</h2>
+                        <p class="text-gray-500 dark:text-gray-400">
+                            For organizations that need the full package.
+                        </p>
+                    </div>
+                    <div class="font-display text-3xl mb-6">
+                        Custom
+                    </div>
+
+                    <hr class="mb-6"/>
+
+                    <ul class="list-disc list-checkmark pl-4 mb-8 text-gray-700 dark:text-gray-300 space-y-1">
+                        <li>Everything in Business</li>
+                        <li>Dedicated instance</li>
+                        <li>Bring your own server</li>
+                        <li>GDPR data processing agreement</li>
+                        <li>Team training</li>
+                        <li>Invoicing</li>
+                    </ul>
+
+                    <div class="mt-auto">
+                        <Button href="mailto:hello@vikunja.io">
+                            Get in touch
+                        </Button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- What Pro adds -->
+        <section class="max-w-5xl mx-auto mt-24 px-4">
+            <h2 class="font-display text-3xl text-center mb-12">What Pro adds to Vikunja</h2>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <div class="mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">Admin panel</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        Manage users, teams, and permissions from a central interface.
+                        No more poking at the database.
+                    </p>
+                </div>
+
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <div class="mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">Audit logs</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        Real audit trails you can integrate with external systems.
+                        Compliance-grade, not decorative.
+                    </p>
+                </div>
+
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <div class="mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">Time tracking</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        Track time spent on tasks directly in Vikunja.
+                        No separate tool, no context switching.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Still open source -->
+        <section class="max-w-4xl mx-auto mt-24 px-4">
+            <h2 class="font-display text-3xl text-center mb-12">Still open source. Still yours.</h2>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="font-display text-lg mb-2">Same license</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        AGPLv3. Not "source available." Not "open core."
+                        The real thing. Every line of code, publicly auditable.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-lg mb-2">Pro adds, it doesn't take away</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        The free version stays exactly as it is. Pro adds features
+                        on top — nothing is being removed or paywalled from what's already there.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-lg mb-2">No lock-in</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        If you cancel, the core app keeps running and your data stays yours.
+                        Pro features deactivate, but you're never locked out of your own work.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-lg mb-2">Same community</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        Bug reports, feature requests, and contributions work exactly
+                        the same way. Pro customers don't get a separate roadmap.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-12 max-w-2xl mx-auto text-center">
+                <blockquote class="text-lg italic text-gray-600 dark:text-gray-400">
+                    "I built Vikunja because I believe you should own your tools.
+                    That doesn't change because you want to share it with your family or your team."
+                </blockquote>
+                <p class="mt-4 text-gray-700 dark:text-gray-300">
+                    <strong>Konrad</strong><br/>
+                    <span class="text-sm">Founder of Vikunja</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- Social proof bar -->
+        <section class="max-w-4xl mx-auto mt-24 px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                    <div class="font-display text-2xl">AGPLv3</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Fully open source</div>
+                </div>
+                <div>
+                    <div class="font-display text-2xl">Since 2018</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Actively developed</div>
+                </div>
+                <div>
+                    <div class="font-display text-2xl">EU-built</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Made in Germany</div>
+                </div>
+                <div>
+                    <div class="font-display text-2xl">Bootstrapped</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">Funded by users, not VCs</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <FAQSection faqs={proFaqs} />
+
+        <!-- CTA -->
+        <section class="max-w-3xl mx-auto mb-20 text-center px-4">
+            <h2 class="font-display text-3xl mb-4">Now in private beta.</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 text-balance">
+                Vikunja Pro is currently in private beta.
+                Join the waitlist and I'll be in touch.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Button href="https://console.vikunja.io/register">
+                    Join the waitlist
+                </Button>
+                <Button href="mailto:hello@vikunja.io" class="bg-gray-200! text-gray-800! dark:bg-gray-700! dark:text-gray-200!">
+                    Questions? Get in touch
+                </Button>
+            </div>
+        </section>
+    </main>
+</Layout>
