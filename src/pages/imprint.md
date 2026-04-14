@@ -6,7 +6,7 @@ description: Discover our imprint page for essential legal information, publicat
 
 # Imprint
 
-*This imprint is valid for [vikunja.io](https://vikunja.io) and [vikunja.cloud](https://vikunja.cloud/dashboard).*
+*This imprint is valid for [vikunja.io](https://vikunja.io), [vikunja.cloud](https://vikunja.cloud/dashboard), and [console.vikunja.io](https://console.vikunja.io).*
 
 Konrad Langenberg Software<br/>
 Willy-Brandt-Allee 31A<br/>
