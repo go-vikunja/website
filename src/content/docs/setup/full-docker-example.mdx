@@ -37,6 +37,10 @@ You'll need to do this before running any of the examples on this page.
 
 Vikunja will not try to acquire ownership of the files folder, as that would mean it had to run as root.
 
+<Callout type="info">
+**On macOS:** Docker Desktop handles bind-mount permissions transparently, so the `chown` step is usually not needed — and will fail because the default macOS user has UID `501`, not `1000`. You can safely skip `chown 1000 $PWD/files` on macOS.
+</Callout>
+
 ### Rootless Docker
 
 If you're running Docker in [rootless mode](https://docs.docker.com/engine/security/rootless/), file permissions work differently than with a regular Docker installation.
