@@ -71,7 +71,7 @@ By default, Vikunja will be exposed on port 3456 on the host.
 To change to something different, you'll need to change the `ports` section in the service definition.
 The number before the colon is the host port - This is where you can reach Vikunja from the outside once all is up and running.
 
-You'll need to change the value of the `VIKUNJA_SERVICE_PUBLICURL` environment variable to the public port or hostname where Vikunja is reachable.
+You'll need to change the value of the `VIKUNJA_SERVICE_PUBLICURL` environment variable to the public URL where Vikunja is reachable. If you're accessing Vikunja on a non-standard port (for example via `http://localhost:3456/`), make sure the port is included in the URL — otherwise you'll get an "unauthorized" error when creating your user account.
 
 ## Ensure adequate file permissions
 
@@ -86,6 +86,10 @@ chown 1000 $PWD/files
 ```
 
 If you're using [rootless Docker](/docs/full-docker-example#rootless-docker), see the dedicated section about file permissions in that setup.
+
+<Callout type="info">
+**On macOS:** Docker Desktop handles bind-mount permissions transparently, so the `chown` step is usually not needed — and will fail because the default macOS user has UID `501`, not `1000`. You can safely skip `chown 1000 $PWD/files` on macOS.
+</Callout>
 
 <Callout type="warning">
 Vikunja's Docker image is based on a `scratch` image. This means:
