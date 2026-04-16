@@ -1,0 +1,308 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import CloudOrSelfHosted from '../../components/partials/CloudOrSelfHosted.astro'
+import FAQSection from '../../components/FAQSection.astro'
+
+const faqs = [
+    {
+        question: 'Can I import my WeKan boards into Vikunja?',
+        answer: 'Yes. Export your WeKan board as JSON (board menu > Export board > JSON), then upload it on Vikunja\'s [import page](/help/import-and-export/#importing-from-wekan). Tasks, labels, and buckets all come across in one go.',
+    },
+    {
+        question: 'Does Vikunja have Kanban boards like WeKan?',
+        answer: 'Yes, and more. Vikunja supports [four views](/help/views): List, Kanban, Gantt, and Table. You can switch between them anytime. Same data, different perspective.',
+    },
+    {
+        question: 'Does Vikunja support swimlanes?',
+        answer: 'Vikunja\'s Kanban view uses buckets (columns) that you can create and reorder freely. If you need to organize cards across multiple dimensions, you can use [labels](/help/labels) and [saved filters](/help/saved-filters) to slice your data however you need.',
+    },
+    {
+        question: 'Can I self-host Vikunja on the same server where WeKan runs?',
+        answer: 'Yes. Vikunja runs as a single binary or Docker container. It uses SQLite by default (no separate database server needed), or PostgreSQL/MySQL if you prefer. It\'ll use a fraction of the resources WeKan needs. See the [installation guide](/docs/installing).',
+    },
+    {
+        question: 'What about mobile access?',
+        answer: 'Vikunja works as a progressive web app on any device. You can also access your tasks via [CalDAV](/help/caldav), which means they show up in your phone\'s native calendar and to-do apps.',
+    },
+    {
+        question: 'Will my WeKan data come across cleanly?',
+        answer: 'The importer brings over your tasks, labels, and buckets. You\'ll want to double-check a board or two after import, but in most cases everything lands where you expect it.',
+    },
+]
+---
+<Layout title="Vikunja vs WeKan: A Stable Alternative for Self-Hosters" description="Looking for a WeKan alternative? Vikunja is an open-source, self-hosted task manager with Kanban, Gantt, and table views — plus a built-in WeKan importer to bring your boards over in minutes.">
+    <Fragment slot="head">
+        <script type="application/ld+json" set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Vikunja vs WeKan",
+            "description": "Side-by-side comparison of Vikunja and WeKan for self-hosted task and project management.",
+        })}></script>
+    </Fragment>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0">
+        <div class="pt-32 pb-8 px-4 text-center">
+            <h1 class="text-4xl font-display">
+                Vikunja vs WeKan
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-balance">
+                Looking for a new home for your boards? Here's how they compare.
+            </p>
+        </div>
+
+        <section class="max-w-3xl mx-auto mt-16 text-lg text-gray-700 dark:text-gray-300">
+            <p>
+                WeKan has been one of the go-to open-source Kanban boards for a long time, and for
+                good reason. But the project has been going through a rough stretch. The v8 release
+                introduced CSS changes that
+                <a href="https://github.com/wekan/wekan/issues/6018" target="_blank" rel="nofollow noreferrer noopener" class="underline">broke desktop layouts</a>
+                for many users, and features like
+                <a href="https://github.com/wekan/wekan/issues/6255" target="_blank" rel="nofollow noreferrer noopener" class="underline">SSO</a> and
+                <a href="https://github.com/wekan/wekan/issues/6265" target="_blank" rel="nofollow noreferrer noopener" class="underline">labels</a>
+                have had regressions in recent releases. Maintaining open-source software solo is hard
+                (I know the feeling), and these things happen. But if your team depends on
+                their board every day, you need something stable.
+            </p>
+            <p class="mt-4">
+                I built Vikunja because I wanted a self-hosted task manager I could rely on.
+                It does everything WeKan does and quite a bit more: lists, Kanban, Gantt charts,
+                tables, CalDAV, reminders, and a full REST API. It ships as a single Go binary
+                with SQLite, so it's lightweight to run and straightforward to maintain.
+            </p>
+            <p class="mt-4">
+                There's a <a href="/help/import-and-export/#importing-from-wekan" class="underline">built-in WeKan importer</a>
+                that brings your boards over in minutes. Export your board as JSON in WeKan, upload it
+                in Vikunja, done. Tasks, labels, and buckets come across in one go.
+            </p>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">Why people are looking for alternatives</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8">
+                These are some of the concerns WeKan users have raised on GitHub:
+            </p>
+            <div class="space-y-6">
+                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
+                    "Many of us have end users depending on WeKan daily. When the UI breaks, they flood us with support requests."
+                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
+                        <a href="https://github.com/wekan/wekan/issues/6018#issuecomment-3558873741" target="_blank" rel="nofollow noreferrer noopener" class="underline">GitHub issue #6018</a>
+                    </footer>
+                </blockquote>
+                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
+                    "Latest versions UI is broken [...] and it looks like a samsung smartphone UI or something that is just not professional."
+                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
+                        <a href="https://github.com/wekan/wekan/issues/6066#issuecomment-3745105132" target="_blank" rel="nofollow noreferrer noopener" class="underline">GitHub issue #6066</a>
+                    </footer>
+                </blockquote>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">What changes when you switch</h2>
+            <div class="max-w-3xl text-gray-700 dark:text-gray-300 space-y-6">
+                <div>
+                    <h3 class="font-display text-xl">Updates you can actually install</h3>
+                    <p class="mt-2">
+                        Every Vikunja release has a <a href="/changelog" class="underline">detailed changelog</a>.
+                        Breaking changes are documented before they land. Upgrades don't hang your database
+                        or break your login screen. You stop treating "don't touch it" as an ops strategy.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">Four views, not just Kanban</h3>
+                    <p class="mt-2">
+                        WeKan gives you a Kanban board. Vikunja gives you
+                        <a href="/help/views" class="underline">List, Kanban, Gantt, and Table</a>
+                        on the same data. Your project manager uses Gantt while your developers
+                        use Kanban. Switch between them anytime.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">A clean, consistent UI</h3>
+                    <p class="mt-2">
+                        Vikunja's interface is designed for desktop and mobile alike.
+                        It looks clean, stays consistent across updates, and won't surprise
+                        your team after an upgrade.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">Lightweight to run</h3>
+                    <p class="mt-2">
+                        Vikunja is a single Go binary. No Meteor, no Node.js runtime, no MongoDB.
+                        It runs on SQLite by default and uses around 50 MB of RAM.
+                        It'll happily run on a Raspberry Pi alongside the rest of your homelab.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">CalDAV and a full API</h3>
+                    <p class="mt-2">
+                        <a href="/help/caldav" class="underline">CalDAV support</a> means your tasks
+                        show up in Thunderbird, Apple Reminders, or any CalDAV client.
+                        The <a href="/docs/api-documentation" class="underline">REST API</a> has full OpenAPI docs,
+                        so you can integrate Vikunja into your existing workflows.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-8">Side by side</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th class="py-3 px-4 font-display text-lg"></th>
+                            <th class="py-3 px-4 font-display text-lg">Vikunja</th>
+                            <th class="py-3 px-4 font-display text-lg">WeKan</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700 dark:text-gray-300">
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Open source</td>
+                            <td class="py-3 px-4">AGPLv3</td>
+                            <td class="py-3 px-4">MIT</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Self-hostable</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">Yes</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Views</td>
+                            <td class="py-3 px-4">List, Kanban, Gantt, Table</td>
+                            <td class="py-3 px-4">Kanban only</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Backend</td>
+                            <td class="py-3 px-4">Go (single binary)</td>
+                            <td class="py-3 px-4">Meteor.js / Node.js</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Database</td>
+                            <td class="py-3 px-4">SQLite, PostgreSQL, or MySQL</td>
+                            <td class="py-3 px-4">MongoDB (required)</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">RAM usage</td>
+                            <td class="py-3 px-4">~50 MB typical</td>
+                            <td class="py-3 px-4 text-balance">500 MB+ (maintainer recommends 64 GB for larger installs)</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">CalDAV</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">REST API</td>
+                            <td class="py-3 px-4 text-balance">All functionality available via API</td>
+                            <td class="py-3 px-4">Limited</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Reminders</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Due dates</td>
+                            <td class="py-3 px-4 text-balance">Start date, end date, repeating</td>
+                            <td class="py-3 px-4">Due date only</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium text-balance">Quick add (natural language)</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Assignees</td>
+                            <td class="py-3 px-4">Multiple per task</td>
+                            <td class="py-3 px-4">Multiple per card</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Labels</td>
+                            <td class="py-3 px-4">Global and per-project</td>
+                            <td class="py-3 px-4">Per-board</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Saved filters</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">File attachments</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">Yes</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Link sharing</td>
+                            <td class="py-3 px-4">Yes (read, write, admin)</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">SSO / OIDC</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">Yes (has had regressions recently)</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Webhooks</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">Limited</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">Import from WeKan</td>
+                            <td class="py-3 px-4">Yes (JSON upload)</td>
+                            <td class="py-3 px-4">—</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">Pricing</h2>
+            <p class="text-gray-700 dark:text-gray-300">
+                Both Vikunja and WeKan are free and open source for self-hosting. If you'd rather
+                not manage a server, <a href="/pricing" class="underline">Vikunja Cloud</a> starts at
+                4&nbsp;&euro;/month for personal use and 5&nbsp;&euro;/user/month for teams,
+                hosted on EU infrastructure.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                The bigger difference is operational: Vikunja is a single binary with SQLite,
+                while WeKan requires MongoDB and Node.js, which means more resources on your server.
+                If you're running a homelab or a small VPS, that matters.
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                See <a href="/pricing" class="underline">Vikunja pricing</a> for details.
+            </p>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">How to switch</h2>
+            <p class="text-gray-700 dark:text-gray-300">
+                The whole process takes a few minutes per board:
+            </p>
+            <ol class="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300 mt-4">
+                <li>
+                    <a href="/docs/installing" class="underline">Set up Vikunja</a> (Docker, binary, or
+                    <a href="https://vikunja.cloud/register" class="underline">start a free Cloud trial</a>)
+                </li>
+                <li>In WeKan, export each board as JSON (board menu &gt; Export board &gt; JSON)</li>
+                <li>In Vikunja, go to the import page and upload your JSON files</li>
+                <li>Your tasks, labels, and buckets come across automatically</li>
+            </ol>
+            <p class="text-gray-700 dark:text-gray-300 mt-4 text-balance">
+                Try it with one board first. If it works the way you expect,
+                bring the rest over. Check the <a href="/help/import-and-export/#importing-from-wekan" class="underline">import guide</a>
+                for the full walkthrough.
+            </p>
+        </section>
+
+        <FAQSection faqs={faqs} />
+
+        <div class="pb-20 flex items-center justify-center flex-col text-center">
+            <h2 class="font-display text-3xl mb-4">Give it a try</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-lg mx-auto text-balance">
+                Import one WeKan board and see how it feels. If it works, bring the rest over.
+            </p>
+            <CloudOrSelfHosted />
+        </div>
+    </main>
+</Layout>
