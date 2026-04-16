@@ -21,9 +21,11 @@ Before that, though: the security argument Cal.com made deserves a response on i
 
 ## Security through obscurity, dressed for 2026
 
-TODO integrate Claude mythos und Glasswing
-
 The core claim is that an AI scanning a public codebase can find vulnerabilities faster than defenders can patch them. Therefore: hide the codebase.
+
+Anthropic's [Project Glasswing](https://www.anthropic.com/glasswing), announced in early April 2026, uses a new Claude model to find vulnerabilities in critical open-source software at a pace nothing before could match. The 27-year-old OpenBSD bug Cal.com cited as evidence against open source was found that way. The capability is real.
+
+But Glasswing is [partnered with open-source maintainers](https://www.theregister.com/2026/04/10/project_glasswing/), not run against them. The Linux Foundation is a founding participant. The whole point of feeding an AI the source of critical software is to find and fix bugs faster, which only works if the source is available in the first place. If you close the code, you also close off the defenders using the same tools to help you.
 
 This is security through obscurity. It's a well-known bad idea. The principle the field has held to for over a century, often referred to as [Kerckhoffs's principle](https://en.wikipedia.org/wiki/Kerckhoffs%27s_principle), is that a system should remain secure even when everything about it except the key is public.
 
@@ -47,15 +49,15 @@ In the 2.3.0 release notes I wrote:
 
 That's the part worth emphasising. The reports I've been getting aren't LLM-generated noise. They're from researchers who probably used AI to accelerate their work and then did the actual investigation a responsible disclosure requires. Several have reported multiple issues across several releases. Each report included enough detail to reproduce, fix, and credit.
 
-The curl project's decision to end their bug bounty was about a different problem: unvetted LLM output flooding maintainers with false positives that looked plausible on the surface and fell apart under inspection. That's a real burden and I sympathise with it. But the answer to "flood of bad reports" is better triage and coordination, not closing the source.
+The curl project's earlier decision to end their bug bounty was about a related but different problem: unvetted LLM output flooding maintainers with plausible-looking false positives. That was accurate a year ago. The picture has since shifted. Daniel Stenberg, curl's maintainer, [recently wrote](https://mastodon.social/@bagder/116407367327224765) that "the AI slop security reporting is basically extinct," and that the first quarter of 2026 alone produced more fixed curl vulnerabilities than either 2024 or 2025 on its own. Higher submission rate, higher quality reports, more real bugs and vulnerabilities identified.
 
-TODO: curl bekommt jetzt auch richtig viele high-quality reports rein, nur halt keinen slop mehr, see Daniel Stenbergs Mastodon
+The bottleneck has moved. Stenberg is [explicit about it](https://mastodon.social/@bagder/116402029183500777): "The problem here is not AI. Just good old overloading a few with so much work." That's a capacity and coordination problem. It's fixable, and it doesn't get fixed by closing the source.
 
 I said this at the bottom of the 2.3.0 post and I'll say it again here: I'm happy to get more of these reports. If you're doing a thorough investigation, with or without AI, [reach out through the security process](/security#reporting-a-security-vulnerability) first so we can coordinate timing and disclosure. That's the scale fix. Hiding the code isn't.
 
 ## What would have to happen for Vikunja to close
 
-Here's where it gets concrete. Closing Vikunja isn't a single decision I could just make. Five structural facts would have to change first.
+Here's where it gets concrete. Closing Vikunja isn't a single decision I could just make. Four structural facts would have to change first.
 
 ### Vikunja is AGPL-3 licensed
 
@@ -69,21 +71,11 @@ Vikunja doesn't. When someone sends a pull request to the Vikunja repo, they kee
 
 You can verify this on any pull request: there's no bot-signed CLA check, no agreement link, no terms of contribution beyond the license that's already in the repo.
 
-### Pro is also AGPL-3
-
-TODO pro is not yet published
-
-When I started building a paid tier, the obvious move would have been to keep those features proprietary. That's the standard open-core playbook: free core, closed enterprise layer, eventually the enterprise layer is where all the interesting work happens and the core withers.
-
-I didn't do that. All [Pro feature code](/pro) lives in the same public repo under the same AGPL-3 license as the rest. The license key activates the features so they work out of the box; it doesn't gate source access. You can read every line. You can fork it. What you can't do without the key is sell activations.
-
-This matters for the "could Vikunja close" question because there's no proprietary layer standing by to absorb features. Closing "just the Pro part" isn't an available move, because the Pro part was never closed.
-
 ### No investors
 
 Most relicensing stories have a VC in the third act. The investor needs an exit, the company needs margin, the path to margin runs through capturing self-hosted users, and the license change is the tool.
 
-Vikunja is bootstrapped. There's no investor asking me to optimise for an exit. The people I have to answer to are the users paying for Pro and the contributors whose code is in the repo. Neither group wants Vikunja to close.
+Vikunja is bootstrapped. There's no investor asking me to optimise for an exit. The people I have to answer to are the users paying for [Vikunja Cloud](https://vikunja.cloud) and the contributors whose code is in the repo. Neither group wants Vikunja to close. Any paid tier I build will ship under the same license, in the same public repo.
 
 ### Forks are always possible
 
@@ -93,10 +85,10 @@ The safety net isn't hypothetical. Valkey forked Redis in 2024 and is now the de
 
 ## What this is, and what it isn't
 
-None of this is a guarantee. Any commitment can break. What I can honestly say is that in Vikunja's case, the commitment isn't only mine. It's baked into the license, into the absence of a CLA, into the structure of the Pro tier, and into the right-to-fork that every user already has. Undoing those would be a visible and contested process, not a quiet Monday-morning announcement.
+None of this is a guarantee. Any commitment can break. What I can honestly say is that in Vikunja's case, the commitment isn't only mine. It's baked into the license, into the absence of a CLA, and into the right-to-fork that every user already has. Undoing those would be a visible and contested process, not a quiet Monday-morning announcement.
 
 And I don't want to undo them. Open source is how Vikunja gets the security reports I wrote about above, the contributors who ship features I wouldn't have thought of, and the trust that makes self-hosters comfortable running it on their own infrastructure. Closing would destroy the conditions that make Vikunja work in the first place.
 
-If you want to verify any of this yourself: the [LICENSE file](https://github.com/go-vikunja/vikunja/blob/main/LICENSE) is in the repo, the absence of a CLA is visible in every pull request, and the Pro code sits in the main repo alongside everything else.
+If you want to verify any of this yourself: the [LICENSE file](https://github.com/go-vikunja/vikunja/blob/main/LICENSE) is in the repo, and the absence of a CLA is visible in every pull request.
 
 Vikunja stays open. Here's what that's built on.
