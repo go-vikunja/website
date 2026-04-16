@@ -25,6 +25,7 @@ const changelogCollection = defineCollection({
 		title: z.string(),
 		description: z.string(),
 		date: z.date(),
+		isRelease: z.boolean().optional(),
 	}),
 })
 

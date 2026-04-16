@@ -21,9 +21,13 @@ const post = Astro.props
 async function getNewestEntry() {
 	const changelog = await getCollection('changelog')
 
-	return changelog.reduce((newest, current) => {
-		return new Date(current.data.date) > new Date(newest.data.date) ? current : newest
-	})
+	return changelog
+        .filter(c => c.data.isRelease)
+        .reduce((newest, current) => {
+		    return new Date(current.data.date) > new Date(newest.data.date) 
+                ? current 
+                : newest
+	    })
 }
 
 const newestRelease = await getNewestEntry()
@@ -49,7 +53,7 @@ const description = post.data.description || Astro.props?.frontmatter?.descripti
             <h1 class="font-display text-4xl font-bold">{post.data.title}</h1>
             <p class="text-gray-500">{formatDate(post.data.date)}</p>
 
-			{newestRelease.id !== post.id &&
+			{post.data.isRelease && newestRelease.id !== post.id &&
                     <Callout type="warning" class="mt-6">
                         There has been a <a href={'/changelog'+newestRelease.slug} class="underline!">new release</a> with additional fixes and
                         improvements.
