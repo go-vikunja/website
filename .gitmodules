@@ -1,0 +1,3 @@
+[submodule "marketing"]
+	path = marketing
+	url = git@github.com:go-vikunja/marketing.git
