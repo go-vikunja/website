@@ -1,5 +1,5 @@
 ---
-title: "On Cal.com, AI security reports, and why Vikunja stays open"
+title: "On Cal.com, AI security reports, and why Vikunja can't easily close"
 date: 2026-04-16T12:00:00.000Z
 slug: /vikunja-stays-open
 description: >-
@@ -12,7 +12,7 @@ Cal.com has [announced](https://cal.com/de/blog/cal-com-goes-closed-source-why) 
 
 Every time a project like this closes, I get the same question: could Vikunja do this too? The list of recent examples is long, and the endings are mixed. HashiCorp moved Terraform to the Business Source License in 2023 and was [acquired by IBM](https://techcrunch.com/2025/02/27/ibm-closes-6-4b-hashicorp-acquisition/) in early 2025; Terraform is still BSL. MongoDB has been on [SSPL](https://www.mongodb.com/legal/licensing/server-side-public-license) since 2018 and stayed there. Redis went to SSPL in 2024 and then [back to AGPL-3](https://redis.io/blog/agplv3/) in 2025, after the Valkey fork took over much of its enterprise usage. Elasticsearch made [roughly the same round trip](https://www.elastic.co/blog/elasticsearch-is-open-source-again): SSPL in 2021, AGPL added as an option in 2024, once OpenSearch had built its own ecosystem. And now Cal.com.
 
-To be fair to those companies: making a business on open source is genuinely hard. Elastic, MongoDB, and Redis all watched hyperscalers like AWS repackage their code as managed services, capture most of the revenue, and contribute little back upstream. The license changes weren't made lightly. They were responses to a real structural problem that nobody has solved cleanly. Cal.com's framing is different (they lead with security), but commercial pressure on open-source businesses is always part of the story.
+To be fair to those companies: making a business on open source is genuinely hard. Especially the database products all watched hyperscalers like AWS repackage their code as managed services, capture most of the revenue, and contribute little back upstream. The license changes weren't made lightly. They were responses to a real structural problem that nobody has solved cleanly. Cal.com's framing is different (they lead with security), but commercial pressure on open-source businesses is always part of the story.
 
 I want to answer that honestly. "I promise we won't" is what every founder who eventually did said. And I do believe that at the time they said it, they actually mean it. It's just that the circumstances change, forcing people to take a different path.
 So the question isn't really about intent. It's about what would actually have to happen for Vikunja to close, and whether the answer is comfortable.
@@ -21,15 +21,17 @@ Before that, though: the security argument Cal.com made deserves a response on i
 
 ## Security through obscurity, dressed for 2026
 
+TODO integrate Claude mythos und Glasswing
+
 The core claim is that an AI scanning a public codebase can find vulnerabilities faster than defenders can patch them. Therefore: hide the codebase.
 
-This is security through obscurity. It's a well-known bad idea. The principle the field has held to for over a century, often called Kerckhoffs's principle, is that a system should remain secure even when everything about it except the key is public.
+This is security through obscurity. It's a well-known bad idea. The principle the field has held to for over a century, often referred to as [Kerckhoffs's principle](https://en.wikipedia.org/wiki/Kerckhoffs%27s_principle), is that a system should remain secure even when everything about it except the key is public.
 
 LLMs don't change this. They change the speed, but not the direction. If AI can scan open code and find bugs, it can also run against closed code: through a debugger, through fuzzing a binary, through static analysis of anything that ships to a customer's machine, through the API itself. The bugs don't disappear when the source is hidden. They just don't get found until someone with motivation finds them. Usually the wrong someone, and usually later than would have been useful.
 
 The most instructive example I can offer is one from Vikunja's own release notes. [CVE-2026-28268](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-rfjg-6m84-crj2), shipped as a fix in [Vikunja 2.1.0](/vikunja-v2.1.0-was-released), was a bug where password reset tokens weren't cleaned up after use. Anyone who got hold of a reset link once could keep reusing it. That bug had been in Vikunja since version 0.18.0, released in September 2021. Almost five years of it sitting there in public code.
 
-It got found. Because the code was public, a researcher could look at it, recognise the problem, and report it responsibly. Had Vikunja been closed source, nobody external would have been in a position to catch it. The bug would still be there, and whoever eventually found it wouldn't have been obligated to tell me first.
+It got found. Because the code was public, a researcher could look at it, recognise the problem, and report it responsibly. Had Vikunja been closed source, nobody external would have been in a position to catch it. The bug would still be there, and whoever eventually found it wouldn't have been obligated to tell me first, because the incentive would likely not have been "make this open-source product better".
 
 That's the tradeoff open source actually makes: transparency trades "bugs found later by the wrong people" for "bugs found earlier by the right ones."
 
@@ -47,7 +49,9 @@ That's the part worth emphasising. The reports I've been getting aren't LLM-gene
 
 The curl project's decision to end their bug bounty was about a different problem: unvetted LLM output flooding maintainers with false positives that looked plausible on the surface and fell apart under inspection. That's a real burden and I sympathise with it. But the answer to "flood of bad reports" is better triage and coordination, not closing the source.
 
-I said this at the bottom of the 2.3.0 post and I'll say it again here: I'm happy to get more of these reports. If you're doing a thorough investigation, [reach out through the security process](/security#reporting-a-security-vulnerability) first so we can coordinate timing and disclosure. That's the scale fix. Hiding the code isn't.
+TODO: curl bekommt jetzt auch richtig viele high-quality reports rein, nur halt keinen slop mehr, see Daniel Stenbergs Mastodon
+
+I said this at the bottom of the 2.3.0 post and I'll say it again here: I'm happy to get more of these reports. If you're doing a thorough investigation, with or without AI, [reach out through the security process](/security#reporting-a-security-vulnerability) first so we can coordinate timing and disclosure. That's the scale fix. Hiding the code isn't.
 
 ## What would have to happen for Vikunja to close
 
@@ -61,11 +65,13 @@ Not MIT, not Apache, not BSD. [AGPL-3](https://github.com/go-vikunja/vikunja/blo
 
 This is the one most people miss. A contributor license agreement is a document that contributors sign to grant or transfer broader rights to their code, typically to let the project owner relicense it later. Most projects that closed up had a CLA. MongoDB did. HashiCorp did. Redis did.
 
-Vikunja doesn't. When someone sends a pull request to the Vikunja repo, they keep the copyright to their code. I don't own it. I can't unilaterally relicense it. To change the license of Vikunja, I would either have to ask every contributor who ever wrote a non-trivial patch and get every single "yes", or rewrite every one of their contributions myself. The first is impractical given the size of the contributor list. The second is unrealistic, because some contributions are load-bearing and longstanding.
+Vikunja doesn't. When someone sends a pull request to the Vikunja repo, they keep the copyright to their code. I don't own it. I can't unilaterally relicense it. To change the license of Vikunja, I would either have to ask every contributor who ever wrote a non-trivial patch and get every single "yes", or rewrite every one of their contributions myself. The first is impractical given the size of the contributor list. The second is unrealistic.
 
 You can verify this on any pull request: there's no bot-signed CLA check, no agreement link, no terms of contribution beyond the license that's already in the repo.
 
 ### Pro is also AGPL-3
+
+TODO pro is not yet published
 
 When I started building a paid tier, the obvious move would have been to keep those features proprietary. That's the standard open-core playbook: free core, closed enterprise layer, eventually the enterprise layer is where all the interesting work happens and the core withers.
 
