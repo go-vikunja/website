@@ -62,7 +62,7 @@ For more details, see the [security advisory](https://github.com/go-vikunja/viku
 
 ### Calendar property injection via task titles over CalDAV (CVE-2026-35601)
 
-The CalDAV output wasn't escaping special characters in task titles. A task with certain line-break characters in its title could inject arbitrary calendar properties into other users' calendar clients when they synced — for example, a fake attachment link or a spoofed reminder that looked like it came from Vikunja. Task titles, categories, project names, and alarms are now all properly escaped on the way out.
+The CalDAV output wasn't escaping special characters in task titles. A task with certain line-break characters in its title could inject arbitrary calendar properties into other users' calendar clients when they synced. For example, a fake attachment link or a spoofed reminder that looked like it came from Vikunja. Task titles, categories, project names, and alarms are now all properly escaped on the way out.
 
 For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-2g7h-7rqr-9p4r). Thanks to [@adrgs](https://github.com/adrgs) for reporting this!
 
@@ -112,7 +112,7 @@ Contributed in [#2340](https://github.com/go-vikunja/vikunja/pull/2340) (quick e
 
 To make the new desktop and app login flow work (and to open the door for other apps), Vikunja can now act as an OAuth 2.0 login provider. This means other apps can now send users to Vikunja to log in the same way you'd log into a third-party site with your Google or GitHub account. You approve the sign-in once, the other app gets a token, and that's it.
 
-The desktop app and [Android app](https://github.com/go-vikunja/app) are the first things to use this, but the same flow is available for anything else — scripts, third-party clients, integrations — as long as they can do OAuth.
+The desktop app and [Android app](https://github.com/go-vikunja/app) are the first things to use this, but the same flow is available for anything else (scripts, third-party clients, integrations) as long as they can do OAuth.
 
 Check out the [OAuth authorization server docs](/docs/oauth-server) for the details. Contributed in [#2308](https://github.com/go-vikunja/vikunja/pull/2308).
 
