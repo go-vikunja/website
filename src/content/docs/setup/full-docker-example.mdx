@@ -100,7 +100,7 @@ To use sqlite as a database backend, change the `vikunja` section of the example
 vikunja:
   image: vikunja/vikunja
   environment:
-    VIKUNJA_SERVICE_JWTSECRET: <a super secure random secret>
+    VIKUNJA_SERVICE_SECRET: <a super secure random secret>
     VIKUNJA_SERVICE_PUBLICURL: http://<your public frontend url with slash>/
     # Note the default path is /app/vikunja/vikunja.db.
     # This config variable moves it to a different folder so you can use a volume and
@@ -157,7 +157,7 @@ services:
       VIKUNJA_DATABASE_TYPE: postgres
       VIKUNJA_DATABASE_USER: vikunja
       VIKUNJA_DATABASE_DATABASE: vikunja
-      VIKUNJA_SERVICE_JWTSECRET: <a super secure random secret>
+      VIKUNJA_SERVICE_SECRET: <a super secure random secret>
     ports:
       - 3456:3456
     volumes:
@@ -206,7 +206,7 @@ services:
       VIKUNJA_DATABASE_TYPE: postgres
       VIKUNJA_DATABASE_USER: vikunja
       VIKUNJA_DATABASE_DATABASE: vikunja
-      VIKUNJA_SERVICE_JWTSECRET: <a super secure random secret>
+      VIKUNJA_SERVICE_SECRET: <a super secure random secret>
     volumes:
       - ./files:/app/vikunja/files
     networks:
@@ -271,7 +271,7 @@ services:
       VIKUNJA_DATABASE_TYPE: postgres
       VIKUNJA_DATABASE_USER: vikunja
       VIKUNJA_DATABASE_DATABASE: vikunja
-      VIKUNJA_SERVICE_JWTSECRET: <a super secure random secret>
+      VIKUNJA_SERVICE_SECRET: <a super secure random secret>
     ports:
       - 3456:3456
     volumes:
@@ -380,7 +380,7 @@ services:
       VIKUNJA_DATABASE_TYPE: postgres
       VIKUNJA_DATABASE_USER: vikunja
       VIKUNJA_DATABASE_DATABASE: vikunja
-      VIKUNJA_SERVICE_JWTSECRET: <a super secure random secret>
+      VIKUNJA_SERVICE_SECRET: <a super secure random secret>
     ports:
       - 3456:3456
     volumes:
