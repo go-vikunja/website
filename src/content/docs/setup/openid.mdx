@@ -67,7 +67,7 @@ More detailed instructions for various different identity providers can be [foun
 
 ### Step 2: Configure Vikunja
 
-Vikunja has to be configured to use the identity provider. Please note that there is currently no option to configure these settings via environment variables, they have to be defined using the configuration file. The configuration schema is as follows:
+Vikunja has to be configured to use the identity provider. The configuration schema is as follows:
 
 ```yaml
 auth:
@@ -91,6 +91,20 @@ Typically, you'll want to use the `issuer` URL as found in the provider metadata
 
 The values for `clientid` and `clientsecret` are typically obtained when configuring the client.
 The scope usually doesn't need to be specified or changed, unless you want to configure the automatic team assignment.
+
+The same settings can also be provided through environment variables, following the standard `VIKUNJA_` prefix and uppercased, underscore-separated path used elsewhere in Vikunja's config. The `<provider-id>` becomes part of the variable name. For the example above, the equivalent environment variables would be:
+
+```sh
+VIKUNJA_AUTH_OPENID_ENABLED=true
+VIKUNJA_AUTH_OPENID_PROVIDERS_<PROVIDER_ID>_NAME=<provider-name>
+VIKUNJA_AUTH_OPENID_PROVIDERS_<PROVIDER_ID>_AUTHURL=<auth-url>
+VIKUNJA_AUTH_OPENID_PROVIDERS_<PROVIDER_ID>_CLIENTID=<vikunja client-id>
+VIKUNJA_AUTH_OPENID_PROVIDERS_<PROVIDER_ID>_CLIENTSECRET=<vikunja client-secret>
+VIKUNJA_AUTH_OPENID_PROVIDERS_<PROVIDER_ID>_SCOPE="openid profile email"
+VIKUNJA_AUTH_OPENID_PROVIDERS_<PROVIDER_ID>_FORCEUSERINFO=false
+```
+
+Replace `<PROVIDER_ID>` with the uppercased provider key you would have used in YAML. Multiple providers can be configured by repeating the `VIKUNJA_AUTH_OPENID_PROVIDERS_<PROVIDER_ID>_*` block with a different ID. Note that values containing spaces (such as `scope`) need to be quoted.
 
 Optionally it is possible to disable local authentication and therefore forcing users to login via OpenID connect:
 
