@@ -7,6 +7,7 @@ description: >-
   hold up, what AI-assisted security reports actually look like from the receiving
   end, and the structural reasons Vikunja staying open is more than a promise.
 ---
+import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
 
 Cal.com has [announced](https://cal.com/de/blog/cal-com-goes-closed-source-why) that their production codebase is going closed source. Their stated reason is that AI has made it too easy for attackers to find bugs in open code, so hiding the code is now the safer option.
 
@@ -76,7 +77,7 @@ You can verify this on any pull request: there's no bot-signed CLA check and no 
 
 Most relicensing stories have a VC in the third act. The investor needs an exit, the company needs margin, the path to margin runs through capturing self-hosted users, and the license change is the tool.
 
-Vikunja is bootstrapped. There's no investor asking me to optimise for an exit. The people I have to answer to are the users paying for [Vikunja Cloud](https://app.vikunja.cloud/?redirectToProvider=true) and the contributors whose code is in the repo. Neither group wants Vikunja to close. Any paid tier I build will ship under the same license, in the same public repo.
+Vikunja is bootstrapped. There's no investor asking me to optimise for an exit. The people I have to answer to are the users paying for <a href={VIKUNJA_CLOUD_LINK}>Vikunja Cloud</a> and the contributors whose code is in the repo. Neither group wants Vikunja to close. Any paid tier I build will ship under the same license, in the same public repo.
 
 ### Forks are always possible
 

@@ -6,6 +6,7 @@ description: >-
   URLs, and client compatibility.
 ---
 import Screenshot from '../../components/Screenshot.astro'
+import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
 
 
 > **Warning:** The CalDAV integration is in an early alpha stage and has bugs.
@@ -22,7 +23,7 @@ You can find your CalDAV connection details in your [Settings](/help/settings) u
 
 When you connect a CalDAV client, use your Vikunja **username** and one of the following as the password:
 
-- **Your account password** — the easiest option, and the one we recommend whenever it works for you. Local accounts, including those provisioned via LDAP, can use their normal password directly. If your account signs in through an external identity provider (OIDC) — for example on [Vikunja Cloud](https://app.vikunja.cloud/?redirectToProvider=true) — the CalDAV settings tab shows a hint asking you to use a dedicated token instead, because your password isn't stored in Vikunja. Passwords also don't work when two-factor authentication is enabled on your account.
+- **Your account password** — the easiest option, and the one we recommend whenever it works for you. Local accounts, including those provisioned via LDAP, can use their normal password directly. If your account signs in through an external identity provider (OIDC) — for example on <a href={VIKUNJA_CLOUD_LINK}>Vikunja Cloud</a> — the CalDAV settings tab shows a hint asking you to use a dedicated token instead, because your password isn't stored in Vikunja. Passwords also don't work when two-factor authentication is enabled on your account.
 - **A dedicated CalDAV token** generated on the CalDAV settings tab. Use this if your account signs in via OIDC, or if you have two-factor authentication enabled.
 - **An [API token](/help/settings#api-tokens) with the CalDAV permission group**, available from Vikunja **2.3.0** onwards. Use the token value (it starts with `tk_`) as the password. This is handy if you want to manage all your automation credentials in one place, or if you want a single token to cover both CalDAV sync and API access.
 
