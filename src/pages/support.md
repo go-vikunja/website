@@ -20,7 +20,7 @@ and allows us to dedicate more time to developing new features and fixing bugs.
 
 ## Use Vikunja Cloud
 
-One of the best ways to support Vikunja is by using [Vikunja Cloud](https://vikunja.cloud). Our hosted service gives you
+One of the best ways to support Vikunja is by using [Vikunja Cloud](https://app.vikunja.cloud/?redirectToProvider=true). Our hosted service gives you
 a hassle-free experience with automatic updates, backups, and maintenance, while directly supporting the project's development.
 
 ## Consulting and Training

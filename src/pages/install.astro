@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import {VIKUNJA_CLOUD_LINK} from '../helpers/vikunjaCloudLink'
 
 let latestVersion = '<version>'
 try {
@@ -25,7 +26,7 @@ try {
         <div class="pt-24 pb-8 text-center">
             <h1 class="text-4xl font-display">Install Vikunja Server</h1>
             <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Set up your self-hosted Vikunja server in minutes.</p>
-            <p class="mt-2 text-sm text-gray-500 dark:text-gray-500">Don't want to manage a server? <a href="https://vikunja.cloud/register" class="text-primary hover:underline">Try Vikunja Cloud</a></p>
+            <p class="mt-2 text-sm text-gray-500 dark:text-gray-500">Don't want to manage a server? <a href={VIKUNJA_CLOUD_LINK} class="text-primary hover:underline">Try Vikunja Cloud</a></p>
         </div>
 
         <!-- Step 1: Pick platform -->

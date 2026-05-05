@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Button from '../components/Button.astro'
+import {VIKUNJA_CLOUD_LINK} from '../helpers/vikunjaCloudLink'
 ---
 <Layout title="Convince Your Boss" description="Everything you need to bring Vikunja to your team at work. Cost comparison, security posture, deployment options, and a one-pager you can forward.">
     <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0">
@@ -211,7 +212,7 @@ import Button from '../components/Button.astro'
                     <li>
                         <strong>Set up a test instance</strong>:
                         <a href="/install" class="underline">self-host with Docker</a> in 5 minutes,
-                        or start a <a href="https://vikunja.cloud" class="underline">free 14-day Cloud trial</a>.
+                        or start a <a href={VIKUNJA_CLOUD_LINK} class="underline">free 14-day Cloud trial</a>.
                     </li>
                     <li>
                         <strong>Import existing tasks</strong>:
