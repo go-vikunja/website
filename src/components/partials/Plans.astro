@@ -1,5 +1,6 @@
 ---
 import Button from '../Button.astro'
+import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
 
 interface Props {
 	showTitle?: boolean
@@ -91,7 +92,7 @@ const plans: Plan[] = [
                         </ul>
 
                         <div>
-                            <Button href="https://vikunja.cloud">
+                            <Button href={VIKUNJA_CLOUD_LINK}>
                                 Buy
                             </Button>
                             <p class="text-sm text-gray-500 dark:text-gray-400 block mt-2">
