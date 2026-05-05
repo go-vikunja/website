@@ -1,5 +1,6 @@
 ---
 import {marked} from 'marked'
+import {VIKUNJA_CLOUD_LINK} from '../helpers/vikunjaCloudLink'
 
 interface Props {
 	faqs?: {question: string, answer: string}[]
@@ -13,15 +14,15 @@ const defaultFaqs = [
 	},
 	{
 		question: 'Is Vikunja free and open source?',
-		answer: 'Yes. Vikunja is licensed under the AGPLv3 and completely free to self-host. If you prefer not to manage your own server, [Vikunja Cloud](https://vikunja.cloud/register) offers a paid hosted option.',
+		answer: `Yes. Vikunja is licensed under the AGPLv3 and completely free to self-host. If you prefer not to manage your own server, [Vikunja Cloud](${VIKUNJA_CLOUD_LINK}) offers a paid hosted option.`,
 	},
 	{
 		question: 'How do I install Vikunja?',
-		answer: 'You can install Vikunja using Docker, native binaries for your platform, or sign up for [Vikunja Cloud](https://vikunja.cloud/register). Use the [install wizard](/install) for a guided setup.',
+		answer: `You can install Vikunja using Docker, native binaries for your platform, or sign up for [Vikunja Cloud](${VIKUNJA_CLOUD_LINK}). Use the [install wizard](/install) for a guided setup.`,
 	},
 	{
 		question: 'Do I have to self-host Vikunja?',
-		answer: 'No. While self-hosting is a great option, [Vikunja Cloud](https://vikunja.cloud/register) gives you a fully managed instance with automatic updates, backups, and zero maintenance. It\'s the easiest way to get started and directly supports the continued development of Vikunja.',
+		answer: `No. While self-hosting is a great option, [Vikunja Cloud](${VIKUNJA_CLOUD_LINK}) gives you a fully managed instance with automatic updates, backups, and zero maintenance. It's the easiest way to get started and directly supports the continued development of Vikunja.`,
 	},
 	{
 		question: 'Can I import tasks from Todoist, Trello, or Microsoft To-Do?',

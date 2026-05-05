@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro'
 import Screenshot from '../components/Screenshot.astro'
 import LinkCard from '../components/LinkCard.astro'
+import {VIKUNJA_CLOUD_LINK} from '../helpers/vikunjaCloudLink'
 
 import VikunjaTaskOverview from '../assets/images/vikunja/01-task-overview.png'
 import VikunjaTaskOverviewDark from '../assets/images/vikunja/01-task-overview-dark.png'
@@ -205,7 +206,7 @@ const carouselImages = [
                 Features
             </LinkCard>
             <LinkCard
-                    href="https://vikunja.cloud/?utm_source=io&utm_medium=io&utm_campaign=menu"
+                    href={`${VIKUNJA_CLOUD_LINK}&utm_source=io&utm_medium=io&utm_campaign=menu`}
                     image={HeroLlama3}
                     alt="Two llamas or alpacas in a misty green field. One is lying down in the foreground, while another stands grazing in the background. Behind them, ancient stone structures or ruins are visible through the fog, suggesting a historic or archaeological site."
             >

@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro'
 import CloudOrSelfHosted from '../../components/partials/CloudOrSelfHosted.astro'
 import FAQSection from '../../components/FAQSection.astro'
+import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
 
 const faqs = [
     {
@@ -14,7 +15,7 @@ const faqs = [
     },
     {
         question: 'Can I use Vikunja for free?',
-        answer: 'Self-host it for free with no limits on boards, tasks, or users. If you want managed hosting, [Vikunja Cloud](https://vikunja.cloud) starts at 4 EUR/month with a 14-day free trial.',
+        answer: `Self-host it for free with no limits on boards, tasks, or users. If you want managed hosting, [Vikunja Cloud](${VIKUNJA_CLOUD_LINK}) starts at 4 EUR/month with a 14-day free trial.`,
     },
 ]
 ---
@@ -173,7 +174,7 @@ const faqs = [
             <ol class="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300">
                 <li>
                     <a href="/install" class="underline">Set up Vikunja</a> (Docker, binary, or
-                    <a href="https://vikunja.cloud" class="underline">Cloud trial</a>)
+                    <a href={VIKUNJA_CLOUD_LINK} class="underline">Cloud trial</a>)
                 </li>
                 <li>Export your Trello board as JSON (Menu &rarr; More &rarr; Print and Export)</li>
                 <li>Import the JSON file in Vikunja's migration settings</li>

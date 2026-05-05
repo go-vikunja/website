@@ -1,6 +1,7 @@
 ---
 import LogoFull from './LogoFull.astro'
 import SubscribeToNewsletter from './partials/SubscribeToNewsletter.astro'
+import {VIKUNJA_CLOUD_LINK} from '../helpers/vikunjaCloudLink'
 
 const nowYear = (new Date()).getFullYear()
 ---
@@ -133,7 +134,7 @@ const nowYear = (new Date()).getFullYear()
         >Managed Service</a
         >
         <a
-                href="https://vikunja.cloud/register?utm_source=io&utm_medium=io&utm_campaign=footer"
+                href={`${VIKUNJA_CLOUD_LINK}&utm_source=io&utm_medium=io&utm_campaign=footer`}
                 class="py-2 hover:underline md:pt-0"
                 rel="noopener"
         >
