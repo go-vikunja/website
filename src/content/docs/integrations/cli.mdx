@@ -309,6 +309,22 @@ Flags:
 * `-d`, `--direct`: If provided, reset the password directly instead of sending the user a reset mail.
 * `-p`, `--password`: The new password of the user. Only used in combination with --direct. You will be asked to enter it if not provided through the flag.
 
+### `user set-admin`
+
+Promote or demote a user as an instance admin. Requires an active [Vikunja Pro](/docs/pro) license with the admin panel feature.
+The last remaining admin cannot be demoted.
+
+Usage:
+
+```sh
+vikunja user set-admin [username-or-id] [flags]
+```
+
+Flags:
+
+* `--admin`: Promote the user to instance admin.
+* `--no-admin`: Revoke instance admin from the user.
+
 ### `user update`
 
 Update an existing user.

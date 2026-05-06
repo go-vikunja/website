@@ -1,0 +1,174 @@
+---
+title: Vikunja Pro
+slug: pro
+description: >-
+  Configure a Vikunja Pro license, understand what it unlocks, and manage
+  instance admins on a self-hosted Vikunja install.
+---
+import Callout from '../../../components/Callout.astro';
+
+Vikunja Pro is an optional set of features for self-hosted instances. The free,
+AGPL-licensed version of Vikunja is fully functional on its own. Pro gates a small
+number of additional capabilities aimed at organizations:
+
+- **Admin panel**: a UI for managing users and projects across the whole instance.
+- **Time tracking**: per-task time entries and reports.
+- **Audit logs**: structured records of important actions.
+
+Buying a Pro license is also the main way to fund continued development of Vikunja.
+See [Vikunja Pro](/pro) for the current plans. If your organization can't afford
+the standard pricing, [reach out](/contact). Packages for purchasing power parity
+and non-profits are available.
+
+## How Licensing Works
+
+A license is a single config value. When set, the API contacts the Vikunja license
+server on startup and once a day after that, exchanges your license key plus a
+small telemetry payload for the list of features you're entitled to, and caches
+the response in the local database.
+
+If the license server is temporarily unreachable, the cached response keeps Pro
+features active for up to **72 hours**. If the cache is older than that, or if the
+server says the key is invalid or expired, the instance silently degrades to
+community mode. Pro features are turned off, but everything else continues to work
+as normal.
+
+If the license key is empty or unset, no requests are made at all and the instance
+runs in community mode from the start.
+
+## Setting the License Key
+
+Set `license.key` in your config file:
+
+```yaml
+license:
+  key: your-license-key-here
+```
+
+Or via environment variable:
+
+```bash
+VIKUNJA_LICENSE_KEY=your-license-key-here
+```
+
+See [the configuration reference](/docs/config-options) for how Vikunja loads
+config files and environment variables.
+
+After restarting the API, look for `License valid. Pro features enabled.` in the
+logs. A failed check logs a warning explaining the reason.
+
+## Network Requirements
+
+The API needs to reach one of the Vikunja license servers over HTTPS:
+
+- `console.vikunja.io`
+- `check.vikunja.io`
+
+If your instance is behind an outbound firewall, allow these hosts. The check is
+a single small POST request. There is no callback, websocket, or persistent
+connection.
+
+## What Is Sent to the License Server
+
+Every license check posts the following fields:
+
+- Your license key.
+- A randomly-generated **instance ID**, created on first launch and stored in the
+  database.
+- The Vikunja version.
+- The database type (`mysql`, `postgres`, or `sqlite`).
+- A count of active, disabled, and email-confirmation-pending users.
+- The host operating system.
+- Whether the API is running inside a container.
+
+No project, task, or user content is transmitted, and no individually identifying
+user information is sent. Only counts.
+
+The exact payload is defined in
+[`pkg/license/check.go`](https://github.com/go-vikunja/vikunja/blob/main/pkg/license/check.go)
+in the Vikunja source.
+
+## User Limits
+
+If your license includes a user cap, Vikunja prevents creating new active users
+once the cap is reached. Disabled users and users still pending email
+confirmation do not count against the limit. Existing users keep working
+normally.
+
+## Removing the License
+
+To stop using Pro features, unset `license.key` and restart the API. The instance
+switches to community mode on next start, and cached license state is cleared.
+
+<Callout type="info">
+Data created while Pro was active, such as admin flags, time tracking entries,
+and audit log rows, is preserved in the database. It simply becomes inaccessible
+through the UI
+and API until a valid license is applied again.
+</Callout>
+
+## Admin Panel
+
+The admin panel is one of the Pro features. It only appears when both of these
+are true:
+
+1. The `admin_panel` Pro feature is active for your license.
+2. The current user is flagged as an instance admin.
+
+### Promoting a User
+
+There is **no first-run admin bootstrap**. You promote users from the server CLI:
+
+```bash
+vikunja user set-admin <username-or-id> --admin
+```
+
+To revoke admin rights:
+
+```bash
+vikunja user set-admin <username-or-id> --no-admin
+```
+
+See the [CLI documentation](/docs/cli) for how to invoke commands across different
+deployments, including [running the CLI inside a Docker container](/docs/cli#using-the-cli-in-docker).
+
+Vikunja refuses to demote the last remaining admin to prevent accidental
+lockouts. If you need to transfer admin rights, promote the new user before
+demoting the old one.
+
+<Callout type="warning">
+The CLI refuses to set the admin flag on an instance that does not have an active
+Pro license with the admin panel feature, since the flag has no effect without it.
+Configure your license first, then promote the user.
+</Callout>
+
+### Accessing the Panel
+
+When both conditions are met, an **Admin** entry appears in the user dropdown in
+the top-right of the web UI. The panel has three views:
+
+- **Overview** (`/admin`): instance-wide stats.
+- **Users** (`/admin/users`): create users, change their status, toggle the admin
+  flag, delete users.
+- **Projects** (`/admin/projects`): list all projects on the instance and
+  transfer project ownership between users.
+
+Direct navigation to `/admin` without the Pro feature or the admin flag redirects
+to a not-found page.
+
+### What Admins Can Do
+
+Beyond the dedicated panel, instance admins:
+
+- Read and modify any project, team, or link share regardless of who owns it.
+- Call the `/api/v1/admin/*` API endpoints, which expose the same operations as
+  the panel for scripting.
+
+Both the panel and the API endpoints are gated by the same two checks (Pro
+license active and `is_admin` set on the user).
+
+### Recovering From a Lockout
+
+If you lose access to all admin accounts, log into the server and use
+`vikunja user set-admin` to promote a different user. There is no web-based
+recovery path. The CLI is the only way to set the admin flag, by design.
