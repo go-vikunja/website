@@ -71,9 +71,6 @@ const carouselImages = [
                 <p class="mt-4 text-xl">
                     Made and hosted in the EU.
                 </p>
-                <p class="mt-2 text-lg text-gray-400 dark:text-gray-500">
-                    Plan with the elegance of a sloth on a sunny day.
-                </p>
             </div>
 
             <CloudOrSelfHosted/>
@@ -188,31 +185,31 @@ const carouselImages = [
             </p>
         </div>
 
-        <FAQSection />
-
         <section class="mx-auto mb-16 flex w-full max-w-6xl flex-col px-4 md:px-2 gap-4 text-left md:flex-row">
             <LinkCard
                     href="/install"
                     image={HeroLlama1}
                     alt="A close-up of an alpaca with curly brown fur on its head. The alpaca has a white body and is looking directly at the camera with large, expressive eyes and a distinctive snout."
             >
-                Installation
+                Install on your server
             </LinkCard>
             <LinkCard
                     href="/features"
                     image={HeroLlama2}
                     alt="An expansive landscape with a herd of alpacas or llamas grazing on a green meadow. The background shows rolling hills and mountains, with a mix of barren and vegetated areas creating a diverse terrain."
             >
-                Features
+                See all features
             </LinkCard>
             <LinkCard
                     href={`${VIKUNJA_CLOUD_LINK}&utm_source=io&utm_medium=io&utm_campaign=menu`}
                     image={HeroLlama3}
                     alt="Two llamas or alpacas in a misty green field. One is lying down in the foreground, while another stands grazing in the background. Behind them, ancient stone structures or ruins are visible through the fog, suggesting a historic or archaeological site."
             >
-                Get it Hosted
+                Start free 14-day trial
             </LinkCard>
         </section>
+
+        <FAQSection />
 
         <script>
 			document.addEventListener('DOMContentLoaded', () => {
