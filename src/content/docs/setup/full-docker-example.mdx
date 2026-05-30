@@ -102,9 +102,9 @@ vikunja:
   environment:
     VIKUNJA_SERVICE_SECRET: <a super secure random secret>
     VIKUNJA_SERVICE_PUBLICURL: http://<your public frontend url with slash>/
-    # Note the default path is /app/vikunja/vikunja.db.
-    # This config variable moves it to a different folder so you can use a volume and
-    # store the database file outside the container so state is persisted even if the container is destroyed.
+    # The official image already presets this to /db/vikunja.db; it is shown
+    # explicitly here so the database file lives in the ./db volume below and
+    # state is persisted even if the container is destroyed.
     VIKUNJA_DATABASE_PATH: /db/vikunja.db
   ports:
     - 3456:3456
@@ -114,8 +114,9 @@ vikunja:
   restart: unless-stopped
 ```
 
-The default path Vikunja uses for sqlite is relative to the binary, which in the docker container would be `/app/vikunja/vikunja.db`.
-The `VIKUNJA_DATABASE_PATH` environment variable changes it so that the database file is stored in a volume at `/db`, to persist state across restarts.
+The official Vikunja image presets `VIKUNJA_DATABASE_PATH=/db/vikunja.db`, so the sqlite database file is stored at `/db/vikunja.db` inside the container by default.
+Mounting a volume at `/db` (as in the example above) persists it across restarts.
+Note that because environment variables take precedence over the config file, setting `database.path` in a mounted `config.yml` will **not** move the database — change the `VIKUNJA_DATABASE_PATH` environment variable or the host side of the `/db` bind mount instead.
 
 You'll also need to remove or change the `VIKUNJA_DATABASE_TYPE` to `sqlite` on the container declaration.
 

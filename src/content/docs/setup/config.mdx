@@ -9,7 +9,7 @@ description: >-
 import ConfigOptions from '../../../components/partials/ConfigOptions.astro';
 import Callout from '../../../components/Callout.astro';
 
-You can either use a `config.yml` file in the root directory of Vikunja or set almost all config options with environment variables. If you have both, the value set in the config file is used.
+You can either use a `config.yml` file in the root directory of Vikunja or set almost all config options with environment variables. If you set the same option in both, the environment variable takes precedence over the value from the config file.
 
 Variables are nested in the `config.yml`, these nested variables become `VIKUNJA_FIRST_CHILD` when configuring via
 environment variables. So setting
@@ -70,6 +70,14 @@ Mount the `config.yml` file into the Vikunja container, by adding this line to t
 volumes:
   - ./path/to/config.yml:/etc/vikunja/config.yml
 ```
+
+<Callout type="warning">
+The official Docker image presets two config options as environment variables: `VIKUNJA_SERVICE_ROOTPATH=/app/vikunja/` and `VIKUNJA_DATABASE_PATH=/db/vikunja.db`.
+Because environment variables take precedence over the config file, setting `service.rootpath` or `database.path` in a mounted `config.yml` has **no effect** in the official container — the preset environment variables win.
+
+To store the database somewhere else, change the **host side of the bind mount** (for example `./my-db:/db` instead of `./db:/db`) rather than the in-container path, or override the environment variable directly.
+A relative `files.basepath` is resolved against `service.rootpath`, so with the preset rootpath uploaded files live in `/app/vikunja/files` by default.
+</Callout>
 
 After all the setup is done, start Vikunja as shown in the [Docker Compose setup](/docs/full-docker-example).
 
