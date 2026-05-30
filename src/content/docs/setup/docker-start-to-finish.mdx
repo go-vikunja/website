@@ -220,7 +220,7 @@ Make sure the `VIKUNJA_DATABASE_HOST` value matches the service name of your dat
 
 If the `testmail` command fails with this error but you believe your SMTP settings are correct, note that Vikunja sends an SMTP `NOOP` command to verify the connection. Some minimal SMTP relays (like `msmtpd`) do not support this command. Use a full-featured SMTP server or relay instead.
 
-Also ensure your SMTP configuration is defined in **one place only** — either environment variables or a config file. If both are set, the config file takes precedence, which can cause confusion if they have different values.
+Also ensure your SMTP configuration is defined in **one place only** — either environment variables or a config file. If both are set, the environment variable takes precedence, which can cause confusion if they have different values.
 
 ## Try it
 
