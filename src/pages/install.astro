@@ -50,7 +50,7 @@ try {
         <!-- Step 2: Pick Linux install method -->
         <section id="step-2" class="wizard-step hidden">
             <h2 class="text-2xl font-display text-center mb-8">How do you want to install Vikunja?</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-3xl mx-auto">
                 <button data-linux-method="docker" class="wizard-card">
                     <span class="text-lg font-bold">Docker</span>
                     <span class="text-sm text-gray-500 dark:text-gray-400">Recommended</span>
@@ -62,6 +62,10 @@ try {
                 <button data-linux-method="fedora" class="wizard-card">
                     <span class="text-lg font-bold">Fedora / CentOS</span>
                     <span class="text-sm text-gray-500 dark:text-gray-400">RPM package</span>
+                </button>
+                <button data-linux-method="nixos" class="wizard-card">
+                    <span class="text-lg font-bold">NixOS</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">Declarative module</span>
                 </button>
                 <button data-linux-method="linux-other" class="wizard-card">
                     <span class="text-lg font-bold">Other</span>

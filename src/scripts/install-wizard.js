@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const state = {
     platform: null, // 'linux' | 'freebsd' | 'kubernetes'
-    env: null,      // 'debian' | 'fedora' | 'linux-other' | 'freebsd' | 'kubernetes'
+    env: null,      // 'debian' | 'fedora' | 'nixos' | 'linux-other' | 'freebsd' | 'kubernetes'
     method: null,   // 'docker' | 'native'
     version: document.querySelector('main').dataset.version || '<version>',
     arch: 'amd64',
@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const envNames = {
       debian: 'Debian/Ubuntu',
       fedora: 'Fedora/CentOS',
+      nixos: 'NixOS',
       'linux-other': 'Linux',
       freebsd: 'FreeBSD',
       docker: 'Docker',
@@ -85,7 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const methodNames = {
       docker: 'Docker Compose',
       native: state.env === 'freebsd' ? 'build from source' :
-              state.env === 'kubernetes' ? 'Helm chart' : 'native packages',
+              state.env === 'kubernetes' ? 'Helm chart' :
+              state.env === 'nixos' ? 'a declarative module' : 'native packages',
     }
     const el = document.getElementById('setup-summary')
     el.textContent = `${envNames[state.env]} with ${methodNames[state.method]}`
@@ -215,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (s.method === 'docker') return generateDocker(s)
     if (s.env === 'debian') return generateDebian(s)
     if (s.env === 'fedora') return generateFedora(s)
+    if (s.env === 'nixos') return generateNixOS(s)
     if (s.env === 'linux-other') return generateBinary(s)
     if (s.env === 'freebsd') return generateFreeBSD(s)
     if (s.env === 'kubernetes') return generateKubernetes(s)
@@ -504,6 +507,158 @@ sudo systemctl enable --now vikunja`
 
     const proxyBlock = generateProxyConfig(s)
     if (proxyBlock) blocks.push(proxyBlock)
+
+    return blocks
+  }
+
+  // --- NixOS (declarative services.vikunja module) ---
+
+  function generateNixOS(s) {
+    const blocks = []
+
+    const useProxy = s.proxy !== 'none'
+    const domain = s.proxyDomain || 'vikunja.example.com'
+    // The module derives service.publicurl from the frontend scheme + hostname.
+    const scheme = useProxy && s.proxyDomain ? 'https' : 'http'
+    const hostname = useProxy && s.proxyDomain ? domain : 'localhost'
+
+    let cfg = `{ config, pkgs, ... }:
+
+{
+  services.vikunja = {
+    enable = true;
+    frontendScheme = "${scheme}";
+    frontendHostname = "${hostname}";
+    port = 3456;`
+
+    if (s.db === 'postgres') {
+      cfg += `
+    database = {
+      type = "postgres";
+      host = "/run/postgresql";
+      user = "vikunja";
+      database = "vikunja";
+    };`
+    } else if (s.db === 'mysql') {
+      cfg += `
+    database = {
+      type = "mysql";
+      host = "/run/mysqld/mysqld.sock";
+      user = "vikunja";
+      database = "vikunja";
+    };`
+    } else {
+      cfg += `
+    database.type = "sqlite";`
+    }
+
+    // settings maps directly to Vikunja's config keys
+    // See https://vikunja.io/docs/config-options/
+    cfg += `
+    settings = {
+      service = {
+        secret = "${serviceSecret}";
+      };`
+
+    if (hasSmtp(s)) {
+      cfg += `
+      mailer = {
+        enabled = true;
+        host = "${s.smtp.host}";
+        port = ${s.smtp.port || 587};
+        username = "${s.smtp.user}";
+        password = "${s.smtp.password}";
+        fromemail = "${s.smtp.from}";
+      };`
+    }
+
+    cfg += `
+    };
+  };`
+
+    // The module configures connectivity only — provision the database locally.
+    if (s.db === 'postgres') {
+      cfg += `
+
+  # Vikunja connects over the local socket using peer authentication
+  services.postgresql = {
+    enable = true;
+    ensureDatabases = [ "vikunja" ];
+    ensureUsers = [{
+      name = "vikunja";
+      ensureDBOwnership = true;
+    }];
+  };`
+    } else if (s.db === 'mysql') {
+      cfg += `
+
+  # Vikunja connects over the local socket using socket authentication
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+    ensureDatabases = [ "vikunja" ];
+    ensureUsers = [{
+      name = "vikunja";
+      ensurePermissions = { "vikunja.*" = "ALL PRIVILEGES"; };
+    }];
+  };`
+    }
+
+    if (s.proxy === 'nginx') {
+      cfg += `
+
+  services.nginx = {
+    enable = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+    virtualHosts."${domain}" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://localhost:3456";
+        proxyWebsockets = true;
+        extraConfig = "client_max_body_size 20M;";
+      };
+    };
+  };
+
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "you@example.com";
+  };
+
+  networking.firewall.allowedTCPPorts = [ 80 443 ];`
+    } else if (s.proxy === 'caddy') {
+      cfg += `
+
+  # Caddy obtains and renews TLS certificates automatically
+  services.caddy = {
+    enable = true;
+    virtualHosts."${domain}".extraConfig = ''
+      reverse_proxy localhost:3456
+    '';
+  };
+
+  networking.firewall.allowedTCPPorts = [ 80 443 ];`
+    }
+
+    cfg += `
+}`
+
+    blocks.push({ filename: '/etc/nixos/vikunja.nix', content: cfg })
+
+    const rebuild = `# Add ./vikunja.nix to the imports in your configuration.nix:
+#   imports = [ ./hardware-configuration.nix ./vikunja.nix ];
+
+# Then build and switch to the new configuration:
+sudo nixos-rebuild switch`
+    blocks.push({ filename: 'Apply the configuration', content: rebuild })
+
+    // Apache/Traefik aren't wired into the Nix module above — offer a raw config.
+    if (s.proxy === 'apache' || s.proxy === 'traefik') {
+      const proxyBlock = generateProxyConfig(s)
+      if (proxyBlock) blocks.push(proxyBlock)
+    }
 
     return blocks
   }
