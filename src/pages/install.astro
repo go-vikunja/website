@@ -50,24 +50,24 @@ try {
         <!-- Step 2: Pick Linux install method -->
         <section id="step-2" class="wizard-step hidden">
             <h2 class="text-2xl font-display text-center mb-8">How do you want to install Vikunja?</h2>
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-3xl mx-auto">
-                <button data-linux-method="docker" class="wizard-card">
+            <div class="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
+                <button data-linux-method="docker" class="wizard-card w-40 sm:w-48">
                     <span class="text-lg font-bold">Docker</span>
                     <span class="text-sm text-gray-500 dark:text-gray-400">Recommended</span>
                 </button>
-                <button data-linux-method="debian" class="wizard-card">
+                <button data-linux-method="debian" class="wizard-card w-40 sm:w-48">
                     <span class="text-lg font-bold">Debian / Ubuntu</span>
                     <span class="text-sm text-gray-500 dark:text-gray-400">.deb package</span>
                 </button>
-                <button data-linux-method="fedora" class="wizard-card">
+                <button data-linux-method="fedora" class="wizard-card w-40 sm:w-48">
                     <span class="text-lg font-bold">Fedora / CentOS</span>
                     <span class="text-sm text-gray-500 dark:text-gray-400">RPM package</span>
                 </button>
-                <button data-linux-method="nixos" class="wizard-card">
+                <button data-linux-method="nixos" class="wizard-card w-40 sm:w-48">
                     <span class="text-lg font-bold">NixOS</span>
                     <span class="text-sm text-gray-500 dark:text-gray-400">Declarative module</span>
                 </button>
-                <button data-linux-method="linux-other" class="wizard-card">
+                <button data-linux-method="linux-other" class="wizard-card w-40 sm:w-48">
                     <span class="text-lg font-bold">Other</span>
                     <span class="text-sm text-gray-500 dark:text-gray-400">Binary download</span>
                 </button>
