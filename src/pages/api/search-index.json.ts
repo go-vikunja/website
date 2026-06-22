@@ -19,7 +19,7 @@ async function buildIndex(collection: 'docs' | 'help', prefix: string): Promise<
       const headings = extractHeadings(ast)
 
       return {
-        slug: `${prefix}${entry.slug}`,
+        slug: `${prefix}${entry.id}`,
         title: entry.data.title,
         description: entry.data.description || '',
         headings,

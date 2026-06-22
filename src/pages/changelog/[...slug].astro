@@ -1,5 +1,5 @@
 ---
-import {type CollectionEntry, getCollection} from 'astro:content'
+import {type CollectionEntry, getCollection, render} from 'astro:content'
 import Layout from '../../layouts/Layout.astro'
 import Prose from '../../components/Prose.astro'
 import {formatDate} from '../../helpers/formatDate'
@@ -10,7 +10,7 @@ export async function getStaticPaths() {
 	const changelog = await getCollection('changelog')
 	return changelog.map((entry) => ({
 		params: {
-            slug: entry.slug.endsWith('/') ? entry.slug : entry.slug + '/',
+            slug: entry.id.endsWith('/') ? entry.id : entry.id + '/',
 		},
 		props: entry,
 	}))
@@ -33,7 +33,7 @@ async function getNewestEntry() {
 
 const newestRelease = await getNewestEntry()
 
-const {Content} = await post.render()
+const {Content} = await render(post)
 // @ts-ignore: Property exists
 const description = post.data.description || Astro.props?.frontmatter?.description || Astro.props.description
 ---
@@ -56,7 +56,7 @@ const description = post.data.description || Astro.props?.frontmatter?.descripti
 
 			{post.data.isRelease && newestRelease.id !== post.id &&
                     <Callout type="warning" class="mt-6">
-                        There has been a <a href={'/changelog'+newestRelease.slug} class="underline!">new release</a> with additional fixes and
+                        There has been a <a href={'/changelog'+newestRelease.id} class="underline!">new release</a> with additional fixes and
                         improvements.
                         Updating is highly encouraged.
                     </Callout>
