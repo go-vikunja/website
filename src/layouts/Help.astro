@@ -53,7 +53,7 @@ async function getSidebarNavigation(): Promise<SectionItem[]> {
 	return help
 		.filter(d => !d.data.hideInMenu)
 		.map(d => ({
-			url: '/help/' + d.slug,
+			url: '/help/' + d.id,
 			title: d.data.title,
 		}))
 		.sort((a, b) => a.title.localeCompare(b.title))

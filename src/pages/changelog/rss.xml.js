@@ -17,7 +17,7 @@ export async function GET(context) {
       title: entry.data.title,
       description: entry.data.description,
       pubDate: entry.data.date,
-      link: `/changelog/${entry.slug.endsWith('/') ? entry.slug : entry.slug + '/'}`,
+      link: `/changelog${entry.id.endsWith('/') ? entry.id : entry.id + '/'}`,
     })),
     customData: `<language>en-us</language>`,
   });

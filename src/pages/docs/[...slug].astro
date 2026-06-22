@@ -1,5 +1,5 @@
 ---
-import {type CollectionEntry, getCollection} from 'astro:content'
+import {type CollectionEntry, getCollection, render} from 'astro:content'
 import Docs from '../../layouts/Docs.astro'
 import {type ConfigItem, generateConfigHeadings, fetchConfigItems} from '../../helpers/config'
 
@@ -7,7 +7,7 @@ export async function getStaticPaths() {
     const docs = await getCollection('docs')
     return docs.map((entry) => ({
         params: {
-            slug: entry.slug,
+            slug: entry.id,
         },
         props: entry,
     }))
@@ -15,8 +15,8 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'docs'>
 
 const post = Astro.props
-const {Content, headings} = await post.render()
-if (post.slug === 'config-options') {
+const {Content, headings} = await render(post)
+if (post.id === 'config-options') {
     const data: ConfigItem = await fetchConfigItems()
     data.children?.forEach(c => headings.push(...generateConfigHeadings(c)))
 }

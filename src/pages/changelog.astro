@@ -10,9 +10,9 @@ async function getChangelogEntries() {
 		.sort((a, b) => a.data.date > b.data.date ? -1 : 1)
 		.map(c => ({
 			title: c.data.title,
-			slug: '/changelog' + (c.slug.endsWith('/') ? c.slug : c.slug + '/'),
+			slug: '/changelog' + (c.id.endsWith('/') ? c.id : c.id + '/'),
 			date: c.data.date,
-			snippet: generateSnippet(c.body),
+			snippet: generateSnippet(c.body ?? ''),
 		}))
 }
 
