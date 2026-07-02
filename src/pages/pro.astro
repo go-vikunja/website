@@ -7,7 +7,7 @@ import FAQSection from '../components/FAQSection.astro'
 const proFaqs = [
     {
         question: 'Is this a family plan for Vikunja Cloud?',
-        answer: 'No. Pro plans (including Family) are for a Vikunja instance you host yourself. Vikunja Cloud is our managed hosting and has its own plans — you\'ll find those on the [pricing page](/pricing). We plan to bring Pro features to Cloud eventually, but that will be a separate offering with its own pricing, not the plans on this page. Joining the Pro waitlist signs you up for the self-hosted product.',
+        answer: 'No — but that exists! Vikunja Cloud has a [Family plan](/pricing): up to 5 users on a fully managed instance for 10€/month or 99€/year, available today, no waitlist. The Pro Homelab plan is something else: it adds Pro features to a Vikunja instance you host yourself. We plan to bring Pro features to Cloud eventually, but that will be a separate offering with its own pricing, not the plans on this page.',
     },
     {
         question: 'Is this open core?',
@@ -18,8 +18,8 @@ const proFaqs = [
         answer: 'Vikunja itself keeps working. Your tasks, projects, and data aren\'t going anywhere. The Pro features (audit logs, admin panel, time tracking) need an active subscription. The core app you use every day does not.',
     },
     {
-        question: 'What\'s the difference between Family, Business, and Enterprise?',
-        answer: 'They all include the same Pro features. Family is a flat fee for up to 5 users, for households sharing a Vikunja instance. Business is per-user pricing for companies. Enterprise is for organizations that need invoicing, a dedicated instance, a GDPR data processing agreement, or hands-on support.',
+        question: 'What\'s the difference between Homelab, Business, and Enterprise?',
+        answer: 'They all include the same Pro features. Homelab is a flat fee for up to 5 users, for people running Vikunja on their own server at home. Business is per-user pricing for companies. Enterprise is for organizations that need invoicing, a dedicated instance, a GDPR data processing agreement, or hands-on support.',
     },
     {
         question: 'Can I self-host with a Pro plan?',
@@ -71,7 +71,7 @@ const proFaqs = [
     },
 ]
 ---
-<Layout title="Vikunja Pro" description="Pro features for self-hosted Vikunja: audit logs, admin panel, time tracking. For families, teams, and companies running their own instance. Not yet available on Vikunja Cloud. AGPLv3 licensed.">
+<Layout title="Vikunja Pro" description="Pro features for self-hosted Vikunja: audit logs, admin panel, time tracking. For homelabbers, teams, and companies running their own instance. Not yet available on Vikunja Cloud. AGPLv3 licensed.">
     <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0">
 
         <!-- Hero -->
@@ -91,7 +91,8 @@ const proFaqs = [
                 <p>
                     <strong>Pro is not Vikunja Cloud.</strong>
                     Pro adds features to an instance you run on your own server (or a dedicated one we run for you).
-                    If you want a managed account without running a server, you're looking for
+                    If you want a managed account without running a server &mdash; including a
+                    <a href="/pricing">family plan for up to 5 users</a> &mdash; you're looking for
                     <a href="/pricing">Vikunja Cloud</a>. Pro features will come to Cloud eventually,
                     but as a separate offering &mdash; the plans below won't apply there.
                 </p>
@@ -102,10 +103,10 @@ const proFaqs = [
         <section class="max-w-5xl mx-auto mt-16 px-4">
             <div class="grid md:grid-cols-3 gap-6">
 
-                <!-- Family -->
+                <!-- Homelab -->
                 <article class="border border-gray-100 dark:border-gray-800 rounded-sm p-8 bg-white dark:bg-gray-800 flex flex-col">
                     <div class="mb-6">
-                        <h2 class="font-display text-xl mb-1">Family</h2>
+                        <h2 class="font-display text-xl mb-1">Homelab</h2>
                         <p class="text-gray-500 dark:text-gray-400 text-balance">
                             For homelabbers and households running their own instance.
                         </p>
@@ -338,7 +339,7 @@ const proFaqs = [
             <p class="text-sm text-gray-500 dark:text-gray-400 mb-8 text-balance">
                 The waitlist is for the self-hosted Pro plans above. If you'd rather have us do the
                 hosting, <a href="/pricing" class="underline">Vikunja Cloud</a> is available today &mdash;
-                no waitlist needed.
+                including a family plan for up to 5 users. No waitlist needed.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Button href="https://console.vikunja.io/register">
