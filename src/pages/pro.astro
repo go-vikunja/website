@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Button from '../components/Button.astro'
-import Callout from '../components/Callout.astro'
 import FAQSection from '../components/FAQSection.astro'
 
 const proFaqs = [
@@ -86,17 +85,10 @@ const proFaqs = [
             <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
                 Now in private beta.
             </p>
-
-            <Callout type="info" class="max-w-2xl mx-auto mt-8 text-left">
-                <p>
-                    <strong>Pro is not Vikunja Cloud.</strong>
-                    Pro adds features to an instance you run on your own server (or a dedicated one we run for you).
-                    If you want a managed account without running a server &mdash; including a
-                    <a href="/pricing">family plan for up to 5 users</a> &mdash; you're looking for
-                    <a href="/pricing">Vikunja Cloud</a>. Pro features will come to Cloud eventually,
-                    but as a separate offering &mdash; the plans below won't apply there.
-                </p>
-            </Callout>
+            <p class="mt-6 text-gray-600 dark:text-gray-400">
+                Looking for managed hosting instead?
+                <a href="/pricing" class="underline">Vikunja Cloud</a> has you covered &mdash; including a family plan.
+            </p>
         </div>
 
         <!-- Plan cards -->
