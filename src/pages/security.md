@@ -69,6 +69,19 @@ systems.
   Usually, the IP address or the URL of the affected system and a description of the vulnerability will be sufficient,
   but complex vulnerabilities may require further explanation.
 
+### AI-assisted reports
+
+Using AI tools to find or analyze a vulnerability is fine. Sending us their unverified output is not.
+
+- Verify the vulnerability yourself against a current version of Vikunja before reporting. You must be able to
+  demonstrate the issue — reports describing code paths or behavior that do not exist in the codebase will be
+  closed without a detailed response.
+- Disclose in the report if it was written with AI assistance.
+- A human must be able to answer our follow-up questions about the report.
+
+Plausible-sounding but fabricated vulnerability reports waste the time we would rather spend fixing real ones.
+Repeat senders of unverified reports will be ignored.
+
 ### What we promise:
 
 - We will respond to your report quickly with our evaluation of the report and an expected resolution date,
