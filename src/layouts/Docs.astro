@@ -61,7 +61,9 @@ async function getSidebarNavigation(): Promise<DocumentationArray> {
 	const entries: { [key: string]: SectionItem[] } = {}
 
 	docs.forEach(d => {
-		const groupKey = d.id.split('/')[0]
+		// d.id is the frontmatter slug and carries no folder information,
+		// so the group must be derived from the file path instead.
+		const groupKey = d.filePath?.replace(/^.*src\/content\/docs\//, '').split('/')[0] ?? ''
 		if (!entries[groupKey]) {
 			entries[groupKey] = []
 		}
