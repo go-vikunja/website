@@ -21,6 +21,14 @@ export default defineConfig({
 		plugins: [
 			tailwindcss(),
 		],
+		server: {
+			watch: {
+				// .devenv symlinks into /nix/store and the watcher follows
+				// symlinks, so it would scan the whole store at full CPU
+				// (withastro/astro#13083).
+				ignored: ['**/.devenv/**', '**/.wrangler/**'],
+			},
+		},
 	},
 	integrations: [
 		mdx(),
