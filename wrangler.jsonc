@@ -1,0 +1,7 @@
+{
+	"name": "website-next",
+	"compatibility_date": "2026-04-15",
+	// The workerd-based dev server (adapter v13+) needs Node built-ins like
+	// tty for the remark/unified pipeline in the search index endpoint.
+	"compatibility_flags": ["nodejs_compat"]
+}
