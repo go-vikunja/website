@@ -24,7 +24,8 @@ const entries = await getChangelogEntries()
         <div class="flex items-center justify-between mb-6">
             <h1 class="text-4xl font-display font-bold">Changelog</h1>
             <a 
-                href="/changelog/rss.xml" 
+                href="/changelog/rss.xml"
+                data-astro-prefetch="false"
                 class="inline-flex items-center gap-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 transition"
                 title="Subscribe to RSS feed"
             >
