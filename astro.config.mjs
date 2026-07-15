@@ -10,6 +10,9 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
 	site: 'https://vikunja.io',
 	output: 'static',
+	prefetch: {
+		prefetchAll: true,
+	},
 	vite: {
 		plugins: [
 			tailwindcss(),
