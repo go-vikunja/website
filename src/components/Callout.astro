@@ -4,7 +4,7 @@ interface Props {
 	class?: string
 }
 
-const {type, class: classNames} = Astro.props
+const {type, class: classNames = ''} = Astro.props
 
 function getClasses(): string {
 	let suffix = ''
@@ -17,7 +17,7 @@ function getClasses(): string {
 			break
 	}
 
-	return classNames + ' callout callout-' + type + ' rounded-sm px-4 py-3 ' + suffix
+	return (classNames + ' callout callout-' + type + ' rounded-sm px-4 py-3 ' + suffix).trim()
 }
 ---
 
@@ -28,7 +28,7 @@ function getClasses(): string {
 <style>
     @reference '../styles/global.css';
 
-    .callout :global(> p) {
+    :global(.callout > p) {
 		@apply m-0;
 	}
 
