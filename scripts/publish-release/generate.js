@@ -29,12 +29,12 @@ export async function generateAndEdit(blogPostPath, version) {
 	const newsletter = await buildNewsletter(blogUrl)
 
 	// Load brand voice guidelines
-	const brandDir = join(dirname(blogPostPath), '..', '..', '..', 'brand')
+	const brandDir = join(dirname(blogPostPath), '..', '..', '..', 'marketing', 'brand')
 	let voiceProfile = ''
 	try {
 		voiceProfile = readFileSync(join(brandDir, 'voice-profile.md'), 'utf-8')
 	} catch {
-		console.log('Warning: Could not load brand/voice-profile.md')
+		console.log('Warning: Could not load marketing/brand/voice-profile.md')
 	}
 
 	const prompt = `You are helping announce a Vikunja release (version ${version}).
