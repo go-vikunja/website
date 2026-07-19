@@ -1,0 +1,46 @@
+---
+title: Bot users
+slug: bot-users
+description: >-
+  Bot users are Vikunja accounts meant for scripts, integrations, and agents
+  rather than people. Learn what they are, how to create one, and how they
+  differ from a regular account.
+---
+import Callout from '../../../components/Callout.astro';
+
+A bot user is a Vikunja account meant for automation rather than a person: scripts, integrations, CI jobs, and coding agents.
+It exists so that work done by a machine is attributed to a clearly-labelled account instead of borrowing your own login.
+
+<Callout type="info">
+Bot users are available from Vikunja **2.4.0** onwards.
+</Callout>
+
+## What makes a bot different
+
+A bot user is a normal user account with a few deliberate restrictions:
+
+- **It can't sign in interactively.** A bot has no password and no email, so it can't log in through the web UI or over CalDAV. It authenticates only with an [API token](/docs/api-documentation).
+- **It's owned by a human.** Every bot belongs to the user who created it. That owner can manage the bot and its tokens, and if the owner is deleted, so is the bot.
+- **Its username starts with `bot-`.** The prefix is reserved: bot usernames must use it, and regular signups can't. This makes bots easy to spot in an assignee list or a share.
+- **It's visually marked.** Bots get a distinct avatar and a badge in the interface, so you can tell at a glance which activity came from automation.
+
+Everything else works like a regular account.
+A bot can be shared into projects, assigned to tasks, mentioned in comments, and it shows up in search.
+
+## Creating a bot
+
+Go to **Settings → Bots** (`/user/settings/bots`).
+Give the bot a name, and Vikunja creates the account with the `bot-` prefix.
+From the same page you can:
+
+- Mint API tokens for the bot, scoped to whatever the bot needs to do.
+- Rename or delete the bot.
+
+Once the bot exists, share the projects it should have access to with it, the same way you'd share with any other user, and it can act within those projects using its token.
+
+## Using bots
+
+The typical flow is: create a bot, share the relevant project with it, mint a scoped API token, and hand that token to whatever automation you're running.
+The automation then talks to Vikunja's [API](/docs/api-documentation) as the bot, and everything it does is attributed to the bot rather than to you.
+
+If you want a bot driving an agent's task-tracking specifically, [veans](/docs/veans) sets all of this up for you: it creates a bot, shares your project with it, and mints the token in one step.
