@@ -1,0 +1,154 @@
+---
+title: API v2
+slug: api-v2
+description: >-
+  Vikunja's v2 REST API: OpenAPI 3.1 spec, standard REST verbs, PATCH support,
+  RFC 9457 errors, pagination envelope, and how it differs from v1.
+---
+
+`/api/v2` is the second version of Vikunja's REST API. It covers everything v1 does but with standard REST semantics, an OpenAPI 3.1 spec generated from the code itself, and a few things v1 never had, like `PATCH` support and conditional requests.
+
+The v2 API ships with Vikunja 2.4.0.
+
+If you're building a new integration, build it against v2.
+
+## Timeline for v1
+
+The v1 API goes away one major version at a time:
+
+- **2.4.0**: v2 ships. v1 is frozen: all new routes for new features land on v2 only.
+- **3.0**: v1 is deprecated. It keeps working, but is maintained on a best-effort basis, with no guarantee that it gains new features.
+- **4.0**: v1 is removed.
+
+Existing v1 clients have until 4.0 to switch, but the [porting steps](#porting-a-v1-client) are small. There's little reason to wait.
+
+We estimate to release 3.0 in Q3/Q4 2026 and 4.0 some time in the second half of 2027. Note that we do not guarantee these dates, they are made on a best-effort basis.
+
+## Interactive docs and OpenAPI spec
+
+Your instance serves its own API reference under `/api/v2/docs`, an interactive UI where you can browse every endpoint and try requests against your instance directly.
+
+The raw spec is available in several flavors:
+
+- `/api/v2/openapi.json` and `/api/v2/openapi.yaml`: OpenAPI 3.1
+- `/api/v2/openapi-3.0.json` and `/api/v2/openapi-3.0.yaml`: downgraded to OpenAPI 3.0, for tools that don't understand 3.1 yet
+
+Unlike v1's Swagger docs, which are generated from code annotations at build time, the v2 spec is reflected from the Go types at runtime. It matches what your instance actually serves, including every field description, validation rule and which fields are read-only. That makes it a solid base for generating client SDKs.
+
+JSON responses also carry a `$schema` field linking to the JSON Schema of that resource under `/api/v2/schemas/`, so editors and validators can pick it up automatically.
+
+## Authentication
+
+Nothing changed here. The same credentials work on both API versions, passed as a Bearer token:
+
+```
+Authorization: Bearer <token>
+```
+
+That's either an [API token](/docs/api-documentation) (`tk_` prefix, created under Settings > API Tokens) or a JWT obtained by logging in. Token permission scopes apply to v2 routes the same way they do to v1 routes.
+
+## What's different from v1
+
+### Standard REST verbs
+
+v1 has an unusual verb mapping: `PUT` creates and `POST` updates. v2 uses the verbs the way the rest of the world does:
+
+| Operation      | v1     | v2                 |
+|----------------|--------|--------------------|
+| Create         | `PUT`  | `POST` (returns 201) |
+| Full update    | `POST` | `PUT`              |
+| Partial update | not available | `PATCH`       |
+| Read           | `GET`  | `GET`              |
+| Delete         | `DELETE` | `DELETE` (returns 204, empty body) |
+
+### PATCH for partial updates
+
+Every resource that supports `GET` and `PUT` also accepts `PATCH`. A plain JSON body is treated as a [JSON Merge Patch](https://datatracker.ietf.org/doc/html/rfc7386): send only the fields you want to change.
+
+```
+PATCH /api/v2/labels/42
+Content-Type: application/json
+
+{"title": "new title"}
+```
+
+[JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902) (`application/json-patch+json`) works too if you need operations like moving or testing values.
+
+In v1, updates replace the whole resource, so clients have to fetch, merge and send everything back. With `PATCH` that dance is gone.
+
+### Pagination envelope
+
+v1 returns a bare JSON array and hides pagination in the `x-pagination-total-pages` and `x-pagination-result-count` response headers. v2 list endpoints wrap results in an envelope:
+
+```json
+{
+	"items": [ ... ],
+	"total": 128,
+	"page": 1,
+	"per_page": 50,
+	"total_pages": 3
+}
+```
+
+The query parameters are `page` and `per_page` as before. The search parameter was renamed from v1's `s` to `q`.
+
+### Errors follow RFC 9457
+
+Errors come back as `application/problem+json` per [RFC 9457](https://datatracker.ietf.org/doc/html/rfc9457):
+
+```json
+{
+	"title": "Not Found",
+	"status": 404,
+	"detail": "This label does not exist.",
+	"code": 8002
+}
+```
+
+`code` is Vikunja's numeric error code, the same one v1 uses. The [error code list](/docs/errors) applies to both versions.
+
+One status code changed: validation failures return `422 Unprocessable Entity` on v2, where v1 returns `412 Precondition Failed`. Invalid fields are listed in the `errors` array of the problem body.
+
+### Conditional requests
+
+Single-resource `GET` returns an `ETag` header. Send it back as `If-None-Match` and you'll get a `304 Not Modified` when nothing changed, which saves bandwidth for polling clients. `If-Match` / `If-Unmodified-Since` preconditions are supported as well.
+
+### Your permission level is in the body
+
+v1 exposes the caller's access level to a resource in an `x-max-permission` response header. v2 puts it in the response body as a `max_permission` field, where generated clients can actually see it.
+
+## Porting a v1 client
+
+The JSON models are unchanged: same field names, same `snake_case`, same structure. Porting mostly comes down to:
+
+1. Swap the verbs: create with `POST` instead of `PUT`, update with `PUT` (or `PATCH`) instead of `POST`.
+2. Read lists from the `items` field instead of the top-level array, and take pagination from the body instead of headers.
+3. Rename the search parameter from `s` to `q`.
+4. Expect `201` on create and `204` on delete.
+5. Parse errors from the problem+json body; treat `422` as the validation status instead of `412`.
+
+Endpoint paths are the same as v1 with the `/api/v2` prefix, with a handful of exceptions where v1's layout was inconsistent. Check `/api/v2/docs` on your instance for the full list.
+
+### Letting a coding agent do it
+
+The steps are mechanical, which makes them a good fit for a coding agent. The prompt below contains everything the agent needs to know about the differences; paste it into Claude Code, Cursor or similar, pointed at your client's codebase, and review the diff it produces.
+
+```text
+Migrate this codebase from the Vikunja v1 REST API to v2.
+
+First, get the current API docs. Ask me which Vikunja instance to fetch them from. If I don't name one, use https://try.vikunja.io/api/v2/openapi.json and tell me that's what you're doing — the docs on try.vikunja.io are always up to date, but can contain changes that are not in a release yet. Fetch <instance>/api/v2/openapi.json and treat it as the authority: take the exact request and response shapes from it rather than guessing.
+
+Then do recon: find every request to a path containing /api/v1/ and build an inventory of the Vikunja routes this codebase uses — method, path, and the call sites in the code. Check every route in the inventory against the spec, and show me the inventory and the resulting migration plan before changing anything.
+
+Then port every call site to /api/v2/ using the spec and the rules below. The JSON models are unchanged (same field names, snake_case): do not rename any payload fields. Authentication is unchanged.
+
+1. The verbs for create and update are swapped. v1 creates with PUT and updates with POST; v2 creates with POST (returns 201) and updates with PUT. For updates that only change a few fields, prefer PATCH with a JSON Merge Patch body (Content-Type: application/json, send only the changed fields).
+2. List endpoints no longer return a bare JSON array. They return an envelope: {"items": [...], "total": n, "page": n, "per_page": n, "total_pages": n}. Read results from "items" and pagination from the body. The x-pagination-total-pages and x-pagination-result-count response headers are gone.
+3. The search query parameter is now "q" (v1 called it "s"). "page" and "per_page" are unchanged.
+4. DELETE returns 204 with an empty body. Do not parse a response body on delete.
+5. Errors are RFC 9457 application/problem+json with fields "title", "status", "detail" and "code". "code" carries the same numeric Vikunja error codes as v1; the human-readable text moved from v1's "message" field to "detail". Validation failures return 422 instead of v1's 412.
+6. The caller's access level moved from the x-max-permission response header to a "max_permission" field in single-resource response bodies.
+7. Most endpoint paths are identical to v1, but a few moved. Where the spec disagrees with the v1 path, the spec wins.
+
+Work through the call sites one at a time. Update tests and mocks that assert on v1 shapes: bare list arrays, pagination headers, 200 on create, 412 validation errors. Do not change any behavior beyond the API mapping.
+```
