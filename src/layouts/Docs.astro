@@ -8,6 +8,7 @@ import TableOfContentsHeading from '../components/TableOfContentsHeading.astro'
 import SearchButton from '../components/SearchButton.astro'
 import SearchModal from '../components/SearchModal.astro'
 import CopyMarkdownButton from '../components/CopyMarkdownButton.astro'
+import CodeCopyButtons from '../components/CodeCopyButtons.astro'
 
 interface Props {
 	title: string
@@ -92,6 +93,7 @@ const sidebarEntries = await getSidebarNavigation()
 ---
 <Layout title={title} description={description}>
     <SearchModal />
+    <CodeCopyButtons />
 
     <div class="mx-auto flex max-w-(--breakpoint-2xl) flex-col lg:flex-row lg:pt-8">
         <!-- Search Button (fixed position on mobile) -->
