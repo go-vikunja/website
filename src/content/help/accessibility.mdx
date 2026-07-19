@@ -1,0 +1,111 @@
+---
+title: Accessibility
+slug: accessibility
+description: >-
+  How to use Vikunja with a keyboard, adjust display and sound, and what works
+  with screen readers, plus current limitations and how to report problems.
+---
+import Callout from '../../components/Callout.astro';
+
+Vikunja is built to work without a mouse and to adapt to how you read and hear the interface. This page covers the keyboard shortcuts, the display and sound settings, and what currently works with assistive technology, including the parts that are still rough.
+
+## Using Vikunja with a keyboard
+
+You can reach and open every task without dragging, clicking, or pointing. The shortcuts below work throughout the app; press `?` at any time to open the shortcut reference for wherever you happen to be.
+
+### On every page
+
+| Keys | Action |
+|------|--------|
+| `Ctrl+K` / `Cmd+K` | Open search and quick actions |
+| `Ctrl+E` / `Cmd+E` | Toggle the menu |
+| `?` | Open the keyboard shortcut reference |
+
+Search doubles as a command palette, so `Ctrl+K` also gets you to any task or project by name and lets you create new ones without leaving the page.
+
+### Moving around
+
+These are chords: press the first key, release it, then press the second.
+
+| Keys | Goes to |
+|------|---------|
+| `g` then `o` | Overview |
+| `g` then `u` | Upcoming |
+| `g` then `p` | Projects |
+| `g` then `a` | Labels |
+| `g` then `m` | Teams |
+
+Inside a project, the same pattern switches [views](/help/views): `g` then `l` for List, `g` then `t` for Table, `g` then `k` for Kanban, and `g` then `g` for Gantt.
+
+### In the List view
+
+| Keys | Action |
+|------|--------|
+| `j` | Highlight the next task |
+| `k` | Highlight the previous task |
+| `Enter` | Open the highlighted task |
+
+### On a task
+
+When a task is open, single-key shortcuts jump straight to each field, so you never have to tab through the whole page to change one thing.
+
+| Keys | Action |
+|------|--------|
+| `t` | Mark done or undone |
+| `a` | Assign to a user |
+| `l` | Add labels |
+| `d` | Change the due date |
+| `Alt+R` / `Shift+R` | Manage reminders |
+| `e` | Edit the description |
+| `p` | Change the priority |
+| `c` | Change the color |
+| `f` | Add an attachment |
+| `r` | Edit related tasks |
+| `m` | Move to another project |
+| `s` | Toggle favorite |
+| `u` | Open the task's project |
+| `Ctrl+S` / `Cmd+S` | Save |
+| `Delete` / `Backspace` | Delete the task |
+
+Pressing `.` copies the task identifier; press it twice for the identifier and title, three times to add the URL. `Ctrl+.` / `Cmd+.` copies the task URL on its own.
+
+### Doing without drag-and-drop
+
+Most things you can drag, you can also do from the keyboard:
+
+- **Move a task between Kanban buckets:** open the task and use the bucket dropdown in the breadcrumb line at the top. You don't need to drag the card.
+- **Reschedule in the Gantt view:** press `Tab` to land on a task bar, then use the Left and Right arrow keys to move it a day at a time. Separate buttons resize the start and end. Hold `Shift` with an arrow to extend the bar, or `Ctrl` / `Cmd` to shrink it.
+- **Set dates without the calendar grid:** in any date picker you can type the date directly, and there are separate month, year, and time controls if you'd rather step through them.
+- **Write descriptions by keyboard:** the rich-text editor is fully operable without a mouse. Markdown shortcuts work as you type (`#` for headings, `-` for a bullet, `1.` for a numbered list, `[]` for a checkbox), `Ctrl+S` / `Cmd+S` saves, and `Tab` moves focus out of the editor rather than trapping you in it.
+
+## Display and sound
+
+- **Color scheme:** choose Light, Dark, or System (which follows your operating system) under Settings → General → Color Scheme. See [Settings](/help/settings#color-scheme).
+- **Zoom:** the layout reflows at 200% browser zoom without cutting off or hiding content, so you can enlarge text with your browser's own zoom.
+- **Completion sound:** the pop that plays when you finish a task can be turned off under Settings → General.
+
+## Screen readers and assistive technology
+
+Vikunja is built with semantic structure that assistive technology can use: page landmarks, labeled controls, a skip-to-content link, and live-region announcements that read out the result of an action. The Gantt chart carries an ARIA description of what it shows. Images you add to a task description can be given alt text: select the image and choose **Alt text** in the bubble menu that appears.
+
+<Callout type="info">
+So far we've tested with automated checks and manual keyboard and accessibility-tree audits. We're expanding our screen reader testing, so if something reads badly in your reader, we want to hear about it.
+</Callout>
+
+## What doesn't work yet
+
+We'd rather tell you plainly than have you fight the interface:
+
+- **Reordering cards within a Kanban bucket** and **manually reordering the List view** are drag-and-drop only. The workaround is to sort instead: pick a [sort order](/help/views#sorting-the-list) and the tasks arrange themselves.
+- **Renaming a Kanban bucket** still needs a pointer.
+- Some color-contrast and announcement issues are still being fixed. A July 2026 accessibility audit kicked off a round of improvements, and the work is ongoing.
+
+## Reporting an accessibility problem
+
+If something gets in your way, report it the same way you'd report any bug:
+
+- Open an issue on [GitHub](https://github.com/go-vikunja/vikunja)
+- Post on the [community forum](https://community.vikunja.io)
+- Email [hello@vikunja.io](mailto:hello@vikunja.io)
+
+Every one of these is text-based, so you can reach us however works for you.

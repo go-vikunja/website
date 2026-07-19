@@ -61,5 +61,6 @@ Use these pages as your main starting points:
 - [Sharing & Teams](/help/sharing-and-teams) for collaboration and permissions
 - [Settings](/help/settings) for account preferences, reminders, tokens, and imports
 - [Import & Export](/help/import-and-export) for moving data in and out of Vikunja
+- [Accessibility](/help/accessibility) for keyboard shortcuts, display and sound options, and screen reader support
 
 If you need server setup, API details, or development guides, go to the [technical documentation](/docs).
