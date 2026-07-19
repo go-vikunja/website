@@ -1,0 +1,67 @@
+---
+---
+<script>
+	const copyIcon = '<svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>'
+	const checkIcon = '<svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>'
+
+	async function copyText(text: string) {
+		try {
+			await navigator.clipboard.writeText(text)
+		} catch {
+			// Fallback for non-secure contexts
+			const textarea = document.createElement('textarea')
+			textarea.value = text
+			textarea.style.position = 'fixed'
+			textarea.style.opacity = '0'
+			document.body.appendChild(textarea)
+			textarea.select()
+			document.execCommand('copy')
+			document.body.removeChild(textarea)
+		}
+	}
+
+	document.querySelectorAll('#main-content pre').forEach(pre => {
+		// The button sits on a wrapper, not the pre, so it stays put when the code scrolls horizontally
+		const wrapper = document.createElement('div')
+		wrapper.className = 'code-block-wrapper'
+		pre.parentNode?.insertBefore(wrapper, pre)
+		wrapper.appendChild(pre)
+
+		const button = document.createElement('button')
+		button.type = 'button'
+		button.className = 'copy-code-button absolute top-2 right-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white/90 dark:bg-gray-800/90 p-1.5 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer'
+		button.title = 'Copy to clipboard'
+		button.setAttribute('aria-label', 'Copy code to clipboard')
+		button.innerHTML = copyIcon
+
+		let resetTimeout: number
+		button.addEventListener('click', async () => {
+			await copyText(pre.textContent ?? '')
+			button.innerHTML = checkIcon
+			clearTimeout(resetTimeout)
+			resetTimeout = window.setTimeout(() => {
+				button.innerHTML = copyIcon
+			}, 2000)
+		})
+		wrapper.appendChild(button)
+	})
+</script>
+
+<style is:global>
+	.code-block-wrapper {
+		position: relative;
+
+		/* Hidden-until-hover only where hovering exists; touch devices keep the button visible */
+		@media (hover: hover) {
+			& .copy-code-button {
+				opacity: 0;
+				transition: opacity 0.15s;
+			}
+
+			&:hover .copy-code-button,
+			& .copy-code-button:focus-visible {
+				opacity: 1;
+			}
+		}
+	}
+</style>
