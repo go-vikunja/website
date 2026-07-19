@@ -1,0 +1,194 @@
+---
+title: veans agent CLI
+slug: veans
+description: >-
+  veans is a command-line tool for driving Vikunja from a terminal or a coding
+  agent. Learn how to install it, run veans init, and use it to create, claim,
+  and update tasks.
+---
+import Callout from '../../../components/Callout.astro';
+
+`veans` is a small, experimental command-line tool for driving Vikunja from a terminal, a script, or a coding agent.
+It wraps Vikunja's REST API with an agent-friendly surface and can emit a system prompt that teaches an agent to track its work in Vikunja instead of a scratch to-do list.
+
+It's built and published alongside the main Vikunja binary.
+
+<Callout type="info">
+veans needs a Vikunja **2.4.0** or newer instance.
+It signs in through the OAuth authorization server (2.3+) and creates a [bot user](/docs/bot-users), which shipped in 2.4.0.
+</Callout>
+
+veans is heavily inspired by [beans](https://github.com/hmans/beans), which does the same thing with a local file-based tracker.
+veans keeps the shape and the workflow but points it at a Vikunja project instead.
+
+## What veans is for
+
+Coding agents keep their own to-do lists.
+Claude Code has `TodoWrite`, other tools have their own scratch files, and either way that list lives inside a single session and disappears when the session ends.
+You can't see it while the agent is working, your teammates can't see it at all, and nothing survives to the next session.
+
+veans replaces that ephemeral list with real tasks in a Vikunja project.
+The agent claims a task before it starts, moves it along as it works, and leaves it in review when it's done.
+The result is that the agent's work is visible in the same place you already track everything else: you can watch a task move across the board in real time, comment on it, reprioritize it, or pick up where the agent left off.
+When the session ends, the trail is still there.
+
+veans itself is built for machines, not people.
+Everything prints JSON, so it's made to be consumed by an agent or a script.
+The human side of the workflow happens in Vikunja.
+
+## The workflow it sets up
+
+veans is opinionated about how work moves.
+Every task travels through the same five stages, backed by five Kanban buckets that `veans init` creates for you:
+
+**Todo → In Progress → In Review → Done**, with **Scrapped** for work that gets abandoned.
+
+A typical loop looks like this:
+
+1. A task sits in **Todo**. You can create it, or the agent can.
+2. The agent runs `veans claim <id>`. That assigns the task to the bot, moves it to **In Progress**, and tags it with a label for the current git branch, so you can see which branch is tackling which task.
+3. The agent does the work, updating the task with comments or status as it goes.
+4. When it's finished, the agent moves the task to **In Review**. It does *not* mark it done.
+5. You review the change (typically a pull request), and a human moves the task to **Done** once it's actually landed.
+
+The one rule that makes this work: **the agent never closes its own tasks.**
+It parks finished work in In Review and waits for a person to sign off.
+That keeps a human in the loop on everything the agent produces, instead of the agent declaring victory on its own.
+
+## Where it's opinionated
+
+veans deliberately trades flexibility for a workflow that just works out of the box:
+
+- **Fixed stages.** The five buckets above are the whole model. veans maps its statuses onto them and expects them to exist.
+- **A dedicated bot user.** The agent acts as a [bot account](/docs/bot-users), not as you. Its work is clearly attributed, and you can revoke or rotate it without touching your own login.
+- **Humans close tasks, agents don't.** Finished work lands in In Review, never Done.
+- **Machine-readable output.** Commands print JSON, aimed at being consumed by an agent or a script rather than read as prose.
+- **The agent is re-taught every session.** `veans prime` re-emits the workflow prompt whenever a session starts or context is compacted, so the agent doesn't drift away from these rules over a long run.
+
+If that matches how you want an agent to work, veans gets you there with one `init`.
+If you need a different flow, the raw [`veans api`](#commands) command is there as an escape hatch.
+
+## Installing
+
+If you've set up Vikunja's [package repositories](/docs/installing), `veans` is available there as its own package, on all of them:
+
+```sh
+sudo apt install veans      # Debian/Ubuntu
+sudo dnf install veans      # Fedora/RHEL
+sudo pacman -S veans        # Arch
+sudo apk add veans          # Alpine
+```
+
+Otherwise, grab the standalone binary from the [downloads page](https://dl.vikunja.io/veans/) and put it somewhere on your `PATH`:
+
+```sh
+sudo install ./veans /usr/local/bin/
+```
+
+## Getting started
+
+In a repository that can reach your Vikunja instance, run:
+
+```sh
+veans init --server https://vikunja.example.com
+```
+
+`veans init` sets everything up for you:
+
+1. **Signs you in.** By default it uses OAuth 2.0 with PKCE against Vikunja's built-in [authorization server](/docs/oauth-server), so there's no client to register. veans prints a URL, you open it in your browser and sign in, then paste the resulting callback URL back into the CLI.
+2. **Asks you to pick a project and a Kanban view** to track work in.
+3. **Creates the canonical buckets** if they're missing: Todo, In Progress, In Review, Done, and Scrapped.
+4. **Creates a bot user** named `bot-<repo>` (an account meant for automation: no password, no email, can't sign in interactively) and shares the project with it.
+5. **Mints a long-lived API token for the bot**, scoped to the endpoints your server actually exposes, and stores it in your OS keychain (falling back to `~/.config/veans/credentials.yml` if no keychain is available).
+6. **Writes `.veans.yml`** to the repo root.
+
+The token that gets stored is the bot's, not yours.
+Your own sign-in is discarded as soon as `init` finishes, so you can rotate or revoke the bot independently without touching your own account.
+
+### Other ways to sign in
+
+If OAuth doesn't fit your setup, `veans init` also accepts:
+
+- `--token <token>`: paste in a JWT or personal API token. Useful with SSO/OIDC.
+- `--use-password`: sign in with username and password (local accounts only).
+- `--username` and `--password`: the same, non-interactively, for scripts.
+
+## Commands
+
+```
+veans init                  sign in, create the bot, mint a token, write .veans.yml
+veans prime                 print the agent system prompt (silent if there's no .veans.yml)
+veans list                  list tasks (--ready, --mine, --branch, --filter, --status); prints JSON
+veans show <id>             show a single task as JSON
+veans create "title"        create a task (--description, --label, --status, --priority, --parent, --blocked-by)
+veans update <id>           update a task (--status, --title, --priority, --label-add/remove, --comment, ...)
+veans claim <id>            assign the bot, move the task to In Progress, tag it with the current branch
+veans api METHOD PATH       raw REST call, for anything not wrapped by the commands above
+veans login                 re-mint the bot's token
+veans version               print the version
+```
+
+Task IDs accept `PROJ-NN` (when the project has an identifier), `#NN` (when it doesn't), or a bare number.
+
+## Using veans with a coding agent
+
+`veans prime` prints a system prompt that teaches an agent the workflow: claim a task, work on it, move it to In Review, and let a human close it.
+Wire it into your agent so it runs at the start of a session and before context is compacted.
+
+For Claude Code, in `.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "SessionStart": [{ "hooks": [{ "type": "command", "command": "veans prime" }] }],
+    "PreCompact":   [{ "hooks": [{ "type": "command", "command": "veans prime" }] }]
+  }
+}
+```
+
+`veans prime` exits silently when there's no `.veans.yml` in or above the current directory, so it's safe to install globally without breaking sessions in unrelated repos.
+
+## The `.veans.yml` file
+
+`veans init` writes this to the repo root.
+It's safe to commit.
+The numeric IDs are what veans actually uses; the identifier and bot username are just for readable output.
+
+```yaml
+server: https://vikunja.example.com
+project_id: 42
+project_identifier: PROJ        # may be empty, in which case task IDs render as #NN
+view_id: 7
+buckets:
+  todo: 11
+  in_progress: 12
+  in_review: 13
+  done: 14
+  scrapped: 15
+bot:
+  username: bot-myrepo
+  user_id: 99
+```
+
+## Where credentials are stored
+
+On every command, veans looks for the bot's token in this order:
+
+1. Your **OS keychain** (macOS Keychain, Windows Credential Manager, or libsecret/gnome-keyring on Linux).
+2. The **`VEANS_TOKEN`** environment variable, optionally with `VEANS_SERVER`. This is the one to use in CI or containers.
+3. **`~/.config/veans/credentials.yml`** (mode `0600`), used automatically when no keychain is available.
+
+## Status model
+
+veans maps a small set of statuses onto the buckets it creates:
+
+| Status        | Bucket       | Who moves it there                       |
+| ------------- | ------------ | ---------------------------------------- |
+| `todo`        | Todo         | new tasks land here by default           |
+| `in-progress` | In Progress  | `veans claim` or `update -s in-progress` |
+| `in-review`   | In Review    | the agent, when its work is done         |
+| `completed`   | Done         | a human, once the work has landed        |
+| `scrapped`    | Scrapped     | the agent, with a `--reason`             |
+
+An agent never marks a task `completed` itself.
+It parks finished work in In Review, and a human closes it once the change is merged.
