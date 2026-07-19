@@ -78,6 +78,8 @@ Most things you can drag, you can also do from the keyboard:
 - **Set dates without the calendar grid:** in any date picker you can type the date directly, and there are separate month, year, and time controls if you'd rather step through them.
 - **Write descriptions by keyboard:** the rich-text editor is fully operable without a mouse. Markdown shortcuts work as you type (`#` for headings, `-` for a bullet, `1.` for a numbered list, `[]` for a checkbox), `Ctrl+S` / `Cmd+S` saves, and `Tab` moves focus out of the editor rather than trapping you in it.
 
+On Safari, `Tab` skips over links by default, so keyboard navigation can feel like it's missing stops. Turn on Safari → Settings → Advanced → "Press Tab to highlight each item" to Tab through everything, or hold `Option` while you press `Tab`.
+
 ## Display and sound
 
 - **Color scheme:** choose Light, Dark, or System (which follows your operating system) under Settings → General → Color Scheme. See [Settings](/help/settings#color-scheme).
@@ -87,6 +89,8 @@ Most things you can drag, you can also do from the keyboard:
 ## Screen readers and assistive technology
 
 Vikunja is built with semantic structure that assistive technology can use: page landmarks, labeled controls, a skip-to-content link, and live-region announcements that read out the result of an action. The Gantt chart carries an ARIA description of what it shows. Images you add to a task description can be given alt text: select the image and choose **Alt text** in the bubble menu that appears.
+
+If you're picking a combination, VoiceOver works best with Safari, and NVDA with Chrome or Firefox. VoiceOver paired with Firefox announces headings and languages poorly; that's a limitation of the browser, not something we can fix from Vikunja's side.
 
 <Callout type="info">
 So far we've tested with automated checks and manual keyboard and accessibility-tree audits. We're expanding our screen reader testing, so if something reads badly in your reader, we want to hear about it.
