@@ -18,7 +18,11 @@ const proFaqs = [
     },
     {
         question: 'What\'s the difference between Homelab, Business, and Enterprise?',
-        answer: 'They all include the same Pro features. Homelab is a flat fee for up to 5 users, for people running Vikunja on their own server at home. Business is per-user pricing for companies. Enterprise is for organizations that need invoicing, a dedicated instance, a GDPR data processing agreement, or hands-on support.',
+        answer: 'Homelab is a flat fee for up to 5 users, for people running Vikunja on their own server at home. It includes the admin panel and time tracking, but not audit logs. Business includes all Pro features with per-user pricing for companies. Enterprise is for larger organizations that need yearly invoicing, a GDPR data processing agreement, or hands-on support via phone. If you\'d rather not run the instance yourself, a managed dedicated instance is available as a paid add-on on any plan.',
+    },
+    {
+        question: 'How does per-user billing work on the Business plan?',
+        answer: 'You choose one of two models: set a fixed number of seats and add or remove them at any time, or let us automatically bill for the number of users active on your instance, with no seat management needed. Monthly and yearly billing are both available.',
     },
     {
         question: 'Can I self-host with a Pro plan?',
@@ -110,7 +114,6 @@ const proFaqs = [
                     <hr class="mb-6"/>
 
                     <ul class="list-disc list-checkmark pl-4 mb-8 text-gray-700 dark:text-gray-300 space-y-1">
-                        <li>All Pro features</li>
                         <li>Admin panel</li>
                         <li>Time tracking</li>
                         <li>Up to 5 users</li>
@@ -144,7 +147,7 @@ const proFaqs = [
                         <li>Admin panel</li>
                         <li>Audit logs</li>
                         <li>Time tracking</li>
-                        <li>Unlimited users</li>
+                        <li>Pay per seat or per active user</li>
                         <li>Priority email support</li>
                     </ul>
 
@@ -171,11 +174,11 @@ const proFaqs = [
 
                     <ul class="list-disc list-checkmark pl-4 mb-8 text-gray-700 dark:text-gray-300 space-y-1">
                         <li>Everything in Business</li>
-                        <li>Dedicated instance</li>
-                        <li>Bring your own server</li>
+                        <li>Phone support</li>
+                        <li>Yearly invoicing</li>
                         <li>GDPR data processing agreement</li>
-                        <li>Team training</li>
-                        <li>Invoicing</li>
+                        <li>Team training available</li>
+                        <li>Managed dedicated instance available</li>
                     </ul>
 
                     <div class="mt-auto">
