@@ -14,16 +14,19 @@ const SECTION_LINKEDIN = '=== LINKEDIN ==='
 export async function generateAndEdit(blogPostPath, version) {
 	const blogContent = readFileSync(blogPostPath, 'utf-8')
 
-	// Extract slug from frontmatter
-	const slugMatch = blogContent.match(/^---[\s\S]*?slug:\s*(\S+)[\s\S]*?---/m)
-	const slug = slugMatch ? slugMatch[1].replace(/^\//, '') : `vikunja-v${version}-was-released`
-	const blogUrl = `https://vikunja.io/changelog/${slug}`
+	const frontmatter = extractFrontmatter(blogContent, blogPostPath)
 
-	// Extract title from frontmatter
-	const titleMatch = blogContent.match(/^---[\s\S]*?title:\s*'([^']+)'[\s\S]*?---/m)
-		|| blogContent.match(/^---[\s\S]*?title:\s*"([^"]+)"[\s\S]*?---/m)
-		|| blogContent.match(/^---[\s\S]*?title:\s*(.+)[\s\S]*?---/m)
-	const blogTitle = titleMatch ? titleMatch[1].trim() : `Vikunja ${version} was released`
+	// Astro's glob loader uses the frontmatter slug as the entry id, so it defines the live URL
+	const slug = getFrontmatterValue(frontmatter, 'slug')
+	if (!slug) {
+		throw new Error(`No slug in frontmatter of ${blogPostPath} — cannot determine the live post URL`)
+	}
+	const blogUrl = `https://vikunja.io/changelog/${slug.replace(/^\/+|\/+$/g, '')}/`
+
+	const blogTitle = getFrontmatterValue(frontmatter, 'title')
+	if (!blogTitle) {
+		throw new Error(`No title in frontmatter of ${blogPostPath}`)
+	}
 
 	// Build newsletter from the live rendered page
 	const newsletter = await buildNewsletter(blogUrl)
@@ -91,6 +94,25 @@ ${SECTION_LINKEDIN}
 
 	const {short, linkedin} = parseSections(editedContent)
 	return {short, linkedin, newsletter, blogTitle}
+}
+
+function extractFrontmatter(content, blogPostPath) {
+	const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)
+	if (!match) {
+		throw new Error(`No frontmatter block found in ${blogPostPath}`)
+	}
+	return match[1]
+}
+
+function getFrontmatterValue(frontmatter, key) {
+	const match = frontmatter.match(new RegExp(`^${key}:[ \\t]*(.+)$`, 'm'))
+	if (!match) {
+		return null
+	}
+
+	const value = match[1].trim()
+	const quoted = value.match(/^'(.*)'$/) || value.match(/^"(.*)"$/)
+	return quoted ? quoted[1] : value
 }
 
 async function buildNewsletter(blogUrl) {
