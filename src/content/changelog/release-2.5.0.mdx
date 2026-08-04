@@ -1,0 +1,60 @@
+---
+title: 'Vikunja 2.5.0: A security fix, faster multiline task creation, and a lot of bug fixes'
+date: 2026-08-04T12:00:00.000Z
+slug: /vikunja-2.5.0-was-released
+isRelease: true
+description: >-
+  Vikunja 2.5.0 fixes a security issue with share links, makes creating many
+  tasks at once fast and reliable, and spends the rest of its 203 commits on bug
+  fixes across CalDAV, notifications, imports, filters and the desktop app.
+---
+
+A bit over two weeks after 2.4.0, here's 2.5.0. This is a cleanup release: 203 commits, 58 of them dependency updates and 105 of them fixes. There's one security fix and one real new feature, so let's start with the security one.
+
+## Security fix: a share link could act as another user
+
+A [share link](/help/sharing-and-teams#link-shares) is its own kind of login, and internally it got an ID from the same number range as user accounts. Three permission checks compared that ID against user IDs without checking which kind they were looking at, so a share link whose ID matched a user's ID was treated as that user. Whoever held the link could remove that user from their teams, delete that user's bot users, and read the member list of any team they're in.
+
+This is the same class of bug as [the API token issue in 2.4.0](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-vvcv-vpph-h844), at three places that fix didn't touch. Share links are now rejected everywhere a real user account is required, and their internal ID can no longer collide with a user ID. Everything up to and including 2.4.0 is affected. No CVE has been assigned yet. [Check out the full advisory on GitHub](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-32r8-5843-4qw2) to learn more about the details. Thanks to [@manus-use](https://github.com/manus-use) for reporting this!
+
+## Creating many tasks at once
+
+Pasting a list of tasks [into the quick add field](/help/quick-add-magic#creating-multiple-tasks-at-once) created each line with its own request. They raced each other, which meant the order you typed them in was not always the order you got back. This was really annoying if you just pasted a shopping list or a set of steps in order.
+
+To fix this for good, there's now a bulk creation endpoint in the new v2 API which the frontend uses for multiline input. Type or paste as many lines as you want, hit enter, and they all get created in one request in the order you wrote them. It's also a lot faster, since the project lookups, index assignment and saved filter updates now happen once per batch instead of once per task ([#3388](https://github.com/go-vikunja/vikunja/pull/3388) and [#3405](https://github.com/go-vikunja/vikunja/pull/3405), fixing [#3288](https://github.com/go-vikunja/vikunja/issues/3288)).
+
+If you're building against the API, the bulk endpoint is worth using for anything that creates tasks in groups.
+
+## Fixes and improvements
+
+105 of the commits in this release are fixes. That's not exaclty 105 separate bugs, plenty of them are several commits chipping away at the same thing.
+
+The ones most likely to affect you:
+
+- **CalDAV got a lot of attention again.** Updating a task from a calendar client no longer wipes fields that client doesn't understand ([#3370](https://github.com/go-vikunja/vikunja/pull/3370)). Percent signs survive a sync now, alarms relative to the end of a task anchor to the due date, and completion state comes from the actual done status. Clients that send property updates get a proper answer instead of a blanket "not implemented" ([#3364](https://github.com/go-vikunja/vikunja/pull/3364)), and asking for a user that isn't yours returns a 404 instead of leaking whether that account exists ([#3371](https://github.com/go-vikunja/vikunja/pull/3371), [#3349](https://github.com/go-vikunja/vikunja/pull/3349)).
+- **The desktop app stopped logging you out on every start.** The main window and the hidden quick entry window both tried to refresh the same single-use login token at boot, and one of them always lost and showed the login screen. The windows now coordinate, and the quick entry window is only created when you actually use it ([#3365](https://github.com/go-vikunja/vikunja/pull/3365)).
+- **Switching a view to kanban actually gives you a kanban board.** Changing an existing view's kind left it without a bucket configuration, so the board rendered as one empty column per task. New and already broken views are both fixed ([#3406](https://github.com/go-vikunja/vikunja/pull/3406)).
+- **Notifications.** Task deleted notifications are delivered again ([#3333](https://github.com/go-vikunja/vikunja/pull/3333)), people who lost access to a project no longer get notified about it ([#3325](https://github.com/go-vikunja/vikunja/pull/3325)), and reading a notification now checks project access ([#3347](https://github.com/go-vikunja/vikunja/pull/3347)).
+- **Restoring a dump works on MySQL and MariaDB.** Dates in a dump weren't parsed back correctly, which broke restores on both. Directory entries in the zip are now skipped instead of tripping up the restore which fixes a problem when you hand-edited a dump and imported it back again.
+- **Imports.** A TickTick export with a circular parent reference crashed the import instead of being rejected ([#3321](https://github.com/go-vikunja/vikunja/pull/3321)), kanban views without a bucket configuration get repaired on import, and tasks from exports without ordering information get sensible positions.
+- **Filters no longer rewrite your text.** Words like `in` or `like` inside a quoted value were treated as filter syntax, so filtering for a task containing them broke ([#3352](https://github.com/go-vikunja/vikunja/pull/3352)). Saved filters belonging to disabled users no longer break filter maintenance for everyone else ([#3303](https://github.com/go-vikunja/vikunja/pull/3303)).
+- **Labels on child projects.** You can now attach labels to tasks in a child project you have access to through its parent ([#3374](https://github.com/go-vikunja/vikunja/pull/3374)). These labels were already shown to you before but adding them to a task failed with a permission error.
+- **The systemd unit no longer hides your files.** The hardened unit masked filesystem paths, so Vikunja couldn't see files it was configured to use ([#3306](https://github.com/go-vikunja/vikunja/pull/3306)). Future changes will switch to running Vikunja with a dedicated user.
+- **Deprecated config keys apply again.** If you still set `service.jwtsecret`, it now applies to `service.secret` instead of being silently ignored ([#3310](https://github.com/go-vikunja/vikunja/pull/3310)).
+- **Kanban and list views are now slightly faster** on large projects. Task positions got an index, and permissions for many projects are now resolved in one query instead of one each.
+
+There's also a batch of hardening work. The websocket endpoint is rate limited ([#3348](https://github.com/go-vikunja/vikunja/pull/3348)) and OAuth authorization codes are burned even when validation fails ([#3350](https://github.com/go-vikunja/vikunja/pull/3350)). Error responses no longer include internal detail, token endpoint responses stay out of the debug log, and requests to Gravatar, Unsplash and the license server go through the SSRF-safe HTTP client ([#3345](https://github.com/go-vikunja/vikunja/pull/3345)). Thanks to [@kigiela](https://github.com/kigiela) for contributing four of these in [#3240](https://github.com/go-vikunja/vikunja/pull/3240)!
+
+## How to Upgrade
+
+To get the upgrade, simply replace the Vikunja binary with the new release from the [downloads page](https://dl.vikunja.io/vikunja/v2.5.0/) or pull the `:latest` docker image.
+
+You can also check out [the update docs](/docs/installing#updating) for more information about the process.
+
+## Closing
+
+As usual, you can find the full changelog [in the GitHub repo](https://github.com/go-vikunja/vikunja/blob/main/CHANGELOG.md#250---2026-08-04).
+
+If you have any questions about this release, please reach out either [in the community forum](https://community.vikunja.io), [Bluesky](https://bsky.app/profile/vikunja.io), or [Mastodon](https://social.linux.pizza/@vikunja).
+
+Thank you for using Vikunja, and I look forward to bringing you more enhancements in future updates!
