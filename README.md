@@ -4,6 +4,8 @@ This project holds the source code for the Vikunja homepage at [vikunja.io](http
 
 ## 🚀 Project Structure
 
+
+
 Inside of your Astro project, you'll see the following folders and files:
 
 ```text
