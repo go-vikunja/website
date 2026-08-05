@@ -35,7 +35,7 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@anthropic-ai/sdk": "^0.71.0",
+    "@anthropic-ai/sdk": "^0.115.0",
     "@types/turndown": "^5.0.6",
     "@types/unist": "^3.0.3",
     "esbuild": "^0.28.1",
