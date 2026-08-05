@@ -15,10 +15,10 @@
   "dependencies": {
     "@astrojs/check": "^0.9.9",
     "@astrojs/cloudflare": "^14.0.0",
-    "@astrojs/markdown-remark": "^7.2.0",
+    "@astrojs/markdown-remark": "^7.2.2",
     "@astrojs/mdx": "^7.0.0",
-    "@astrojs/node": "^11.0.0",
-    "@astrojs/rss": "^4.0.18",
+    "@astrojs/node": "^11.0.3",
+    "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource/open-sans": "^5.2.5",
     "@fontsource/quicksand": "^5.2.9",
@@ -45,14 +45,19 @@
     "mdast-util-to-string": "^4.0.0",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
-    "sharp": "^0.34.4",
+    "sharp": "^0.35.0",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.0.0",
     "wrangler": "^4.103.0"
   },
   "pnpm": {
     "overrides": {
-      "undici@>=7.0.0 <7.24.0": ">=7.24.0"
+      "undici@>=7.0.0 <7.29.0": ">=7.29.0 <8",
+      "fast-uri@<3.1.5": ">=3.1.5 <4",
+      "sharp@<0.35.0": ">=0.35.0",
+      "js-yaml@>=3.0.0 <3.15.0": ">=3.15.0 <4",
+      "postcss@<8.5.23": ">=8.5.23",
+      "yaml@>=2.0.0 <2.8.3": ">=2.8.3"
     }
   },
   "packageManager": "pnpm@10.28.2+sha512.41872f037ad22f7348e3b1debbaf7e867cfd448f2726d9cf74c08f19507c31d2c8e7a11525b983febc2df640b5438dee6023ebb1f84ed43cc2d654d2bc326264"
