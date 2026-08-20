@@ -7,7 +7,7 @@ import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
 const faqs = [
     {
         question: 'Can I import my Planka boards into Vikunja?',
-        answer: 'Yes. Planka has no native export ([open issue](https://github.com/plankanban/planka/issues/670)), only a REST API, so Vikunja\'s [Planka importer](https://github.com/go-vikunja/vikunja/pull/3552) talks to that API directly. You enter your Planka URL and an API key (or username and password), and it pulls projects, boards, cards, labels, checklists, comments, and attachments across. Credentials are used for the migration only and never stored. The importer is in unstable builds now and ships with the next release; on [Vikunja Cloud](/pricing) it\'s available as soon as the release lands.',
+        answer: 'Yes. Planka has no native export ([open issue](https://github.com/plankanban/planka/issues/670)), only a REST API, so Vikunja\'s [Planka importer](/help/import-and-export/#importing-from-planka) talks to that API directly. You enter your Planka URL and an API key (or username and password), and it pulls projects, boards, cards, labels, checklists, comments, and attachments across. Credentials are used for the migration only and never stored. The importer is in unstable builds now and ships with the next release; on [Vikunja Cloud](/pricing) it\'s available as soon as the release lands.',
     },
     {
         question: 'Is SSO really free in Vikunja?',
@@ -73,7 +73,7 @@ const faqs = [
                 repository under the same AGPL-3 license, and authentication isn't part of it.
             </p>
             <p class="mt-4">
-                There's also a <a href="https://github.com/go-vikunja/vikunja/pull/3552" class="underline">Planka importer</a>:
+                There's also a <a href="/help/import-and-export/#importing-from-planka" class="underline">Planka importer</a>:
                 it pulls your boards straight out of Planka's REST API.
                 It's in unstable builds now and ships with the next release. More on that below.
             </p>
@@ -216,7 +216,7 @@ const faqs = [
                         </tr>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">Import from Planka</td>
-                            <td class="py-3 px-4 text-balance">Yes, built in</td>
+                            <td class="py-3 px-4 text-balance"><a href="/help/import-and-export/#importing-from-planka" class="underline">Yes, built in</a></td>
                             <td class="py-3 px-4">&mdash;</td>
                         </tr>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
@@ -297,6 +297,7 @@ const faqs = [
                 accounts don't exist in Vikunja yet. The importer works with Planka v2; for v1 instances
                 it fails with a clear message instead of importing something half right. It ships with
                 the next Vikunja release and is in <a href="/docs/installing" class="underline">unstable builds</a> today.
+                See the <a href="/help/import-and-export/#importing-from-planka" class="underline">Planka import help page</a> for details.
             </p>
         </section>
 
