@@ -3,7 +3,7 @@ title: Import & Export
 slug: import-and-export
 description: >-
   Export your Vikunja data or import tasks from CSV files, TickTick, WeKan,
-  Todoist, Trello, and Microsoft To Do.
+  Planka, Todoist, Trello, and Microsoft To Do.
 ---
 import Screenshot from '../../components/Screenshot.astro'
 
@@ -44,6 +44,7 @@ Vikunja supports importing from the following sources:
 - **CSV:** Import tasks from any CSV file with custom column mapping.
 - **TickTick**
 - **WeKan** (available from version 2.3.0)
+- **Planka** (available from version 2.6.0)
 - **Todoist**
 - **Trello**
 - **Microsoft To Do**
@@ -88,3 +89,22 @@ This feature is available from Vikunja **2.3.0** onwards (or unstable builds).
 To import a WeKan board, first export it as JSON in WeKan (board menu > Export board > JSON), then select the WeKan icon on the import page and upload the file.
 
 Each board export creates one Vikunja project. Lists become kanban buckets, cards become tasks, and labels, checklists, comments, and dates are all preserved.
+
+### Importing from Planka
+
+<Callout type="info">
+This feature is available from Vikunja **2.6.0** onwards (or unstable builds).
+</Callout>
+
+Vikunja imports directly from a running Planka instance (version 2 or later). There is no file to export. Select the Planka icon on the import page, enter the URL of your Planka instance and choose how Vikunja should log in:
+
+- **API key:** A Planka administrator must create an API key for your account. Copying a token from your browser does not work.
+- **Username and password:** Only works for local Planka accounts without two-factor authentication that have logged in to Planka at least once. Accounts using single sign-on need an API key.
+
+Your credentials are only used for this import and are not stored.
+
+Vikunja imports all projects and boards you have access to. A Planka project with a single board becomes one Vikunja project; a project with several boards becomes a parent project with one child project per board. Lists become kanban buckets, cards become tasks, and labels, due dates, comments, and file attachments are preserved. Archived and closed cards are imported as done tasks; trashed cards are skipped. Checklists and custom fields are added to the task description. Assignees and board members are not imported.
+
+<Callout type="info">
+If your Planka instance runs on a private network, the administrator of your Vikunja instance may need to allow outgoing requests to non-routable addresses for the import to reach it.
+</Callout>
