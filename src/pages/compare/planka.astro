@@ -1,0 +1,313 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import CloudOrSelfHosted from '../../components/partials/CloudOrSelfHosted.astro'
+import FAQSection from '../../components/FAQSection.astro'
+import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
+
+const faqs = [
+    {
+        question: 'Can I import my Planka boards into Vikunja?',
+        answer: 'Yes. Planka has no native export ([open issue](https://github.com/plankanban/planka/issues/670)), only a REST API, so Vikunja\'s [Planka importer](https://github.com/go-vikunja/vikunja/pull/3552) talks to that API directly. You enter your Planka URL and an API key (or username and password), and it pulls projects, boards, cards, labels, checklists, comments, and attachments across. Credentials are used for the migration only and never stored. The importer is in unstable builds now and ships with the next release; on [Vikunja Cloud](/pricing) it\'s available as soon as the release lands.',
+    },
+    {
+        question: 'Is SSO really free in Vikunja?',
+        answer: 'Yes. [OpenID Connect](/docs/openid) and [LDAP](/docs/ldap) are part of the free, self-hosted version and have been for years. Vikunja Pro exists, but it does not gate authentication. The [Pro FAQ](/pro) says it in so many words: you don\'t need Pro for that.',
+    },
+    {
+        question: 'Does Vikunja have Kanban boards like Planka?',
+        answer: 'Yes. Vikunja has a Kanban view with buckets you can create and reorder, plus [List, Gantt, and Table views](/help/views) on the same data. Planka is a dedicated Kanban tool and does that one thing well. Vikunja gives you Kanban as one of four ways to look at your tasks.',
+    },
+    {
+        question: 'Can I run Vikunja on the same server as Planka?',
+        answer: 'Yes. Vikunja is a single Go binary or Docker container with SQLite by default (PostgreSQL and MySQL are supported too). It runs alongside an existing Planka install while you migrate. See the [installation guide](/docs/installing).',
+    },
+    {
+        question: 'Will Vikunja ever move SSO to Pro?',
+        answer: 'The license makes that structurally hard. Vikunja is AGPL-3 with no contributor license agreement, so I don\'t hold the rights I would need to relicense contributed code. Vikunja Pro ships in the same public repository under the same license. I wrote about why this setup keeps Vikunja open in [Vikunja stays open](/changelog/vikunja-stays-open). The same reasoning applies to feature tiering.',
+    },
+    {
+        question: 'My Planka admin account was SSO-based and I am locked out. What now?',
+        answer: 'Planka 2.2.0 deactivates SSO-only users because they no longer have a password login. Planka documents how to [create a new admin user](https://docs.planka.cloud/docs/configuration/admin-user) via environment variables, so do that first to regain access and export your data. In Vikunja, OIDC users are regular users: they can be admins, they can be added to teams, and switching auth methods does not deactivate anyone.',
+    },
+]
+---
+<Layout title="Vikunja vs Planka: Self-Hosted Kanban With SSO That Stays Free" description="Looking for a Planka alternative after SSO moved to Pro? Vikunja is an open-source, self-hosted task manager with Kanban, Gantt, List, and Table views. OIDC and LDAP are in the free version and stay there.">
+    <Fragment slot="head">
+        <script type="application/ld+json" set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Vikunja vs Planka",
+            "description": "Side-by-side comparison of Vikunja and Planka for self-hosted Kanban and project management.",
+        })}></script>
+    </Fragment>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0" id="main-content">
+        <div class="pt-32 pb-8 px-4 text-center">
+            <h1 class="text-4xl font-display">
+                Vikunja vs Planka
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-balance">
+                Self-hosted Kanban with SSO that stays in the free version.
+            </p>
+        </div>
+
+        <section class="max-w-3xl mx-auto mt-16 text-lg text-gray-700 dark:text-gray-300">
+            <p>
+                Planka is a good Kanban board. It is fast, looks clean, and a lot of homelabs and small
+                teams run it. In August 2026 the project
+                <a href="https://github.com/plankanban/planka/issues/1754" target="_blank" rel="nofollow noreferrer noopener" class="underline">moved OIDC/SSO out of the Community edition</a>
+                and into the closed-source Pro tier. Version 2.2.0 shipped without it, and users who
+                only ever logged in via SSO were deactivated on upgrade.
+            </p>
+            <p class="mt-4">
+                The maintainers have been open about their reasoning: SSO generated a lot of support
+                requests and they see it as an enterprise feature. That's a legitimate business call
+                for them to make. For Vikunja, that line is somewhere else: your requirements (compliance or otherwise)
+                don't care how many users you have, and a login method shouldn't be the thing
+                that decides which tier you're on.
+            </p>
+            <p class="mt-4">
+                Vikunja is an open-source, self-hosted task manager with Kanban, List, Gantt, and
+                Table views. <a href="/docs/openid" class="underline">OpenID Connect</a> and
+                <a href="/docs/ldap" class="underline">LDAP</a> are freely available, documented,
+                and have been for years. There is a paid <a href="/pro">Pro tier</a>, but it ships in the same public
+                repository under the same AGPL-3 license, and authentication isn't part of it.
+            </p>
+            <p class="mt-4">
+                There's also a <a href="https://github.com/go-vikunja/vikunja/pull/3552" class="underline">Planka importer</a>:
+                it pulls your boards straight out of Planka's REST API.
+                It's in unstable builds now and ships with the next release. More on that below.
+            </p>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">Why people are looking for alternatives</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8">
+                From the GitHub thread announcing the SSO change:
+            </p>
+            <div class="space-y-6">
+                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
+                    "Security features, SSO or 2FA or auto-logout are in my opinion basic features and should not be put behind a paywall"
+                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
+                        GitHub user nin0-dev,
+                        <a href="https://github.com/plankanban/planka/issues/1754#issuecomment-5224830049" target="_blank" rel="nofollow noreferrer noopener" class="underline">issue #1754</a>
+                    </footer>
+                </blockquote>
+                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
+                    "I'm not expecting new versions to remove basic features."
+                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
+                        GitHub user Billos,
+                        <a href="https://github.com/plankanban/planka/issues/1754#issuecomment-5225029134" target="_blank" rel="nofollow noreferrer noopener" class="underline">issue #1754</a>
+                    </footer>
+                </blockquote>
+                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
+                    "After updating to 2.2.0, all SSO-based users are deactivated, since they no longer have a password login."
+                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
+                        Planka maintainer announcement,
+                        <a href="https://github.com/plankanban/planka/issues/1754" target="_blank" rel="nofollow noreferrer noopener" class="underline">issue #1754</a>
+                    </footer>
+                </blockquote>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">What changes when you switch</h2>
+            <div class="max-w-3xl text-gray-700 dark:text-gray-300 space-y-6">
+                <div>
+                    <h3 class="font-display text-xl">SSO is a login button</h3>
+                    <p class="mt-2">
+                        <a href="/docs/openid" class="underline">OIDC</a> and
+                        <a href="/docs/ldap" class="underline">LDAP</a> work in the free, self-hosted
+                        version. Point Vikunja at Authentik, Keycloak, Authelia, or your existing
+                        directory and log in. Users who come in via OIDC are regular users with the
+                        same permissions as anyone else.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">A license that keeps it that way</h3>
+                    <p class="mt-2">
+                        Vikunja is AGPL-3 with no contributor license agreement. That means it's a constraint:
+                        I don't hold the rights I would need to move contributed code into a closed tier.
+                        Vikunja Pro exists and ships in the same public repo under the same license.
+                        <a href="/changelog/vikunja-stays-open" class="underline">Longer explanation of how that works is here</a>.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">Kanban and three more views</h3>
+                    <p class="mt-2">
+                        Planka gives you a Kanban board. Vikunja gives you
+                        <a href="/help/views" class="underline">List, Kanban, Gantt, and Table</a>
+                        on the same data. View all tasks in all different ways, switch between them anytime.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">Your data goes with you</h3>
+                    <p class="mt-2">
+                        Vikunja has a <a href="/help/import-and-export/#export" class="underline">full data export</a>
+                        built in: projects, tasks, attachments, everything in one ZIP. If you ever
+                        want to leave, you can. Planka currently has
+                        <a href="https://github.com/plankanban/planka/issues/670" target="_blank" rel="nofollow noreferrer noopener" class="underline">no native export</a>.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">Lightweight to run</h3>
+                    <p class="mt-2">
+                        Vikunja is a single Go binary. It runs on SQLite by default, or PostgreSQL and
+                        MySQL if you prefer, and it's happy on a Raspberry Pi alongside the rest of your homelab.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">CalDAV, mobile, and a full API</h3>
+                    <p class="mt-2">
+                        <a href="/help/caldav" class="underline">CalDAV support</a> puts your tasks in
+                        Thunderbird, Apple Reminders, or any CalDAV client. Vikunja works as a
+                        progressive web app on your phone, and the
+                        <a href="/docs/api-documentation" class="underline">REST API</a> has full OpenAPI docs.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-8">Side by side</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th class="py-3 px-4 font-display text-lg"></th>
+                            <th class="py-3 px-4 font-display text-lg">Vikunja</th>
+                            <th class="py-3 px-4 font-display text-lg">Planka</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700 dark:text-gray-300">
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">License</td>
+                            <td class="py-3 px-4">AGPL-3, no CLA</td>
+                            <td class="py-3 px-4 text-balance">Source-available "PLANKA Community License"; Pro is closed source; contributors sign a CLA</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Self-hostable</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">Yes</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">SSO / OIDC</td>
+                            <td class="py-3 px-4 text-balance">Yes (<a href="/docs/openid" class="underline">OIDC</a>, <a href="/docs/ldap" class="underline">LDAP</a>)</td>
+                            <td class="py-3 px-4 text-balance">Pro only since 2.2.0 (<a href="https://github.com/plankanban/planka/issues/1754" target="_blank" rel="nofollow noreferrer noopener" class="underline">issue #1754</a>)</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Kanban</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">Yes</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Views</td>
+                            <td class="py-3 px-4">List, Kanban, Gantt, Table</td>
+                            <td class="py-3 px-4">Kanban</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Data export</td>
+                            <td class="py-3 px-4 text-balance">Full export (projects, tasks, attachments)</td>
+                            <td class="py-3 px-4 text-balance">No native export (<a href="https://github.com/plankanban/planka/issues/670" target="_blank" rel="nofollow noreferrer noopener" class="underline">issue #670</a>), REST API only</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Importers</td>
+                            <td class="py-3 px-4 text-balance">Trello, WeKan, Todoist, TickTick, Microsoft To Do, CSV</td>
+                            <td class="py-3 px-4">Trello</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Import from Planka</td>
+                            <td class="py-3 px-4 text-balance">Yes, built in</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Backend</td>
+                            <td class="py-3 px-4">Go (single binary)</td>
+                            <td class="py-3 px-4">Node.js</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Database</td>
+                            <td class="py-3 px-4">SQLite, PostgreSQL, or MySQL</td>
+                            <td class="py-3 px-4">PostgreSQL</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">CalDAV</td>
+                            <td class="py-3 px-4">Yes</td>
+                            <td class="py-3 px-4">No</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Mobile</td>
+                            <td class="py-3 px-4">Progressive web app</td>
+                            <td class="py-3 px-4">Responsive web UI</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">REST API</td>
+                            <td class="py-3 px-4 text-balance">All functionality, OpenAPI docs</td>
+                            <td class="py-3 px-4">Yes</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">Paid tier</td>
+                            <td class="py-3 px-4 text-balance">Pro, same public repo, same license</td>
+                            <td class="py-3 px-4">Pro, closed source</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">Pricing</h2>
+            <p class="text-gray-700 dark:text-gray-300">
+                Both Vikunja and Planka Community are free to self-host. The difference is where the
+                paid line sits. Planka Pro is a separate closed-source product and, since 2.2.0, it's
+                where SSO lives. Vikunja Pro adds features on top of the free version but leaves
+                authentication where it is.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                If you'd rather not manage a server, <a href="/pricing" class="underline">Vikunja Cloud</a>
+                starts at 4&nbsp;&euro;/month for personal use and 5&nbsp;&euro;/user/month for teams,
+                hosted on EU infrastructure.
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                See <a href="/pricing" class="underline">Vikunja pricing</a> for details.
+            </p>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">How to switch</h2>
+            <p class="text-gray-700 dark:text-gray-300">
+                Vikunja's Planka importer connects to your running Planka instance, so you don't need
+                an export file (Planka doesn't have one anyway):
+            </p>
+            <ol class="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300 mt-4">
+                <li>
+                    If your admin was SSO-only and you're locked out after 2.2.0,
+                    <a href="https://docs.planka.cloud/docs/configuration/admin-user" target="_blank" rel="nofollow noreferrer noopener" class="underline">create a new admin user</a>
+                    first so you can reach your data
+                </li>
+                <li>
+                    <a href="/docs/installing" class="underline">Set up Vikunja</a> (Docker, binary, or
+                    <a href={VIKUNJA_CLOUD_LINK} class="underline">start a free Cloud trial</a>)
+                </li>
+                <li>In Vikunja, go to Settings &gt; Import from other services and pick Planka</li>
+                <li>Enter your Planka URL and an API key (or your username and password); credentials are used for the migration only and never stored</li>
+                <li>Vikunja pulls your projects, boards, cards, labels, checklists, comments, and attachments. Boards become projects, lists become Kanban buckets, done cards stay done</li>
+            </ol>
+            <p class="text-gray-700 dark:text-gray-300 mt-4 text-balance">
+                What doesn't come across: assignees, memberships, and avatars, since your team's user
+                accounts don't exist in Vikunja yet. The importer works with Planka v2; for v1 instances
+                it fails with a clear message instead of importing something half right. It ships with
+                the next Vikunja release and is in <a href="/docs/installing" class="underline">unstable builds</a> today.
+            </p>
+        </section>
+
+        <FAQSection faqs={faqs} />
+
+        <div class="pb-20 flex items-center justify-center flex-col text-center">
+            <h2 class="font-display text-3xl mb-4">Give it a try</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-lg mx-auto text-balance">
+                Point it at your identity provider, bring one board over, and see how it feels.
+            </p>
+            <CloudOrSelfHosted />
+        </div>
+    </main>
+</Layout>
