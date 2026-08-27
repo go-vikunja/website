@@ -28,7 +28,7 @@ We will retain and use your information to the extent necessary to comply with o
 
 If you are a resident of the European Economic Area (EEA), you have certain data protection rights. 
 If you wish to be informed what Personal Information we hold about you and if you want it to be removed from our systems, please contact us. 
-Our Privacy Policy was generated with the help of [GDPR Privacy Policy Generator](https://gdprprivacypolicy.net.com/) and the 
+Our Privacy Policy was generated with the help of [GDPR Privacy Policy Generator](https://gdprprivacypolicy.net/) and the 
 [GDPR Privacy Policy Template](https://privacypolicytemplate.net/).
 
 In certain circumstances, you have the following data protection rights:

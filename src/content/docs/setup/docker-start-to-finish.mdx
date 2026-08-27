@@ -94,7 +94,7 @@ If you're using [rootless Docker](/docs/full-docker-example#rootless-docker), se
 <Callout type="warning">
 Vikunja's Docker image is based on a `scratch` image. This means:
 <p>**There is no shell inside the container.** Commands like `docker exec -it vikunja sh` will not work. Use `docker logs vikunja` to check for errors instead.</p>
-<p>**`PUID` and `PGID` environment variables are not supported.** These are conventions from other images (like LinuxServer.io) but have no effect on the Vikunja container. To change the user the container runs as, use Docker's [`user:` directive](https://docs.docker.com/compose/how-tos/user/) in your compose file.</p>
+<p>**`PUID` and `PGID` environment variables are not supported.** These are conventions from other images (like LinuxServer.io) but have no effect on the Vikunja container. To change the user the container runs as, use Docker's [`user:` directive](https://docs.docker.com/reference/compose-file/services/#user) in your compose file.</p>
 <p>**The `/tmp` directory must be writable** for data exports to work. If you use a custom user, ensure `/tmp` is accessible or mount a writable volume at `/tmp`.</p>
 </Callout>
 
