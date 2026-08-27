@@ -14,7 +14,7 @@ Ready to set up Vikunja on your own server? Begin with our [install documentatio
 
 ## API & Integrations
 
-Learn about the [API](/docs/api), [CLI](/docs/cli), and [third-party integrations](/docs/integrations).
+Learn about the [API](/docs/api-documentation), [CLI](/docs/cli), and [third-party integrations](/docs/integrations).
 
 ## Development
 
