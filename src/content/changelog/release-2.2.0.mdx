@@ -58,13 +58,13 @@ For more details, see the [security advisory](https://github.com/go-vikunja/viku
 
 ### TOTP reuse during validity window (CVE-2026-33473)
 
-A valid TOTP code could be reused within its 30-second window to authenticate multiple sessions. Note: the fix for this issue was not merged in time for 2.2.0 and actually shipped in [2.2.1](/vikunja-v2.2.1-was-released).
+A valid TOTP code could be reused within its 30-second window to authenticate multiple sessions. Note: the fix for this issue was not merged in time for 2.2.0 and actually shipped in [2.2.1](/changelog/vikunja-v2.2.2-was-released).
 
 For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-p747-qc5p-773r). Thanks to [@alp1n3-dev](https://github.com/alp1n3-dev) for reporting this!
 
 ### Rate limit bypass via spoofed headers (CVE-2026-29794)
 
-Unauthenticated rate limits could be bypassed by spoofing `X-Forwarded-For` or `X-Real-IP` headers. The fix adds `service.ipextractionmethod` and `service.trustedproxies` config options to control how the client IP is determined. Check out [the docs](/docs/config-options#ipextraction) for more info.
+Unauthenticated rate limits could be bypassed by spoofing `X-Forwarded-For` or `X-Real-IP` headers. The fix adds `service.ipextractionmethod` and `service.trustedproxies` config options to control how the client IP is determined. Check out [the docs](/docs/config-options#1-service-ipextractionmethod) for more info.
 
 For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-m547-hp4w-j6jx). Thanks to [@alp1n3-dev](https://github.com/alp1n3-dev) for reporting this!
 
@@ -92,7 +92,7 @@ Notification emails got a makeover. Instead of the old template-heavy style, ema
 
 ### SSRF protection for webhooks
 
-Webhooks now include built-in SSRF protection to prevent requests to internal/non-routable IP addresses. If you need to allow webhooks to reach local services, you can set `webhooks.allownonroutableips` in your config. Check out [the docs](/docs/config-options#webhooks) for more info.
+Webhooks now include built-in SSRF protection to prevent requests to internal/non-routable IP addresses. If you need to allow webhooks to reach local services, you can set `webhooks.allownonroutableips` in your config. Check out [the docs](/docs/config-options#0--webhooks) for more info.
 
 ### Overdue task highlighting
 
