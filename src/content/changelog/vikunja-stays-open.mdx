@@ -33,7 +33,7 @@ This is security through obscurity, a well-known bad idea. For over a century th
 
 LLMs don't change the direction, only the speed. If AI can scan open code and find bugs, it can also run against closed code through fuzzing a binary, static analysis of anything shipped to a customer's machine, or the API itself. The bugs don't disappear when the source is hidden. They just get found later, by someone who has no obligation to tell you first.
 
-The most instructive example I can offer is one from Vikunja's own release notes. [CVE-2026-28268](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-rfjg-6m84-crj2), shipped as a fix in [Vikunja 2.1.0](/vikunja-v2.1.0-was-released), was a bug where password reset tokens weren't cleaned up after use. Anyone who got hold of a reset link once could keep reusing it. That bug had been in Vikunja since version 0.18.0, released in September 2021. Almost five years of it sitting there in public code.
+The most instructive example I can offer is one from Vikunja's own release notes. [CVE-2026-28268](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-rfjg-6m84-crj2), shipped as a fix in [Vikunja 2.1.0](/changelog/vikunja-v2.1.0-was-released), was a bug where password reset tokens weren't cleaned up after use. Anyone who got hold of a reset link once could keep reusing it. That bug had been in Vikunja since version 0.18.0, released in September 2021. Almost five years of it sitting there in public code.
 
 It got found. Because the code was public, a researcher could look at it, recognise the problem, and report it responsibly. Had Vikunja been closed source, nobody external would have been in a position to catch it. The bug would still be there, and whoever eventually found it wouldn't have been obligated to tell me first, because the incentive would likely not have been "make this open-source product better".
 
@@ -43,7 +43,7 @@ That's the tradeoff open source actually makes: transparency trades "bugs found 
 
 I have direct experience with what Cal.com is describing.
 
-Across the last five releases ([2.0.0](/vikunja-v2.0.0-was-released), [2.1.0](/vikunja-v2.1.0-was-released), [2.2.0](/vikunja-v2.2.0-was-released), [2.2.1/2.2.2](/vikunja-v2.2.2-was-released), and [2.3.0](/whats-new-in-vikunja-2.3.0)), Vikunja shipped fixes for 35 CVEs in about six weeks. That reflects the same shift Cal.com identified.
+Across the last five releases ([2.0.0](/changelog/vikunja-v2.0.0-was-released), [2.1.0](/changelog/vikunja-v2.1.0-was-released), [2.2.0](/changelog/vikunja-v2.2.0-was-released), [2.2.1/2.2.2](/changelog/vikunja-v2.2.2-was-released), and [2.3.0](/changelog/whats-new-in-vikunja-2.3.0)), Vikunja shipped fixes for 35 CVEs in about six weeks. That reflects the same shift Cal.com identified.
 
 In the 2.3.0 release notes I wrote:
 
