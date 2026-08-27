@@ -35,7 +35,7 @@ export async function POST({request}: APIContext) {
 	subscribeData.append('email', body.get('email'))
 	subscribeData.append('l', LIST_ID)
 
-	const subscription = await fetch('https://newsletter.kolaente.de/subscription/form', {
+	const subscription = await fetch('https://newsletter.vikunja.io/subscription/form', {
 		body: subscribeData,
 		method: 'POST',
 	})
