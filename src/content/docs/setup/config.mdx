@@ -36,10 +36,10 @@ Vikunja provides a default [`config.yml`](https://dl.vikunja.io/vikunja/unstable
 
 Vikunja will search in various places for a config file:
 
-* Next to the location of the binary
-* In the `service.rootpath` location set in a config (remember you can set config arguments via environment variables)
+* In the `service.rootpath` location set in a config (remember you can set config arguments via environment variables). Unless you set it, `service.rootpath` defaults to the current working directory, falling back to the directory of the binary if the working directory cannot be determined.
 * In `/etc/vikunja`
 * In `~/.config/vikunja`
+* In the current working directory
 
 The `service.rootpath` setting is used only while finding the first config file.
 You can therefore set `VIKUNJA_SERVICE_ROOTPATH` to point Vikunja to that
@@ -60,6 +60,26 @@ service:
 
 Vikunja reads `/etc/vikunja/config.yml` but does not check
 `/opt/vikunja/config.yml` afterward.
+
+### Pinning a config file with `--config`
+
+Use the `--config` flag to point Vikunja at one specific config file and skip the search path entirely.
+It works on every command and has no shorthand.
+If the file cannot be read, Vikunja exits with an error instead of falling back to the defaults.
+
+```sh
+vikunja doctor --config /opt/vikunja/config.yml
+vikunja migrate --config /opt/vikunja/config.yml
+```
+
+This is what you want when you run a command from a different working directory than the install.
+Without `--config`, Vikunja may find no config file at all, fall back to the defaults and resolve relative paths against the directory you ran the command in, which makes a working install look broken or empty.
+
+When the pinned config does not set `service.rootpath`, the rootpath defaults to the directory containing that config file, so relative paths like `files.basepath` resolve inside the install.
+A relative `service.rootpath` in the pinned config is resolved against the config file's directory as well.
+If `database.path` is not set, its default is resolved against that anchored rootpath too, so the SQLite database stays with the install.
+
+Environment variables still take precedence, so `VIKUNJA_SERVICE_ROOTPATH` and `VIKUNJA_DATABASE_PATH` continue to win, and a value set explicitly in the pinned config wins over these anchored defaults.
 
 ### Using a config file with Docker Compose
 
