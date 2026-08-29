@@ -27,6 +27,14 @@ A bot user is a normal user account with a few deliberate restrictions:
 Everything else works like a regular account.
 A bot can be shared into projects, assigned to tasks, mentioned in comments, and it shows up in search.
 
+## Labels shared by an owner and their bots
+
+You and all bots you own can find and attach each other's labels. This makes it possible for separate automations to use the same labels without copying them first.
+
+A bot can only edit or delete labels it created itself. As the human owner, you can manage labels created by any of your bots.
+
+Attaching a label to a task makes it visible to everyone who can read that task, including people using a link share. If separate automations need isolated labels, give them bots with different owners.
+
 ## Creating a bot
 
 Go to **Settings → Bots** (`/user/settings/bots`).
