@@ -51,7 +51,9 @@ Click the **Done** button at the top of the right sidebar to mark the task as co
 
 Click **Subscribe** to follow changes on the task. Subscribers receive notifications for comments, edits, and triggered [reminders](/help/dates-and-reminders).
 
-You are subscribed automatically when you are assigned to a task, and when you are subscribed to the project the task belongs to (or one of its parent projects). Creating a task does not subscribe you to it.
+You are subscribed automatically when you create a task, when you are assigned to one, and when you are subscribed to the project the task belongs to (or one of its parent projects). Tasks created through a link share have no user to subscribe, so nobody is subscribed automatically in that case.
+
+If your subscription comes from the project rather than the task itself, you can still unsubscribe from that one task. Click **Unsubscribe** on it and you keep the project subscription for everything else.
 
 ### Favoriting a task
 
@@ -99,9 +101,13 @@ Click **Attachments** in the sidebar (or press `f`) to open the file picker and 
 
 Clicking an uploaded attachment opens a preview where possible:
 
-- **Images** (`jpg`, `jpeg`, `png`, `gif`, `bmp`) open inline in a modal.
+- **Images** (`jpg`, `jpeg`, `png`, `gif`, `bmp`) open in a preview where you can zoom and pan, with the mouse or the keyboard. From Vikunja **2.6.0** onwards.
 - **PDFs** open inline in a modal using your browser's built-in PDF viewer, so you can scroll, zoom, and search without leaving the task. PDF previews are available from Vikunja **2.3.0** onwards.
+- **Videos** open in a modal and play there, as long as your browser supports the format. Video attachments show a play icon in the attachment list. From Vikunja **2.6.0** onwards.
+- **Audio** plays directly in the attachment row. Click another audio attachment and the first one stops. From Vikunja **2.6.0** onwards.
 - **Other file types** download directly.
+
+Each attachment row shows the file name. File size, type, and who uploaded it are in a tooltip on the row.
 
 A separate download button next to each attachment always downloads the file, regardless of whether it has a preview.
 

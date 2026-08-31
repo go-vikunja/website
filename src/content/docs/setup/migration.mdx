@@ -6,6 +6,7 @@ description: >-
   step-by-step instructions for setup, configuration, and starting the migration
   process.
 ---
+import Callout from '../../../components/Callout.astro';
 
 There are several importers available for third-party services like Trello, Microsoft To Do or Todoist.
 
@@ -26,11 +27,21 @@ However, the `VIKUNJA_SERVICE_PUBLICURL` must be set correctly so that the OAuth
 | Todoist | OAuth |
 | Trello | OAuth |
 | Microsoft To Do | OAuth |
+| Planka | Server URL and credentials |
 | TickTick | File import |
 | WeKan | File import |
+| CSV | File import |
 | Vikunja (file export) | File import |
 
 If your source service is not listed, you may be able to export data as CSV or JSON and convert it to Vikunja's import format. See the [development docs](/docs/migrations) for writing custom importers.
+
+## Planka
+
+The Planka importer connects to a running Planka server rather than using OAuth or a file export, so it needs no setup beyond enabling it. See [the import docs](/help/import-and-export#importing-from-planka) for how users configure it.
+
+<Callout type="warning">
+Outgoing requests go through Vikunja's SSRF-safe HTTP client, which refuses non-routable addresses. If Planka runs on the same host or elsewhere on your LAN, the import fails until you set `outgoingrequests.allownonroutableips` to `true`. That loosens the protection for every outgoing request, not just migrations.
+</Callout>
 
 ## Start the Migration Process
 
@@ -38,7 +49,10 @@ Log in, and navigate to Settings > Import from other services. In the list of av
 If not, ensure that the config options are properly picked up. Refer to the Vikunja log to see if the config file was loaded or not.
 If there is no icon for the service you enabled, make sure your [config setup](/docs/config-options#0--migration) is correct.
 
-Click on the service icon and on Get Started. 
+Click on the service icon and on Get Started.
+
+For file-based sources (TickTick, WeKan, CSV, a Vikunja export) you upload the export file here instead, and for Planka you enter the server URL and credentials. The rest of this section applies to the OAuth sources.
+
 This will redirect you to the service where you need to allow Vikunja Migration to access your account. 
 In case there is an error when being redirected, make sure that you allowed your Vikunja domain in the allowed redirects or origin list in the service.
 Once this is done, you will be redirected to Vikunja which should tell you that the migration is in progress now. 

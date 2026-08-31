@@ -110,6 +110,18 @@ If both are disabled, other users can only find you by your exact username. On s
 
 Update your password or the email address on your account. To change your password, enter your current password first.
 
+### Changing your email address
+
+From Vikunja **2.6.0** onwards, a new email address does not take effect until you confirm it. After you request the change:
+
+- Your old address stays active. You keep receiving notifications there, and you keep signing in with it.
+- The new address gets a confirmation mail. Click the link in it to complete the change.
+- Your old address gets a mail telling it a change was requested, so you find out if it wasn't you.
+
+The settings page shows the pending address while it waits for confirmation, with buttons to **resend** the confirmation mail or **cancel** the change. Resending is rate limited, so you may have to wait a moment between attempts.
+
+If your instance has no mailer configured, there is nothing to confirm and the new address applies immediately.
+
 <Callout type="info">
 When your account uses external authentication (for example, Vikunja Cloud), password and email management is handled by that provider. These sections will be disabled in Vikunja. Make changes through your provider instead.
 </Callout>

@@ -103,7 +103,9 @@ Vikunja imports directly from a running Planka instance (version 2 or later). Th
 
 Your credentials are only used for this import and are not stored.
 
-Vikunja imports all projects and boards you have access to. A Planka project with a single board becomes one Vikunja project; a project with several boards becomes a parent project with one child project per board. Lists become kanban buckets, cards become tasks, and labels, due dates, comments, and file attachments are preserved. Archived and closed cards are imported as done tasks; trashed cards are skipped. Checklists and custom fields are added to the task description. Assignees and board members are not imported.
+Everything lands under a project called **Migrated from Planka**. A Planka project with a single board becomes one Vikunja project; a project with several boards becomes a parent project with one child project per board. Lists become kanban buckets, cards become tasks, and labels, due dates, comments, attachments, and cover images are preserved.
+
+Cards in a closed or archive list are imported as done; the trash list is skipped. Checklists, custom fields, and link attachments are added to the task description. Comments keep the author's name but not their account. Assignees and board members are not imported.
 
 <Callout type="info">
 If your Planka instance runs on a private network, the administrator of your Vikunja instance may need to allow outgoing requests to non-routable addresses for the import to reach it.
