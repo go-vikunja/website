@@ -2,8 +2,8 @@
 title: Settings
 slug: settings
 description: >-
-  All user settings: general preferences, password, email, avatar, data export,
-  import, CalDAV, API tokens, and account deletion.
+  All user settings: general preferences, password, two-factor authentication,
+  email, avatar, data export, import, CalDAV, API tokens, and account deletion.
 ---
 import Screenshot from '../../components/Screenshot.astro'
 
@@ -19,6 +19,7 @@ These settings are worth checking first:
 
 - **Default view:** choose whether projects open in List, Gantt, Table, or Kanban view.
 - **Timezone:** make sure it matches where you are, or due dates and reminders may be off.
+- **Two-factor authentication:** protect a local account with a code from an authenticator app as well as your password.
 - **Email reminders:** turn these on if you want to receive reminders and overdue-task summaries by email.
 - **Quick Add Magic mode:** choose Vikunja-style or Todoist-style shortcuts for adding dates, labels, and other task details while typing.
 - **Privacy settings:** decide whether other users can find you by name or email when they want to add you to a team or project.
@@ -46,6 +47,10 @@ Choose which project receives tasks you create from the [dashboard](/help/dashbo
 ### Default view
 
 Set the [view](/help/views) that is shown when you first open a project. Choose between List, Gantt, Table, and Kanban views.
+
+### Default due time
+
+Choose the time Vikunja uses when you set a [due date](/help/dates-and-reminders#due-date) without specifying a time in date-picker selections and dates parsed by [Quick Add Magic](/help/quick-add-magic). An explicitly entered time always takes precedence.
 
 ### Minimum priority
 
@@ -125,6 +130,10 @@ If your instance has no mailer configured, there is nothing to confirm and the n
 <Callout type="info">
 When your account uses external authentication (for example, Vikunja Cloud), password and email management is handled by that provider. These sections will be disabled in Vikunja. Make changes through your provider instead.
 </Callout>
+
+## Two-factor authentication
+
+Local accounts can require a six-digit code from an authenticator app in addition to the account password. See [Two-factor authentication](/help/two-factor-authentication) for setup, sign-in, CalDAV, and recovery details.
 
 ## Avatar
 

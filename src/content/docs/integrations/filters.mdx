@@ -42,11 +42,22 @@ API filter queries use `snake_case` field names, unlike the `camelCase` used in 
 | `done`        | `done`          |
 | `priority`    | `priority`      |
 | `assignees`   | `assignees`     |
+| `createdBy`   | `created_by`    |
 | `labels`      | `labels`        |
 | `project`     | `project`       |
 | `reminders`   | `reminders`     |
 | `created`     | `created`       |
 | `updated`     | `updated`       |
+
+The `created_by` field matches usernames, not numeric user IDs:
+
+```
+created_by = 'alice'
+created_by in 'alice,bob'
+created_by != 'service-account'
+```
+
+Use `created_by_id` when you specifically need to compare the numeric creator ID.
 
 ## Labels and projects by ID
 

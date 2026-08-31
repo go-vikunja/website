@@ -40,6 +40,10 @@ failregex = ^.*\bmsg="POST\s+/api/v\d+/login[^"]*".*\bstatus=(?:400|403|412)\b.*
 
 This filter matches failed login attempts recorded in the HTTP log.
 
+It only matches `POST /api/v1/login` and `POST /api/v2/login`. It does not match CalDAV requests under `/dav` or `/.well-known/caldav`, so failed CalDAV authentication will not appear in this Fail2Ban jail.
+
+Vikunja **2.6.0** and later apply a separate, always-on limit to Basic Auth endpoints. By default, an IP address gets 10 failed attempts per minute across CalDAV and authenticated feed routes. Requests without credentials do not count, and successful requests are refunded, so a working CalDAV client's regular sync requests do not use up the limit. Configure the threshold with [`ratelimit.basicauthlimit`](/docs/config-options#1-ratelimit-basicauthlimit).
+
 ### Create a Jail
 
 Next, add a jail definition for Vikunja to your `/etc/fail2ban/jail.local`:

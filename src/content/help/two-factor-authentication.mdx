@@ -1,0 +1,46 @@
+---
+title: Two-factor authentication
+slug: two-factor-authentication
+description: >-
+  Protect a local Vikunja account with time-based one-time passwords, and learn
+  how setup, sign-in, CalDAV, and recovery work.
+---
+import Callout from '../../components/Callout.astro';
+
+Vikunja supports two-factor authentication using time-based one-time passwords (TOTP). After entering your password, you also enter a six-digit code from an authenticator app.
+
+You can enable it on local Vikunja accounts that don't use an external provider to log in. If you sign in through LDAP or an OpenID provider, two-factor authentication is managed by that provider instead.
+
+## Enable two-factor authentication
+
+1. Click your username in the top right corner and select **Settings**.
+2. Open **Two Factor Authentication** and click **Enroll**.
+3. Scan the QR code with your authenticator app. You can also enter the displayed secret manually.
+4. Enter a code from the app and click **Confirm**.
+
+Vikunja logs out all of your sessions when you finish setup. Sign in again with your password and a code from the authenticator app.
+
+<Callout type="info">
+From Vikunja 2.6.0 onwards, the QR code and secret are only available while you set up two-factor authentication. Once setup is complete, they cannot be opened again. Add every authenticator you want to use before confirming the first code.
+</Callout>
+
+## Sign in
+
+Enter your username and password as usual. Vikunja then asks for the current code from your authenticator app.
+
+Each code can only be used once. If you sign in twice within the same 30-second window, wait for the app to generate a new code before the second sign-in.
+
+## CalDAV
+
+Your account password no longer works for [CalDAV](/help/caldav) after you enable two-factor authentication. CalDAV clients cannot ask for a second-factor code, so use a dedicated CalDAV token or an API token with **CalDAV > Access** permission instead.
+
+## Disable two-factor authentication
+
+Open **Settings**, select **Two Factor Authentication**, and click **Disable**. Enter your current account password to confirm.
+
+To move to a new authenticator after setup, disable two-factor authentication and enroll again. This creates a new secret.
+
+## If you lose your authenticator
+
+Vikunja does not provide recovery codes. If you still have a signed-in session and know your password, disable two-factor authentication from that session and enroll again. Otherwise, contact the administrator of your Vikunja instance.
+

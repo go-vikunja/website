@@ -27,6 +27,14 @@ When you connect a CalDAV client, use your Vikunja **username** and one of the f
 - **A dedicated CalDAV token** generated on the CalDAV settings tab. Use this if your account signs in via OIDC, or if you have two-factor authentication enabled.
 - **An [API token](/help/settings#api-tokens) with the CalDAV permission group**, available from Vikunja **2.3.0** onwards. Use the token value (it starts with `tk_`) as the password. This is handy if you want to manage all your automation credentials in one place, or if you want a single token to cover both CalDAV sync and API access.
 
+## Failed authentication and rate limits
+
+From Vikunja **2.6.0** onwards, failed CalDAV authentication is limited per IP address. The default allows 10 failed attempts per minute, even when the instance's general rate limiter is disabled. After the limit is reached, CalDAV requests from that IP return `429 Too Many Requests` until the current minute has passed.
+
+Normal sync traffic does not use up this limit. Requests without credentials only receive the usual authentication challenge, and successful requests are refunded from the counter. A client can send as many successful `PROPFIND` and `REPORT` requests as it needs.
+
+If a client suddenly looks broken after several password or token errors, check its saved credentials and wait for the rate-limit window to reset. The same failed-authentication budget is shared with Vikunja's authenticated notification feeds from that IP.
+
 ## URLs
 
 All URLs are located under the `/dav` subspace.

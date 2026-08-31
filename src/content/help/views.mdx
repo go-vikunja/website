@@ -38,6 +38,12 @@ From here you can:
 
 Each view can have its own filter. Only matching tasks appear in that view. See [Filters](/help/filters) for the filter syntax.
 
+### Remembered view settings
+
+Vikunja remembers the state of each view separately in your browser. List and table views keep their sort order, filter, search, and current page. Gantt views keep their date range and whether tasks without dates are shown. Reloading the page, restarting the desktop app, or returning through the sidebar restores that view's previous state.
+
+The saved state is local to that browser or desktop app, so it does not follow your account to another device. Query parameters in a bookmarked or shared URL take precedence over the saved state.
+
 ## List view
 
 <Screenshot src="views-list" alt="List view showing tasks in a flat list" />
@@ -64,7 +70,7 @@ Click the **sort** button in the list header to change how tasks are ordered. Yo
 - **% done**, most or least done first
 - **Created** or **updated**, newest or oldest first
 
-The list view sorts by one field at a time. Your choice is stored in the URL, so you can bookmark a list with a specific sort order or share the link with someone else.
+The list view sorts by one field at a time. Your choice is stored for that view and written to the URL, so you can bookmark a list with a specific sort order or share the link with someone else.
 
 Sorting was added in Vikunja **2.3.0**. In the [table view](#table-view), you can still sort by clicking column headers directly, and hold `Ctrl` or `Cmd` to sort by more than one column at once.
 
@@ -92,6 +98,7 @@ The table view shows tasks in a spreadsheet-like layout.
 
 - **Configurable columns:** Show only the fields you care about.
 - **Filtering:** Use the filter option in the top right to narrow down the displayed tasks.
+- **Sorting:** Click a column header to sort by it. Hold `Ctrl` or `Cmd` while clicking to sort by multiple columns. The sort order is remembered for this view.
 
 Use table view when you want to compare many task fields side by side.
 
