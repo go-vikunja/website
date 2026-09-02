@@ -39,10 +39,10 @@ importers:
         version: 3.7.3
       '@fontsource/open-sans':
         specifier: ^5.2.5
-        version: 5.2.7
+        version: 5.3.0
       '@fontsource/quicksand':
         specifier: ^5.2.9
-        version: 5.2.10
+        version: 5.3.0
       '@tailwindcss/aspect-ratio':
         specifier: ^0.4.2
         version: 0.4.2(tailwindcss@4.3.3)
@@ -592,11 +592,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@fontsource/open-sans@5.2.7':
-    resolution: {integrity: sha512-8yfgDYjE5O0vmTPdrcjV35y4yMnctsokmi9gN49Gcsr0sjzkMkR97AnKDe6OqZh2SFkYlR28fxOvi21bYEgMSw==}
+  '@fontsource/open-sans@5.3.0':
+    resolution: {integrity: sha512-V1bdMlGNyZrJwzrdusshMOw2YR0aqYDL7kOo9dkxUEKl8dFv66A9HLckOOXl572sG/7ohhDQrCrTFGSn9LZcSw==}
 
-  '@fontsource/quicksand@5.2.10':
-    resolution: {integrity: sha512-rck0ccT6vJF9RnbSW2ON1grq5qFZvjVOGvYIUixATXF8mNh4KglD+8Sn8QpRgKQBSBJF5yOR3SBYBWPg/Y8YbQ==}
+  '@fontsource/quicksand@5.3.0':
+    resolution: {integrity: sha512-epmMUyXI39f88bZSCyKlHTZqUWg4O7DqrTXOKqsqbVKMLshX9RtIYCUIw+G2nOfEwdIHIjYbeWdwHRcEzRXBRQ==}
 
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
@@ -3577,9 +3577,9 @@ snapshots:
   '@esbuild/win32-x64@0.28.1':
     optional: true
 
-  '@fontsource/open-sans@5.2.7': {}
+  '@fontsource/open-sans@5.3.0': {}
 
-  '@fontsource/quicksand@5.2.10': {}
+  '@fontsource/quicksand@5.3.0': {}
 
   '@img/colour@1.1.0': {}
 
