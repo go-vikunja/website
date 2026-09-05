@@ -65,8 +65,8 @@ MATRIX_ROOM_ID=
 LISTMONK_URL=https://your-listmonk-instance.example.com
 LISTMONK_API_USER=
 LISTMONK_API_TOKEN=
-# List ID to send the campaign to (find at Lists -> click list -> ID in URL)
-LISTMONK_LIST_ID=
+# Comma-separated list IDs to send the campaign to (find at Lists -> click list -> ID in URL)
+LISTMONK_LIST_IDS=1,2
 ```
 
 GitHub Releases uses the `gh` CLI's existing authentication — no extra credentials needed. Run `gh auth status` to verify.

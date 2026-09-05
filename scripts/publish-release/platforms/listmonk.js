@@ -6,8 +6,8 @@ export async function postToListmonk(htmlContent, version, title) {
 		return null
 	}
 
-	if (!listmonkConfig.listId) {
-		console.log('Skipping Listmonk: LISTMONK_LIST_ID not set')
+	if (listmonkConfig.listIds.length === 0) {
+		console.log('Skipping Listmonk: LISTMONK_LIST_IDS not set')
 		return null
 	}
 
@@ -20,7 +20,7 @@ export async function postToListmonk(htmlContent, version, title) {
 		body: JSON.stringify({
 			name: title,
 			subject: title,
-			lists: [listmonkConfig.listId],
+			lists: listmonkConfig.listIds,
 			type: 'regular',
 			content_type: 'html',
 			body: htmlContent,
