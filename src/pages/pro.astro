@@ -17,12 +17,20 @@ const proFaqs = [
         answer: 'Vikunja itself keeps working. Your tasks, projects, and data aren\'t going anywhere. The Pro features (audit logs, admin panel, time tracking) need an active subscription. The core app you use every day does not.',
     },
     {
-        question: 'What\'s the difference between Homelab, Business, and Enterprise?',
-        answer: 'Homelab is a flat fee for up to 5 users, for people running Vikunja on their own server at home. It includes the admin panel and time tracking, but not audit logs. Business includes all Pro features with per-user pricing for companies. Enterprise is for larger organizations that need yearly invoicing, a GDPR data processing agreement, or hands-on support via phone. If you\'d rather not run the instance yourself, a managed dedicated instance is available as a paid add-on on any plan.',
+        question: 'What\'s the difference between the plans?',
+        answer: 'Homelab is a flat fee for up to 5 users, for people running Vikunja on their own server at home. It includes the admin panel and time tracking, but no audit logs and no guest users. Team is for small teams: up to 25 users on a single instance, plus 5 guest users, still without audit logs. Business adds audit logs, unlimited guests, and client invoicing, for up to 500 users across up to 3 instances. Scale is Business without the ceilings: unlimited users and unlimited instances. Enterprise is for organizations that need yearly invoicing, a GDPR data processing agreement, or hands-on support via phone. If you\'d rather not run the instance yourself, a managed dedicated instance is available as a paid add-on on any plan.',
     },
     {
-        question: 'How does per-user billing work on the Business plan?',
-        answer: 'You choose one of two models: set a fixed number of seats and add or remove them at any time, or let us automatically bill for the number of users active on your instance, with no seat management needed. Monthly and yearly billing are both available.',
+        question: 'How does per-user billing work?',
+        answer: 'On the Team, Business, and Scale plans you choose one of two models: set a fixed number of seats and add or remove them at any time, or let us automatically bill for the number of users active on your instance, with no seat management needed. Monthly and yearly billing are both available.',
+    },
+    {
+        question: 'What are guest users?',
+        answer: 'Guest users are people you invite into individual projects without giving them a full seat on your instance — clients, freelancers, or anyone who only needs to see their own corner of the work. Team includes 5 guests, Business and up are unlimited, and Homelab doesn\'t include them. This feature is still being built.',
+    },
+    {
+        question: 'What is client invoicing?',
+        answer: 'Client invoicing turns the time you already track in Vikunja into an invoice: pick a client and a period, and Vikunja builds it from your time tracking data — no spreadsheet detour. It\'s included from the Business plan up and is still being built.',
     },
     {
         question: 'Can I self-host with a Pro plan?',
@@ -73,6 +81,103 @@ const proFaqs = [
         answer: 'Yes. If you\'re in a country where the standard pricing doesn\'t make sense, [send us an email](mailto:hello@vikunja.io) and we\'ll work something out.',
     },
 ]
+
+interface ProPlan {
+    title: string
+    description: string
+    price: string
+    priceSuffix?: string
+    features: string[]
+    ctaLabel: string
+    ctaHref: string
+    featured?: boolean
+}
+
+// Label stays unbroken so the badge wraps as a unit instead of splitting the phrase.
+const comingSoon = (label: string) => `<span class="whitespace-nowrap">${label}</span> <span class="align-middle whitespace-nowrap rounded-sm bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 text-xs text-gray-600 dark:text-gray-300">Coming soon</span>`
+
+const proPlans: ProPlan[] = [
+    {
+        title: 'Homelab',
+        description: 'For homelabbers and their households.',
+        price: 'Flat fee',
+        priceSuffix: ' / up to 5 users',
+        features: [
+            'Admin panel',
+            'Time tracking',
+            'Up to 5 users',
+            'Support the project',
+            'Email support',
+        ],
+        ctaLabel: 'Join the waitlist',
+        ctaHref: 'https://console.vikunja.io/register',
+    },
+    {
+        title: 'Team',
+        description: 'For small teams working in one place.',
+        price: 'Per user',
+        priceSuffix: ' / month',
+        features: [
+            'Admin panel',
+            'Time tracking',
+            'Up to 25 users',
+            '1 instance',
+            comingSoon('5 guests'),
+            'Email support',
+        ],
+        ctaLabel: 'Join the waitlist',
+        ctaHref: 'https://console.vikunja.io/register',
+    },
+    {
+        title: 'Business',
+        description: 'For companies that bill their time.',
+        price: 'Per user',
+        priceSuffix: ' / month',
+        features: [
+            'Everything in Team',
+            'Audit logs',
+            'Up to 500 users',
+            'Up to 3 instances',
+            comingSoon('Unlimited guests'),
+            comingSoon('Client invoicing'),
+            'Pay per seat or per active user',
+            'Priority email support',
+        ],
+        ctaLabel: 'Join the waitlist',
+        ctaHref: 'https://console.vikunja.io/register',
+        featured: true,
+    },
+    {
+        title: 'Scale',
+        description: 'For companies running Vikunja everywhere.',
+        price: 'Per user',
+        priceSuffix: ' / month',
+        features: [
+            'Everything in Business',
+            'Unlimited users',
+            'Unlimited instances',
+            'Priority email support',
+        ],
+        ctaLabel: 'Join the waitlist',
+        ctaHref: 'https://console.vikunja.io/register',
+    },
+]
+
+const enterprisePlan: ProPlan = {
+    title: 'Enterprise',
+    description: 'For organizations that need the full package.',
+    price: 'Custom',
+    features: [
+        'Everything in Scale',
+        'Phone support',
+        'Yearly invoicing',
+        'Team training available',
+        'GDPR data processing agreement',
+        'Managed dedicated instance available',
+    ],
+    ctaLabel: 'Get in touch',
+    ctaHref: 'mailto:hello@vikunja.io',
+}
 ---
 <Layout title="Vikunja Pro" description="Pro features for self-hosted Vikunja: audit logs, admin panel, time tracking. For homelabbers, teams, and companies running their own instance. Not yet available on Vikunja Cloud. AGPLv3 licensed.">
     <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0" id="main-content">
@@ -96,106 +201,66 @@ const proFaqs = [
         </div>
 
         <!-- Plan cards -->
-        <section class="max-w-5xl mx-auto mt-16 px-4">
-            <div class="grid md:grid-cols-3 gap-6">
+        <section class="max-w-(--breakpoint-lg) mx-auto mt-16 px-4">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {proPlans.map((plan: ProPlan) => (
+                    <article class:list={['rounded-sm p-6 bg-white dark:bg-gray-800 flex flex-col', plan.featured ? 'border-2 border-primary' : 'border border-gray-100 dark:border-gray-800']}>
+                        <div class="mb-4">
+                            <h2 class="font-display text-xl mb-1">{plan.title}</h2>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 text-balance">
+                                {plan.description}
+                            </p>
+                        </div>
+                        <div class="font-display text-2xl mb-6">
+                            {plan.price}<span class="block text-base font-sans text-gray-500 dark:text-gray-400">{plan.priceSuffix ?? ''}&nbsp;</span>
+                        </div>
 
-                <!-- Homelab -->
-                <article class="border border-gray-100 dark:border-gray-800 rounded-sm p-8 bg-white dark:bg-gray-800 flex flex-col">
-                    <div class="mb-6">
-                        <h2 class="font-display text-xl mb-1">Homelab</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-balance">
-                            For homelabbers and their households.
-                        </p>
-                    </div>
-                    <div class="font-display text-3xl mb-6">
-                        Flat fee<span class="text-lg font-sans text-gray-500 dark:text-gray-400"> / up to 5 users</span>
-                    </div>
+                        <hr class="mb-6"/>
 
-                    <hr class="mb-6"/>
+                        <ul class="list-disc list-checkmark pl-4 mb-8 text-gray-700 dark:text-gray-300 space-y-1">
+                            {plan.features.map((f: string) => (
+                                <li><Fragment set:html={f}/></li>
+                            ))}
+                        </ul>
 
-                    <ul class="list-disc list-checkmark pl-4 mb-8 text-gray-700 dark:text-gray-300 space-y-1">
-                        <li>Admin panel</li>
-                        <li>Time tracking</li>
-                        <li>Up to 5 users</li>
-                        <li>Support the project</li>
-                        <li>Email support</li>
-                    </ul>
-
-                    <div class="mt-auto">
-                        <Button href="https://console.vikunja.io/register">
-                            Join the waitlist
-                        </Button>
-                    </div>
-                </article>
-
-                <!-- Business -->
-                <article class="border-2 border-primary rounded-sm p-8 bg-white dark:bg-gray-800 flex flex-col">
-                    <div class="mb-6">
-                        <h2 class="font-display text-xl mb-1">Business</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-balance">
-                            For teams and companies of any size.
-                        </p>
-                    </div>
-                    <div class="font-display text-3xl mb-6">
-                        Per user<span class="text-lg font-sans text-gray-500 dark:text-gray-400"> / month</span>
-                    </div>
-
-                    <hr class="mb-6"/>
-
-                    <ul class="list-disc list-checkmark pl-4 mb-8 text-gray-700 dark:text-gray-300 space-y-1">
-                        <li>All Pro features</li>
-                        <li>Admin panel</li>
-                        <li>Audit logs</li>
-                        <li>Time tracking</li>
-                        <li>Pay per seat or per active user</li>
-                        <li>Priority email support</li>
-                    </ul>
-
-                    <div class="mt-auto">
-                        <Button href="https://console.vikunja.io/register">
-                            Join the waitlist
-                        </Button>
-                    </div>
-                </article>
-
-                <!-- Enterprise -->
-                <article class="border border-gray-100 dark:border-gray-800 rounded-sm p-8 bg-white dark:bg-gray-800 flex flex-col">
-                    <div class="mb-6">
-                        <h2 class="font-display text-xl mb-1">Enterprise</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-balance">
-                            For organizations that need the full package.
-                        </p>
-                    </div>
-                    <div class="font-display text-3xl mb-6">
-                        Custom
-                    </div>
-
-                    <hr class="mb-6"/>
-
-                    <ul class="list-disc list-checkmark pl-4 mb-8 text-gray-700 dark:text-gray-300 space-y-1">
-                        <li>Everything in Business</li>
-                        <li>Phone support</li>
-                        <li>Yearly invoicing</li>
-                        <li>GDPR data processing agreement</li>
-                        <li>Team training available</li>
-                        <li>Managed dedicated instance available</li>
-                    </ul>
-
-                    <div class="mt-auto">
-                        <Button href="mailto:hello@vikunja.io">
-                            Get in touch
-                        </Button>
-                    </div>
-                </article>
+                        <div class="mt-auto">
+                            <Button href={plan.ctaHref}>
+                                {plan.ctaLabel}
+                            </Button>
+                        </div>
+                    </article>
+                ))}
             </div>
+
+            <article class="border border-gray-100 dark:border-gray-800 rounded-sm p-6 bg-white dark:bg-gray-800 mt-4 grid gap-6 md:grid-cols-4 md:items-center">
+                <div>
+                    <h2 class="font-display text-xl mb-1">{enterprisePlan.title}</h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-balance">
+                        {enterprisePlan.description}
+                    </p>
+                    <div class="font-display text-2xl mt-4">{enterprisePlan.price}</div>
+                </div>
+
+                <ul class="list-disc list-checkmark pl-4 text-gray-700 dark:text-gray-300 space-y-1 md:columns-2 md:col-span-2">
+                    {enterprisePlan.features.map((f: string) => (
+                        <li><Fragment set:html={f}/></li>
+                    ))}
+                </ul>
+
+                <div class="md:text-right">
+                    <Button href={enterprisePlan.ctaHref}>
+                        {enterprisePlan.ctaLabel}
+                    </Button>
+                </div>
+            </article>
         </section>
 
         <!-- What Pro adds -->
         <section class="max-w-5xl mx-auto mt-24 px-4">
             <h2 class="font-display text-3xl text-center mb-12">What Pro adds to Vikunja</h2>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+            <div class="flex flex-wrap justify-center gap-8">
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6 w-full md:w-[calc((100%-4rem)/3)]">
                     <div class="mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -209,7 +274,7 @@ const proFaqs = [
                     </p>
                 </div>
 
-                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6 w-full md:w-[calc((100%-4rem)/3)]">
                     <div class="mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -222,7 +287,7 @@ const proFaqs = [
                     </p>
                 </div>
 
-                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6 w-full md:w-[calc((100%-4rem)/3)]">
                     <div class="mb-3">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -232,6 +297,36 @@ const proFaqs = [
                     <p class="text-gray-700 dark:text-gray-300">
                         Track time spent on tasks directly in Vikunja.
                         No separate tool, no context switching.
+                    </p>
+                </div>
+
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6 w-full md:w-[calc((100%-4rem)/3)]">
+                    <div class="mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">
+                        <Fragment set:html={comingSoon('Guest users')}/>
+                    </h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        Invite clients and external collaborators into single projects
+                        without giving them a full seat on your instance.
+                    </p>
+                </div>
+
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6 w-full md:w-[calc((100%-4rem)/3)]">
+                    <div class="mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">
+                        <Fragment set:html={comingSoon('Client invoicing')}/>
+                    </h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        Turn tracked time into client invoices without leaving Vikunja.
+                        No spreadsheet detour.
                     </p>
                 </div>
             </div>
