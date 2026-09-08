@@ -59,6 +59,18 @@ created_by != 'service-account'
 
 Use `created_by_id` when you specifically need to compare the numeric creator ID.
 
+### Current user macro (`@me`)
+
+User-based fields (`assignees`, `created_by`) support the `@me` macro, which dynamically resolves to the authenticated user's username at runtime:
+
+```
+assignees in @me
+assignees in '@me,alice'
+created_by = @me
+```
+
+Because `@me` is resolved dynamically at search time rather than when saving the filter, saved filters and shared project views containing `@me` will automatically adapt to whoever is viewing them.
+
 ## Labels and projects by ID
 
 In the web UI, you can refer to labels and projects by name. Through the API, you must use numeric IDs:
