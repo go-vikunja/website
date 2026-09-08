@@ -107,6 +107,10 @@ auth:
 
 Note that Vikunja requires users to have an email address to work correctly.
 
+When creating users from LDAP:
+- **Username formatting:** spaces in the username attribute are converted to dashes (`-`), and any leading `@` symbols are trimmed (since Vikunja usernames cannot start with `@`).
+- **Email requirement:** Vikunja requires users to have an email address to work correctly.
+
 ## Avatar Synchronization
 
 Vikunja can synchronize user avatars from LDAP if your directory stores user photos. To enable this feature, configure the LDAP attribute that contains the raw image data:
@@ -149,7 +153,7 @@ When a user logs in, Vikunja will:
 
 1. Search for groups in the LDAP directory using the configured filter
 2. Create teams in Vikunja that match these groups (if they don't already exist)
-3. Add the user to the appropriate teams based on their group membership
+3. Add the user to the appropriate teams based on their group membership (matched by the user's DN, username, external subject ID, or `@`-trimmed username)
 
 You may need to adjust the `groupsyncfilter` based on your LDAP directory structure. The default filter looks for objects with class `group` or `groupOfNames`.
 
