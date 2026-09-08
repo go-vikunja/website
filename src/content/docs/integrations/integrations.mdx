@@ -46,3 +46,23 @@ Visit the [Cria GitHub repository](https://github.com/frigidplatypus/cria) to le
 [mDone](https://marco308.github.io/mdone/) is a native iOS and macOS app for Vikunja. It connects directly to your own Vikunja server over the REST API with no middleman, no account in between, and no analytics, tracking, or third-party SDKs. On top of standard task management it adds focus sessions and Home/Lock Screen widgets to keep your current task front of mind.
 
 Visit the [mDone website](https://marco308.github.io/mdone/) to learn more.
+
+  ## tui-do
+
+  [tui-do](https://github.com/sjwasko/tui-do) is a local-first terminal user interface (TUI) for Vikunja, written in Rust. It keeps a local SQLite copy of your tasks, so it
+  opens instantly, stays usable when the server is unreachable, and queues edits made offline to reconcile when the connection returns. It ships as a single static binary with
+  no runtime dependencies, and includes a `tui-do add` command that files tasks from the shell — or from a script or coding agent — using Vikunja's quick-add magic syntax.
+
+  Visit the [tui-do GitHub repository](https://github.com/sjwasko/tui-do) to learn more.
+
+  PR title: Add tui-do to External Integrations
+
+  PR body:
+  Adds tui-do, a local-first terminal UI for Vikunja, to the External Integrations page.
+  
+  It keeps a local SQLite cache so it opens instantly and accepts edits while the
+  server is unreachable, queueing them until it can sync. Ships as a single static
+  binary for x86_64 and aarch64, plus macOS. 
+  
+  Suggested by @kolaente in the announcement thread:
+  https://community.vikunja.io/t/announcing-a-new-vikunja-tui-called-tui-do/5076
