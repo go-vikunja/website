@@ -7,7 +7,7 @@ description: Learn about vikunja.io's privacy policy, GDPR compliance, data prot
 # Privacy Policy for vikunja.io
 
 At vikunja.io, one of our main priorities is the privacy of our visitors. 
-This Privacy Policy document contains types of information that is collected and recorded by vikunja.io and how we use it.
+This Privacy Policy document contains types of information that are collected and recorded by vikunja.io and how we use it.
 
 If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us through email at [gdpr@vikunja.io](mailto:gdpr@vikunja.io).
 
@@ -15,7 +15,7 @@ If you have additional questions or require more information about our Privacy P
 
 We are a Data Controller of your information.
 
-vikunja.io legal basis for collecting and using the personal information described in this Privacy Policy depends on the Personal Information we collect 
+vikunja.io's legal basis for collecting and using the personal information described in this Privacy Policy depends on the Personal Information we collect 
 and the specific context in which we collect the information:
 
 *   vikunja.io needs to perform a contract with you
@@ -43,8 +43,8 @@ In certain circumstances, you have the following data protection rights:
 ## Log Files
 
 vikunja.io follows a standard procedure of using log files. These files log visitors when they visit websites. 
-All hosting companies do this and a part of hosting services' analytics. The information collected by log files 
-include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, 
+All hosting companies do this and are a part of hosting services' analytics. The information collected by log files 
+includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, 
 and possibly the number of clicks. These are not linked to any information that is personally identifiable. 
 The purpose of the information is for administering the site, preventing abuse and gathering demographic information.
 
