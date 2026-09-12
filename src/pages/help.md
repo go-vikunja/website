@@ -59,6 +59,7 @@ Use these pages as your main starting points:
 - [Projects](/help/projects) for project structure, backgrounds, archiving, and favorites
 - [Views](/help/views) for list, table, kanban, and Gantt
 - [Sharing & Teams](/help/sharing-and-teams) for collaboration and permissions
+- [MCP](/help/mcp/) for connecting AI clients to your tasks and projects
 - [Settings](/help/settings) for account preferences, reminders, tokens, and imports
 - [Import & Export](/help/import-and-export) for moving data in and out of Vikunja
 - [Accessibility](/help/accessibility) for keyboard shortcuts, display and sound options, and screen reader support
