@@ -4,12 +4,17 @@ slug: fail2ban
 description: >-
   This guide explains how to configure Fail2Ban to protect your Vikunja instance from repeated failed login attempts.
 ---
+import Callout from '../../../components/Callout.astro';
 
 To protect your Vikunja instance from brute-force and abusive requests, you can use [Fail2Ban](https://github.com/fail2ban/fail2ban), which monitors logs and blocks IPs at the network level after repeated failed logins.
 
 Use the [ratelimit options](/docs/config-options/#0--ratelimit) to limit request frequency across endpoints, and Fail2Ban when you want to ban clients entirely.
 
 Both mechanisms can be used together to provide layered protection against abuse and unauthorized access attempts.
+
+<Callout type="warning">
+**NOTE:** If Vikunja runs behind a reverse proxy, configure [client IP addresses](/docs/reverse-proxy#client-ip-addresses) first. Otherwise `remote_ip` in the HTTP log is the proxy's address rather than the client's, and this jail bans the proxy after `maxretry` failed logins, which locks out every user.
+</Callout>
 
 ## Configure Vikunja
 
