@@ -1,0 +1,120 @@
+---
+title: MCP
+slug: mcp
+description: >-
+  Connect an AI assistant to Vikunja with MCP and choose what it can read or change.
+---
+
+import Callout from '../../components/Callout.astro';
+
+<Callout type="info">
+MCP is available in Vikunja **2.7.0 and later**, or in unstable builds.
+</Callout>
+
+MCP (Model Context Protocol) lets an AI assistant work with your Vikunja tasks, projects, and labels. To connect one, create an API token with the permissions you want to give it.
+
+## Create a connection token
+
+1. Click your username, open Settings, and select MCP.
+2. Click Create a token and give it a name you'll recognize, such as "Claude Code".
+3. Start with a permission preset, then adjust individual permissions if needed:
+   - Read only: lets the client read data without changing it.
+   - Typed tools read + write: the default. Covers tasks, projects, labels, assignees, comments, and user search.
+   - Full access: allows every operation available through MCP.
+4. Adjust the expiry date if needed, then click Create token.
+5. Choose your client and follow the instructions. The page fills in your server URL and token for you.
+6. Click Done when you've connected the client.
+
+You'll only see the token once. Copy it before leaving or reloading the page. If you lose it, create a new one.
+
+MCP → Access stays selected because every connection needs it. The token also needs permission for each action you want the client to perform. Even with Full access, it can only access projects you have permission to use.
+
+## Connect your client
+
+Replace `https://vikunja.example/api/v2/mcp` and `YOUR_TOKEN` below with your endpoint and token from Settings → MCP. If you've just created a token, you can copy the commands directly from that page.
+
+### Claude Code
+
+Run this in your terminal:
+
+```sh
+claude mcp add --transport http --header 'Authorization: Bearer YOUR_TOKEN' vikunja 'https://vikunja.example/api/v2/mcp'
+```
+
+Open a Claude Code session and run `/mcp` to check the connection.
+
+See the [official Claude Code MCP guide](https://code.claude.com/docs/en/mcp).
+
+### Codex
+
+Run these commands in your terminal:
+
+```sh
+export VIKUNJA_MCP_TOKEN='YOUR_TOKEN'
+codex mcp add vikunja --url 'https://vikunja.example/api/v2/mcp' --bearer-token-env-var VIKUNJA_MCP_TOKEN
+```
+
+Start Codex from the same terminal so it can read the token. Set `VIKUNJA_MCP_TOKEN` again in each new terminal. If you use a desktop launcher, add the variable to its environment instead.
+
+You can also add the server to `~/.codex/config.toml`. You'll still need to set the environment variable:
+
+```toml
+[mcp_servers.vikunja]
+url = "https://vikunja.example/api/v2/mcp"
+bearer_token_env_var = "VIKUNJA_MCP_TOKEN"
+```
+
+See the [official Codex MCP guide](https://learn.chatgpt.com/docs/extend/mcp?surface=cli).
+
+### Claude Desktop / claude.ai
+
+You'll need Claude's Request headers beta, which is available to a limited set of organizations. If you don't see that section, you can't connect Vikunja this way yet.
+
+1. Open Customize → Connectors → Add custom connector. Team and Enterprise owners manage connectors through their organization settings.
+2. Name the connector "Vikunja" and enter the endpoint from Settings → MCP.
+3. Choose No sign-in for authentication.
+4. Under Request headers, choose `authorization` and enter your token with `Bearer ` in front of it, including the space: `Bearer YOUR_TOKEN`.
+5. Save the connector and enable it for the conversation.
+
+Claude's servers must be able to reach your Vikunja instance. If you add an organization connector, everyone who uses it shares the permissions of its Vikunja token.
+
+See the [official Claude custom connector guide](https://claude.com/docs/connectors/custom/remote-mcp).
+
+### Mistral Vibe
+
+1. In the sidebar on the left, open Context → Connectors → Add Connector → Add Custom Connector.
+2. Name the connector "Vikunja", enter the endpoint from Settings → MCP, and connect.
+3. Choose HTTP Bearer Token authentication and paste just the token, without `Bearer `.
+4. Enable the connector for the task where you want to use it.
+
+See the [official Mistral MCP connector guide](https://docs.mistral.ai/vibe/work/connectors/mcp-connectors).
+
+### ChatGPT
+
+ChatGPT can't connect to Vikunja yet: its developer mode doesn't accept the bearer token Vikunja uses. This needs MCP OAuth support in Vikunja. Choosing No Authentication won't work.
+
+See the [official ChatGPT developer-mode guide](https://developers.openai.com/api/docs/guides/developer-mode) for its supported authentication options.
+
+### Other clients
+
+Your client needs to support Streamable HTTP and bearer-token authentication. Enter your MCP endpoint and add this request header:
+
+```text
+Authorization: Bearer YOUR_TOKEN
+```
+
+If the client has a dedicated bearer-token field, paste only the token there.
+
+## Manage or revoke access
+
+You can see your MCP tokens in Settings → MCP, including expired ones. To revoke access, delete the token and confirm. Removing a connector from your AI client doesn't revoke its Vikunja token.
+
+To replace a token, create a new one, update the client, check the connection, then delete the old token. Manage all API tokens opens the full token list.
+
+## Troubleshooting
+
+- The client cannot connect: copy the endpoint from Settings and check that the client can reach your instance. Hosted clients need a reachable HTTPS URL.
+- Authentication fails: check the token's expiry and whether it was deleted. Header values need the `Bearer ` prefix; dedicated bearer-token fields usually add it themselves.
+- The connection works but an action is denied: check that the token allows the action and that you have access to the project. If the token is missing a permission, create a new one with the permissions you need.
+- Codex cannot find the token: set `VIKUNJA_MCP_TOKEN` in the environment that launches Codex, then restart it.
+- You lost the token: it cannot be retrieved. Create a new one and delete the old one.
