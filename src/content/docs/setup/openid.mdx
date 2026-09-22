@@ -337,6 +337,8 @@ If users logging in via OIDC get random usernames instead of their actual name, 
 3. `nickname` from the userinfo endpoint
 4. If none are available, a random username is generated
 
+Any leading `@` characters in the username will be automatically stripped, as Vikunja usernames cannot start with `@`.
+
 Check your provider's configuration to ensure it includes `preferred_username` in the profile scope. Some providers (like Synology SSO) do not include this claim by default.
 
 ### Users must log in before they can be assigned to tasks
