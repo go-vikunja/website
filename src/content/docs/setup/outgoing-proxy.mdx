@@ -49,7 +49,15 @@ outgoingrequests:
   proxyurl: "http://user:password@proxy.internal:3128"
 ```
 
-If your proxy needs a username and password, put them in the URL as shown above. If you use [mole](https://github.com/frain-dev/mole), you can instead set `outgoingrequests.proxypassword`. Vikunja then authenticates with the username `vikunja`.
+If your proxy needs a username and password, put them in the URL as shown above. To keep the password out of the URL, set it in `outgoingrequests.proxypassword` instead. Vikunja then uses the username from the URL, or `vikunja` if the URL has none, which is what [mole](https://github.com/frain-dev/mole) expects:
+
+```yaml
+outgoingrequests:
+  proxyurl: "http://mole:8080"
+  proxypassword: "your-proxy-password"
+```
+
+If the URL already contains a password, `outgoingrequests.proxypassword` is ignored.
 
 <Callout type="warning">
 The config option has no equivalent to `NO_PROXY`. Every request goes through the proxy, including requests to an OpenID Connect provider on your internal network. Make sure the proxy can reach it, or use the environment variables instead.
