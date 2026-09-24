@@ -328,6 +328,14 @@ curl https://your-provider/.well-known/openid-configuration | jq .
 
 Verify that the `authorization_endpoint`, `token_endpoint`, and `userinfo_endpoint` values point to the correct host and port.
 
+### Vikunja can't reach the provider through a proxy
+
+<Callout type="info">
+Routing OpenID Connect requests through a proxy is currently only available in [unstable builds](/docs/versions).
+</Callout>
+
+If you configured an [outgoing proxy](/docs/outgoing-proxy), Vikunja sends all requests to your provider through it. When `outgoingrequests.proxyurl` is set, this includes providers on your internal network. Either make sure the proxy can reach the provider, or configure the proxy with the `HTTPS_PROXY` environment variable and add the provider's host to `NO_PROXY`.
+
 ### Usernames are auto-generated (random characters)
 
 If users logging in via OIDC get random usernames instead of their actual name, the identity provider is not including the `preferred_username` claim. Vikunja checks these sources in order:

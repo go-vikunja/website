@@ -1,0 +1,96 @@
+---
+title: Outgoing requests through a proxy
+slug: outgoing-proxy
+description: >-
+  Route Vikunja's outgoing HTTP requests, including webhooks, OpenID Connect,
+  and the license check, through a forward proxy.
+---
+import Callout from '../../../components/Callout.astro';
+
+<Callout type="info">
+This page describes behavior that is currently only available in [unstable builds](/docs/versions). It will be part of the next release.
+</Callout>
+
+Vikunja can send all of its outgoing HTTP requests through a forward proxy. This is useful when your server has no direct internet access, or when you want to control which internal services Vikunja can reach.
+
+## What goes through the proxy
+
+- Webhook deliveries
+- Avatar downloads (Gravatar and OpenID Connect profile pictures)
+- Unsplash backgrounds
+- Migrations from Todoist, Trello, Microsoft To Do, and Planka
+- OpenID Connect: discovery, token exchange, userinfo, and key fetching
+- The [Vikunja Pro license check](/docs/pro)
+
+Email (SMTP) and LDAP connections don't use HTTP and don't go through the proxy.
+
+## Configuring the proxy
+
+There are two ways to configure a proxy. If both are set, the config option wins.
+
+### Environment variables
+
+Vikunja reads the standard `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` environment variables (the lowercase versions work too):
+
+```bash
+HTTPS_PROXY=http://proxy.internal:3128
+HTTP_PROXY=http://proxy.internal:3128
+NO_PROXY=keycloak.internal,10.0.0.0/8
+```
+
+`HTTPS_PROXY` is used for `https://` targets and `HTTP_PROXY` for `http://` targets. `NO_PROXY` takes a comma-separated list of hosts, domain suffixes (`.internal`), or IP ranges in CIDR notation that Vikunja connects to directly. Requests to `localhost` and loopback addresses never use the proxy.
+
+### Config option
+
+Set [`outgoingrequests.proxyurl`](/docs/config-options#1-outgoingrequests-proxyurl) to use one proxy for every request:
+
+```yaml
+outgoingrequests:
+  proxyurl: "http://user:password@proxy.internal:3128"
+```
+
+If your proxy needs a username and password, put them in the URL as shown above. To keep the password out of the URL, set it in `outgoingrequests.proxypassword` instead. Vikunja then uses the username from the URL, or `vikunja` if the URL has none, which is what [mole](https://github.com/frain-dev/mole) expects:
+
+```yaml
+outgoingrequests:
+  proxyurl: "http://mole:8080"
+  proxypassword: "your-proxy-password"
+```
+
+If the URL already contains a password, `outgoingrequests.proxypassword` is ignored.
+
+<Callout type="warning">
+The config option has no equivalent to `NO_PROXY`. Every request goes through the proxy, including requests to an OpenID Connect provider on your internal network. Make sure the proxy can reach it, or use the environment variables instead.
+</Callout>
+
+If the proxy URL is invalid, outgoing requests fail instead of bypassing the proxy.
+
+## Proxies on a private network
+
+By default, Vikunja refuses to connect to private, loopback, and link-local addresses to prevent [server-side request forgery](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery). The connection to the configured proxy is exempt from this check, so the proxy can live on your internal network without setting `outgoingrequests.allownonroutableips`.
+
+Requests that go through the proxy are resolved by the proxy, so Vikunja doesn't check them. Requests that bypass the proxy, such as hosts listed in `NO_PROXY`, are still checked. Vikunja also refuses requests that bypass the proxy but target the proxy's own address.
+
+<Callout type="warning">
+A generic forward proxy such as Squid doesn't block internal targets by default. If people you don't fully trust can create webhooks or run migrations on your instance, use a filtering proxy like [mole](https://github.com/frain-dev/mole), or configure your proxy to deny requests to your internal networks.
+</Callout>
+
+## Self-signed certificates and TLS inspection
+
+If your proxy uses a self-signed certificate, or inspects TLS traffic by re-signing certificates with its own certificate authority, Vikunja needs to trust that certificate authority.
+
+Vikunja uses the operating system's trusted certificates. On a regular Linux install, add your CA certificate to the system store, for example with `update-ca-certificates` on Debian and Ubuntu or `update-ca-trust` on Fedora and RHEL.
+
+The Docker image doesn't include tools to update the certificate store. Mount your CA certificate into a directory and point `SSL_CERT_DIR` to it:
+
+```yaml
+services:
+  vikunja:
+    image: vikunja/vikunja
+    environment:
+      SSL_CERT_DIR: /etc/ssl/custom
+    volumes:
+      - ./my-ca.pem:/etc/ssl/custom/my-ca.pem:ro
+```
+
+Vikunja loads the certificates from `SSL_CERT_DIR` in addition to the default ones, so public websites keep working. Avoid `SSL_CERT_FILE`, because it replaces the default certificates instead of adding to them.
