@@ -69,7 +69,11 @@ If the proxy URL is invalid, outgoing requests fail instead of bypassing the pro
 
 By default, Vikunja refuses to connect to private, loopback, and link-local addresses to prevent [server-side request forgery](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery). The connection to the configured proxy is exempt from this check, so the proxy can live on your internal network without setting `outgoingrequests.allownonroutableips`.
 
-Requests that go through the proxy are resolved by the proxy, so it is the proxy's job to block requests to internal services. Requests that bypass the proxy, such as hosts listed in `NO_PROXY`, are still checked by Vikunja.
+Requests that go through the proxy are resolved by the proxy, so Vikunja doesn't check them. Requests that bypass the proxy, such as hosts listed in `NO_PROXY`, are still checked. Vikunja also refuses requests that bypass the proxy but target the proxy's own address.
+
+<Callout type="warning">
+A generic forward proxy such as Squid doesn't block internal targets by default. If people you don't fully trust can create webhooks or run migrations on your instance, use a filtering proxy like [mole](https://github.com/frain-dev/mole), or configure your proxy to deny requests to your internal networks.
+</Callout>
 
 ## Self-signed certificates and TLS inspection
 
