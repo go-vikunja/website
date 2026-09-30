@@ -5,6 +5,7 @@ description: >-
   Technical reference for Vikunja webhooks: API usage, payload structure,
   signature verification, and hosting security.
 ---
+import Callout from '../../../components/Callout.astro';
 
 This page covers the technical details of working with Vikunja webhooks programmatically. For an introduction to what webhooks are and how to set them up in the UI, see the [Webhooks help page](/help/webhooks).
 
@@ -65,15 +66,19 @@ See [webhooks.fyi](https://webhooks.fyi/security/hmac) for detailed implementati
 
 ## Hosting security
 
-If your Vikunja instance is used by multiple people, outgoing webhook requests could be used to probe internal network services (SSRF). Vikunja supports using [mole](https://github.com/frain-dev/mole) as a proxy for outgoing webhook requests to prevent this.
-
-Configure the proxy in your Vikunja config:
+If your Vikunja instance is used by multiple people, outgoing webhook requests could be used to probe internal network services (SSRF). By default, Vikunja refuses to send webhooks to private, loopback, and link-local addresses. For stricter control, route outgoing requests through a proxy such as [mole](https://github.com/frain-dev/mole):
 
 ```yaml
-webhooks:
+outgoingrequests:
   proxyurl: "http://mole:8080"
   proxypassword: "your-proxy-password"
 ```
+
+<Callout type="info">
+The `outgoingrequests.*` options replace the deprecated `webhooks.proxyurl` and `webhooks.proxypassword`, which still work. Credentials in the proxy URL, `HTTP_PROXY`/`HTTPS_PROXY` support, and proxies on a private network are currently only available in [unstable builds](/docs/versions).
+</Callout>
+
+See [outgoing requests through a proxy](/docs/outgoing-proxy) for all proxy options.
 
 See the [webhook configuration options](/docs/config-options#0--webhooks) for all available settings, including timeout configuration.
 

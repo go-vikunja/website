@@ -68,6 +68,18 @@ If your instance is behind an outbound firewall, allow these hosts. The check is
 a single small POST request. There is no callback, websocket, or persistent
 connection.
 
+### Behind a proxy
+
+<Callout type="info">
+Proxy support for the license check is currently only available in
+[unstable builds](/docs/versions). It will be part of the next release.
+</Callout>
+
+If your server can only reach the internet through a forward proxy, set the
+`HTTPS_PROXY` environment variable or the `outgoingrequests.proxyurl` config
+option. See [outgoing requests through a proxy](/docs/outgoing-proxy) for
+details, including how to trust a proxy that inspects TLS traffic.
+
 ## What Is Sent to the License Server
 
 Every license check posts the following fields:
