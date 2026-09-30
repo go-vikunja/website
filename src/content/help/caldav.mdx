@@ -7,6 +7,7 @@ description: >-
 ---
 import Screenshot from '../../components/Screenshot.astro'
 import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
+import Callout from '../../components/Callout.astro'
 
 
 > **Warning:** The CalDAV integration is in an early alpha stage and has bugs.
@@ -45,6 +46,37 @@ URLs are:
 * `/projects/`: Used to manage [projects](/help/projects)
 * `/projects/<Project ID>/`: Used to manage a single project
 * `/projects/<Project ID>/<Task UID>`: Used to manage a task on a project
+
+## Set up on iOS
+
+<Callout type="info">
+Syncing with iPhone and iPad needs Vikunja **2.2.0** or later.
+</Callout>
+
+Your Vikunja tasks show up in the Reminders app. Each project becomes a list.
+
+First, create a CalDAV token in Vikunja:
+
+1. Click your username in the top right corner and select **Settings**.
+2. Open the **CalDAV** tab.
+3. Copy the CalDAV URL at the top of the page and note your username shown below it.
+4. Click **Create a CalDAV token** and copy the token. You won't see it again.
+
+Then add the account on your iPhone or iPad:
+
+1. Open the **Settings** app and go to **Apps** → **Calendar** → **Calendar Accounts**. On iOS 17 and earlier, go to **Calendar** → **Accounts** instead.
+2. Tap **Add Account** → **Other** → **Add CalDAV Account**.
+3. Fill in the fields:
+   - **Server:** the CalDAV URL you copied, for example `https://vikunja.example.com/api/v1/dav/principals/yourname/`
+   - **User Name:** your Vikunja username
+   - **Password:** the CalDAV token
+   - **Description:** any name, for example "Vikunja"
+4. Tap **Next** and wait for iOS to verify the account.
+5. Turn on **Reminders** and tap **Save**.
+
+Open the Reminders app. Your Vikunja projects appear under the account's description. It can take a moment for the first sync to finish.
+
+If verification fails, check that the Server field contains the full URL including `https://` and the trailing slash. After several failed attempts, Vikunja temporarily blocks further logins from your IP (see [rate limits](#failed-authentication-and-rate-limits)), so wait a minute before trying again.
 
 ## Supported properties
 
@@ -90,8 +122,8 @@ Vikunja **currently does not** support these properties:
 * [OpenTasks](https://opentasks.app/) & [DAVx⁵](https://www.davx5.com/)
 * [Tasks (Android)](https://tasks.org/)
 * [Korganizer](https://apps.kde.org/korganizer/)
+* Apple Reminders on iOS (Vikunja 2.2.0 and later, see [Set up on iOS](#set-up-on-ios))
 
 ### Not working
 
 * [Thunderbird (68)](https://www.thunderbird.net/)
-* iOS CalDAV Sync (See [#753](https://kolaente.dev/vikunja/vikunja/issues/753))
