@@ -7,13 +7,13 @@ description: >-
   requests, rate limiting, monitoring, logging, backups and updates.
 ---
 
-This page is a checklist for operators of a self-hosted Vikunja instance. Each section says what to do, why, and which settings are involved. The linked pages have the details. Every key is described in the [configuration options](/docs/config-options), and all of them are available from Vikunja 2.7.0 onwards.
+Work through this checklist when you set up a self-hosted Vikunja instance. The linked pages have the details, and every key is described in the [configuration options](/docs/config-options). All settings here are available from Vikunja 2.7.0 onwards.
 
 Features marked **Pro** require a [Vikunja Pro license](/docs/pro).
 
 ## TLS and reverse proxy
 
-Vikunja serves plain HTTP. Terminate TLS at a [reverse proxy](/docs/reverse-proxy) so that credentials and tokens never cross the network unencrypted.
+By default, Vikunja serves plain HTTP. Terminate TLS at a [reverse proxy](/docs/reverse-proxy) so that credentials and tokens never cross the network unencrypted.
 
 * Only the proxy should be able to reach Vikunja. If both run on the same host, bind Vikunja to localhost with `service.interface` (default `:3456`) or listen on a Unix socket with `service.unixsocket` and `service.unixsocketmode`. Otherwise, restrict the port with a firewall.
 * Set `service.publicurl` to the HTTPS URL your users open. Vikunja uses it to build links, for example in emails, and as the allowed CORS origin.
@@ -41,7 +41,7 @@ Limit what an attacker gains if Vikunja itself is compromised.
 Use your existing identity provider so that onboarding, offboarding and password policies are handled in one place.
 
 * Connect [OpenID Connect](/docs/openid) ([provider examples](/docs/openid-example-configurations)) or [LDAP](/docs/ldap).
-* Vikunja creates an account for every user who completes the OpenID Connect login. Restrict in your identity provider which users may use the Vikunja client.
+* Vikunja creates an account for every user who completes the OpenID Connect login. Use your identity provider to control who may sign in to the Vikunja client.
 * Once all users come from SSO, set `auth.local.enabled: false` and `service.enableregistration: false`. Disable local accounts you no longer need with `vikunja user change-status <id> --disable` (see [CLI](/docs/cli)).
 * **LDAP over TLS:** `auth.ldap.usetls` (default `true`) connects with LDAPS, which uses implicit TLS. StartTLS is not supported. `auth.ldap.port` defaults to `389`, so set it to your LDAPS port, usually `636`. Leave `auth.ldap.verifytls` at its default `true`. The bind account (`auth.ldap.binddn`) only needs read access to the directory.
 * **Two-factor authentication:** local accounts can enable TOTP in their settings while `service.enabletotp` is `true` (default). Vikunja does not force users to enroll. TOTP is not available to LDAP and OpenID Connect users. For OpenID Connect, enforce MFA in the identity provider.
@@ -80,8 +80,6 @@ service:
 ```
 
 ## Disable features you don't need
-
-Every feature you turn off reduces the attack surface.
 
 | Key | Default | Disable it to |
 |-----|---------|---------------|
@@ -139,11 +137,11 @@ Vikunja makes outgoing HTTP requests for webhooks, avatar downloads, migration i
 
 ## Rate limiting
 
-Rate limits slow down brute-force attempts and limit the damage of a misbehaving client.
+Rate limits slow down password guessing and stop a single client from flooding the API.
 
 * Logins, registration and password reset requests are always limited per IP (`ratelimit.noauthlimit`, default 10 per minute). So are token refreshes (`ratelimit.tokenrefreshlimit`, default 60 per minute) and failed HTTP basic auth attempts, which CalDAV uses (`ratelimit.basicauthlimit`, default 10 per minute).
 * Set `ratelimit.enabled: true` to also limit authenticated API requests. Choose `ratelimit.kind` (`user` or `ip`), `ratelimit.limit` and `ratelimit.period` (seconds).
-* All of these count per IP address, so they only work with correct [client IPs](#tls-and-reverse-proxy).
+* The per-IP limits need correct [client IPs](#tls-and-reverse-proxy). Without them, all clients share the proxy's budget.
 * With more than one Vikunja instance, store the counters in Redis so all instances share them: set `ratelimit.store: redis` and configure `redis.enabled`, `redis.host` and `redis.password`.
 * To block repeat offenders at the firewall, use [fail2ban](/docs/fail2ban).
 
