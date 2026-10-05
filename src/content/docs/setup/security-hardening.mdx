@@ -1,0 +1,174 @@
+---
+title: Security hardening
+slug: security-hardening
+description: >-
+  A checklist for running a self-hosted Vikunja instance securely: TLS,
+  least privilege, authentication, sessions, secrets, database, outgoing
+  requests, rate limiting, monitoring, logging, backups and updates.
+---
+
+Work through this checklist when you set up a self-hosted Vikunja instance. The linked pages have the details, and every key is described in the [configuration options](/docs/config-options). All settings here are available from Vikunja 2.7.0 onwards.
+
+Features marked **Pro** require a [Vikunja Pro license](/docs/pro).
+
+## TLS and reverse proxy
+
+By default, Vikunja serves plain HTTP. Terminate TLS at a [reverse proxy](/docs/reverse-proxy) so that credentials and tokens never cross the network unencrypted.
+
+* Only the proxy should be able to reach Vikunja. If both run on the same host, bind Vikunja to localhost with `service.interface` (default `:3456`) or listen on a Unix socket with `service.unixsocket` and `service.unixsocketmode`. Otherwise, restrict the port with a firewall.
+* Set `service.publicurl` to the HTTPS URL your users open. Vikunja uses it to build links, for example in emails, and as the allowed CORS origin.
+* Set `service.ipextractionmethod` to `xff`. With the default `direct`, Vikunja sees the proxy's address on every request, so IP-based rate limits, request logs and audit entries all point at the proxy.
+* With `xff`, Vikunja trusts the `X-Forwarded-For` header from loopback, link-local and private network addresses. Add any other proxy addresses to `service.trustedproxies` as a comma-separated list of CIDR ranges. Because private addresses are trusted, clients on your internal network must not be able to reach Vikunja directly.
+
+```yaml
+service:
+  publicurl: "https://tasks.example.org/"
+  interface: "127.0.0.1:3456"
+  ipextractionmethod: "xff"
+  trustedproxies: "203.0.113.10/32"
+```
+
+## Run with least privilege
+
+Limit what an attacker gains if Vikunja itself is compromised.
+
+* **Docker:** the official image is built `FROM scratch`, so it contains no shell or package manager, and runs as UID `1000`. Do not override the user with `root`. Mount the files directory (`/app/vikunja/files`) and, with SQLite, the database directory (`/db`) as volumes owned by UID `1000`, so no data lives inside the container. See the [Docker example](/docs/full-docker-example) and the [Kubernetes guide](/docs/hosting-vikunja-with-k8s).
+* **deb/rpm packages:** run Vikunja as a dedicated user with systemd sandboxing, as described in [systemd hardening](/docs/systemd-hardening).
+* **Files:** with `files.type: local`, keep `files.basepath` outside the installation directory and readable only by the Vikunja user. With `files.type: s3`, the bucket does not need public access because Vikunja serves attachments itself. Give the access key permissions for this bucket only.
+
+## Authentication
+
+Use your existing identity provider so that onboarding, offboarding and password policies are handled in one place.
+
+* Connect [OpenID Connect](/docs/openid) ([provider examples](/docs/openid-example-configurations)) or [LDAP](/docs/ldap).
+* Vikunja creates an account for every user who completes the OpenID Connect login. Use your identity provider to control who may sign in to the Vikunja client.
+* Once all users come from SSO, set `auth.local.enabled: false` and `service.enableregistration: false`. Disable local accounts you no longer need with `vikunja user change-status <id> --disable` (see [CLI](/docs/cli)).
+* **LDAP over TLS:** `auth.ldap.usetls` (default `true`) connects with LDAPS, which uses implicit TLS. StartTLS is not supported. `auth.ldap.port` defaults to `389`, so set it to your LDAPS port, usually `636`. Leave `auth.ldap.verifytls` at its default `true`. The bind account (`auth.ldap.binddn`) only needs read access to the directory.
+* **Two-factor authentication:** local accounts can enable TOTP in their settings while `service.enabletotp` is `true` (default). Vikunja does not force users to enroll. TOTP is not available to LDAP and OpenID Connect users. For OpenID Connect, enforce MFA in the identity provider.
+
+```yaml
+auth:
+  local:
+    enabled: false
+  ldap:
+    enabled: true
+    host: "ldap.example.org"
+    port: 636
+    usetls: true
+    verifytls: true
+service:
+  enableregistration: false
+```
+
+## Sessions
+
+Shorter lifetimes reduce how long a stolen token or an unattended browser remains useful. All values are in seconds.
+
+| Key | Default | Meaning |
+|-----|---------|---------|
+| `service.jwtttlshort` | `600` (10 minutes) | Lifetime of the access token. Clients renew it with a refresh token. When a session is ended or the user is disabled, the current access token stays valid until it expires. |
+| `service.jwtttl` | `259200` (3 days) | A session without activity for this long expires. Also the lifetime of link share tokens. |
+| `service.jwtttllong` | `2592000` (30 days) | The same for sessions created with "Stay logged in". |
+
+Sessions have no absolute maximum lifetime: a session that keeps being used does not expire. Users can review and end their sessions in their settings. Stricter values could look like this:
+
+```yaml
+service:
+  jwtttlshort: 300   # 5 minutes
+  jwtttl: 28800      # 8 hours of inactivity
+  jwtttllong: 28800  # "Stay logged in" lasts no longer than a normal session
+```
+
+## Disable features you don't need
+
+| Key | Default | Disable it to |
+|-----|---------|---------------|
+| `service.enablelinksharing` | `true` | Prevent sharing projects through public links. |
+| `service.enablepublicteams` | `false` | Keep teams discoverable only by their members. |
+| `service.enablecaldav` | `true` | Remove the CalDAV endpoint, which accepts HTTP basic auth. |
+| `webhooks.enabled` | `true` | Stop users from making Vikunja send requests to URLs they choose. |
+| `plugins.enabled` | `false` | Keep third-party code from running inside Vikunja. |
+| `migration.todoist.enable`, `migration.trello.enable`, `migration.microsofttodo.enable` | `false` | Keep the OAuth-based importers off. |
+| `service.enableuserdeletion` | `true` | Prevent users from deleting their own accounts, for example when you have retention requirements. The CLI is unaffected. |
+| `service.enabletaskattachments` | `true` | Prevent file uploads to tasks. |
+
+To limit which users can be found through the user search, set `service.enableopenidteamusersearch: true`. Users then only find others who share a team with them.
+
+The file importers (Vikunja export, TickTick, WeKan and CSV) cannot be disabled. Their limits are set with `migration.vikunjafile.*` and `migration.maxcsvrows`.
+
+## Secrets
+
+Keep secrets out of config files and environment variables that end up in backups, tickets or `docker inspect` output.
+
+* Set `service.secret`, which signs session tokens. If it is empty, Vikunja generates a new one at every start. All sessions then end on restart, and multiple instances reject each other's tokens. Generate a value with `openssl rand -hex 32`.
+* Load secrets from files: any key can be read from a file by adding `.file`, or the `_FILE` suffix to the environment variable, for example `VIKUNJA_DATABASE_PASSWORD_FILE=/run/secrets/db_password`. This works with Docker secrets, Kubernetes secrets and systemd credentials. See [reading config values from files](/docs/config-options#reading-config-values-from-files).
+* Use it for `service.secret`, `database.password`, `auth.ldap.bindpassword`, `auth.openid.providers.<provider>.clientsecret`, `mailer.password`, `redis.password`, `files.s3.secretkey`, `metrics.password`, `outgoingrequests.proxypassword` and `license.key`.
+* Make the config file readable only by the Vikunja user, as shown in [systemd hardening](/docs/systemd-hardening#create-a-dedicated-user).
+* Archives created with `vikunja dump` contain the config file and every `VIKUNJA_*` environment variable in plain text, in addition to the database and all files. Treat them like the database itself: encrypt them and restrict access. Values loaded from files are not included, only their paths.
+
+## Database
+
+* Create a dedicated database user that only has access to Vikunja's database, and never use a superuser. It needs permission to create and alter tables, because Vikunja runs its migrations on startup.
+* Encrypt the connection:
+  * **PostgreSQL:** set `database.sslmode: verify-full` and point `database.sslrootcert` at your CA certificate. Client certificates go in `database.sslcert` and `database.sslkey`.
+  * **MySQL/MariaDB:** set `database.tls: true`, which verifies the server certificate against the system's CA store. Avoid `skip-verify` and `preferred`.
+* Do not expose the database port. Only Vikunja and your backup tooling should be able to reach it.
+* With SQLite, the database file holds all data. Make it readable only by the Vikunja user.
+
+```yaml
+database:
+  type: "postgres"
+  host: "db.internal:5432"
+  user: "vikunja"
+  password:
+    file: "/run/secrets/db_password"
+  database: "vikunja"
+  sslmode: "verify-full"
+  sslrootcert: "/etc/vikunja/db-ca.pem"
+```
+
+## Outgoing requests
+
+Vikunja makes outgoing HTTP requests for webhooks, avatar downloads, migration imports, OpenID Connect and the Pro license check. Users control some of the targets, which makes them a possible path into your internal network (SSRF).
+
+* Keep `outgoingrequests.allownonroutableips` at its default `false`. Vikunja then refuses to connect to private, loopback and link-local addresses.
+* To control outgoing traffic centrally, send it through a forward proxy with `outgoingrequests.proxyurl`. Requests through the proxy are not checked by Vikunja, so the proxy must do the filtering. See [outgoing requests through a proxy](/docs/outgoing-proxy).
+* Error reporting to Sentry is off by default (`sentry.enabled`). Keep it off if no data may leave your network.
+
+## Rate limiting
+
+Rate limits slow down password guessing and stop a single client from flooding the API.
+
+* Logins, registration and password reset requests are always limited per IP (`ratelimit.noauthlimit`, default 10 per minute). So are token refreshes (`ratelimit.tokenrefreshlimit`, default 60 per minute) and failed HTTP basic auth attempts, which CalDAV uses (`ratelimit.basicauthlimit`, default 10 per minute).
+* Set `ratelimit.enabled: true` to also limit authenticated API requests. Choose `ratelimit.kind` (`user` or `ip`), `ratelimit.limit` and `ratelimit.period` (seconds).
+* The per-IP limits need correct [client IPs](#tls-and-reverse-proxy). Without them, all clients share the proxy's budget.
+* With more than one Vikunja instance, store the counters in Redis so all instances share them: set `ratelimit.store: redis` and configure `redis.enabled`, `redis.host` and `redis.password`.
+* To block repeat offenders at the firewall, use [fail2ban](/docs/fail2ban).
+
+## Metrics and health endpoints
+
+* `/health` is unauthenticated and only returns `OK` or an error, depending on whether the database and Redis are reachable.
+* With `metrics.enabled: true`, Prometheus metrics are served at `/api/v1/metrics`. This endpoint is **public** unless both `metrics.username` and `metrics.password` are set. Set both, or block the path at your proxy. See [metrics](/docs/metrics-setup).
+* `metrics.pprof` exposes the Go profiler at `/debug/pprof/`, protected by the same credentials. Profiles reveal internals of the running process. Never enable it on an instance that is reachable from the internet.
+
+## Logging and audit
+
+* Set `log.format: structured` to get JSON logs, and ship them to a central log collector. Logs go to stdout by default. To write files instead, set `log.standard: file` (and `log.http: file` for request logs) and `log.path`.
+* **Pro:** set `audit.enabled: true` to record actions such as logins, API token use and changes to tasks and projects as JSON lines in `audit.logfile` (default `audit.log` in `log.path`). Without a valid license, nothing is written.
+  * Vikunja creates the file with mode `0600` and its directory with `0750`. Entries are not signed, so ship the file to an external system to make it tamper-evident.
+  * `audit.rotation.maxsizemb` (default `100`) rotates the file by size. `audit.rotation.maxage` (default `30`) deletes rotated files after that many days. Neither is a retention policy; long-term retention belongs in your log system.
+  * Entries reference users and resources by ID only and contain no names or content.
+
+## Backups
+
+* Back up the database and the files directory together, as described in [what to backup](/docs/what-to-backup).
+* Store backups encrypted and outside the Vikunja host.
+* Test restores regularly: restore into a separate instance, log in, and open a task with an attachment.
+
+## Updates and security advisories
+
+* Security fixes are published as [GitHub security advisories](https://github.com/go-vikunja/vikunja/security/advisories) and announced in the release notes.
+* To get notified about new releases, watch the [GitHub repository](https://github.com/go-vikunja/vikunja) for releases (Watch → Custom → Releases), subscribe to the [changelog RSS feed](/changelog/rss.xml) or sign up for the newsletter at the bottom of this page.
+* Pin a version instead of using `latest`, for example the `vikunja/vikunja:2.7.0` image, so upgrades happen when you decide.
+* Vikunja runs database migrations automatically when it starts. **Back up before every upgrade**, so you can restore the previous state if something goes wrong.
+* Report vulnerabilities to security@vikunja.io. See the [security policy](/security).
