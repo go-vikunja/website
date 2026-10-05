@@ -85,8 +85,9 @@ db:
   restart: unless-stopped
   healthcheck:
     test: ["CMD-SHELL", "mysqladmin ping -h localhost -u $$MYSQL_USER --password=$$MYSQL_PASSWORD"]
-    interval: 2s
-    start_period: 30s
+    interval: 30s
+    start_period: 15s
+    start_interval: 5s
 ```
 
 You'll also need to change the `VIKUNJA_DATABASE_TYPE` to `mysql` on the vikunja container declaration.
@@ -177,8 +178,9 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h localhost -U $$POSTGRES_USER"]
-      interval: 2s
-      start_period: 30s
+      interval: 30s
+      start_period: 15s
+      start_interval: 5s
 ```
 
 ## Example with Traefik 2
@@ -233,8 +235,9 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h localhost -U $$POSTGRES_USER"]
-      interval: 2s
-      start_period: 30s
+      interval: 30s
+      start_period: 15s
+      start_interval: 5s
 
 networks:
   web:
@@ -291,8 +294,9 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h localhost -U $$POSTGRES_USER"]
-      interval: 2s
-      start_period: 30s
+      interval: 30s
+      start_period: 15s
+      start_interval: 5s
   caddy:
     image: caddy
     restart: unless-stopped
@@ -401,8 +405,9 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h localhost -U $$POSTGRES_USER"]
-      interval: 2s
-      start_period: 30s
+      interval: 30s
+      start_period: 15s
+      start_interval: 5s
 ```
 
 Vikunja will automatically detect ParadeDB and enable enhanced search - no additional configuration required.
