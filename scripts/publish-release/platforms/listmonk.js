@@ -1,13 +1,21 @@
 import {listmonkConfig} from '../config.js'
 
-export async function postToListmonk(htmlContent, version, title) {
+export function postToListmonk(htmlContent, version, title) {
+	return createDraftCampaign(htmlContent, title, listmonkConfig.listIds, 'LISTMONK_LIST_IDS')
+}
+
+export function postToListmonkSecurityList(htmlContent, title) {
+	return createDraftCampaign(htmlContent, title, listmonkConfig.securityListIds, 'LISTMONK_SECURITY_LIST_ID')
+}
+
+async function createDraftCampaign(htmlContent, title, listIds, listIdsEnvName) {
 	if (!listmonkConfig.url || !listmonkConfig.apiUser || !listmonkConfig.apiToken) {
 		console.log('Skipping Listmonk: LISTMONK_URL, LISTMONK_API_USER, or LISTMONK_API_TOKEN not set')
 		return null
 	}
 
-	if (listmonkConfig.listIds.length === 0) {
-		console.log('Skipping Listmonk: LISTMONK_LIST_IDS not set')
+	if (listIds.length === 0) {
+		console.log(`Skipping Listmonk: ${listIdsEnvName} not set`)
 		return null
 	}
 
@@ -20,7 +28,7 @@ export async function postToListmonk(htmlContent, version, title) {
 		body: JSON.stringify({
 			name: title,
 			subject: title,
-			lists: listmonkConfig.listIds,
+			lists: listIds,
 			type: 'regular',
 			content_type: 'html',
 			body: htmlContent,
