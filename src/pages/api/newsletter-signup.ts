@@ -1,12 +1,16 @@
 import type {APIContext} from 'astro'
 import {TURNSTILE_SECRET} from 'astro:env/server'
-
-const LIST_ID = 'f0bc9ec2-56a4-48c8-baad-7a31b137484e'
+import {isNewsletterList, NEWSLETTER_LISTS} from '../../helpers/newsletter'
 
 export const prerender = false
 
 export async function POST({request}: APIContext) {
 	const body = await request.formData()
+
+	const list = body.get('list')
+	if (!isNewsletterList(list)) {
+		return new Response(JSON.stringify({message: 'The selected newsletter does not exist!'}), {status: 400})
+	}
 
 	// Turnstile injects a token in "cf-turnstile-response".
 	const token = body.get('cf-turnstile-response')
@@ -33,7 +37,9 @@ export async function POST({request}: APIContext) {
 	const subscribeData = new FormData()
 	// @ts-ignore
 	subscribeData.append('email', body.get('email'))
-	subscribeData.append('l', LIST_ID)
+	for (const uuid of NEWSLETTER_LISTS[list]) {
+		subscribeData.append('l', uuid)
+	}
 
 	const subscription = await fetch('https://newsletter.vikunja.io/subscription/form', {
 		body: subscribeData,
