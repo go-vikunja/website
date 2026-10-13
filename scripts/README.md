@@ -76,3 +76,21 @@ LISTMONK_SECURITY_LIST_ID=3
 GitHub Releases uses the `gh` CLI's existing authentication — no extra credentials needed. Run `gh auth status` to verify.
 
 LinkedIn has no API integration — the script prints the post text for you to copy and post manually.
+
+## announce-security-release
+
+Creates the heads-up newsletter for a release with security fixes, a few days before the release. It only goes to the security list.
+
+```
+node scripts/announce-security-release.js <version> --date YYYY-MM-DD --severity <low|medium|high|critical> [--dry-run]
+```
+
+Example:
+
+```
+node scripts/announce-security-release.js 2.7.1 --date 2026-10-20 --severity high
+```
+
+The mail only contains the version, the release date and the highest severity. Anyone can subscribe to the list, so don't add details about the vulnerabilities when reviewing the draft.
+
+It uses the same Listmonk credentials as `publish-release`. Both scripts only create draft campaigns, review and send them in Listmonk.
