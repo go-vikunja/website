@@ -10,6 +10,8 @@ import Callout from '../../../components/Callout.astro';
 These examples assume you have an instance of Vikunja running on your server listening on port `3456`.
 If you've changed this setting, you need to update the server configurations accordingly.
 
+Whichever proxy you use, see [Client IP addresses](#client-ip-addresses) below so that Vikunja logs and rate limits the real client instead of the proxy.
+
 ## NGINX
 
 You may need to adjust `server_name` and `root` accordingly.
@@ -142,3 +144,30 @@ vikunja.example.com {
     reverse_proxy 127.0.0.1:3456
 }
 ```
+
+## Client IP addresses
+
+By default, Vikunja uses the TCP remote address of the incoming connection to identify a client. Behind a reverse proxy that address is the proxy itself, so every request is logged and rate limited as if it came from the proxy and the real client address is discarded.
+
+To make Vikunja read the client address from the `X-Forwarded-For` header your proxy already sets, set the extraction method and list the addresses your proxy connects from:
+
+```yaml
+service:
+    ipextractionmethod: xff
+    trustedproxies: 127.0.0.1/32,::1/128
+```
+
+The same via environment variables:
+
+```sh
+export VIKUNJA_SERVICE_IPEXTRACTIONMETHOD=xff
+export VIKUNJA_SERVICE_TRUSTEDPROXIES=127.0.0.1/32,::1/128
+```
+
+`X-Forwarded-For` is only trusted when the request arrives from an address listed in `trustedproxies`, so a client that reaches Vikunja directly cannot forge it. See the [service options](/docs/config-options/#0--service) for the full description, including the `realip` method.
+
+<Callout type="warning">
+**NOTE:** Keep `trustedproxies` as narrow as possible. If Vikunja's port is reachable from anywhere other than the proxy, a broad range such as `10.0.0.0/8` lets any client on that network send an `X-Forwarded-For` header and appear as an address of their choosing. List only the addresses your proxy connects from.
+</Callout>
+
+This affects everything that acts on the client address, including the [ratelimit](/docs/config-options/#0--ratelimit) options and [Fail2Ban](/docs/fail2ban).
