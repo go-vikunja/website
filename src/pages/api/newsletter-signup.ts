@@ -7,8 +7,11 @@ export const prerender = false
 export async function POST({request}: APIContext) {
 	const body = await request.formData()
 
-	const list = body.get('list')
-	if (!isNewsletterList(list)) {
+	const lists = body.getAll('list')
+	if (lists.length === 0) {
+		return new Response(JSON.stringify({message: 'Please select at least one newsletter!'}), {status: 400})
+	}
+	if (!lists.every(isNewsletterList)) {
 		return new Response(JSON.stringify({message: 'The selected newsletter does not exist!'}), {status: 400})
 	}
 
@@ -37,8 +40,8 @@ export async function POST({request}: APIContext) {
 	const subscribeData = new FormData()
 	// @ts-ignore
 	subscribeData.append('email', body.get('email'))
-	for (const uuid of NEWSLETTER_LISTS[list]) {
-		subscribeData.append('l', uuid)
+	for (const list of lists) {
+		subscribeData.append('l', NEWSLETTER_LISTS[list])
 	}
 
 	const subscription = await fetch('https://newsletter.vikunja.io/subscription/form', {
