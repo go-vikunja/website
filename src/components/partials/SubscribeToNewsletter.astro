@@ -6,14 +6,14 @@ interface Props {
 	defaultList?: NewsletterList
 }
 
-const {defaultList = 'all'} = Astro.props
+const {defaultList = 'news'} = Astro.props
 ---
 
 <div data-newsletter="signup">
     <p class="font-display text-base font-bold">Subscribe to our newsletter</p>
     <p class="mt-2">
-        We'll email you about releases, news and security announcements. Low traffic.
-        Unsubscribe any time.
+        We'll email you about releases and news about Vikunja. Low traffic. Unsubscribe any
+        time.
     </p>
 
     <form method="post" action="" class="mt-4! w-ful">
@@ -33,12 +33,12 @@ const {defaultList = 'all'} = Astro.props
         <fieldset class="mt-2 flex flex-col gap-1">
             <legend class="sr-only">What do you want to receive?</legend>
             <label class="flex items-center gap-2">
-                <input type="radio" name="list" value="all" checked={defaultList === 'all'} class="text-primary">
-                Releases, news and security announcements
+                <input type="checkbox" name="list" value="news" checked={defaultList === 'news'} class="text-primary">
+                Releases and news
             </label>
             <label class="flex items-center gap-2">
-                <input type="radio" name="list" value="security" checked={defaultList === 'security'} class="text-primary">
-                Security announcements only
+                <input type="checkbox" name="list" value="security" checked={defaultList === 'security'} class="text-primary">
+                Security announcements
             </label>
         </fieldset>
 
@@ -96,6 +96,16 @@ const {defaultList = 'all'} = Astro.props
 		}
 
 		form.addEventListener('focusin', loadTurnstile)
+
+		const listCheckboxes = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="list"]'))
+
+		function validateLists() {
+			const anyChecked = listCheckboxes.some(checkbox => checkbox.checked)
+			listCheckboxes[0]?.setCustomValidity(anyChecked ? '' : 'Please select at least one newsletter.')
+		}
+
+		listCheckboxes.forEach(checkbox => checkbox.addEventListener('change', validateLists))
+		validateLists()
 
 		function showError(error: string) {
 			if (errorMessage) {
