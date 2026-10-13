@@ -3,6 +3,7 @@ title: "Security"
 layout: '../layouts/Content.astro'
 description: Learn about our commitment to data protection, cloud hosting, and how to report vulnerabilities.
 ---
+import SubscribeToNewsletter from '../components/partials/SubscribeToNewsletter.astro'
 
 # Security
 
@@ -28,11 +29,18 @@ All parts of Vikunja Cloud are hosted at [Hetzner](https://hetzner.com) in Germa
 Their data centers are kept secure through multiple layers of [physical, network and system security](https://www.hetzner.com/assets/Uploads/downloads/Sicherheit-en.pdf)
 and their [ISO/IEC 27001 certification](https://www.hetzner.com/unternehmen/zertifizierung).
 
+## Security announcements
+
+We announce releases with security fixes a few days in advance on a dedicated mailing list, so you can plan the upgrade.
+Once the release is out, you'll get a short summary of what was fixed.
+
+<div class="not-prose max-w-md text-sm">
+    <SubscribeToNewsletter defaultList="security"/>
+</div>
+
 ## Reporting a security vulnerability
 
-<span class="text-gray-500">
-Based on <a class="underline! text-gray-500!" href="https://supabase.com/.well-known/security.txt">https://supabase.com/.well-known/security.txt</a>.
-</span>
+<span class="text-gray-500">Based on <a class="underline! text-gray-500!" href="https://supabase.com/.well-known/security.txt">{'https://supabase.com/.well-known/security.txt'}</a>.</span>
 
 At Vikunja, we consider the security of the product and our systems a top priority. But no matter how much effort we put
 into system security, there can still be vulnerabilities present.
