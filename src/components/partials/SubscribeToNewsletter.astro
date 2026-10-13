@@ -1,47 +1,69 @@
 ---
 import Button from '../Button.astro'
+import type {NewsletterList} from '../../helpers/newsletter'
+
+interface Props {
+	defaultList?: NewsletterList
+}
+
+const {defaultList = 'all'} = Astro.props
 ---
 
-<p class="font-display text-base font-bold">Subscribe to our newsletter</p>
-<p class="mt-2">
-    We'll email you about releases and news about Vikunja. Low traffic. Unsubscribe any
-    time.
-</p>
-
-<form method="post" action="" class="mt-4! w-ful" id="newsletter-form">
-    <p>
-        <label for="newsletter-email" class="sr-only">Your mail address</label>
-        <input
-                name="email"
-                required
-                type="email"
-                placeholder="Your mail address"
-                id="newsletter-email"
-                class="inline-flex relative justify-start items-center py-2 px-3 m-0 w-full max-w-full h-10 font-sans text-base leading-normal align-top bg-white dark:bg-gray-800 rounded-sm border border-solid appearance-none cursor-text border-gray-300 dark:border-gray-700 text-neutral-700 dark:text-gray-200"
-        />
+<div data-newsletter="signup">
+    <p class="font-display text-base font-bold">Subscribe to our newsletter</p>
+    <p class="mt-2">
+        We'll email you about releases, news and security announcements. Low traffic.
+        Unsubscribe any time.
     </p>
 
-    <div class="cf-turnstile" data-sitekey="0x4AAAAAAABNSP6TBlZ-SPeg" data-theme="light"></div>
+    <form method="post" action="" class="mt-4! w-ful">
+        <p>
+            <label>
+                <span class="sr-only">Your mail address</span>
+                <input
+                        name="email"
+                        required
+                        type="email"
+                        placeholder="Your mail address"
+                        class="inline-flex relative justify-start items-center py-2 px-3 m-0 w-full max-w-full h-10 font-sans text-base leading-normal align-top bg-white dark:bg-gray-800 rounded-sm border border-solid appearance-none cursor-text border-gray-300 dark:border-gray-700 text-neutral-700 dark:text-gray-200"
+                />
+            </label>
+        </p>
 
-    <p id="newsletter-error-message" class="hidden text-red-500"></p>
+        <fieldset class="mt-2 flex flex-col gap-1">
+            <legend class="sr-only">What do you want to receive?</legend>
+            <label class="flex items-center gap-2">
+                <input type="radio" name="list" value="all" checked={defaultList === 'all'} class="text-primary">
+                Releases, news and security announcements
+            </label>
+            <label class="flex items-center gap-2">
+                <input type="radio" name="list" value="security" checked={defaultList === 'security'} class="text-primary">
+                Security announcements only
+            </label>
+        </fieldset>
 
-    <Button
-            class="mt-2! w-full"
-            type="submit"
-    >
-        Subscribe to our newsletter
-    </Button>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAABNSP6TBlZ-SPeg" data-theme="light"></div>
 
-    <p class="mt-2 text-sm text-neutral-500 dark:text-gray-400">
-        By clicking &ldquo;Subscribe to our newsletter&rdquo;, you consent to us sending you our
-        newsletter on a regular basis. You can withdraw your consent at any time. For more
-        information, please see our <a href="/privacy" class="underline">Privacy Policy</a>.
+        <p data-newsletter="error" class="hidden text-red-500"></p>
+
+        <Button
+                class="mt-2! w-full"
+                type="submit"
+        >
+            Subscribe to our newsletter
+        </Button>
+
+        <p class="mt-2 text-sm text-neutral-500 dark:text-gray-400">
+            By clicking &ldquo;Subscribe to our newsletter&rdquo;, you consent to us sending you our
+            newsletter on a regular basis. You can withdraw your consent at any time. For more
+            information, please see our <a href="/privacy" class="underline">Privacy Policy</a>.
+        </p>
+    </form>
+
+    <p class="text-green-500 hidden pt-2" data-newsletter="success">
+        Success! We've sent you a message to confirm your sign up.
     </p>
-</form>
-
-<p class="text-green-500 hidden pt-2" id="newsletter-sign-up-success-message">
-    Success! We've sent you a message to confirm your sign up.
-</p>
+</div>
 
 <style>
     @reference '../../styles/global.css';
@@ -52,10 +74,9 @@ import Button from '../Button.astro'
 </style>
 
 <script>
-	const emailInput = document.getElementById('newsletter-email')
 	let scriptLoaded = false
 
-	emailInput?.addEventListener('focus', function () {
+	function loadTurnstile() {
 		if (!scriptLoaded) {
 			const script = document.createElement('script')
 			script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
@@ -63,25 +84,31 @@ import Button from '../Button.astro'
 			document.head.appendChild(script)
 			scriptLoaded = true
 		}
-	})
+	}
 
-	const form = document.getElementById('newsletter-form')
-	const errorMessage = document.getElementById('newsletter-error-message')
-	const successMessage = document.getElementById('newsletter-sign-up-success-message')
+	document.querySelectorAll('[data-newsletter="signup"]').forEach(signup => {
+		const form = signup.querySelector('form')
+		const errorMessage = signup.querySelector('[data-newsletter="error"]')
+		const successMessage = signup.querySelector('[data-newsletter="success"]')
 
-	if (form && errorMessage && successMessage) {
+		if (!form || !errorMessage || !successMessage) {
+			return
+		}
+
+		form.addEventListener('focusin', loadTurnstile)
+
 		function showError(error: string) {
-            if (errorMessage) {
-                errorMessage.textContent = 'An error occurred: ' + error + ' Please try again.'
-                errorMessage.classList.remove('hidden')
-            }
+			if (errorMessage) {
+				errorMessage.textContent = 'An error occurred: ' + error + ' Please try again.'
+				errorMessage.classList.remove('hidden')
+			}
 			console.error('Error during newsletter sign up:', error)
 		}
 
 		form.addEventListener('submit', function (e) {
 			e.preventDefault()
 
-			const formData = new FormData(form as HTMLFormElement)
+			const formData = new FormData(form)
 
 			fetch('/api/newsletter-signup', {
 				method: 'POST',
@@ -100,5 +127,5 @@ import Button from '../Button.astro'
 				})
 				.catch(error => showError(error))
 		})
-	}
+	})
 </script>
