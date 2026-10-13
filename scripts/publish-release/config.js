@@ -30,14 +30,15 @@ export const matrixConfig = {
 	roomId: process.env.MATRIX_ROOM_ID || '#vikunja:matrix.org',
 }
 
-function parseListIds(value) {
+function parseListIds(envName) {
+	const value = process.env[envName]
 	if (!value) {
 		return []
 	}
 	return value.split(',').map(id => id.trim()).filter(Boolean).map(id => {
 		const n = Number(id)
 		if (!Number.isInteger(n) || n <= 0) {
-			throw new Error(`Invalid LISTMONK_LIST_IDS entry: "${id}"`)
+			throw new Error(`Invalid ${envName} entry: "${id}"`)
 		}
 		return n
 	})
@@ -47,7 +48,8 @@ export const listmonkConfig = {
 	url: process.env.LISTMONK_URL,
 	apiUser: process.env.LISTMONK_API_USER,
 	apiToken: process.env.LISTMONK_API_TOKEN,
-	listIds: parseListIds(process.env.LISTMONK_LIST_IDS),
+	listIds: parseListIds('LISTMONK_LIST_IDS'),
+	securityListIds: parseListIds('LISTMONK_SECURITY_LIST_ID'),
 }
 
 export const githubRepo = 'go-vikunja/vikunja'

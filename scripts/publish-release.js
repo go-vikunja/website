@@ -12,7 +12,7 @@ import {postToGithub} from './publish-release/platforms/github.js'
 import {postToDiscourse} from './publish-release/platforms/discourse.js'
 import {postToMatrix} from './publish-release/platforms/matrix.js'
 import {postToLinkedin} from './publish-release/platforms/linkedin.js'
-import {postToListmonk} from './publish-release/platforms/listmonk.js'
+import {postToListmonk, postToListmonkSecurityList} from './publish-release/platforms/listmonk.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const rootDir = join(__dirname, '..')
@@ -41,7 +41,7 @@ async function main() {
 	console.log(`Found blog post: ${blogPostPath}`)
 
 	// 2. Generate content variants
-	const {short, linkedin, newsletter, blogTitle} = await generateAndEdit(blogPostPath, version)
+	const {short, linkedin, newsletter, securityNewsletter, blogTitle} = await generateAndEdit(blogPostPath, version)
 
 	// 3. Post to each platform
 	const results = []
@@ -83,6 +83,16 @@ async function main() {
 			fn: () => postToListmonk(newsletter, version, blogTitle),
 		},
 	]
+
+	if (securityNewsletter) {
+		platforms.push({
+			name: 'Listmonk (security list)',
+			content: securityNewsletter.slice(0, 200) + '...',
+			fn: () => postToListmonkSecurityList(securityNewsletter, `Vikunja ${version} was released with security fixes`),
+		})
+	} else {
+		console.log('No "## Security" section in the blog post, skipping the security list newsletter.')
+	}
 
 	for (const platform of platforms) {
 		if (dryRun) {

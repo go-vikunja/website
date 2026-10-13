@@ -27,6 +27,8 @@ The script:
 
 `--dry-run` skips all API calls and prints what would be posted.
 
+If the blog post has a `## Security` section, the script also offers a trimmed newsletter for the security list. It contains only that section, "How to Upgrade" and a link to the full post. The heading must be exactly `## Security`, otherwise the security list gets nothing.
+
 ### Prerequisites
 
 - Node.js 20+
@@ -67,6 +69,8 @@ LISTMONK_API_USER=
 LISTMONK_API_TOKEN=
 # Comma-separated list IDs to send the campaign to (find at Lists -> click list -> ID in URL)
 LISTMONK_LIST_IDS=1,2
+# ID of the security announcements list
+LISTMONK_SECURITY_LIST_ID=3
 ```
 
 GitHub Releases uses the `gh` CLI's existing authentication — no extra credentials needed. Run `gh auth status` to verify.

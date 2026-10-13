@@ -28,8 +28,10 @@ export async function generateAndEdit(blogPostPath, version) {
 		throw new Error(`No title in frontmatter of ${blogPostPath}`)
 	}
 
-	// Build newsletter from the live rendered page
-	const newsletter = await buildNewsletter(blogUrl)
+	// Build newsletters from the live rendered page
+	const postContent = await fetchPostContent(blogUrl)
+	const newsletter = buildNewsletter(postContent, blogUrl)
+	const securityNewsletter = buildSecurityNewsletter(postContent, blogUrl, version)
 
 	// Load brand voice guidelines
 	const brandDir = join(dirname(blogPostPath), '..', '..', '..', 'marketing', 'brand')
@@ -93,7 +95,7 @@ ${SECTION_LINKEDIN}
 	unlinkSync(tmpFile)
 
 	const {short, linkedin} = parseSections(editedContent)
-	return {short, linkedin, newsletter, blogTitle}
+	return {short, linkedin, newsletter, securityNewsletter, blogTitle}
 }
 
 function extractFrontmatter(content, blogPostPath) {
@@ -115,7 +117,7 @@ function getFrontmatterValue(frontmatter, key) {
 	return quoted ? quoted[1] : value
 }
 
-async function buildNewsletter(blogUrl) {
+export async function fetchPostContent(blogUrl) {
 	const response = await fetch(blogUrl)
 	if (!response.ok) {
 		throw new Error(`Failed to fetch live blog post at ${blogUrl}: ${response.status}`)
@@ -137,12 +139,31 @@ async function buildNewsletter(blogUrl) {
 	content = content.replace(/<h1[^>]*>[\s\S]*?<\/h1>\s*/i, '')
 
 	// Rewrite relative URLs to absolute
-	content = content.replace(/(href|src)="\/([^"]+)"/g, '$1="https://vikunja.io/$2"')
+	return content.replace(/(href|src)="\/([^"]+)"/g, '$1="https://vikunja.io/$2"')
+}
 
+function buildNewsletter(postContent, blogUrl) {
 	// Prepend online version link
 	const onlineLink = `<p><em>You can find an online version of this post <a href="${blogUrl}">here</a>.</em></p>\n\n`
 
-	return onlineLink + content
+	return onlineLink + postContent
+}
+
+// Returns null when the post has no "## Security" section.
+export function buildSecurityNewsletter(postContent, blogUrl, version) {
+	const security = extractSection(postContent, 'security')
+	if (!security) {
+		return null
+	}
+
+	const intro = `<p>Vikunja ${version} is out and fixes the security issues described below. Everything else in this release is covered in the <a href="${blogUrl}">full release post</a>.</p>\n\n`
+
+	return intro + security + (extractSection(postContent, 'how-to-upgrade') ?? '')
+}
+
+function extractSection(postContent, headingId) {
+	const match = postContent.match(new RegExp(`<h2[^>]*\\bid="${headingId}"[^>]*>[\\s\\S]*?(?=<h2[\\s>]|$)`, 'i'))
+	return match ? match[0].trim() + '\n\n' : null
 }
 
 function parseSections(content) {
