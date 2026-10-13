@@ -3,8 +3,8 @@
 import {existsSync} from 'node:fs'
 import {join, dirname} from 'node:path'
 import {fileURLToPath} from 'node:url'
-import {createInterface} from 'node:readline'
 
+import {confirm} from './publish-release/confirm.js'
 import {generateAndEdit} from './publish-release/generate.js'
 import {postToMastodon} from './publish-release/platforms/mastodon.js'
 import {postToBluesky} from './publish-release/platforms/bluesky.js'
@@ -16,16 +16,6 @@ import {postToListmonk} from './publish-release/platforms/listmonk.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const rootDir = join(__dirname, '..')
-
-async function confirm(question) {
-	const rl = createInterface({input: process.stdin, output: process.stdout})
-	return new Promise(resolve => {
-		rl.question(`${question} [Y/n] `, answer => {
-			rl.close()
-			resolve(answer.toLowerCase() !== 'n')
-		})
-	})
-}
 
 async function main() {
 	const args = process.argv.slice(2)
