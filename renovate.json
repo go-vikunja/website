@@ -6,7 +6,7 @@
   "packageRules": [
     {
       "groupName": "astro",
-      "matchPackageNames": ["astro", "@astrojs/**"]
+      "matchPackageNames": ["astro", "@astrojs/**", "wrangler"]
     }
   ]
 }
