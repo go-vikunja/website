@@ -185,6 +185,27 @@ Make sure the new user has required permissions on the `db` and `files` folder.
 Check out the [docker examples](/docs/full-docker-example) for more advanced configuration using PostgreSQL or MySQL and a
 reverse proxy.
 
+### Verify the image signature
+
+Starting with v2.8.0, all images are signed with [cosign](https://docs.sigstore.dev/cosign/system_config/installation/) and come with a build provenance attestation.
+This proves the image was built by Vikunja's release workflow from the tagged source.
+
+To verify the signature:
+
+```sh
+cosign verify vikunja/vikunja:<vikunja version> \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --certificate-identity-regexp '^https://github.com/go-vikunja/vikunja/\.github/workflows/release\.yml@refs/tags/v'
+```
+
+To verify the build provenance with the [GitHub CLI](https://cli.github.com/):
+
+```sh
+gh attestation verify oci://vikunja/vikunja:<vikunja version> --owner go-vikunja
+```
+
+Both commands work the same for images pulled from `ghcr.io/go-vikunja/vikunja`.
+
 ### Using a configuration file with docker
 
 You can mount a local configuration like so:
