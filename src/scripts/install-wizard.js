@@ -162,6 +162,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('arch-option').classList.toggle('hidden', state.env !== 'linux-other')
 
     const blocks = generateOutput(state)
+    const usesSecret = blocks.some(b => b.content?.includes(serviceSecret))
+    document.getElementById('secret-note').classList.toggle('hidden', !usesSecret)
+
     const container = document.getElementById('output-blocks')
     container.replaceChildren()
 
