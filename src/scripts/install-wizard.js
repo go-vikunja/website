@@ -27,50 +27,58 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  const linuxMethods = ['docker', 'debian', 'fedora', 'nixos', 'linux-other']
+
+  // URL hash drives the step so browser back/forward and deep links work
+  function applyRoute() {
+    const [platform, linuxMethod] = location.hash.slice(1).split('/')
+
+    if (platform === 'linux' && linuxMethods.includes(linuxMethod)) {
+      state.platform = 'linux'
+      state.env = linuxMethod
+      state.method = linuxMethod === 'docker' ? 'docker' : 'native'
+    } else if (platform === 'freebsd' || platform === 'kubernetes') {
+      state.platform = platform
+      state.env = platform
+      state.method = 'native'
+    } else if (platform === 'linux') {
+      state.platform = 'linux'
+      showStep(1)
+      return
+    } else {
+      showStep(0)
+      return
+    }
+
+    showStep(2)
+    updateSummary()
+    syncFormWithState()
+    renderOutput()
+  }
+
+  function navigate(hash) {
+    // pushState instead of location.hash so step 1 gets a clean URL without a trailing '#'
+    history.pushState(null, '', location.pathname + location.search + (hash ? `#${hash}` : ''))
+    applyRoute()
+  }
+
   // Step 1: platform cards
   document.querySelectorAll('[data-platform]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      state.platform = btn.dataset.platform
-      if (state.platform === 'linux') {
-        showStep(1)
-      } else {
-        state.env = state.platform
-        state.method = 'native'
-        showStep(2)
-        updateSummary()
-        syncFormWithState()
-        renderOutput()
-      }
-    })
+    btn.addEventListener('click', () => navigate(btn.dataset.platform))
   })
 
   // Step 2: Linux install method cards
   document.querySelectorAll('[data-linux-method]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const choice = btn.dataset.linuxMethod
-      if (choice === 'docker') {
-        state.env = 'docker'
-        state.method = 'docker'
-      } else {
-        state.env = choice
-        state.method = 'native'
-      }
-      showStep(2)
-      updateSummary()
-      syncFormWithState()
-      renderOutput()
-    })
+    btn.addEventListener('click', () => navigate(`linux/${btn.dataset.linuxMethod}`))
   })
 
   // Back buttons
-  document.getElementById('back-to-1').addEventListener('click', () => showStep(0))
+  document.getElementById('back-to-1').addEventListener('click', () => navigate(''))
   document.getElementById('back-to-prev').addEventListener('click', () => {
-    if (state.platform === 'linux') {
-      showStep(1)
-    } else {
-      showStep(0)
-    }
+    navigate(state.platform === 'linux' ? 'linux' : '')
   })
+
+  window.addEventListener('popstate', applyRoute)
 
   // Update the summary text on step 3
   function updateSummary() {
@@ -878,4 +886,6 @@ mailer:
 
     return null
   }
+
+  applyRoute()
 })
