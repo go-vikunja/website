@@ -54,6 +54,18 @@ And after you installed Vikunja, you may want to check out these other resources
 
 <CloudHostingAffiliate />
 
+## Supported databases
+
+Vikunja supports MySQL, MariaDB, PostgreSQL and SQLite. These are the oldest versions that should work:
+
+* MySQL 8.0. MySQL 5.7 is not supported because it lacks recursive CTEs and window functions, which Vikunja needs.
+* MariaDB 10.2
+* PostgreSQL 9.5
+* SQLite is bundled with the official binaries and Docker image, so there is nothing to install.
+
+Only the versions used in CI are tested: MySQL 8, MariaDB 12, PostgreSQL 18 and the bundled SQLite.
+We recommend running a currently maintained release of your database.
+
 ## Managed hosting
 
 If you'd rather not run and maintain Vikunja yourself, [Zenith](https://zenith.hosting/host/vikunja) and [PikaPods](https://www.pikapods.com/pods?run=vikunja) offer one-click managed hosting for Vikunja and handle updates, backups and the server for you.
