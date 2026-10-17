@@ -1,6 +1,7 @@
 import {defineCollection} from 'astro:content'
 import {glob} from 'astro/loaders'
 import {z} from 'astro/zod'
+import {localizedContentPattern} from './i18n/content'
 
 const docsCollection = defineCollection({
 	loader: glob({pattern: '**/[^_]*.mdx', base: './src/content/docs'}),
@@ -12,7 +13,7 @@ const docsCollection = defineCollection({
 })
 
 const helpCollection = defineCollection({
-	loader: glob({pattern: '**/[^_]*.mdx', base: './src/content/help'}),
+	loader: glob({pattern: localizedContentPattern, base: './src/content/help'}),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
