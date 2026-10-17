@@ -3,7 +3,7 @@ import {useTranslations} from '../i18n'
 import {localizedHref, parsePathname} from '../i18n/routes'
 
 const {class: className, ...rest} = Astro.props
-const {{locale}} = parsePathname(Astro.url.pathname)
+const {locale} = parsePathname(Astro.url.pathname)
 const t = useTranslations(locale)
 ---
 <a href={localizedHref(locale, '/')} aria-label={t('logo.label')} class:list={[className]} {...rest}>

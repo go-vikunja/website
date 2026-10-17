@@ -7,7 +7,7 @@ interface Props {
 }
 
 const {showText} = Astro.props
-const {{locale}} = parsePathname(Astro.url.pathname)
+const {locale} = parsePathname(Astro.url.pathname)
 const t = useTranslations(locale)
 ---
 
