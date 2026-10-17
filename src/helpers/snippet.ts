@@ -1,6 +1,8 @@
 function markdownToPlainText(markdown: string): string {
-	// Remove HTML tags
-	return markdown.replace(/<\/?[^>]+(>|$)/g, '')
+	return markdown
+		.replace(/^import\s+(\{[^}]*\}|[^'"\n]*?)\s*from\s+['"][^'"\n]+['"];?[ \t]*$/gm, '') // MDX imports
+		// Remove HTML tags
+		.replace(/<\/?[^>]+(>|$)/g, '')
 		// Remove markdown formatting characters
 		.replace(/!\[.*?\]\(.*?\)/g, '')   // Images
 		.replace(/\[(.*?)\]\(.*?\)/g, '$1') // Links, keep the link text
