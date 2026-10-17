@@ -1,6 +1,11 @@
 ---
 import Button from '../Button.astro'
+import {useTranslations} from '../../i18n'
+import {localizedHref, parsePathname} from '../../i18n/routes'
+
+const {{locale}} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
 ---
-<Button href="/install">
-    Get started
+<Button href={localizedHref(locale, '/install')}>
+    {t('cta.getStarted')}
 </Button>
