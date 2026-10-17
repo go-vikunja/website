@@ -6,7 +6,7 @@ import DarkModeSwitch from './partials/DarkModeSwitch.astro'
 import {useTranslations} from '../i18n'
 import {parsePathname} from '../i18n/routes'
 
-const {{locale}} = parsePathname(Astro.url.pathname)
+const {locale} = parsePathname(Astro.url.pathname)
 const t = useTranslations(locale)
 ---
 <button
