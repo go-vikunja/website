@@ -7,7 +7,9 @@ import TableOfContentsHeading from '../components/TableOfContentsHeading.astro'
 import SearchButton from '../components/SearchButton.astro'
 import SearchModal from '../components/SearchModal.astro'
 import CopyMarkdownButton from '../components/CopyMarkdownButton.astro'
-import {getEntries} from '../i18n/content'
+import {getEntriesWithFallback} from '../i18n/content'
+import {useTranslations} from '../i18n'
+import {localizedHref, parsePathname} from '../i18n/routes'
 
 interface Props {
 	title: string
@@ -42,18 +44,22 @@ function buildToc(headings: MarkdownHeading[]) {
 
 const toc = buildToc(headings)
 
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
+const overviewUrl = localizedHref(locale, '/help')
+
 interface SectionItem {
 	url: string;
 	title: string;
 }
 
 async function getSidebarNavigation(): Promise<SectionItem[]> {
-	const help = await getEntries('help', 'en')
+	const help = await getEntriesWithFallback('help', locale)
 
 	return help
 		.filter(({entry}) => !entry.data.hideInMenu)
 		.map(({slug, entry}) => ({
-			url: '/help/' + slug,
+			url: localizedHref(locale, '/help/' + slug),
 			title: entry.data.title,
 		}))
 		.sort((a, b) => a.title.localeCompare(b.title))
@@ -74,7 +80,7 @@ const sidebarEntries = await getSidebarNavigation()
                 class="navbar-burger m-2 mt-6 block lg:hidden rounded-xs bg-gray-200 dark:bg-gray-800 py-2 px-1 text-center"
                 data-target="helpMenu"
         >
-            Toggle Menu
+            {t('layout.toggleMenu')}
         </button>
         <aside class="w-full lg:w-1/5 hidden lg:block order-1 px-2 text-gray-600 dark:text-gray-300" id="helpMenu">
             <!-- Search Button for desktop (in sidebar) -->
@@ -86,10 +92,10 @@ const sidebarEntries = await getSidebarNavigation()
                 <ul>
                     <li>
                         <a
-                                href="/help"
-                                class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-800 transition ' + ((Astro.url.pathname === '/help' || Astro.url.pathname === '/help/') && ' bg-gray-100! dark:bg-gray-800! text-primary')}
+                                href={overviewUrl}
+                                class={'block rounded-sm px-2 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-800 transition ' + ((Astro.url.pathname === overviewUrl || Astro.url.pathname === overviewUrl + '/') && ' bg-gray-100! dark:bg-gray-800! text-primary')}
                         >
-                            Help overview
+                            {t('help.overview')}
                         </a>
                     </li>
                     {sidebarEntries.map(item => (
@@ -125,7 +131,7 @@ const sidebarEntries = await getSidebarNavigation()
             {toc.length > 0 &&
                     <div class="sticky top-2">
                         <div class="font-display font-bold">
-                            On this page
+                            {t('layout.onThisPage')}
                         </div>
                         <nav class="text-gray-600 dark:text-gray-300 pt-2 max-h-[calc(100vh-2rem)] overflow-y-auto overflow-x-hidden"
                              id="toc">
