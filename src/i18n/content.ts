@@ -2,7 +2,7 @@ import {type CollectionEntry, getCollection} from 'astro:content'
 import {defaultLocale, type Locale} from './locales'
 import {parseEntryId} from './entry-ids'
 
-export type LocalizedCollection = 'help'
+export type LocalizedCollection = 'help' | 'pages'
 
 export async function getEntries<C extends LocalizedCollection>(collection: C, locale: Locale) {
 	const entries: CollectionEntry<C>[] = await getCollection(collection)

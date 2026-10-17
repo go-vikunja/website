@@ -1,0 +1,16 @@
+---
+import {type CollectionEntry, render} from 'astro:content'
+import Content from '../layouts/Content.astro'
+import {getStaticPathsFor} from '../i18n/content'
+
+export function getStaticPaths() {
+    return getStaticPathsFor('pages', 'en')
+}
+type Props = CollectionEntry<'pages'>
+
+const page = Astro.props
+const {Content: Body} = await render(page)
+---
+<Content {...page.data}>
+    <Body/>
+</Content>
