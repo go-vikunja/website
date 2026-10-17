@@ -1,0 +1,369 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Button from '../Button.astro'
+import FAQSection from '../FAQSection.astro'
+import Trans from '../Trans.astro'
+import {useTranslations} from '../../i18n'
+import {localizedHref, parsePathname} from '../../i18n/routes'
+
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
+
+const links = {
+    pricingUrl: localizedHref(locale, '/pricing'),
+    openidUrl: localizedHref(locale, '/docs/openid'),
+    ldapUrl: localizedHref(locale, '/docs/ldap'),
+    contactUrl: 'mailto:hello@vikunja.io',
+}
+const proFaqs = ([
+    'familyCloud', 'openCore', 'stopPaying', 'planDifference', 'perUserBilling', 'guestUsers', 'clientInvoicing',
+    'selfHost', 'alreadySelfHosting', 'licenseKey', 'everyFeaturePro', 'sellOut', 'vsCloud', 'privateBeta', 'trial',
+    'cloudUser', 'sso', 'nonProfit', 'ppp',
+] as const).map(id => ({
+    question: t(`pro.faq.${id}.question`),
+    answer: t(`pro.faq.${id}.answer`, links),
+}))
+
+interface ProPlan {
+    title: string
+    description: string
+    price: string
+    priceSuffix?: string
+    features: string[]
+    ctaLabel: string
+    ctaHref: string
+    featured?: boolean
+}
+
+// Label stays unbroken so the badge wraps as a unit instead of splitting the phrase.
+const comingSoon = (label: string) => `<span class="whitespace-nowrap">${label}</span> <span class="align-middle whitespace-nowrap rounded-sm bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 text-xs text-gray-600 dark:text-gray-300">${t('pro.comingSoon')}</span>`
+
+const waitlist = {ctaLabel: t('pro.joinWaitlist'), ctaHref: 'https://console.vikunja.io/register'}
+
+const proPlans: ProPlan[] = [
+    {
+        title: 'Homelab',
+        description: t('pro.plan.homelab.description'),
+        price: t('pro.plan.flatFee'),
+        priceSuffix: ' ' + t('pro.plan.upTo5Users'),
+        features: [
+            t('pro.feature.adminPanel'),
+            t('pro.feature.timeTracking'),
+            t('pro.feature.upToUsers', {count: '5'}),
+            t('pro.feature.supportProject'),
+            t('pro.feature.emailSupport'),
+        ],
+        ...waitlist,
+    },
+    {
+        title: 'Team',
+        description: t('pro.plan.team.description'),
+        price: t('pro.plan.perUser'),
+        priceSuffix: ' ' + t('pro.plan.perMonth'),
+        features: [
+            t('pro.feature.adminPanel'),
+            t('pro.feature.timeTracking'),
+            t('pro.feature.upToUsers', {count: '25'}),
+            t('pro.feature.oneInstance'),
+            comingSoon(t('pro.feature.guests', {count: '5'})),
+            t('pro.feature.emailSupport'),
+        ],
+        ...waitlist,
+    },
+    {
+        title: 'Business',
+        description: t('pro.plan.business.description'),
+        price: t('pro.plan.perUser'),
+        priceSuffix: ' ' + t('pro.plan.perMonth'),
+        features: [
+            t('pro.feature.everythingIn', {plan: 'Team'}),
+            t('pro.feature.auditLogs'),
+            t('pro.feature.upToUsers', {count: '500'}),
+            t('pro.feature.upToInstances', {count: '3'}),
+            comingSoon(t('pro.feature.unlimitedGuests')),
+            comingSoon(t('pro.feature.clientInvoicing')),
+            t('pro.feature.payPerSeat'),
+            t('pro.feature.priorityEmailSupport'),
+        ],
+        ...waitlist,
+        featured: true,
+    },
+    {
+        title: 'Scale',
+        description: t('pro.plan.scale.description'),
+        price: t('pro.plan.perUser'),
+        priceSuffix: ' ' + t('pro.plan.perMonth'),
+        features: [
+            t('pro.feature.everythingIn', {plan: 'Business'}),
+            t('pro.feature.unlimitedUsers'),
+            t('pro.feature.unlimitedInstances'),
+            t('pro.feature.priorityEmailSupport'),
+        ],
+        ...waitlist,
+    },
+]
+
+const enterprisePlan: ProPlan = {
+    title: 'Enterprise',
+    description: t('pro.plan.enterprise.description'),
+    price: t('pro.plan.custom'),
+    features: [
+        t('pro.feature.everythingIn', {plan: 'Scale'}),
+        t('pro.feature.phoneSupport'),
+        t('pro.feature.yearlyInvoicing'),
+        t('pro.feature.teamTraining'),
+        t('pro.feature.gdpr'),
+        t('pro.feature.managedDedicated'),
+    ],
+    ctaLabel: t('pro.getInTouch'),
+    ctaHref: 'mailto:hello@vikunja.io',
+}
+---
+<Layout title="Vikunja Pro" description={t('pro.description')}>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0" id="main-content">
+
+        <!-- Hero -->
+        <div class="pt-32 pb-8 px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-display text-balance">
+                Vikunja Pro
+            </h1>
+            <p class="mt-6 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-balance">
+                {t('pro.hero.subtitle')}
+            </p>
+            <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                {t('pro.beta')}
+            </p>
+            <p class="mt-6 text-gray-600 dark:text-gray-400">
+                <Trans message="pro.hero.managedHosting">
+                    <a slot="cloudLink" href={localizedHref(locale, '/pricing')} class="underline">Vikunja Cloud</a>
+                </Trans>
+            </p>
+        </div>
+
+        <!-- Plan cards -->
+        <section class="max-w-(--breakpoint-lg) mx-auto mt-16 px-4">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {proPlans.map((plan: ProPlan) => (
+                    <article class:list={['rounded-sm p-6 bg-white dark:bg-gray-800 flex flex-col', plan.featured ? 'border-2 border-primary' : 'border border-gray-100 dark:border-gray-800']}>
+                        <div class="mb-4">
+                            <h2 class="font-display text-xl mb-1">{plan.title}</h2>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 text-balance">
+                                {plan.description}
+                            </p>
+                        </div>
+                        <div class="font-display text-2xl mb-6">
+                            {plan.price}<span class="block text-base font-sans text-gray-500 dark:text-gray-400">{plan.priceSuffix ?? ''}&nbsp;</span>
+                        </div>
+
+                        <hr class="mb-6"/>
+
+                        <ul class="list-disc list-checkmark pl-4 mb-8 text-gray-700 dark:text-gray-300 space-y-1">
+                            {plan.features.map((f: string) => (
+                                <li><Fragment set:html={f}/></li>
+                            ))}
+                        </ul>
+
+                        <div class="mt-auto">
+                            <Button href={plan.ctaHref}>
+                                {plan.ctaLabel}
+                            </Button>
+                        </div>
+                    </article>
+                ))}
+            </div>
+
+            <article class="border border-gray-100 dark:border-gray-800 rounded-sm p-6 bg-white dark:bg-gray-800 mt-4 grid gap-6 md:grid-cols-4 md:items-center">
+                <div>
+                    <h2 class="font-display text-xl mb-1">{enterprisePlan.title}</h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-balance">
+                        {enterprisePlan.description}
+                    </p>
+                    <div class="font-display text-2xl mt-4">{enterprisePlan.price}</div>
+                </div>
+
+                <ul class="list-disc list-checkmark pl-4 text-gray-700 dark:text-gray-300 space-y-1 md:columns-2 md:col-span-2">
+                    {enterprisePlan.features.map((f: string) => (
+                        <li><Fragment set:html={f}/></li>
+                    ))}
+                </ul>
+
+                <div class="md:text-right">
+                    <Button href={enterprisePlan.ctaHref}>
+                        {enterprisePlan.ctaLabel}
+                    </Button>
+                </div>
+            </article>
+        </section>
+
+        <!-- What Pro adds -->
+        <section class="max-w-5xl mx-auto mt-24 px-4">
+            <h2 class="font-display text-3xl text-center mb-12">{t('pro.adds.title')}</h2>
+
+            <div class="flex flex-wrap justify-center gap-8">
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6 w-full md:w-[calc((100%-4rem)/3)]">
+                    <div class="mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">{t('pro.feature.adminPanel')}</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('pro.adds.adminPanel')}
+                    </p>
+                </div>
+
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6 w-full md:w-[calc((100%-4rem)/3)]">
+                    <div class="mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">{t('pro.feature.auditLogs')}</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('pro.adds.auditLogs')}
+                    </p>
+                </div>
+
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6 w-full md:w-[calc((100%-4rem)/3)]">
+                    <div class="mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">{t('pro.feature.timeTracking')}</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('pro.adds.timeTracking')}
+                    </p>
+                </div>
+
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6 w-full md:w-[calc((100%-4rem)/3)]">
+                    <div class="mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">
+                        <Fragment set:html={comingSoon(t('pro.adds.guestUsers.title'))}/>
+                    </h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('pro.adds.guestUsers')}
+                    </p>
+                </div>
+
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6 w-full md:w-[calc((100%-4rem)/3)]">
+                    <div class="mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">
+                        <Fragment set:html={comingSoon(t('pro.feature.clientInvoicing'))}/>
+                    </h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('pro.adds.clientInvoicing')}
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Still open source -->
+        <section class="max-w-4xl mx-auto mt-24 px-4">
+            <h2 class="font-display text-3xl text-center mb-12">{t('pro.openSource.title')}</h2>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="font-display text-lg mb-2">{t('pro.openSource.license.title')}</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        <Trans message="pro.openSource.license.text">
+                            <a slot="auditable" href="https://code.vikunja.io/vikunja" class="underline">{t('pro.openSource.license.auditable')}</a>
+                        </Trans>
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-lg mb-2">{t('pro.openSource.adds.title')}</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('pro.openSource.adds.text')}
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-lg mb-2">{t('pro.openSource.lockIn.title')}</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('pro.openSource.lockIn.text')}
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-lg mb-2">{t('pro.openSource.community.title')}</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('pro.openSource.community.text')}
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-12 max-w-2xl mx-auto text-center">
+                <blockquote class="text-lg italic text-gray-600 dark:text-gray-400">
+                    {t('pro.quote.text')}
+                </blockquote>
+                <p class="mt-4 text-gray-700 dark:text-gray-300">
+                    <strong>Konrad</strong><br/>
+                    <span class="text-sm">{t('pro.quote.role')}</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- Social proof bar -->
+        <section class="max-w-4xl mx-auto mt-24 px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                    <div class="font-display text-2xl">AGPLv3</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">{t('pro.proof.openSource')}</div>
+                </div>
+                <div>
+                    <div class="font-display text-2xl">{t('pro.proof.since', {year: '2018'})}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">{t('pro.proof.activelyDeveloped')}</div>
+                </div>
+                <div>
+                    <div class="font-display text-2xl">{t('pro.proof.euBuilt')}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">{t('pro.proof.madeInGermany')}</div>
+                </div>
+                <div>
+                    <div class="font-display text-2xl">{t('pro.proof.bootstrapped')}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">{t('pro.proof.funded')}</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <FAQSection faqs={proFaqs} />
+
+        <!-- Convince link -->
+        <section class="max-w-3xl mx-auto mb-16 text-center px-4">
+            <p class="text-gray-600 dark:text-gray-400 text-balance">
+                <Trans message="pro.convince.text">
+                    <a slot="link" href={localizedHref(locale, '/convince')} class="underline">{t('pro.convince.link')}</a>
+                </Trans>
+            </p>
+        </section>
+
+        <!-- CTA -->
+        <section class="max-w-3xl mx-auto mb-20 text-center px-4">
+            <h2 class="font-display text-3xl mb-4">{t('pro.beta')}</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 text-balance">
+                {t('pro.cta.text')}
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-8 text-balance">
+                <Trans message="pro.cta.waitlistNote">
+                    <a slot="cloudLink" href={localizedHref(locale, '/pricing')} class="underline">Vikunja Cloud</a>
+                </Trans>
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Button href="https://console.vikunja.io/register">
+                    {t('pro.joinWaitlist')}
+                </Button>
+                <Button href="mailto:hello@vikunja.io" class="bg-gray-200! text-gray-800! dark:bg-gray-700! dark:text-gray-200!">
+                    {t('pro.cta.questions')}
+                </Button>
+            </div>
+        </section>
+    </main>
+</Layout>

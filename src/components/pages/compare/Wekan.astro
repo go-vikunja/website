@@ -1,0 +1,292 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import CloudOrSelfHosted from '../../partials/CloudOrSelfHosted.astro'
+import FAQSection from '../../FAQSection.astro'
+import Trans from '../../Trans.astro'
+import {VIKUNJA_CLOUD_LINK} from '../../../helpers/vikunjaCloudLink'
+import {useTranslations} from '../../../i18n'
+import {localizedHref, parsePathname} from '../../../i18n/routes'
+
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
+const pricingHref = localizedHref(locale, '/pricing')
+const importHref = localizedHref(locale, '/help/import-and-export/#importing-from-wekan')
+
+const faqLinks = {
+    importUrl: importHref,
+    viewsUrl: localizedHref(locale, '/help/views'),
+    labelsUrl: localizedHref(locale, '/help/labels'),
+    filtersUrl: localizedHref(locale, '/help/saved-filters'),
+    installUrl: localizedHref(locale, '/docs/installing'),
+    caldavUrl: localizedHref(locale, '/help/caldav'),
+}
+const faqs = (['import', 'kanban', 'swimlanes', 'server', 'mobile', 'data'] as const).map(id => ({
+    question: t(`compare.wekan.faq.${id}.question`),
+    answer: t(`compare.wekan.faq.${id}.answer`, faqLinks),
+}))
+---
+<Layout title={t('compare.wekan.title')} description={t('compare.wekan.description')}>
+    <Fragment slot="head">
+        <script type="application/ld+json" set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": t('footer.compare', {name: 'WeKan'}),
+            "description": t('compare.wekan.schemaDescription'),
+        })}></script>
+    </Fragment>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0" id="main-content">
+        <div class="pt-32 pb-8 px-4 text-center">
+            <h1 class="text-4xl font-display">
+                {t('footer.compare', {name: 'WeKan'})}
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-balance">
+                {t('compare.wekan.subtitle')}
+            </p>
+        </div>
+
+        <section class="max-w-3xl mx-auto mt-16 text-lg text-gray-700 dark:text-gray-300">
+            <p>
+                <Trans message="compare.wekan.intro1">
+                    <a slot="layouts" href="https://github.com/wekan/wekan/issues/6018" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.wekan.intro1Layouts')}</a>
+                    <a slot="sso" href="https://github.com/wekan/wekan/issues/6255" target="_blank" rel="nofollow noreferrer noopener" class="underline">SSO</a>
+                    <a slot="labels" href="https://github.com/wekan/wekan/issues/6265" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.wekan.intro1Labels')}</a>
+                </Trans>
+            </p>
+            <p class="mt-4">
+                {t('compare.wekan.intro2')}
+            </p>
+            <p class="mt-4">
+                <Trans message="compare.wekan.intro3">
+                    <a slot="importer" href={importHref} class="underline">{t('compare.wekan.intro3Importer')}</a>
+                </Trans>
+            </p>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">{t('compare.common.whyAlternatives')}</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8">
+                {t('compare.wekan.why.intro')}
+            </p>
+            <div class="space-y-6">
+                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
+                    {t('compare.wekan.why.quote1')}
+                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
+                        <a href="https://github.com/wekan/wekan/issues/6018#issuecomment-3558873741" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.common.githubIssue', {number: '6018'})}</a>
+                    </footer>
+                </blockquote>
+                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
+                    {t('compare.wekan.why.quote2')}
+                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
+                        <a href="https://github.com/wekan/wekan/issues/6066#issuecomment-3745105132" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.common.githubIssue', {number: '6066'})}</a>
+                    </footer>
+                </blockquote>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">{t('compare.common.whatChanges')}</h2>
+            <div class="max-w-3xl text-gray-700 dark:text-gray-300 space-y-6">
+                <div>
+                    <h3 class="font-display text-xl">{t('compare.wekan.changes.updates.title')}</h3>
+                    <p class="mt-2">
+                        <Trans message="compare.wekan.changes.updates.text">
+                            <a slot="changelog" href={localizedHref(locale, '/changelog')} class="underline">{t('compare.wekan.changes.updates.changelog')}</a>
+                        </Trans>
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">{t('compare.wekan.changes.views.title')}</h3>
+                    <p class="mt-2">
+                        <Trans message="compare.wekan.changes.views.text">
+                            <a slot="views" href={localizedHref(locale, '/help/views')} class="underline">{t('compare.common.fourViewsAnd')}</a>
+                        </Trans>
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">{t('compare.wekan.changes.ui.title')}</h3>
+                    <p class="mt-2">
+                        {t('compare.wekan.changes.ui.text')}
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">{t('compare.common.lightweight')}</h3>
+                    <p class="mt-2">
+                        {t('compare.wekan.changes.lightweight.text')}
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">{t('compare.wekan.changes.api.title')}</h3>
+                    <p class="mt-2">
+                        <Trans message="compare.wekan.changes.api.text">
+                            <a slot="caldav" href={localizedHref(locale, '/help/caldav')} class="underline">{t('compare.common.caldavSupport')}</a>
+                            <a slot="api" href={localizedHref(locale, '/docs/api-documentation')} class="underline">{t('compare.common.restApi')}</a>
+                        </Trans>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-8">{t('compare.common.sideBySide')}</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th class="py-3 px-4 font-display text-lg"></th>
+                            <th class="py-3 px-4 font-display text-lg">Vikunja</th>
+                            <th class="py-3 px-4 font-display text-lg">WeKan</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700 dark:text-gray-300">
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.openSource')}</td>
+                            <td class="py-3 px-4">AGPLv3</td>
+                            <td class="py-3 px-4">MIT</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.selfHostable')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.views')}</td>
+                            <td class="py-3 px-4">{t('compare.common.fourViews')}</td>
+                            <td class="py-3 px-4">{t('compare.wekan.table.kanbanOnly')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Backend</td>
+                            <td class="py-3 px-4">{t('compare.common.goBinary')}</td>
+                            <td class="py-3 px-4">Meteor.js / Node.js</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.database')}</td>
+                            <td class="py-3 px-4">{t('compare.common.databases')}</td>
+                            <td class="py-3 px-4">{t('compare.wekan.table.mongoRequired')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.wekan.table.ram')}</td>
+                            <td class="py-3 px-4">{t('compare.wekan.table.ramVikunja')}</td>
+                            <td class="py-3 px-4 text-balance">{t('compare.wekan.table.ramWekan')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">CalDAV</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.common.no')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.restApi')}</td>
+                            <td class="py-3 px-4 text-balance">{t('compare.wekan.table.apiVikunja')}</td>
+                            <td class="py-3 px-4">{t('compare.common.limited')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.reminders')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.common.no')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.wekan.table.dueDates')}</td>
+                            <td class="py-3 px-4 text-balance">{t('compare.wekan.table.dueDatesVikunja')}</td>
+                            <td class="py-3 px-4">{t('compare.wekan.table.dueDatesWekan')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium text-balance">{t('compare.common.row.quickAdd')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.common.no')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.wekan.table.assignees')}</td>
+                            <td class="py-3 px-4">{t('compare.wekan.table.assigneesVikunja')}</td>
+                            <td class="py-3 px-4">{t('compare.wekan.table.assigneesWekan')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.wekan.table.labels')}</td>
+                            <td class="py-3 px-4">{t('compare.wekan.table.labelsVikunja')}</td>
+                            <td class="py-3 px-4">{t('compare.wekan.table.labelsWekan')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.savedFilters')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.common.no')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.fileAttachments')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.wekan.table.linkSharing')}</td>
+                            <td class="py-3 px-4">{t('compare.wekan.table.linkSharingVikunja')}</td>
+                            <td class="py-3 px-4">{t('compare.common.no')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">SSO / OIDC</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.wekan.table.ssoWekan')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Webhooks</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.common.limited')}</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">{t('compare.wekan.table.import')}</td>
+                            <td class="py-3 px-4">{t('compare.wekan.table.importVikunja')}</td>
+                            <td class="py-3 px-4">—</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">{t('compare.common.pricing')}</h2>
+            <p class="text-gray-700 dark:text-gray-300">
+                {t('compare.wekan.pricing.bothFree')}
+                <Trans message="compare.common.cloudPricing">
+                    <a slot="cloud" href={pricingHref} class="underline">Vikunja Cloud</a>
+                </Trans>
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                {t('compare.wekan.pricing.text2')}
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                <Trans message="compare.common.seePricing">
+                    <a slot="link" href={pricingHref} class="underline">{t('compare.common.vikunjaPricing')}</a>
+                </Trans>
+            </p>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">{t('compare.common.howToSwitch')}</h2>
+            <p class="text-gray-700 dark:text-gray-300">
+                {t('compare.wekan.switch.intro')}
+            </p>
+            <ol class="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300 mt-4">
+                <li>
+                    <Trans message="compare.common.setUp">
+                        <a slot="setUp" href={localizedHref(locale, '/docs/installing')} class="underline">{t('compare.common.setUpVikunja')}</a>
+                        <a slot="cloud" href={VIKUNJA_CLOUD_LINK} class="underline">{t('compare.common.freeCloudTrial')}</a>
+                    </Trans>
+                </li>
+                <li>{t('compare.wekan.switch.step2')}</li>
+                <li>{t('compare.wekan.switch.step3')}</li>
+                <li>{t('compare.wekan.switch.step4')}</li>
+            </ol>
+            <p class="text-gray-700 dark:text-gray-300 mt-4 text-balance">
+                <Trans message="compare.wekan.switch.outro">
+                    <a slot="guide" href={importHref} class="underline">{t('compare.wekan.switch.guide')}</a>
+                </Trans>
+            </p>
+        </section>
+
+        <FAQSection faqs={faqs} />
+
+        <div class="pb-20 flex items-center justify-center flex-col text-center">
+            <h2 class="font-display text-3xl mb-4">{t('compare.common.giveItATry')}</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-lg mx-auto text-balance">
+                {t('compare.wekan.cta.text')}
+            </p>
+            <CloudOrSelfHosted />
+        </div>
+    </main>
+</Layout>

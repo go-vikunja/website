@@ -1,0 +1,179 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import CloudOrSelfHosted from '../../partials/CloudOrSelfHosted.astro'
+import FAQSection from '../../FAQSection.astro'
+import Trans from '../../Trans.astro'
+import {useTranslations} from '../../../i18n'
+import {localizedHref, parsePathname} from '../../../i18n/routes'
+
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
+const pricingHref = localizedHref(locale, '/pricing')
+
+const faqLinks = {importUrl: localizedHref(locale, '/help/import-and-export/#import')}
+const faqs = (['replacement', 'import', 'docs'] as const).map(id => ({
+    question: t(`compare.notion.faq.${id}.question`),
+    answer: t(`compare.notion.faq.${id}.answer`, faqLinks),
+}))
+---
+<Layout title={t('compare.notion.title')} description={t('compare.notion.description')}>
+    <Fragment slot="head">
+        <script type="application/ld+json" set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": t('footer.compare', {name: 'Notion'}),
+            "description": t('compare.common.schemaDescription', {name: 'Notion'}),
+        })}></script>
+    </Fragment>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0" id="main-content">
+        <div class="pt-32 pb-8 px-4 text-center">
+            <h1 class="text-4xl font-display">
+                {t('footer.compare', {name: 'Notion'})}
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-balance">
+                {t('compare.notion.subtitle')}
+            </p>
+        </div>
+
+        <section class="max-w-3xl mx-auto mt-16 text-lg text-gray-700 dark:text-gray-300">
+            <p>
+                {t('compare.notion.intro1')}
+            </p>
+            <p class="mt-4">
+                <Trans message="compare.notion.intro2">
+                    <a slot="price" href="https://www.notion.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.notion.intro2Price')}</a>
+                </Trans>
+            </p>
+            <p class="mt-4">
+                <Trans message="compare.notion.intro3">
+                    <a slot="views" href={localizedHref(locale, '/help/views')} class="underline">{t('compare.notion.intro3Views')}</a>
+                </Trans>
+            </p>
+            <p class="mt-4">
+                <Trans message="compare.notion.intro4">
+                    <a slot="eu" href="https://www.notion.com/help/data-residency" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.notion.intro4Eu')}</a>
+                </Trans>
+            </p>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">{t('compare.notion.jobs.title')}</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">
+                {t('compare.notion.jobs.intro')}
+            </p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th class="py-3 px-4 font-display text-lg"></th>
+                            <th class="py-3 px-4 font-display text-lg">Vikunja</th>
+                            <th class="py-3 px-4 font-display text-lg">Notion</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700 dark:text-gray-300">
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.notion.table.whatItDoes')}</td>
+                            <td class="py-3 px-4">{t('compare.notion.table.taskManagement')}</td>
+                            <td class="py-3 px-4">{t('compare.notion.table.everything')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.notion.table.speed')}</td>
+                            <td class="py-3 px-4">{t('compare.notion.table.speedVikunja')}</td>
+                            <td class="py-3 px-4">{t('compare.notion.table.speedNotion')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.selfHostable')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.common.no')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.openSource')}</td>
+                            <td class="py-3 px-4">AGPLv3</td>
+                            <td class="py-3 px-4">{t('compare.common.no')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.notion.table.taskViews')}</td>
+                            <td class="py-3 px-4">{t('compare.common.fourViews')}</td>
+                            <td class="py-3 px-4">{t('compare.notion.table.viewsNotion')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.reminders')}</td>
+                            <td class="py-3 px-4">{t('compare.common.allPlans')}</td>
+                            <td class="py-3 px-4">{t('compare.common.allPlans')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">CalDAV</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.common.no')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.notion.table.wiki')}</td>
+                            <td class="py-3 px-4">{t('compare.common.no')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.notion.table.databases')}</td>
+                            <td class="py-3 px-4">{t('compare.common.no')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.euDataResidency')}</td>
+                            <td class="py-3 px-4">{t('compare.common.euResidency')}</td>
+                            <td class="py-3 px-4"><a href="https://www.notion.com/help/data-residency" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.notion.table.enterpriseOnly')}</a></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.vendorLockIn')}</td>
+                            <td class="py-3 px-4">{t('compare.common.noLockIn')}</td>
+                            <td class="py-3 px-4">{t('compare.notion.table.high')}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">{t('compare.common.pricing')}</h2>
+            <p class="text-gray-700 dark:text-gray-300">
+                <Trans message="compare.notion.pricing.text1">
+                    <a slot="cloud" href={pricingHref} class="underline">Vikunja Cloud</a>
+                    <a slot="competitor" href="https://www.notion.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.notion.pricing.competitor')}</a>
+                </Trans>
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                {t('compare.notion.pricing.text2')}
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                {t('compare.common.pricesAsOf', {name: 'Notion', site: 'notion.com'})}
+                <Trans message="compare.common.seePricing">
+                    <a slot="link" href={pricingHref} class="underline">{t('compare.common.vikunjaPricing')}</a>
+                </Trans>
+            </p>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">{t('compare.notion.which.title')}</h2>
+            <div class="text-gray-700 dark:text-gray-300">
+                <p>
+                    <Trans message="compare.notion.which.vikunja">
+                        <strong slot="pick">{t('compare.notion.which.vikunjaPick')}</strong>
+                    </Trans>
+                </p>
+                <p class="mt-4">
+                    <Trans message="compare.notion.which.notion">
+                        <strong slot="pick">{t('compare.notion.which.notionPick')}</strong>
+                    </Trans>
+                </p>
+                <p class="mt-4">
+                    {t('compare.notion.which.both')}
+                </p>
+            </div>
+        </section>
+
+        <FAQSection faqs={faqs} />
+
+        <div class="pb-20 flex items-center justify-center flex-col text-center">
+            <h2 class="font-display text-3xl mb-8">{t('compare.common.tryItOut')}</h2>
+            <CloudOrSelfHosted />
+        </div>
+    </main>
+</Layout>
