@@ -1,3 +1,17 @@
 {
-	"layout.skipToContent": "Skip to main content"
+	"layout.skipToContent": "Skip to main content",
+	"nav.label": "Main navigation",
+	"nav.openMenu": "Open Menu",
+	"nav.home": "Home",
+	"nav.features": "Features",
+	"nav.help": "Help",
+	"nav.docs": "Docs",
+	"nav.pricing": "Pricing",
+	"nav.changelog": "Changelog",
+	"nav.demo": "Demo",
+	"nav.demoNoSignUpLong": "No sign-up required",
+	"nav.demoNoSignUp": "No sign-up",
+	"logo.label": "Vikunja home",
+	"cta.getStarted": "Get started",
+	"darkMode.toggle": "Toggle Dark Mode"
 }
