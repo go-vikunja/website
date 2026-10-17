@@ -95,5 +95,11 @@
 	"home.card.install.alt": "A close-up of an alpaca with curly brown fur on its head. The alpaca has a white body and is looking directly at the camera with large, expressive eyes and a distinctive snout.",
 	"home.card.features": "Features",
 	"home.card.features.alt": "An expansive landscape with a herd of alpacas or llamas grazing on a green meadow. The background shows rolling hills and mountains, with a mix of barren and vegetated areas creating a diverse terrain.",
-	"home.card.hosted.alt": "Two llamas or alpacas in a misty green field. One is lying down in the foreground, while another stands grazing in the background. Behind them, ancient stone structures or ruins are visible through the fog, suggesting a historic or archaeological site."
+	"home.card.hosted.alt": "Two llamas or alpacas in a misty green field. One is lying down in the foreground, while another stands grazing in the background. Behind them, ancient stone structures or ruins are visible through the fog, suggesting a historic or archaeological site.",
+	"layout.toggleMenu": "Toggle Menu",
+	"layout.onThisPage": "On this page",
+	"help.overview": "Help overview",
+	"copyMarkdown.title": "Copy page content as Markdown",
+	"copyMarkdown.label": "Copy as Markdown",
+	"copyMarkdown.copied": "Copied!"
 }
