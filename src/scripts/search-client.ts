@@ -1,5 +1,5 @@
 import MiniSearch from 'minisearch'
-import type { SearchIndexItem } from '../pages/api/search-index.json'
+import type { SearchIndexItem } from '../helpers/search-index'
 
 export interface SearchResult {
   id: string
