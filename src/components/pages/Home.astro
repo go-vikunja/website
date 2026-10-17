@@ -26,25 +26,31 @@ import HeroLlama2 from '../../assets/images/hero-llamas-2-small.jpg'
 import HeroLlama3 from '../../assets/images/hero-llamas-3-small.jpg'
 import CloudOrSelfHosted from '../partials/CloudOrSelfHosted.astro'
 import FAQSection from '../FAQSection.astro'
+import Trans from '../Trans.astro'
+import {useTranslations} from '../../i18n'
+import {localizedHref, parsePathname} from '../../i18n/routes'
+
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
 
 const carouselImages = [
-	{src: VikunjaTaskOverview, darkSrc: VikunjaTaskOverviewDark, alt: 'Overview dashboard showing recently viewed projects and current tasks with due dates and labels.'},
-	{src: VikunjaTaskList, darkSrc: VikunjaTaskListDark, alt: 'Task management interface showing a list view with various task details and options.'},
-	{src: VikunjaTaskGantt, darkSrc: VikunjaTaskGanttDark, alt: 'Gantt view of task management system displaying tasks across June and July 2023.'},
-	{src: VikunjaTaskTable, darkSrc: VikunjaTaskTableDark, alt: 'Table view of tasks with sortable columns for task details and status.'},
-	{src: VikunjaTaskKanban, darkSrc: VikunjaTaskKanbanDark, alt: 'Kanban board view of tasks organized into Backlog, Doing, and Done columns.'},
-	{src: VikunjaTaskDetail, darkSrc: VikunjaTaskDetailDark, alt: 'Detailed task view with description, attached image of llamas, and task management options.'},
-	{src: VikunjaQuickAdd, darkSrc: VikunjaQuickAddDark, alt: 'Command search interface overlay for quick task and project management.'},
-	{src: VikunjaTaskKanbanBackground, darkSrc: VikunjaTaskKanbanBackgroundDark, alt: 'Kanban board view of tasks overlaid on an aerial forest image background.'},
+	{src: VikunjaTaskOverview, darkSrc: VikunjaTaskOverviewDark, alt: t('home.screenshot.overview')},
+	{src: VikunjaTaskList, darkSrc: VikunjaTaskListDark, alt: t('home.screenshot.list')},
+	{src: VikunjaTaskGantt, darkSrc: VikunjaTaskGanttDark, alt: t('home.screenshot.gantt')},
+	{src: VikunjaTaskTable, darkSrc: VikunjaTaskTableDark, alt: t('home.screenshot.table')},
+	{src: VikunjaTaskKanban, darkSrc: VikunjaTaskKanbanDark, alt: t('home.screenshot.kanban')},
+	{src: VikunjaTaskDetail, darkSrc: VikunjaTaskDetailDark, alt: t('home.screenshot.detail')},
+	{src: VikunjaQuickAdd, darkSrc: VikunjaQuickAddDark, alt: t('home.screenshot.quickAdd')},
+	{src: VikunjaTaskKanbanBackground, darkSrc: VikunjaTaskKanbanBackgroundDark, alt: t('home.screenshot.kanbanBackground')},
 ]
 ---
-<Layout title="Vikunja: The task manager you actually own" description="Vikunja is open-source task management you can self-host. Lists, Kanban, Gantt, and more — on your server or ours. Made and hosted in the EU.">
+<Layout title={t('home.title')} description={t('home.description')}>
     <Fragment slot="head">
         <script type="application/ld+json" set:html={JSON.stringify({
             "@context": "https://schema.org",
             "@type": "SoftwareApplication",
             "name": "Vikunja",
-            "description": "Open-source task management you can self-host. Lists, Kanban, Gantt, and more — on your server or ours. Made and hosted in the EU.",
+            "description": t('home.schemaDescription'),
             "applicationCategory": "ProjectManagement",
             "operatingSystem": "Web, Docker, Linux",
             "offers": {
@@ -60,19 +66,19 @@ const carouselImages = [
                 class="flex min-h-screen w-full flex-col items-center justify-center pb-8 text-center text-gray-700 dark:text-gray-300 md:px-0">
             <div class="mt-10 lg:mt-40 mb-20 font-display">
                 <h1 class="mb-4 text-5xl tracking-tight text-balance">
-                    The task manager<br/>
-                    <span class="text-primary">you actually own.</span>
+                    {t('home.hero.title')}<br/>
+                    <span class="text-primary">{t('home.hero.titleHighlight')}</span>
                 </h1>
                 <h2 class="mx-auto max-w-2xl text-2xl text-balance">
-                    Vikunja is open-source task management with lists, Kanban, Gantt, and more.
-                    <a href="/install" class="underline decoration-1 underline-offset-1">Self-host it</a>
-                    or let us run it for you.
+                    <Trans message="home.hero.subtitle">
+                        <a slot="selfHost" href={localizedHref(locale, '/install')} class="underline decoration-1 underline-offset-1">{t('home.hero.selfHost')}</a>
+                    </Trans>
                 </h2>
                 <p class="mt-4 text-xl">
-                    Made and hosted in the EU.
+                    {t('home.hero.eu')}
                 </p>
                 <p class="mt-2 text-lg text-gray-400 dark:text-gray-500">
-                    Plan with the elegance of a sloth on a sunny day.
+                    {t('home.hero.tagline')}
                 </p>
             </div>
 
@@ -107,11 +113,10 @@ const carouselImages = [
                                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                                 />
                             </svg>
-                            Your data, your server
+                            {t('home.ownData.title')}
                         </h2>
                         <p class="pt-4">
-                            Run Vikunja on your own infrastructure. Your tasks, your projects, your rules.
-                            Open-source under the AGPLv3 — you can read every line of code.
+                            {t('home.ownData.text')}
                         </p>
                     </div>
                     <div class="mt-4 md:mr-4 md:w-1/3">
@@ -130,12 +135,10 @@ const carouselImages = [
                                         d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
                                 />
                             </svg>
-                            Grows with your team
+                            {t('home.team.title')}
                         </h2>
                         <p class="pt-4">
-                            Start with your personal to-do list. When your team needs it too,
-                            share projects, assign tasks, and collaborate — without switching
-                            to a different tool.
+                            {t('home.team.text')}
                         </p>
                     </div>
                     <div class="mt-4 md:w-1/3">
@@ -154,37 +157,32 @@ const carouselImages = [
                                         d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
                                 />
                             </svg>
-                            List, Kanban, Gantt, Table
+                            {t('home.views.title')}
                         </h2>
                         <p class="pt-4">
-                            Four ways to view your tasks. Use whatever fits how your brain
-                            works — or switch between views whenever you need to.
+                            {t('home.views.text')}
                         </p>
                     </div>
                 </div>
 
                 <p class="mt-16 text-center text-lg text-gray-500 dark:text-gray-400">
-                    Switching from Todoist, Trello, or Microsoft To-Do?
-                    <a href="/help/import-and-export/#import" class="underline underline-offset-2">Import your tasks in minutes.</a>
+                    {t('home.import.question')}
+                    <a href={localizedHref(locale, '/help/import-and-export/#import')} class="underline underline-offset-2">{t('home.import.link')}</a>
                 </p>
             </div>
         </section>
 
         <div class="w-full max-w-3xl mt-16 mb-24 px-4 mx-auto text-balance">
             <span class="text-4xl font-display">
-                Getting more organized is hard
+                {t('home.quote.title')}
             </span>
             <blockquote class="mt-6 text-lg italic">
-                I built Vikunja because there was no good Open-Source Tool to do what I wanted.
-                Privacy is important. For me, you should be able to look at the code of a piece of software you use a lot.
-                Especially if it is something like a to-do app you use daily.<br/>
-                Vikunja Cloud is the best way for me to make sure the project can continue to live on and be
-                self-sustainable.
-                Being completely bootstrapped, the users of the software are the top priority and not some VC.
+                {t('home.quote.why')}<br/>
+                {t('home.quote.cloud')}
             </blockquote>
             <p class="mt-4">
                 <strong>Konrad</strong><br/>
-                <i>Founder of Vikunja</i>
+                <i>{t('home.quote.role')}</i>
             </p>
         </div>
 
@@ -192,25 +190,25 @@ const carouselImages = [
 
         <section class="mx-auto mb-16 flex w-full max-w-6xl flex-col px-4 md:px-2 gap-4 text-left md:flex-row">
             <LinkCard
-                    href="/install"
+                    href={localizedHref(locale, '/install')}
                     image={HeroLlama1}
-                    alt="A close-up of an alpaca with curly brown fur on its head. The alpaca has a white body and is looking directly at the camera with large, expressive eyes and a distinctive snout."
+                    alt={t('home.card.install.alt')}
             >
-                Installation
+                {t('home.card.install')}
             </LinkCard>
             <LinkCard
-                    href="/features"
+                    href={localizedHref(locale, '/features')}
                     image={HeroLlama2}
-                    alt="An expansive landscape with a herd of alpacas or llamas grazing on a green meadow. The background shows rolling hills and mountains, with a mix of barren and vegetated areas creating a diverse terrain."
+                    alt={t('home.card.features.alt')}
             >
-                Features
+                {t('home.card.features')}
             </LinkCard>
             <LinkCard
                     href={`${VIKUNJA_CLOUD_LINK}&utm_source=io&utm_medium=io&utm_campaign=menu`}
                     image={HeroLlama3}
-                    alt="Two llamas or alpacas in a misty green field. One is lying down in the foreground, while another stands grazing in the background. Behind them, ancient stone structures or ruins are visible through the fog, suggesting a historic or archaeological site."
+                    alt={t('home.card.hosted.alt')}
             >
-                Get it Hosted
+                {t('footer.getHosted')}
             </LinkCard>
         </section>
 
