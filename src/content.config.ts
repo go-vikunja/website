@@ -1,7 +1,7 @@
 import {defineCollection} from 'astro:content'
 import {glob} from 'astro/loaders'
 import {z} from 'astro/zod'
-import {generateLocalizedId, localizedContentPattern} from './i18n/content'
+import {generateLocalizedId, localizedContentPattern} from './i18n/entry-ids'
 
 const docsCollection = defineCollection({
 	loader: glob({pattern: '**/[^_]*.mdx', base: './src/content/docs'}),
