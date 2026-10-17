@@ -792,5 +792,18 @@
 	"compare.planka.faq.future.question": "Will Vikunja ever move SSO to Pro?",
 	"compare.planka.faq.future.answer": "The license makes that structurally hard. Vikunja is AGPL-3 with no contributor license agreement, so I don't hold the rights I would need to relicense contributed code. Vikunja Pro ships in the same public repository under the same license. I wrote about why this setup keeps Vikunja open in [Vikunja stays open]({blogUrl}). The same reasoning applies to feature tiering.",
 	"compare.planka.faq.lockedOut.question": "My Planka admin account was SSO-based and I am locked out. What now?",
-	"compare.planka.faq.lockedOut.answer": "Planka 2.2.0 deactivates SSO-only users because they no longer have a password login. Planka documents how to [create a new admin user]({adminUrl}) via environment variables, so do that first to regain access and export your data. In Vikunja, OIDC users are regular users: they can be admins, they can be added to teams, and switching auth methods does not deactivate anyone."
+	"compare.planka.faq.lockedOut.answer": "Planka 2.2.0 deactivates SSO-only users because they no longer have a password login. Planka documents how to [create a new admin user]({adminUrl}) via environment variables, so do that first to regain access and export your data. In Vikunja, OIDC users are regular users: they can be admins, they can be added to teams, and switching auth methods does not deactivate anyone.",
+	"search.title": "Search Documentation",
+	"search.placeholder": "Search documentation...",
+	"search.label": "Search documentation",
+	"search.resultsLabel": "Search results",
+	"search.loading": "Loading search index...",
+	"search.empty": "Start typing to search documentation",
+	"search.noResults": "No results found",
+	"search.oneResult": "1 result found",
+	"search.results": "{count} results found",
+	"search.hintNavigate": "to navigate",
+	"search.hintSelect": "to select",
+	"search.hintClose": "to close",
+	"search.button": "Search"
 }

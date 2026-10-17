@@ -185,11 +185,11 @@ function handleSearchInput(e: Event): void {
 
     if (currentResults.length === 0) {
       showNoResultsState()
-      announceToScreenReader('No results found')
+      announceToScreenReader(modal?.dataset.messageNoResults ?? '')
     } else {
       hideAllStates()
-      const resultText = currentResults.length === 1 ? '1 result' : `${currentResults.length} results`
-      announceToScreenReader(`${resultText} found`)
+      const message = currentResults.length === 1 ? modal?.dataset.messageOneResult : modal?.dataset.messageResults
+      announceToScreenReader((message ?? '').replace('{count}', String(currentResults.length)))
     }
   }, SEARCH_DEBOUNCE_MS)
 }
