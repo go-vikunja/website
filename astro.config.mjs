@@ -6,11 +6,19 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import sitemap from '@astrojs/sitemap'
 import cloudflare from '@astrojs/cloudflare'
 import tailwindcss from '@tailwindcss/vite'
+import {defaultLocale, locales} from './src/i18n/locales.ts'
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://vikunja.io',
 	output: 'static',
+	i18n: {
+		locales: [...locales],
+		defaultLocale,
+		routing: {
+			prefixDefaultLocale: false,
+		},
+	},
 	prefetch: {
 		prefetchAll: true,
 	},
