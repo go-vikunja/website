@@ -1,13 +1,10 @@
 import {defaultLocale, type Locale, locales, toLocale} from './locales'
 import {generateLocalizedId, parseEntryId} from './entry-ids'
+import {normalizePath} from './paths'
 
 export type TranslatedPaths = Map<Locale, Set<string>>
 
 const contentRoutePrefixes: Record<string, string> = {help: '/help', pages: ''}
-
-export function normalizePath(path: string): string {
-	return path.length > 1 ? path.replace(/\/+$/, '') : path
-}
 
 /**
  * @param pageFiles paths relative to src/pages, e.g. `de/index.astro`

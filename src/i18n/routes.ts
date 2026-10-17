@@ -1,5 +1,7 @@
-import {defaultLocale, type Locale, locales, toLocale} from './locales'
-import {collectTranslatedPaths, isTranslatedIn, localizeHref, normalizePath} from './translated-paths'
+import {type Locale, locales} from './locales'
+import {collectTranslatedPaths, isTranslatedIn, localizeHref} from './translated-paths'
+
+export {parsePathname} from './paths'
 
 // Files under src/pages/<locale>/ and src/content/<collection>/<locale>/ mark pages as translated.
 const translatedPaths = collectTranslatedPaths(
@@ -12,16 +14,6 @@ const translatedPaths = collectTranslatedPaths(
 
 export function isTranslated(locale: Locale, path: string): boolean {
 	return isTranslatedIn(translatedPaths, locale, path)
-}
-
-/** Splits a URL pathname like `/de/pricing/` into its locale and the locale-neutral path. */
-export function parsePathname(pathname: string): {locale: Locale, path: string} {
-	const [, first, ...rest] = pathname.split('/')
-	const locale = toLocale(first)
-	if (locale === defaultLocale) {
-		return {locale: defaultLocale, path: normalizePath(pathname)}
-	}
-	return {locale, path: normalizePath('/' + rest.join('/'))}
 }
 
 /** Links to the page in `locale`, or to the English page if it isn't translated. */
