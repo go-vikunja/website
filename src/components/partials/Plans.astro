@@ -1,12 +1,17 @@
 ---
 import Button from '../Button.astro'
+import Trans from '../Trans.astro'
 import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
+import {useTranslations} from '../../i18n'
+import {localizedHref, parsePathname} from '../../i18n/routes'
 
 interface Props {
 	showTitle?: boolean
 }
 
 const {showTitle = true} = Astro.props
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
 
 interface Plan {
 	title: string
@@ -18,58 +23,60 @@ interface Plan {
 	features: string[]
 }
 
+const communitySupport = `<a class="underline" href="https://community.vikunja.io/" target="_blank" rel="noopener">${t('plans.feature.communitySupport')}</a>`
+
 const plans: Plan[] = [
 	{
-		title: 'Personal',
+		title: t('plans.personal.title'),
 		priceMonthly: 4,
 		priceYearly: 40,
 		priceDifferencePercent: 20,
-		description: 'Your own account, completely managed by us.',
+		description: t('plans.personal.description'),
 		features: [
-			'Unlimited lists',
-			'Unlimited tasks',
-			'Unlimited reminders',
-			'Unlimited share links',
-			'Unlimited relations',
-			'Unlimited filters',
-			'10GB attachment storage',
-			'Support an awesome open-source project',
-			'Email & <a class="underline" href="https://community.vikunja.io/" target="_blank" rel="noopener">Community support</a>',
+			t('plans.feature.unlimitedLists'),
+			t('plans.feature.unlimitedTasks'),
+			t('plans.feature.unlimitedReminders'),
+			t('plans.feature.unlimitedShareLinks'),
+			t('plans.feature.unlimitedRelations'),
+			t('plans.feature.unlimitedFilters'),
+			t('plans.feature.storage', {size: '10GB'}),
+			t('plans.feature.supportProject'),
+			t('plans.feature.emailAndCommunitySupport', {communitySupport}),
 		],
 	},
 	{
-		title: 'Family',
+		title: t('plans.family.title'),
 		priceMonthly: 10,
 		priceYearly: 99,
 		priceDifferencePercent: 17.5,
-		description: 'One plan for your whole household, managed by us.',
-		priceSuffix: 'for up to 5 users',
+		description: t('plans.family.description'),
+		priceSuffix: t('plans.family.priceSuffix'),
 		features: [
-			'Everything in Personal',
-			'Up to 5 users',
-			'Shared projects for the whole household',
-			'One subscription, one bill',
+			t('plans.feature.everythingInPersonal'),
+			t('plans.feature.upTo5Users'),
+			t('plans.feature.sharedProjects'),
+			t('plans.feature.oneSubscription'),
 		],
 	},
 	{
-		title: 'Organization',
+		title: t('plans.organization.title'),
 		priceMonthly: 5,
 		priceYearly: 50,
 		priceDifferencePercent: 20,
-		description: 'A plan for all users in your organization.',
-		priceSuffix: 'per user',
+		description: t('plans.organization.description'),
+		priceSuffix: t('plans.organization.priceSuffix'),
 		features: [
-			'Everything in Personal',
-			'Unlimited Teams',
-			'50GB attachment storage',
-			'Priority Support via Email',
-			'Centralized Team Billing',
+			t('plans.feature.everythingInPersonal'),
+			t('plans.feature.unlimitedTeams'),
+			t('plans.feature.storage', {size: '50GB'}),
+			t('plans.feature.prioritySupport'),
+			t('plans.feature.teamBilling'),
 		],
 	},
 ]
 ---
 <section class="mt-12">
-	{showTitle ? <h2 class="font-display text-4xl mb-4" id="pricing">Pricing</h2> : ''}
+	{showTitle ? <h2 class="font-display text-4xl mb-4" id="pricing">{t('nav.pricing')}</h2> : ''}
 
     <div class="flex flex-col md:flex-row my-0 mx-auto md:space-x-4">
 		{plans.map((p: Plan) => (
@@ -81,11 +88,11 @@ const plans: Plan[] = [
                             </div>
                             <div class="font-display mb-2">
                                 <span class="text-3xl">{p.priceMonthly}€</span>
-                                /&nbsp;month
+                                /&nbsp;{t('plans.month')}
 								{p.priceSuffix ?? ''}
                             </div>
                             <p class="text-sm mb-4 text-gray-500 dark:text-gray-400">
-								{p.priceYearly}€ when billed yearly (-{p.priceDifferencePercent}%)
+								{t('plans.billedYearly', {price: p.priceYearly.toLocaleString(locale), percent: p.priceDifferencePercent.toLocaleString(locale)})}
                             </p>
                         </div>
 
@@ -106,10 +113,10 @@ const plans: Plan[] = [
 
                         <div>
                             <Button href={VIKUNJA_CLOUD_LINK}>
-                                Buy
+                                {t('plans.buy')}
                             </Button>
                             <p class="text-sm text-gray-500 dark:text-gray-400 block mt-2">
-                                Free 14 day trial. Cancel anytime.
+                                {t('plans.trial')}
                             </p>
                         </div>
                     </div>
@@ -122,12 +129,12 @@ const plans: Plan[] = [
                         Pro
                     </div>
                     <div class="font-display mb-4 text-2xl">
-                        Homelab, Team, Business, Scale &amp; Enterprise
+                        {t('plans.pro.plans')}
                     </div>
                 </div>
 
                 <p class="text-gray-700 dark:text-gray-300 pb-4">
-                    Extra features for the Vikunja instance you host yourself.
+                    {t('plans.pro.description')}
                 </p>
             </div>
 
@@ -136,19 +143,19 @@ const plans: Plan[] = [
             <div class="flex flex-col justify-between h-full">
 
                 <ul class="list-disc list-checkmark pl-4 mb-6 text-gray-700 dark:text-gray-300">
-                    <li>Admin panel</li>
-                    <li>Audit logs</li>
-                    <li>Time tracking</li>
-                    <li>For self-hosted instances</li>
-                    <li>Plans from Homelab to Enterprise</li>
+                    <li>{t('pro.feature.adminPanel')}</li>
+                    <li>{t('pro.feature.auditLogs')}</li>
+                    <li>{t('pro.feature.timeTracking')}</li>
+                    <li>{t('plans.pro.selfHosted')}</li>
+                    <li>{t('plans.pro.allPlans')}</li>
                 </ul>
 
                 <div>
-                    <Button href="/pro">
-                        Learn more
+                    <Button href={localizedHref(locale, '/pro')}>
+                        {t('plans.pro.learnMore')}
                     </Button>
                     <p class="text-sm text-gray-500 dark:text-gray-400 block mt-2">
-                        Now in private beta. Not yet available for Cloud accounts.
+                        {t('plans.pro.beta')}
                     </p>
                 </div>
             </div>
@@ -156,31 +163,27 @@ const plans: Plan[] = [
     </div>
 
     <p class="pt-8 text-gray-600 dark:text-gray-300">
-        Vikunja is and always will be <a href="https://vikunja.io/" class="underline" target="_blank" rel="noopener">Open-Source</a>
-        and freely available.<br/>
-        The hosted version supports the development and ensures Vikunja will be around for some time.
+        <Trans message="plans.openSource">
+            <a slot="openSource" href="https://vikunja.io/" class="underline" target="_blank" rel="noopener">{t('plans.openSourceLink')}</a>
+        </Trans><br/>
+        {t('plans.hostedSupports')}
     </p>
 
     <section class="max-w-xl mx-auto text-left">
-        <h2 class="font-display mt-12 mb-4 text-xl">Why is there no free version?</h2>
+        <h2 class="font-display mt-12 mb-4 text-xl">{t('plans.whyNoFree.title')}</h2>
         <p>
-            Building and maintaining software costs money and time. There's no way around it.
-            That money has to come from <em>somewhere</em>.
-            Most free products either have limited functionality to nag you to buy a premium version that is actually
-            usable or just sell your data to advertising companies. In those cases, you're not the user, you're the
-            product.
+            <Trans message="plans.whyNoFree.cost">
+                <em slot="somewhere">{t('plans.whyNoFree.somewhere')}</em>
+            </Trans>
         </p>
         <p class="mt-2">
-            We don't do any of this.<br/>
-            We believe you, the user, should be front and center of the software you're using.
-            You're always free to host Vikunja yourself, no strings attached. Keep in mind that also means you will
-            need to take care of all server maintenance, updates and backups yourself. If that's your jam, great!
-            But if you just want to use it, consider buying a subscription to support the ongoing development.
+            {t('plans.whyNoFree.notUs')}<br/>
+            {t('plans.whyNoFree.userFirst')}
         </p>
         <p class="mt-2">
-            If you're not sure Vikunja is useful to you, just try it risk-free with a 14-day trial.
-            Feel free to <a class="underline" href="mailto:hello@vikunja.io">reach out</a> if you
-            have any questions.
+            <Trans message="plans.whyNoFree.trial">
+                <a slot="reachOut" class="underline" href="mailto:hello@vikunja.io">{t('plans.whyNoFree.reachOut')}</a>
+            </Trans>
         </p>
     </section>
 </section>
