@@ -3,6 +3,7 @@ import NavItem from './NavItem.astro'
 import {VIKUNJA_CLOUD_LINK} from '../helpers/vikunjaCloudLink'
 import ButtonGetStarted from './partials/ButtonGetStarted.astro'
 import DarkModeSwitch from './partials/DarkModeSwitch.astro'
+import LanguageSwitcher from './LanguageSwitcher.astro'
 import {useTranslations} from '../i18n'
 import {parsePathname} from '../i18n/routes'
 
@@ -52,6 +53,7 @@ const t = useTranslations(locale)
             </ul>
         </div>
         <div class="flex sm:hidden flex-col p-4 gap-6">
+            <LanguageSwitcher/>
             <DarkModeSwitch showText={true}/>
             <ButtonGetStarted/>
         </div>
