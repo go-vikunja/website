@@ -1,5 +1,5 @@
 import {type CollectionEntry, getCollection} from 'astro:content'
-import type {Locale} from './locales'
+import {defaultLocale, type Locale} from './locales'
 import {parseEntryId} from './entry-ids'
 
 export type LocalizedCollection = 'help'
@@ -16,4 +16,12 @@ export async function getStaticPathsFor(collection: LocalizedCollection, locale:
 		params: {slug: slug || undefined},
 		props: entry,
 	}))
+}
+
+/** Entries in `locale`, with English entries standing in for missing translations. */
+export async function getEntriesWithFallback<C extends LocalizedCollection>(collection: C, locale: Locale) {
+	const translated = await getEntries(collection, locale)
+	const translatedSlugs = new Set(translated.map(e => e.slug))
+	const fallback = (await getEntries(collection, defaultLocale)).filter(e => !translatedSlugs.has(e.slug))
+	return [...translated, ...fallback]
 }
