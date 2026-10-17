@@ -40,7 +40,12 @@ export default defineConfig({
 	},
 	integrations: [
 		mdx(),
-		sitemap(),
+		sitemap({
+			i18n: {
+				defaultLocale,
+				locales: Object.fromEntries(locales.map(l => [l, l])),
+			},
+		}),
 	],
 	adapter: cloudflare(),
 	markdown: {
