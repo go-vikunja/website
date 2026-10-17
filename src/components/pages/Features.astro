@@ -1,0 +1,264 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Screenshot from '../Screenshot.astro'
+import FeatureCenter from '../features/FeatureCenter.astro'
+import FeatureImageSide from '../features/FeatureImageSide.astro'
+
+import VikunjaTaskOverview from '../../assets/images/vikunja/01-task-overview.png'
+import VikunjaTaskOverviewDark from '../../assets/images/vikunja/01-task-overview-dark.png'
+import VikunjaFeatureTask from '../../assets/images/vikunja/features/task.png'
+import VikunjaFeatureTaskDark from '../../assets/images/vikunja/features/task-dark.png'
+import VikunjaFeatureList from '../../assets/images/vikunja/features/list.png'
+import VikunjaFeatureListDark from '../../assets/images/vikunja/features/list-dark.png'
+import VikunjaFeatureGantt from '../../assets/images/vikunja/features/gantt.png'
+import VikunjaFeatureGanttDark from '../../assets/images/vikunja/features/gantt-dark.png'
+import VikunjaFeatureKanban from '../../assets/images/vikunja/features/kanban.png'
+import VikunjaFeatureKanbanDark from '../../assets/images/vikunja/features/kanban-dark.png'
+import VikunjaFeatureTable from '../../assets/images/vikunja/features/table.png'
+import VikunjaFeatureTableDark from '../../assets/images/vikunja/features/table-dark.png'
+import FeatureSmall from '../features/FeatureSmall.astro'
+import CloudOrSelfHosted from '../partials/CloudOrSelfHosted.astro'
+import Plans from '../partials/Plans.astro'
+import Trans from '../Trans.astro'
+import {useTranslations} from '../../i18n'
+import {parsePathname} from '../../i18n/routes'
+
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
+---
+<Layout title={t('nav.features')} description={t('features.description')}>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0 text-center" id="main-content">
+        <div class="pt-32 pb-8 px-4">
+            <h1 class="text-3xl font-display">
+                {t('features.hero.title')}
+            </h1>
+            <h3 class="font-display text-xl mt-4">
+                {t('features.hero.subtitle')}
+            </h3>
+        </div>
+
+        <div class="flex flex-col md:flex-row text-left mt-16 gap-4 mx-4">
+            <div class="md:w-1/3">
+                <h2 class="text-2xl font-display flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    {t('features.organized.title')}
+                </h2>
+                <p class="pt-4">
+                    {t('features.organized.text')}
+                </p>
+            </div>
+            <div class="md:w-1/3">
+                <h2 class="text-2xl font-display flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                    {t('features.collaborate.title')}
+                </h2>
+                <p class="pt-4">
+                    {t('features.collaborate.text')}
+                </p>
+            </div>
+            <div class="md:w-1/3">
+                <h2 class="text-2xl font-display flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                    </svg>
+                    {t('features.flexible.title')}
+                </h2>
+                <p class="pt-4">
+                    {t('features.flexible.text')}
+                </p>
+            </div>
+        </div>
+
+        <FeatureCenter heading={t('features.openSource.title')}>
+            <Trans message="features.openSource.text">
+                <a slot="license" href="https://code.vikunja.io/vikunja/blob/main/LICENSE" class="underline" target="_blank"
+                   rel="noopener">AGPLv3</a>
+            </Trans>
+        </FeatureCenter>
+
+        <div class="shadow-lg rounded-sm mb-16">
+            <Screenshot
+                src={VikunjaTaskOverview}
+                darkSrc={VikunjaTaskOverviewDark}
+                class="object-contain object-top w-full"
+                alt={t('features.screenshot.overview')}
+            />
+        </div>
+
+        <FeatureCenter heading={t('features.speed.title')}>
+            <svg slot="header-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            {t('features.speed.text')}<br/>
+            {t('features.speed.text2')}
+        </FeatureCenter>
+
+        <FeatureImageSide orientation="left" image={VikunjaFeatureTask} darkImage={VikunjaFeatureTaskDark} alt={t('features.tasks.alt')}>
+            <h2 class="font-display text-2xl flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                </svg>
+                {t('features.tasks.title')}
+            </h2>
+            <p class="pt-4">
+                {t('features.tasks.reminders')}
+            </p>
+            <p class="pt-4">
+                {t('features.tasks.repeating')}
+            </p>
+            <p class="pt-4">
+                {t('features.tasks.subtasks')}
+            </p>
+        </FeatureImageSide>
+
+        <FeatureCenter heading={t('features.quickAdd.title')}>
+            <svg slot="header-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            {t('features.quickAdd.text')}<br/>
+            {t('features.quickAdd.text2')}
+        </FeatureCenter>
+
+        <h2 class="font-display text-3xl text-left mt-32 mb-8 px-4">
+            {t('features.views.title')}
+        </h2>
+
+        <p class="text-left mb-8 px-4">
+            {t('features.views.text')}
+        </p>
+
+        <FeatureImageSide image={VikunjaFeatureList} darkImage={VikunjaFeatureListDark} alt={t('features.list.alt')}>
+            <h2 class="font-display text-2xl flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                </svg>
+                {t('features.list.title')}
+            </h2>
+            <p class="pt-4">
+                {t('features.list.text')}
+            </p>
+        </FeatureImageSide>
+
+        <FeatureImageSide orientation="left" image={VikunjaFeatureGantt} darkImage={VikunjaFeatureGanttDark} alt={t('features.gantt.alt')}>
+            <h2 class="font-display text-2xl flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M 4.3383062,9.0000002 H 19.661694 m -15.3233878,0 a 3.0646776,2 0 0 1 -3.0646776,-2 v -2 a 3.0646776,2 0 0 1 3.0646776,-2 H 19.661694 a 3.0646776,2 0 0 1 3.064677,2 v 2 a 3.0646776,2 0 0 1 -3.064677,2 m -15.3233878,0 A 3.0646776,2 0 0 0 1.2736286,11 v 2 a 3.0646776,2 0 0 0 3.0646776,2 M 19.661694,9.0000002 A 3.0646776,2 0 0 1 22.726371,11 v 2 a 3.0646776,2 0 0 1 -3.064677,2 M 4.3383062,15 H 19.661694 M 4.3383062,15 a 3.0646776,2 0 0 0 -3.0646776,2 v 2 a 3.0646776,2 0 0 0 3.0646776,2 H 19.661694 a 3.0646776,2 0 0 0 3.064677,-2 v -2 a 3.0646776,2 0 0 0 -3.064677,-2"/>
+                </svg>
+                {t('features.gantt.title')}
+            </h2>
+            <p class="pt-4">
+                {t('features.gantt.text')}
+            </p>
+        </FeatureImageSide>
+
+        <FeatureImageSide image={VikunjaFeatureKanban} darkImage={VikunjaFeatureKanbanDark} alt={t('features.kanban.alt')}>
+            <h2 class="font-display text-2xl flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/>
+                </svg>
+                {t('features.kanban.title')}
+            </h2>
+            <p class="pt-4">
+                {t('features.kanban.text')}
+            </p>
+            <p class="pt-4">
+                {t('features.kanban.text2')}
+            </p>
+        </FeatureImageSide>
+
+        <FeatureImageSide orientation="left" image={VikunjaFeatureTable} darkImage={VikunjaFeatureTableDark} alt={t('features.table.alt')}>
+            <h2 class="font-display text-2xl flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-gray-500 dark:text-gray-400" fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                </svg>
+                {t('features.table.title')}
+            </h2>
+            <p class="pt-4">
+                {t('features.table.text')}
+            </p>
+        </FeatureImageSide>
+
+        <FeatureCenter heading={t('features.import.title')}>
+            {t('features.import.text')}
+        </FeatureCenter>
+
+        <div class="md:flex text-left mt-32 mb-4 gap-8">
+            <div class="w-full md:w-1/3">
+                <h2 class="font-display text-2xl mt-8 pl-8 text-right">{t('features.other.title')}</h2>
+            </div>
+            <div class="w-full md:w-1/4">
+                <FeatureSmall title={t('features.other.labels.title')} icon="label">
+                    {t('features.other.labels.text')}
+                </FeatureSmall>
+                <FeatureSmall title={t('features.other.filters.title')} icon="filter">
+                    {t('features.other.filters.text')}
+                </FeatureSmall>
+                <FeatureSmall title={t('features.other.priorities.title')} icon="priority">
+                    {t('features.other.priorities.text')}
+                </FeatureSmall>
+                <FeatureSmall title={t('features.other.delegation.title')} icon="delegation">
+                    {t('features.other.delegation.text')}
+                </FeatureSmall>
+                <FeatureSmall title={t('features.other.attachments.title')} icon="attachment">
+                    {t('features.other.attachments.text')}
+                </FeatureSmall>
+            </div>
+            <div class="w-full md:w-1/4">
+                <FeatureSmall title={t('features.other.relations.title')} icon="relation">
+                    {t('features.other.relations.text')}
+                </FeatureSmall>
+                <FeatureSmall title={t('features.other.dueDates.title')} icon="date">
+                    {t('features.other.dueDates.text')}
+                </FeatureSmall>
+                <FeatureSmall title={t('features.other.shareLinks.title')} icon="share">
+                    {t('features.other.shareLinks.text')}
+                </FeatureSmall>
+                <FeatureSmall title="CalDAV" icon="caldav">
+                    {t('features.other.caldav.text')}
+                </FeatureSmall>
+            </div>
+        </div>
+
+        <FeatureCenter heading={t('features.privacy.title')}>
+            {t('features.privacy.text')}<br/>
+            <Trans message="features.privacy.text2">
+                <a slot="checkIt" href="https://code.vikunja.io" class="underline" target="_blank" rel="noopener">{t('features.privacy.checkIt')}</a>
+            </Trans>
+        </FeatureCenter>
+
+        <!-- TODO Roadmap -->
+
+        <div class="py-20 flex items-center justify-center flex-col">
+            <h2 class="font-display text-3xl mb-8">{t('features.getStarted')}</h2>
+            <CloudOrSelfHosted/>
+        </div>
+
+        <Plans/>
+    </main>
+</Layout>
