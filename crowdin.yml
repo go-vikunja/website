@@ -5,3 +5,9 @@ preserve_hierarchy: true
 files:
   - source: /src/i18n/en.json
     translation: /src/i18n/%two_letters_code%.json
+  # Exclude the slug, hideInMenu and sortOrder front matter keys in Crowdin's
+  # Markdown/MDX parser settings, they must stay identical across locales.
+  - source: /src/content/help/en/**/*.{md,mdx}
+    translation: /src/content/help/%two_letters_code%/**/%original_file_name%
+  - source: /src/content/pages/en/**/*.{md,mdx}
+    translation: /src/content/pages/%two_letters_code%/**/%original_file_name%
