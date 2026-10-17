@@ -1,0 +1,236 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Button from '../Button.astro'
+import Trans from '../Trans.astro'
+import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
+import {useTranslations} from '../../i18n'
+import {localizedHref, parsePathname} from '../../i18n/routes'
+
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
+---
+<Layout title={t('footer.convince')} description={t('convince.description')}>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0" id="main-content">
+        <div class="pt-32 pb-8 px-4 text-center">
+            <h1 class="text-4xl font-display">
+                {t('convince.hero.title')}
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-balance">
+                {t('convince.hero.subtitle')}
+            </p>
+        </div>
+
+        <section class="max-w-4xl mx-auto mt-16">
+            <h2 class="font-display text-3xl mb-6">{t('convince.pitch.title')}</h2>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-sm p-8 text-lg text-gray-700 dark:text-gray-300">
+                <p>
+                    {t('convince.pitch.p1')}
+                </p>
+                <p class="mt-4">
+                    {t('convince.pitch.p2')}
+                </p>
+                <p class="mt-4">
+                    {t('convince.pitch.p3')}
+                </p>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">{t('convince.why.title')}</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <h3 class="font-display text-xl mb-3">{t('convince.why.data.title')}</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('convince.why.data.text')}
+                    </p>
+                </div>
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <h3 class="font-display text-xl mb-3">{t('convince.why.lockIn.title')}</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('convince.why.lockIn.text')}
+                    </p>
+                </div>
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <h3 class="font-display text-xl mb-3">{t('convince.why.enterprise.title')}</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('convince.why.enterprise.text')}
+                    </p>
+                </div>
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <h3 class="font-display text-xl mb-3">{t('convince.why.views.title')}</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('convince.why.views.text')}
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">{t('convince.cost.title')}</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">
+                {t('convince.cost.intro')}
+            </p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th class="py-3 px-4 font-display text-lg"></th>
+                            <th class="py-3 px-4 font-display text-lg">{t('convince.cost.selfHosted')}</th>
+                            <th class="py-3 px-4 font-display text-lg">Vikunja Cloud (Org)</th>
+                            <th class="py-3 px-4 font-display text-lg">Todoist Business</th>
+                            <th class="py-3 px-4 font-display text-lg">Asana Premium</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700 dark:text-gray-300">
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('convince.cost.annualCost')}</td>
+                            <td class="py-3 px-4 font-display text-xl">0 &euro;</td>
+                            <td class="py-3 px-4 font-display text-xl">750 &euro;</td>
+                            <td class="py-3 px-4 text-gray-500">~1,440 &euro;</td>
+                            <td class="py-3 px-4 text-gray-500">~1,978 &euro;</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('convince.cost.selfHostable')}</td>
+                            <td class="py-3 px-4">{t('convince.cost.yes')}</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('convince.cost.openSource')}</td>
+                            <td class="py-3 px-4">{t('convince.cost.yes')}</td>
+                            <td class="py-3 px-4">{t('convince.cost.yes')}</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('convince.cost.euResidency')}</td>
+                            <td class="py-3 px-4">{t('convince.cost.yourChoice')}</td>
+                            <td class="py-3 px-4">{t('convince.cost.yes')}</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4">&mdash;</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">{t('convince.cost.lockIn')}</td>
+                            <td class="py-3 px-4">{t('convince.cost.none')}</td>
+                            <td class="py-3 px-4">{t('convince.cost.none')}</td>
+                            <td class="py-3 px-4">{t('convince.cost.high')}</td>
+                            <td class="py-3 px-4">{t('convince.cost.high')}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                {t('convince.cost.disclaimer')}
+            </p>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">{t('convince.security.title')}</h2>
+            <div class="grid md:grid-cols-2 gap-6 text-gray-700 dark:text-gray-300">
+                <div>
+                    <h3 class="font-display text-lg mb-2">{t('convince.security.openSource.title')}</h3>
+                    <p>
+                        {t('convince.security.openSource.text')}
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-lg mb-2">{t('convince.security.eu.title')}</h3>
+                    <p>
+                        {t('convince.security.eu.text')}
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-lg mb-2">{t('convince.security.gdpr.title')}</h3>
+                    <p>
+                        {t('convince.security.gdpr.text')}
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-lg mb-2">{t('convince.security.disclosure.title')}</h3>
+                    <p>
+                        <Trans message="convince.security.disclosure.text">
+                            <a slot="disclosureLink" href={localizedHref(locale, '/security')} class="underline">{t('convince.security.disclosure.link')}</a>
+                        </Trans>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">{t('convince.deploy.title')}</h2>
+            <p class="text-gray-700 dark:text-gray-300 mb-6">
+                {t('convince.deploy.intro')}
+            </p>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <h3 class="font-display text-xl mb-2">Docker</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('convince.deploy.docker.text')}
+                    </p>
+                </div>
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <h3 class="font-display text-xl mb-2">Kubernetes</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('convince.deploy.kubernetes.text')}
+                    </p>
+                </div>
+                <div class="border border-gray-100 dark:border-gray-800 rounded-sm p-6">
+                    <h3 class="font-display text-xl mb-2">Vikunja Cloud</h3>
+                    <p class="text-gray-700 dark:text-gray-300">
+                        {t('convince.deploy.cloud.text')}
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">{t('convince.pilot.title')}</h2>
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-sm p-8">
+                <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                    {t('convince.pilot.intro')}
+                </p>
+                <ol class="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300">
+                    <li>
+                        <strong>{t('convince.pilot.people.title')}</strong>:
+                        {t('convince.pilot.people.text')}
+                    </li>
+                    <li>
+                        <strong>{t('convince.pilot.setup.title')}</strong>:
+                        <Trans message="convince.pilot.setup.text">
+                            <a slot="selfHostLink" href={localizedHref(locale, '/install')} class="underline">{t('convince.pilot.setup.selfHostLink')}</a>
+                            <a slot="trialLink" href={VIKUNJA_CLOUD_LINK} class="underline">{t('convince.pilot.setup.trialLink')}</a>
+                        </Trans>
+                    </li>
+                    <li>
+                        <strong>{t('convince.pilot.import.title')}</strong>:
+                        {t('convince.pilot.import.text')}
+                    </li>
+                    <li>
+                        <strong>{t('convince.pilot.realWork.title')}</strong>:
+                        {t('convince.pilot.realWork.text')}
+                    </li>
+                    <li>
+                        <strong>{t('convince.pilot.evaluate.title')}</strong>:
+                        {t('convince.pilot.evaluate.text')}
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20 mb-20 text-center">
+            <h2 class="font-display text-3xl mb-4">{t('convince.cta.title')}</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                {t('convince.cta.text')}
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Button href={localizedHref(locale, '/pro')}>
+                    Vikunja Pro
+                </Button>
+                <Button href={localizedHref(locale, '/pricing')} class="bg-gray-200! text-gray-800! dark:bg-gray-700! dark:text-gray-200!">
+                    {t('convince.cta.pricing')}
+                </Button>
+            </div>
+        </section>
+    </main>
+</Layout>
