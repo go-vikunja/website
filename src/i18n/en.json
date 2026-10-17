@@ -50,5 +50,16 @@
 	"cloudOrSelfHosted.getStarted": "Get Started",
 	"cloudOrSelfHosted.or": "OR",
 	"cloudOrSelfHosted.noServer": "Don't have a server or don't want to deal with it?",
-	"cloudOrSelfHosted.meetCloud": "Meet Vikunja Cloud"
+	"cloudOrSelfHosted.meetCloud": "Meet Vikunja Cloud",
+	"faq.title": "Frequently Asked Questions",
+	"faq.whatIs.question": "What is Vikunja?",
+	"faq.whatIs.answer": "Vikunja is an open-source, self-hostable to-do app. It helps you organize your tasks and projects with features like list, kanban, gantt, and table views — all while keeping your data under your control.",
+	"faq.free.question": "Is Vikunja free and open source?",
+	"faq.free.answer": "Yes. Vikunja is licensed under the AGPLv3 and completely free to self-host. If you prefer not to manage your own server, [Vikunja Cloud]({cloudLink}) offers a paid hosted option.",
+	"faq.install.question": "How do I install Vikunja?",
+	"faq.install.answer": "You can install Vikunja using Docker, native binaries for your platform, or sign up for [Vikunja Cloud]({cloudLink}). Use the [install wizard]({installUrl}) for a guided setup.",
+	"faq.selfHost.question": "Do I have to self-host Vikunja?",
+	"faq.selfHost.answer": "No. While self-hosting is a great option, [Vikunja Cloud]({cloudLink}) gives you a fully managed instance with automatic updates, backups, and zero maintenance. It's the easiest way to get started and directly supports the continued development of Vikunja.",
+	"faq.import.question": "Can I import tasks from Todoist, Trello, or Microsoft To-Do?",
+	"faq.import.answer": "Yes. Vikunja has built-in migration support for Todoist, Trello, Microsoft To-Do, and other platforms. You can import your existing tasks and projects directly from the Vikunja interface."
 }
