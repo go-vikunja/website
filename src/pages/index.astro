@@ -1,9 +1,7 @@
 ---
 import Home from '../components/pages/Home.astro'
+import {translateMeta} from '../i18n'
 
-export const meta = {
-	title: 'Vikunja: The task manager you actually own',
-	description: 'Vikunja is open-source task management you can self-host. Lists, Kanban, Gantt, and more — on your server or ours. Made and hosted in the EU.',
-}
+export const meta = translateMeta('en', {title: 'home.title', description: 'home.description'})
 ---
 <Home {...meta}/>
