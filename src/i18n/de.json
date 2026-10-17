@@ -257,7 +257,7 @@
 	"pricing.faq.switch.question": "Kann ich vom Selbsthosten zur Cloud wechseln (oder umgekehrt)?",
 	"pricing.faq.switch.answer": "Ja. Du kannst deine Daten exportieren und in eine andere Instanz importieren. Wenn du Hilfe beim Umzug brauchst, [schreib uns]({contactUrl}) und wir begleiten dich dabei.",
 	"pricing.faq.atWork.question": "Ich hoste Vikunja schon selbst. Wie bringe ich es in mein Team bei der Arbeit?",
-	"pricing.faq.atWork.answer": "Schau dir die Seite [Überzeug deine Vorgesetzten]({convinceUrl}) an — dort findest du alles, was du für deine Argumentation brauchst.",
+	"pricing.faq.atWork.answer": "Schau dir die Seite [Überzeug deinen Chef]({convinceUrl}) an — dort findest du alles, was du für deine Argumentation brauchst.",
 	"pricing.getStarted": "Loslegen",
 	"pro.description": "Pro-Funktionen für selbst gehostetes Vikunja: Audit-Logs, Admin-Panel, Zeiterfassung. Für Homelabs, Teams und Unternehmen mit eigener Instanz. Noch nicht für Vikunja Cloud verfügbar. Lizenziert unter AGPLv3.",
 	"pro.hero.subtitle": "Audit-Logs, ein Admin-Panel und Zeiterfassung für die Vikunja-Instanz, die du selbst hostest. Für deine Familie, dein Team oder dein Unternehmen.",
