@@ -11,3 +11,8 @@ export function useTranslations(locale: Locale) {
 	return (key: MessageKey, params: Record<string, string> = {}): string =>
 		(messages[locale][key] || en[key]).replace(/\{(\w+)\}/g, (match, name) => params[name] ?? match)
 }
+
+export function translateMeta(locale: Locale, keys: {title: MessageKey, description: MessageKey}) {
+	const t = useTranslations(locale)
+	return {title: t(keys.title), description: t(keys.description)}
+}
