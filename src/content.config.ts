@@ -22,6 +22,15 @@ const helpCollection = defineCollection({
 	}),
 })
 
+const pagesCollection = defineCollection({
+	loader: glob({pattern: localizedContentPattern, base: './src/content/pages', generateId: generateLocalizedId}),
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		image: z.string().optional(),
+	}),
+})
+
 const changelogCollection = defineCollection({
 	loader: glob({pattern: '**/[^_]*.mdx', base: './src/content/changelog'}),
 	schema: z.object({
@@ -36,4 +45,5 @@ export const collections = {
 	'docs': docsCollection,
 	'help': helpCollection,
 	'changelog': changelogCollection,
+	'pages': pagesCollection,
 }
