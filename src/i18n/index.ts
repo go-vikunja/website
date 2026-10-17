@@ -8,5 +8,6 @@ export type MessageKey = keyof typeof en
 const messages: Record<Locale, Partial<Record<MessageKey, string>>> = {en, de}
 
 export function useTranslations(locale: Locale) {
-	return (key: MessageKey): string => messages[locale][key] || en[key]
+	return (key: MessageKey, params: Record<string, string> = {}): string =>
+		(messages[locale][key] || en[key]).replace(/\{(\w+)\}/g, (match, name) => params[name] ?? match)
 }
