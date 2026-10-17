@@ -1,0 +1,321 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import CloudOrSelfHosted from '../../partials/CloudOrSelfHosted.astro'
+import FAQSection from '../../FAQSection.astro'
+import Trans from '../../Trans.astro'
+import {VIKUNJA_CLOUD_LINK} from '../../../helpers/vikunjaCloudLink'
+import {useTranslations} from '../../../i18n'
+import {localizedHref, parsePathname} from '../../../i18n/routes'
+
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
+const pricingHref = localizedHref(locale, '/pricing')
+const importHref = localizedHref(locale, '/help/import-and-export/#importing-from-planka')
+const openidHref = localizedHref(locale, '/docs/openid')
+const ldapHref = localizedHref(locale, '/docs/ldap')
+const installHref = localizedHref(locale, '/docs/installing')
+const exportIssueHref = 'https://github.com/plankanban/planka/issues/670'
+const ssoIssueHref = 'https://github.com/plankanban/planka/issues/1754'
+const adminUserHref = 'https://docs.planka.cloud/docs/configuration/admin-user'
+
+const faqLinks = {
+    issueUrl: exportIssueHref,
+    importUrl: importHref,
+    pricingUrl: pricingHref,
+    openidUrl: openidHref,
+    ldapUrl: ldapHref,
+    proUrl: localizedHref(locale, '/pro'),
+    viewsUrl: localizedHref(locale, '/help/views'),
+    installUrl: installHref,
+    blogUrl: localizedHref(locale, '/changelog/vikunja-stays-open'),
+    adminUrl: adminUserHref,
+}
+const faqs = (['import', 'sso', 'kanban', 'server', 'future', 'lockedOut'] as const).map(id => ({
+    question: t(`compare.planka.faq.${id}.question`),
+    answer: t(`compare.planka.faq.${id}.answer`, faqLinks),
+}))
+---
+<Layout title={t('compare.planka.title')} description={t('compare.planka.description')}>
+    <Fragment slot="head">
+        <script type="application/ld+json" set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": t('footer.compare', {name: 'Planka'}),
+            "description": t('compare.planka.schemaDescription'),
+        })}></script>
+    </Fragment>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0" id="main-content">
+        <div class="pt-32 pb-8 px-4 text-center">
+            <h1 class="text-4xl font-display">
+                {t('footer.compare', {name: 'Planka'})}
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-balance">
+                {t('compare.planka.subtitle')}
+            </p>
+        </div>
+
+        <section class="max-w-3xl mx-auto mt-16 text-lg text-gray-700 dark:text-gray-300">
+            <p>
+                <Trans message="compare.planka.intro1">
+                    <a slot="moved" href={ssoIssueHref} target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.planka.intro1Moved')}</a>
+                </Trans>
+            </p>
+            <p class="mt-4">
+                {t('compare.planka.intro2')}
+            </p>
+            <p class="mt-4">
+                <Trans message="compare.planka.intro3">
+                    <a slot="openid" href={openidHref} class="underline">OpenID Connect</a>
+                    <a slot="ldap" href={ldapHref} class="underline">LDAP</a>
+                    <a slot="pro" href={localizedHref(locale, '/pro')}>{t('compare.planka.intro3Pro')}</a>
+                </Trans>
+            </p>
+            <p class="mt-4">
+                <Trans message="compare.planka.intro4">
+                    <a slot="importer" href={importHref} class="underline">{t('compare.planka.intro4Importer')}</a>
+                </Trans>
+            </p>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">{t('compare.common.whyAlternatives')}</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8">
+                {t('compare.planka.why.intro')}
+            </p>
+            <div class="space-y-6">
+                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
+                    {t('compare.planka.why.quote1')}
+                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
+                        {t('compare.common.githubUser', {name: 'nin0-dev'})}
+                        <a href="https://github.com/plankanban/planka/issues/1754#issuecomment-5224830049" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.common.issue', {number: '1754'})}</a>
+                    </footer>
+                </blockquote>
+                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
+                    {t('compare.planka.why.quote2')}
+                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
+                        {t('compare.common.githubUser', {name: 'Billos'})}
+                        <a href="https://github.com/plankanban/planka/issues/1754#issuecomment-5225029134" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.common.issue', {number: '1754'})}</a>
+                    </footer>
+                </blockquote>
+                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
+                    {t('compare.planka.why.quote3')}
+                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
+                        {t('compare.planka.why.maintainerAnnouncement')}
+                        <a href={ssoIssueHref} target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.common.issue', {number: '1754'})}</a>
+                    </footer>
+                </blockquote>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">{t('compare.common.whatChanges')}</h2>
+            <div class="max-w-3xl text-gray-700 dark:text-gray-300 space-y-6">
+                <div>
+                    <h3 class="font-display text-xl">{t('compare.planka.changes.sso.title')}</h3>
+                    <p class="mt-2">
+                        <Trans message="compare.planka.changes.sso.text">
+                            <a slot="oidc" href={openidHref} class="underline">OIDC</a>
+                            <a slot="ldap" href={ldapHref} class="underline">LDAP</a>
+                        </Trans>
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">{t('compare.planka.changes.license.title')}</h3>
+                    <p class="mt-2">
+                        <Trans message="compare.planka.changes.license.text">
+                            <a slot="link" href={localizedHref(locale, '/changelog/vikunja-stays-open')} class="underline">{t('compare.planka.changes.license.link')}</a>
+                        </Trans>
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">{t('compare.planka.changes.views.title')}</h3>
+                    <p class="mt-2">
+                        <Trans message="compare.planka.changes.views.text">
+                            <a slot="views" href={localizedHref(locale, '/help/views')} class="underline">{t('compare.common.fourViewsAnd')}</a>
+                        </Trans>
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">{t('compare.planka.changes.data.title')}</h3>
+                    <p class="mt-2">
+                        <Trans message="compare.planka.changes.data.text">
+                            <a slot="export" href={localizedHref(locale, '/help/import-and-export/#export')} class="underline">{t('compare.planka.changes.data.export')}</a>
+                            <a slot="noExport" href={exportIssueHref} target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.planka.changes.data.noExport')}</a>
+                        </Trans>
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">{t('compare.common.lightweight')}</h3>
+                    <p class="mt-2">
+                        {t('compare.planka.changes.lightweight.text')}
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-display text-xl">{t('compare.planka.changes.api.title')}</h3>
+                    <p class="mt-2">
+                        <Trans message="compare.planka.changes.api.text">
+                            <a slot="caldav" href={localizedHref(locale, '/help/caldav')} class="underline">{t('compare.common.caldavSupport')}</a>
+                            <a slot="api" href={localizedHref(locale, '/docs/api-documentation')} class="underline">{t('compare.common.restApi')}</a>
+                        </Trans>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-8">{t('compare.common.sideBySide')}</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th class="py-3 px-4 font-display text-lg"></th>
+                            <th class="py-3 px-4 font-display text-lg">Vikunja</th>
+                            <th class="py-3 px-4 font-display text-lg">Planka</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700 dark:text-gray-300">
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.planka.table.license')}</td>
+                            <td class="py-3 px-4">{t('compare.planka.table.licenseVikunja')}</td>
+                            <td class="py-3 px-4 text-balance">{t('compare.planka.table.licensePlanka')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.selfHostable')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">SSO / OIDC</td>
+                            <td class="py-3 px-4 text-balance">
+                                <Trans message="compare.planka.table.ssoVikunja">
+                                    <a slot="oidc" href={openidHref} class="underline">OIDC</a>
+                                    <a slot="ldap" href={ldapHref} class="underline">LDAP</a>
+                                </Trans>
+                            </td>
+                            <td class="py-3 px-4 text-balance">
+                                <Trans message="compare.planka.table.ssoPlanka">
+                                    <a slot="issue" href={ssoIssueHref} target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.common.issue', {number: '1754'})}</a>
+                                </Trans>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Kanban</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.views')}</td>
+                            <td class="py-3 px-4">{t('compare.common.fourViews')}</td>
+                            <td class="py-3 px-4">Kanban</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.planka.table.dataExport')}</td>
+                            <td class="py-3 px-4 text-balance">{t('compare.planka.table.dataExportVikunja')}</td>
+                            <td class="py-3 px-4 text-balance">
+                                <Trans message="compare.planka.table.dataExportPlanka">
+                                    <a slot="issue" href={exportIssueHref} target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.common.issue', {number: '670'})}</a>
+                                </Trans>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.planka.table.importers')}</td>
+                            <td class="py-3 px-4 text-balance">Trello, WeKan, Todoist, TickTick, Microsoft To Do, CSV</td>
+                            <td class="py-3 px-4">Trello</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.planka.table.import')}</td>
+                            <td class="py-3 px-4 text-balance"><a href={importHref} class="underline">{t('compare.planka.table.importVikunja')}</a></td>
+                            <td class="py-3 px-4">&mdash;</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">Backend</td>
+                            <td class="py-3 px-4">{t('compare.common.goBinary')}</td>
+                            <td class="py-3 px-4">Node.js</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.database')}</td>
+                            <td class="py-3 px-4">{t('compare.common.databases')}</td>
+                            <td class="py-3 px-4">PostgreSQL</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">CalDAV</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.common.no')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.planka.table.mobile')}</td>
+                            <td class="py-3 px-4">{t('compare.planka.table.mobileVikunja')}</td>
+                            <td class="py-3 px-4">{t('compare.planka.table.mobilePlanka')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.restApi')}</td>
+                            <td class="py-3 px-4 text-balance">{t('compare.planka.table.apiVikunja')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">{t('compare.planka.table.paidTier')}</td>
+                            <td class="py-3 px-4 text-balance">{t('compare.planka.table.paidTierVikunja')}</td>
+                            <td class="py-3 px-4">{t('compare.planka.table.paidTierPlanka')}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">{t('compare.common.pricing')}</h2>
+            <p class="text-gray-700 dark:text-gray-300">
+                {t('compare.planka.pricing.text1')}
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                <Trans message="compare.common.cloudPricing">
+                    <a slot="cloud" href={pricingHref} class="underline">Vikunja Cloud</a>
+                </Trans>
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                <Trans message="compare.common.seePricing">
+                    <a slot="link" href={pricingHref} class="underline">{t('compare.common.vikunjaPricing')}</a>
+                </Trans>
+            </p>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">{t('compare.common.howToSwitch')}</h2>
+            <p class="text-gray-700 dark:text-gray-300">
+                {t('compare.planka.switch.intro')}
+            </p>
+            <ol class="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300 mt-4">
+                <li>
+                    <Trans message="compare.planka.switch.step1">
+                        <a slot="link" href={adminUserHref} target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.planka.switch.step1Link')}</a>
+                    </Trans>
+                </li>
+                <li>
+                    <Trans message="compare.common.setUp">
+                        <a slot="setUp" href={installHref} class="underline">{t('compare.common.setUpVikunja')}</a>
+                        <a slot="cloud" href={VIKUNJA_CLOUD_LINK} class="underline">{t('compare.common.freeCloudTrial')}</a>
+                    </Trans>
+                </li>
+                <li>{t('compare.planka.switch.step3')}</li>
+                <li>{t('compare.planka.switch.step4')}</li>
+                <li>{t('compare.planka.switch.step5')}</li>
+            </ol>
+            <p class="text-gray-700 dark:text-gray-300 mt-4 text-balance">
+                <Trans message="compare.planka.switch.outro">
+                    <a slot="unstable" href={installHref} class="underline">{t('compare.planka.switch.unstable')}</a>
+                    <a slot="help" href={importHref} class="underline">{t('compare.planka.switch.help')}</a>
+                </Trans>
+            </p>
+        </section>
+
+        <FAQSection faqs={faqs} />
+
+        <div class="pb-20 flex items-center justify-center flex-col text-center">
+            <h2 class="font-display text-3xl mb-4">{t('compare.common.giveItATry')}</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-lg mx-auto text-balance">
+                {t('compare.planka.cta.text')}
+            </p>
+            <CloudOrSelfHosted />
+        </div>
+    </main>
+</Layout>
