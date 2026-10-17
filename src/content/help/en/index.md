@@ -1,6 +1,6 @@
 ---
 title: Help
-layout: '../layouts/Help.astro'
+hideInMenu: true
 description: Learn how to use Vikunja day to day. Start with the basics, then jump to the feature you need.
 ---
 
