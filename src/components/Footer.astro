@@ -2,8 +2,14 @@
 import LogoFull from './LogoFull.astro'
 import SubscribeToNewsletter from './partials/SubscribeToNewsletter.astro'
 import {VIKUNJA_CLOUD_LINK} from '../helpers/vikunjaCloudLink'
+import Trans from './Trans.astro'
+import {useTranslations} from '../i18n'
+import {localizedHref, parsePathname} from '../i18n/routes'
 
 const nowYear = (new Date()).getFullYear()
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
+const href = (path: string) => localizedHref(locale, path)
 ---
 <footer
         class="mx-auto mt-20 max-w-(--breakpoint-xl) border-t-2 border-gray-200 dark:border-gray-800 py-8 px-4 text-left text-sm text-gray-800 dark:text-gray-200 sm:flex sm:flex-wrap md:flex-nowrap"
@@ -12,17 +18,19 @@ const nowYear = (new Date()).getFullYear()
         <LogoFull class="h-8 w-28"/>
         <p class="py-4 text-gray-600 dark:text-gray-300">
             &copy; {nowYear}<br/>
-                Made with <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="inline size-4 text-red-500">
+                <Trans message="footer.madeWith">
+                    <svg slot="heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="inline size-4 text-red-500">
             <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
-        </svg> and
-            <a class="underline" href="https://astro.build" target="_blank" rel="nofollow noreferrer noopener">Astro</a>.
+        </svg>
+                    <a slot="astro" class="underline" href="https://astro.build" target="_blank" rel="nofollow noreferrer noopener">Astro</a>
+                </Trans>
         </p>
 
         <SubscribeToNewsletter/>
     </div>
     <div class="md:hidden basis-full h-0"></div>
     <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5">
-        <h3 class="mb-4 font-display text-base font-bold md:mb-6">Support the Project</h3>
+        <h3 class="mb-4 font-display text-base font-bold md:mb-6">{t('footer.support')}</h3>
         <a
                 href="https://www.buymeacoffee.com/kolaente"
                 class="flex py-2 align-middle hover:underline md:pt-0"
@@ -108,7 +116,7 @@ const nowYear = (new Date()).getFullYear()
                         d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                 />
             </svg>
-            <span> Sponsor on GitHub </span>
+            <span> {t('footer.sponsorGitHub')} </span>
         </a>
         <a
                 href="https://opencollective.com/vikunja"
@@ -116,62 +124,62 @@ const nowYear = (new Date()).getFullYear()
                 target="_blank"
                 rel="nofollow noreferrer noopener"
         >
-            Sponsor on Open Collective
+            {t('footer.sponsorOpenCollective')}
         </a>
-        <a href="/pro" class="py-2 hover:underline md:pt-0">
-            Get Vikunja Pro
+        <a href={href('/pro')} class="py-2 hover:underline md:pt-0">
+            {t('footer.getPro')}
         </a>
-        <a href="/support" class="py-2 hover:underline md:pt-0">
-            More ways to support
+        <a href={href('/support')} class="py-2 hover:underline md:pt-0">
+            {t('footer.moreWaysToSupport')}
         </a>
     </div>
     <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5">
-        <h3 class="mb-4 font-display text-base font-bold md:mb-6">Product</h3>
+        <h3 class="mb-4 font-display text-base font-bold md:mb-6">{t('footer.product')}</h3>
         <a
-                href="/features/#pricing"
+                href={href('/features/#pricing')}
                 class="py-2 hover:underline md:pt-0"
                 rel="noopener"
-        >Managed Service</a
+        >{t('footer.managedService')}</a
         >
         <a
                 href={`${VIKUNJA_CLOUD_LINK}&utm_source=io&utm_medium=io&utm_campaign=footer`}
                 class="py-2 hover:underline md:pt-0"
                 rel="noopener"
         >
-            Get it Hosted
+            {t('footer.getHosted')}
         </a>
         <a
             href="/stickers"
             rel="noopener"
             class="py-2 hover:underline md:pt-0"
         >
-            Buy Stickers
+            {t('footer.buyStickers')}
         </a>
-        <a href="/features" class="py-2 hover:underline md:pt-0">Features</a>
-        <a href="/convince" class="py-2 hover:underline md:pt-0">Convince Your Boss</a>
-        <a href="/compare/todoist" class="py-2 hover:underline md:pt-0">Vikunja vs Todoist</a>
-        <a href="/compare/trello" class="py-2 hover:underline md:pt-0">Vikunja vs Trello</a>
-        <a href="/compare/notion" class="py-2 hover:underline md:pt-0">Vikunja vs Notion</a>
-        <a href="/compare/wekan" class="py-2 hover:underline md:pt-0">Vikunja vs WeKan</a>
-        <a href="/compare/planka" class="py-2 hover:underline md:pt-0">Vikunja vs Planka</a>
+        <a href={href('/features')} class="py-2 hover:underline md:pt-0">{t('nav.features')}</a>
+        <a href={href('/convince')} class="py-2 hover:underline md:pt-0">{t('footer.convince')}</a>
+        <a href={href('/compare/todoist')} class="py-2 hover:underline md:pt-0">{t('footer.compare', {name: 'Todoist'})}</a>
+        <a href={href('/compare/trello')} class="py-2 hover:underline md:pt-0">{t('footer.compare', {name: 'Trello'})}</a>
+        <a href={href('/compare/notion')} class="py-2 hover:underline md:pt-0">{t('footer.compare', {name: 'Notion'})}</a>
+        <a href={href('/compare/wekan')} class="py-2 hover:underline md:pt-0">{t('footer.compare', {name: 'WeKan'})}</a>
+        <a href={href('/compare/planka')} class="py-2 hover:underline md:pt-0">{t('footer.compare', {name: 'Planka'})}</a>
         <a 
             href="https://code.vikunja.io/"
             class="py-2 hover:underline md:pt-0"
             rel="noopener"
         >
-           Code 
+           {t('footer.code')} 
         </a>
     </div>
     <div class="md:hidden basis-full h-0"></div>
     <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5">
-        <h3 class="mb-4 font-display text-base font-bold md:mb-6">Social</h3>
+        <h3 class="mb-4 font-display text-base font-bold md:mb-6">{t('footer.social')}</h3>
         <a
             href="https://community.vikunja.io"
             class="py-2 hover:underline md:pt-0"
             rel="noopener"
             target="_blank"
         >
-            Community Forum
+            {t('footer.forum')}
         </a>
         <a
                 href="https://matrix.to/#/#vikunja:matrix.org"
@@ -179,7 +187,7 @@ const nowYear = (new Date()).getFullYear()
                 target="_blank"
                 rel="nofollow noreferrer noopener"
         >
-            Chat on Matrix
+            {t('footer.matrix')}
         </a>
         <a
             href="https://instagram.com/vikunjaio"
@@ -223,14 +231,14 @@ const nowYear = (new Date()).getFullYear()
         </a>
     </div>
     <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5">
-        <h3 class="mb-4 font-display text-base font-bold md:mb-6">About</h3>
-        <a href="/" class="py-2 hover:underline md:pt-0">Home</a>
-        <a href="/docs" class="py-2 hover:underline md:pt-0">Docs</a>
-        <a href="/contact" class="py-2 hover:underline md:pt-0">Contact</a>
-        <a href="/security" class="py-2 hover:underline md:pt-0">Security</a>
-        <a href="/survey" class="py-2 hover:underline md:pt-0">Feedback Survey</a>
-        <a href="/privacy" class="py-2 hover:underline md:pt-0">Privacy Policy</a>
-        <a href="/imprint" class="py-2 hover:underline md:pt-0">Imprint</a>
+        <h3 class="mb-4 font-display text-base font-bold md:mb-6">{t('footer.about')}</h3>
+        <a href={href('/')} class="py-2 hover:underline md:pt-0">{t('nav.home')}</a>
+        <a href={href('/docs')} class="py-2 hover:underline md:pt-0">{t('nav.docs')}</a>
+        <a href={href('/contact')} class="py-2 hover:underline md:pt-0">{t('footer.contact')}</a>
+        <a href={href('/security')} class="py-2 hover:underline md:pt-0">{t('footer.security')}</a>
+        <a href={href('/survey')} class="py-2 hover:underline md:pt-0">{t('footer.survey')}</a>
+        <a href={href('/privacy')} class="py-2 hover:underline md:pt-0">{t('footer.privacy')}</a>
+        <a href={href('/imprint')} class="py-2 hover:underline md:pt-0">{t('footer.imprint')}</a>
     </div>
 </footer>
 
