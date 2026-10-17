@@ -45,5 +45,10 @@
 	"newsletter.consent": "By clicking “Subscribe to our newsletter”, you consent to us sending you our newsletter on a regular basis. You can withdraw your consent at any time. For more information, please see our {privacyPolicy}.",
 	"newsletter.success": "Success! We've sent you a message to confirm your sign up.",
 	"newsletter.selectList": "Please select at least one newsletter.",
-	"newsletter.error": "An error occurred: {error} Please try again."
+	"newsletter.error": "An error occurred: {error} Please try again.",
+	"cloudOrSelfHosted.selfHost": "Use the open-source version on your own server",
+	"cloudOrSelfHosted.getStarted": "Get Started",
+	"cloudOrSelfHosted.or": "OR",
+	"cloudOrSelfHosted.noServer": "Don't have a server or don't want to deal with it?",
+	"cloudOrSelfHosted.meetCloud": "Meet Vikunja Cloud"
 }
