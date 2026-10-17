@@ -7,6 +7,7 @@ import sitemap from '@astrojs/sitemap'
 import cloudflare from '@astrojs/cloudflare'
 import tailwindcss from '@tailwindcss/vite'
 import {defaultLocale, locales} from './src/i18n/locales.ts'
+import {rehypeLocalizeLinks} from './src/i18n/rehype-localize-links.ts'
 
 // https://astro.build/config
 export default defineConfig({
@@ -54,6 +55,7 @@ export default defineConfig({
 		// below (heading slugs + anchor links) keep working for our .mdx content.
 		processor: unified({
 			rehypePlugins: [
+				rehypeLocalizeLinks,
 				rehypeSlug,
 				[
 					rehypeAutolinkHeadings,
