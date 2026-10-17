@@ -1,0 +1,16 @@
+---
+import {type MessageKey, useTranslations} from '../i18n'
+import {parsePathname} from '../i18n/routes'
+
+// Renders a message, filling `{name}` placeholders with the slot of the same name.
+interface Props {
+	message: MessageKey
+}
+
+const {message} = Astro.props
+const t = useTranslations(parsePathname(Astro.url.pathname).locale)
+const parts = await Promise.all(
+	t(message).split(/\{(\w+)\}/).map((part, i) => i % 2 === 0 ? part : Astro.slots.render(part)),
+)
+---
+{parts.map((part, i) => i % 2 === 0 ? part : <Fragment set:html={part}/>)}

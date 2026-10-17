@@ -9,6 +9,9 @@ import '../styles/global.css'
 
 import Footer from '../components/Footer.astro'
 import Header from '../components/Header.astro'
+import {useTranslations} from '../i18n'
+import {defaultLocale} from '../i18n/locales'
+import {localizedHref, parsePathname, translationsOf} from '../i18n/routes'
 
 interface Props {
 	title: string;
@@ -24,10 +27,15 @@ const imageUrl = image
 	: new URL('/images/vikunja.jpg', Astro.url)
 
 const canonical = (new URL(Astro.url.pathname, Astro.site)).toString()
+
+const {locale, path} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
+const translations = translationsOf(path)
+const alternateUrl = (l: typeof locale) => new URL(localizedHref(l, path === '/' ? path : `${path}/`), Astro.site).toString()
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
 <head>
     <title>{title}</title>
 
@@ -57,6 +65,10 @@ const canonical = (new URL(Astro.url.pathname, Astro.site)).toString()
     <meta name="url" content={canonical}/>
     <meta name="twitter:url" content={canonical}/>
     <meta property="og:url" content={canonical}/>
+	{translations.length > 1 && <>
+        {translations.map(l => <link rel="alternate" hreflang={l} href={alternateUrl(l)}/>)}
+        <link rel="alternate" hreflang="x-default" href={alternateUrl(defaultLocale)}/>
+	</>}
 
     <!-- Images -->
     <meta itemprop="image" content={imageUrl}/>
@@ -89,7 +101,7 @@ const canonical = (new URL(Astro.url.pathname, Astro.site)).toString()
 <body class="bg-gray-50 dark:bg-gray-900 font-sans text-gray-900 dark:text-gray-100 antialiased">
 
 <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:font-bold focus:text-white focus:shadow-lg">
-    Skip to main content
+    {t('layout.skipToContent')}
 </a>
 
 <Header/>

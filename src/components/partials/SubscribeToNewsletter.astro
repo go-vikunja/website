@@ -1,44 +1,52 @@
 ---
 import Button from '../Button.astro'
 import type {NewsletterList} from '../../helpers/newsletter'
+import Trans from '../Trans.astro'
+import {useTranslations} from '../../i18n'
+import {localizedHref, parsePathname} from '../../i18n/routes'
 
 interface Props {
 	defaultList?: NewsletterList
 }
 
 const {defaultList = 'news'} = Astro.props
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
 ---
 
-<div data-newsletter="signup">
-    <p class="font-display text-base font-bold">Subscribe to our newsletter</p>
+<div
+        data-newsletter="signup"
+        data-message-select-list={t('newsletter.selectList')}
+        data-message-error={t('newsletter.error')}
+>
+    <p class="font-display text-base font-bold">{t('newsletter.subscribe')}</p>
     <p class="mt-2">
-        We'll email you about releases and news about Vikunja. Low traffic. Unsubscribe any
-        time.
+        {t('newsletter.intro')}
     </p>
 
     <form method="post" action="" class="mt-4! w-ful">
         <p>
             <label>
-                <span class="sr-only">Your mail address</span>
+                <span class="sr-only">{t('newsletter.email')}</span>
                 <input
                         name="email"
                         required
                         type="email"
-                        placeholder="Your mail address"
+                        placeholder={t('newsletter.email')}
                         class="inline-flex relative justify-start items-center py-2 px-3 m-0 w-full max-w-full h-10 font-sans text-base leading-normal align-top bg-white dark:bg-gray-800 rounded-sm border border-solid appearance-none cursor-text border-gray-300 dark:border-gray-700 text-neutral-700 dark:text-gray-200"
                 />
             </label>
         </p>
 
         <fieldset class="mt-2 flex flex-col gap-1">
-            <legend class="sr-only">What do you want to receive?</legend>
+            <legend class="sr-only">{t('newsletter.listsLegend')}</legend>
             <label class="flex items-center gap-2">
                 <input type="checkbox" name="list" value="news" checked={defaultList === 'news'} class="text-primary">
-                Releases and news
+                {t('newsletter.listNews')}
             </label>
             <label class="flex items-center gap-2">
                 <input type="checkbox" name="list" value="security" checked={defaultList === 'security'} class="text-primary">
-                Security announcements
+                {t('newsletter.listSecurity')}
             </label>
         </fieldset>
 
@@ -50,18 +58,18 @@ const {defaultList = 'news'} = Astro.props
                 class="mt-2! w-full"
                 type="submit"
         >
-            Subscribe to our newsletter
+            {t('newsletter.subscribe')}
         </Button>
 
         <p class="mt-2 text-sm text-neutral-500 dark:text-gray-400">
-            By clicking &ldquo;Subscribe to our newsletter&rdquo;, you consent to us sending you our
-            newsletter on a regular basis. You can withdraw your consent at any time. For more
-            information, please see our <a href="/privacy" class="underline">Privacy Policy</a>.
+            <Trans message="newsletter.consent">
+                <a slot="privacyPolicy" href={localizedHref(locale, '/privacy')} class="underline">{t('footer.privacy')}</a>
+            </Trans>
         </p>
     </form>
 
     <p class="text-green-500 hidden pt-2" data-newsletter="success">
-        Success! We've sent you a message to confirm your sign up.
+        {t('newsletter.success')}
     </p>
 </div>
 
@@ -97,11 +105,12 @@ const {defaultList = 'news'} = Astro.props
 
 		form.addEventListener('focusin', loadTurnstile)
 
+		const messages = (signup as HTMLElement).dataset
 		const listCheckboxes = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="list"]'))
 
 		function validateLists() {
 			const anyChecked = listCheckboxes.some(checkbox => checkbox.checked)
-			listCheckboxes[0]?.setCustomValidity(anyChecked ? '' : 'Please select at least one newsletter.')
+			listCheckboxes[0]?.setCustomValidity(anyChecked ? '' : messages.messageSelectList ?? '')
 		}
 
 		listCheckboxes.forEach(checkbox => checkbox.addEventListener('change', validateLists))
@@ -109,7 +118,7 @@ const {defaultList = 'news'} = Astro.props
 
 		function showError(error: string) {
 			if (errorMessage) {
-				errorMessage.textContent = 'An error occurred: ' + error + ' Please try again.'
+				errorMessage.textContent = (messages.messageError ?? '').replace('{error}', error)
 				errorMessage.classList.remove('hidden')
 			}
 			console.error('Error during newsletter sign up:', error)
