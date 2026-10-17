@@ -1,6 +1,8 @@
 ---
 import {type MarkdownHeading} from 'astro'
 import TableOfContentsHeading from './TableOfContentsHeading.astro'
+import {useTranslations} from '../i18n'
+import {parsePathname} from '../i18n/routes'
 
 interface Props {
 	headings: MarkdownHeading[]
@@ -27,11 +29,12 @@ function buildToc(headings: MarkdownHeading[]) {
 }
 
 const toc = buildToc(Astro.props.headings)
+const t = useTranslations(parsePathname(Astro.url.pathname).locale)
 ---
 {toc.length > 0 &&
         <div class="sticky top-2">
             <div class="font-display font-bold">
-                On this page
+                {t('layout.onThisPage')}
             </div>
             <nav class="text-gray-600 dark:text-gray-300 pt-2 max-h-[calc(100vh-2rem)] overflow-y-auto overflow-x-hidden"
                  id="toc">
