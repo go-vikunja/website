@@ -1,0 +1,205 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import CloudOrSelfHosted from '../../partials/CloudOrSelfHosted.astro'
+import FAQSection from '../../FAQSection.astro'
+import Trans from '../../Trans.astro'
+import {VIKUNJA_CLOUD_LINK} from '../../../helpers/vikunjaCloudLink'
+import {useTranslations} from '../../../i18n'
+import {localizedHref, parsePathname} from '../../../i18n/routes'
+
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
+const pricingHref = localizedHref(locale, '/pricing')
+const viewsHref = localizedHref(locale, '/help/views')
+
+const faqLinks = {
+    importUrl: localizedHref(locale, '/help/import-and-export/#import'),
+    webhooksUrl: localizedHref(locale, '/help/webhooks'),
+    cloudLink: VIKUNJA_CLOUD_LINK,
+}
+const faqs = (['import', 'automations', 'free'] as const).map(id => ({
+    question: t(`compare.trello.faq.${id}.question`),
+    answer: t(`compare.trello.faq.${id}.answer`, faqLinks),
+}))
+---
+<Layout title={t('compare.trello.title')} description={t('compare.trello.description')}>
+    <Fragment slot="head">
+        <script type="application/ld+json" set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": t('footer.compare', {name: 'Trello'}),
+            "description": t('compare.trello.schemaDescription'),
+        })}></script>
+    </Fragment>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0" id="main-content">
+        <div class="pt-32 pb-8 px-4 text-center">
+            <h1 class="text-4xl font-display">
+                {t('footer.compare', {name: 'Trello'})}
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-balance">
+                {t('compare.trello.subtitle')}
+            </p>
+        </div>
+
+        <section class="max-w-3xl mx-auto mt-16 text-lg text-gray-700 dark:text-gray-300">
+            <p>
+                <Trans message="compare.trello.intro1">
+                    <a slot="calendar" href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.trello.intro1Calendar')}</a>
+                </Trans>
+            </p>
+            <p class="mt-4">
+                <Trans message="compare.trello.intro2">
+                    <a slot="limits" href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.trello.intro2Limits')}</a>
+                    <a slot="csv" href="https://support.atlassian.com/trello/docs/exporting-data-from-trello/" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.trello.intro2Csv')}</a>
+                </Trans>
+            </p>
+            <p class="mt-4">
+                <Trans message="compare.trello.intro3">
+                    <a slot="views" href={viewsHref} class="underline">{t('compare.trello.intro3Views')}</a>
+                </Trans>
+            </p>
+            <p class="mt-4">
+                {t('compare.trello.intro4')}
+            </p>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-4">{t('compare.trello.paid.title')}</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">
+                {t('compare.trello.paid.intro')}
+            </p>
+            <div class="max-w-3xl text-gray-700 dark:text-gray-300 space-y-4">
+                <p>
+                    <Trans message="compare.trello.paid.views">
+                        <strong slot="title">{t('compare.trello.paid.viewsTitle')}</strong>
+                        <a slot="locked" href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.trello.paid.viewsLocked')}</a>
+                        <a slot="switch" href={viewsHref} class="underline">{t('compare.trello.paid.viewsSwitch')}</a>
+                    </Trans>
+                </p>
+                <p>
+                    <Trans message="compare.trello.paid.csv">
+                        <strong slot="title">{t('compare.trello.paid.csvTitle')}</strong>
+                        <a slot="premiumOnly" href="https://support.atlassian.com/trello/docs/exporting-data-from-trello/" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.trello.paid.csvPremiumOnly')}</a>
+                    </Trans>
+                </p>
+                <p>
+                    <Trans message="compare.trello.paid.boards">
+                        <strong slot="title">{t('compare.trello.paid.boardsTitle')}</strong>
+                        <a slot="caps" href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.trello.paid.boardsCaps')}</a>
+                    </Trans>
+                </p>
+                <p>
+                    <Trans message="compare.trello.paid.eu">
+                        <strong slot="title">{t('compare.trello.paid.euTitle')}</strong>
+                    </Trans>
+                </p>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-8">{t('compare.common.sideBySide')}</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th class="py-3 px-4 font-display text-lg"></th>
+                            <th class="py-3 px-4 font-display text-lg">Vikunja</th>
+                            <th class="py-3 px-4 font-display text-lg">Trello</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700 dark:text-gray-300">
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.selfHostable')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.common.no')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.openSource')}</td>
+                            <td class="py-3 px-4">AGPLv3</td>
+                            <td class="py-3 px-4">{t('compare.common.no')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.views')}</td>
+                            <td class="py-3 px-4">{t('compare.common.fourViews')}</td>
+                            <td class="py-3 px-4"><a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.trello.table.views')}</a></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.trello.table.boards')}</td>
+                            <td class="py-3 px-4">{t('compare.common.unlimited')}</td>
+                            <td class="py-3 px-4"><a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">10</a></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.trello.table.gantt')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4"><a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.trello.table.ganttTrello')}</a></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.trello.table.attachments')}</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4"><a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.trello.table.attachmentsTrello')}</a></td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">CalDAV</td>
+                            <td class="py-3 px-4">{t('compare.common.yes')}</td>
+                            <td class="py-3 px-4">{t('compare.common.no')}</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 dark:border-gray-800">
+                            <td class="py-3 px-4 font-medium">{t('compare.common.row.euDataResidency')}</td>
+                            <td class="py-3 px-4">{t('compare.common.euResidency')}</td>
+                            <td class="py-3 px-4">{t('compare.trello.table.euTrello')}</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">{t('compare.trello.table.enterpriseMinimum')}</td>
+                            <td class="py-3 px-4">{t('compare.trello.table.noMinimum')}</td>
+                            <td class="py-3 px-4"><a href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.trello.table.users')}</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">{t('compare.common.pricing')}</h2>
+            <p class="text-gray-700 dark:text-gray-300">
+                <Trans message="compare.trello.pricing.text1">
+                    <a slot="cloud" href={pricingHref} class="underline">Vikunja Cloud</a>
+                </Trans>
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                <Trans message="compare.trello.pricing.text2">
+                    <a slot="competitor" href="https://trello.com/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.trello.pricing.competitor')}</a>
+                </Trans>
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                {t('compare.common.pricesAsOf', {name: 'Trello', site: 'trello.com'})}
+                <Trans message="compare.common.seePricing">
+                    <a slot="link" href={pricingHref} class="underline">{t('compare.common.vikunjaPricing')}</a>
+                </Trans>
+            </p>
+        </section>
+
+        <section class="max-w-3xl mx-auto mt-20">
+            <h2 class="font-display text-3xl mb-6">{t('compare.common.howToSwitch')}</h2>
+            <ol class="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300">
+                <li>
+                    <Trans message="compare.common.setUp">
+                        <a slot="setUp" href={localizedHref(locale, '/install')} class="underline">{t('compare.common.setUpVikunja')}</a>
+                        <a slot="cloud" href={VIKUNJA_CLOUD_LINK} class="underline">{t('compare.common.cloudTrial')}</a>
+                    </Trans>
+                </li>
+                <li>{t('compare.trello.switch.step2')}</li>
+                <li>{t('compare.trello.switch.step3')}</li>
+            </ol>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                {t('compare.trello.switch.outro')}
+            </p>
+        </section>
+
+        <FAQSection faqs={faqs} />
+
+        <div class="pb-20 flex items-center justify-center flex-col text-center">
+            <h2 class="font-display text-3xl mb-8">{t('compare.common.tryItOut')}</h2>
+            <CloudOrSelfHosted />
+        </div>
+    </main>
+</Layout>
