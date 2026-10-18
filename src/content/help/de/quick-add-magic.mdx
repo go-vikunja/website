@@ -1,0 +1,119 @@
+---
+title: Quick Add Magic
+slug: quick-add-magic
+description: Erstell Aufgaben schneller, indem du Labels, Daten, Prioritäten und mehr direkt in den Aufgabentitel schreibst.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+
+Mit Quick Add Magic legst du Details wie Fälligkeitsdatum, Labels und Priorität schon beim Tippen des Aufgabentitels fest. Statt erst eine Aufgabe zu erstellen und dann ihre Felder einzeln zu bearbeiten, erledigst du alles in einem Schritt.
+
+Wenn du zum Beispiel Folgendes tippst:
+
+```
+Verpackungsmaterial bestellen *logistik !3 tomorrow at 5pm
+```
+
+entsteht eine Aufgabe namens „Verpackungsmaterial bestellen“ mit dem Label `logistik`, Priorität 3 und Fälligkeit morgen um 17 Uhr. Datums-, Zeit- und Wiederholungsangaben wie `tomorrow` oder `every week` erkennt Vikunja nur auf Englisch.
+
+<Screenshot src="quick-add-magic-parsed" alt="Quick Add Magic zerlegt einen Aufgabentitel in einzelne Felder" />
+
+Quick Add Magic funktioniert in der Weboberfläche und nutzt den unten beschriebenen **Standardmodus**. Wenn du von Todoist kommst, kannst du in deinen Einstellungen auf [Todoist-kompatible Kürzel](#todoist-mode) umstellen.
+
+## Labels
+
+Ein Label fügst du hinzu, indem du `*` und den Namen des Labels tippst. Gibt es das Label noch nicht, erstellt Vikunja es für dich.
+
+- `*logistik` fügt das Label „logistik“ hinzu
+- `*"wartet auf andere"` setzt Labels aus mehreren Wörtern in Anführungszeichen
+- Du kannst mehrere Labels hinzufügen: `*dringend *logistik`
+
+## Zugewiesene
+
+Weise die Aufgabe jemandem zu, indem du `@` und den Anmeldenamen tippst. Du kannst mehrere Personen zuweisen.
+
+- `@sarah` weist die Aufgabe sarah zu
+- `@sarah @david` weist sie beiden zu
+
+## Projekt
+
+Pack die Aufgabe in ein bestimmtes [Projekt](/help/projects), indem du `+` und den Projektnamen tippst. Das Projekt muss schon existieren.
+
+- `+Privat` legt die Aufgabe ins Projekt „Privat“
+- `+"Büroumzug Nord"` setzt Projekte aus mehreren Wörtern in Anführungszeichen
+
+## Priorität
+
+Setz eine Priorität, indem du `!` und eine Zahl von 1 (niedrig) bis 5 (dringend) tippst.
+
+- `!1` niedrige Priorität
+- `!5` dringend
+
+## Datum und Uhrzeit
+
+Schreib irgendwo in den Aufgabentitel ein Datum, um es als Fälligkeitsdatum zu setzen. Vikunja versteht viele natürliche Formate:
+
+- **Relativ:** today, tonight, tomorrow, next monday, this weekend, later this week, next week, next month, end of month, in 5 days
+- **Wochentage:** tuesday (nimmt den nächsten Dienstag)
+- **Bestimmte Daten:** 17/02/2025, Feb 17, 17th (im aktuellen Monat)
+
+Eine Uhrzeit hängst du mit `at` an: `tomorrow at 5pm`, `next monday at 17:00`.
+
+## Wiederkehrende Aufgaben
+
+Damit sich eine Aufgabe [wiederholt](/help/dates-and-reminders), schreib `every` und ein Intervall dazu:
+
+- `every day`
+- `every 3 days`
+- `every week`
+- `every 2 weeks`
+- `every month`
+
+## Mehrere Aufgaben auf einmal erstellen
+
+<Screenshot src="quick-add-magic-multiline" alt="Mehrere Aufgaben mit mehrzeiliger Eingabe erstellen" />
+
+Um mehrere Aufgaben in einem Rutsch zu erstellen, schreib jede Aufgabe in eine eigene Zeile. Mit `Shift + Enter` beginnst du eine neue Zeile, oder du fügst mehrzeiligen Text aus einem anderen Dokument ein.
+
+### Unteraufgaben
+
+Wenn du mehrere Aufgaben eingibst, rück eine Zeile ein, um sie zur Unteraufgabe der Zeile darüber zu machen. Du kannst mit Leerzeichen oder Tabs einrücken, bleib innerhalb einer Eingabe nur bei einem davon.
+
+```
+Umzugstag planen
+  Laderampe reservieren
+  Alle Abteilungen informieren
+    Abteilungsschilder drucken
+```
+
+So entsteht „Umzugstag planen“ als übergeordnete Aufgabe mit „Laderampe reservieren“ und „Alle Abteilungen informieren“ als Unteraufgaben. „Abteilungsschilder drucken“ wird eine Unteraufgabe von „Alle Abteilungen informieren“.
+
+## Alles zusammen
+
+```
+Umzugs-Check-in +"Büroumzug Nord" *dringend every week monday at 10am
+```
+
+Das erstellt eine wöchentlich wiederkehrende Aufgabe namens „Umzugs-Check-in“ im Projekt „Büroumzug Nord“ mit dem Label „dringend“, fällig jeden Montag um 10 Uhr.
+
+```
+Sitzplan fertigstellen *dringend *logistik @david in 5 days
+```
+
+Das erstellt eine Aufgabe für david mit zwei Labels, die in 5 Tagen fällig ist.
+
+## Todoist-Modus
+
+Wenn du an die [Quick-Add-Kürzel von Todoist](https://todoist.com/help/articles/use-task-quick-add-in-todoist-va4Lhpzz) gewöhnt bist, kannst du Vikunja auf diese Schlüsselwörter umstellen.
+
+Geh in die [Einstellungen](/help/settings), scroll zu „Quick Add Magic Modus“ und wähl „Todoist“.
+
+## Erkennung überspringen
+
+Enthält dein Aufgabentitel Wörter, die Quick Add Magic normalerweise auswerten würde (wie „tomorrow“ oder „monday“), setz den ganzen Titel in Anführungszeichen, um die Erkennung abzuschalten:
+
+```
+"Milch kaufen tomorrow"
+```
+
+So entsteht eine Aufgabe mit genau dem Titel „Milch kaufen tomorrow“, ohne dass ein Fälligkeitsdatum gesetzt wird.
