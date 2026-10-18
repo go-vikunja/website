@@ -8,6 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "postinstall": "astro sync",
     "lint": "astro check --root ./src",
     "serve-dist": "node ./dist/server/entry.mjs",
     "deploy-cf": "pnpm run build && wrangler deploy"
