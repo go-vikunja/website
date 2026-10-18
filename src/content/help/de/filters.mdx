@@ -1,0 +1,153 @@
+---
+title: Filter
+slug: filters
+description: >-
+  Filtere Aufgaben nach Fälligkeitsdatum, Priorität, Labels, Zugewiesenen und mehr
+  mit der Abfragesyntax von Vikunja.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+import Callout from '@/components/Callout.astro';
+import DateMathExamples from '@/components/partials/DateMathExamples.astro';
+
+Mit Filtern grenzt du deine Aufgabenliste so ein, dass du nur siehst, was gerade wichtig ist. Statt dich durch alles zu scrollen, schreibst du eine kurze Abfrage und Vikunja zeigt nur die passenden Aufgaben an.
+
+## Häufige Beispiele
+
+Kopier eines davon in ein Filterfeld, um es auszuprobieren:
+
+|                                         |                                           |
+|-----------------------------------------|-------------------------------------------|
+| `done = false`                          | Alle offenen Aufgaben                     |
+| `dueDate < now`                         | Überfällige Aufgaben                      |
+| `dueDate > now && dueDate < now+7d`     | Aufgaben, die in den nächsten 7 Tagen fällig sind |
+| `done = false && priority >= 3`         | Offene Aufgaben mit hoher Priorität (ab 3) |
+| `assignees in yourUsername`              | Aufgaben, die dir zugewiesen sind         |
+| `createdBy = alice`                     | Aufgaben, die `alice` erstellt hat        |
+| `labels in urgent`                      | Aufgaben mit dem Label „urgent“           |
+| `labels in urgent, logistics`           | Aufgaben mit dem Label „urgent“ oder „logistics“ |
+| `done = false && dueDate < now`         | Offene, überfällige Aufgaben              |
+
+Du kannst diese Muster beliebig kombinieren. Zum Beispiel offene Aufgaben mit hoher Priorität, die diese Woche fällig sind:
+
+```
+done = false && priority >= 3 && dueDate > now && dueDate < now+7d
+```
+
+## Wo du Filter nutzen kannst
+
+<Screenshot src="filters-active" alt="Ein aktiver Filter in einer Ansicht" />
+
+- **[Ansichten](/help/views):** Füg einer beliebigen Ansicht einen Filter hinzu, damit sie nur passende Aufgaben zeigt.
+- **[Gespeicherte Filter](/help/saved-filters):** Erstell einen wiederverwendbaren Filter, der in deiner Seitenleiste erscheint und projektübergreifend funktioniert.
+- **[Dashboard](/help/dashboard):** Leg einen gespeicherten Filter fest, um zu steuern, welche Aufgaben auf deiner Startseite erscheinen.
+
+<Callout type="info">
+**„Aufgaben ohne Werte einbeziehen“** ist standardmäßig aktiviert. Ein Filter wie `assignees in sarah` liefert dann auch Aufgaben, die *niemandem* zugewiesen sind. Deaktiviere diesen Schalter in den Filtereinstellungen, wenn du nur Aufgaben sehen willst, bei denen ein Wert gesetzt ist.
+</Callout>
+
+<Screenshot src="filters-include-nulls" alt="Schalter „Aufgaben ohne Werte einbeziehen“ in den Filtereinstellungen" />
+
+## So schreibst du einen Filter
+
+Eine Filterabfrage besteht aus drei Teilen: einem **Feld**, einem **Operator** und einem **Wert**.
+
+```
+priority >= 3
+```
+
+- `priority` ist das Feld (was du prüfst)
+- `>=` ist der Operator (wie verglichen wird)
+- `3` ist der Wert (womit verglichen wird)
+
+Um Bedingungen zu kombinieren, nutzt du `&&` (und) oder `||` (oder):
+
+```
+done = false && priority >= 3
+```
+
+Mit Klammern gruppierst du Bedingungen:
+
+```
+(priority = 1 || priority = 2) && dueDate <= now
+```
+
+Der Filtereditor schlägt dir beim Tippen Feldnamen, Labelnamen, Anmeldenamen und Projektnamen vor.
+
+<Screenshot src="filters-editor-autocomplete" alt="Filtereditor mit Vorschlägen zur Autovervollständigung" />
+
+### Felder
+
+|               |                                                                                               |
+|---------------|-----------------------------------------------------------------------------------------------|
+| `done`        | Ob die Aufgabe erledigt ist (`true` oder `false`)                                             |
+| `priority`    | Prioritätsstufe (1 bis 5)                                                                     |
+| `percentDone` | Fortschritt in Prozent (0 bis 100)                                                            |
+| `dueDate`     | Das [Fälligkeitsdatum](/help/dates-and-reminders)                                             |
+| `startDate`   | Das [Anfangsdatum](/help/dates-and-reminders)                                                 |
+| `endDate`     | Das [Enddatum](/help/dates-and-reminders)                                                     |
+| `doneAt`      | Wann die Aufgabe erledigt wurde                                                               |
+| `assignees`   | Die [Zugewiesenen](/help/tasks#assignees)                                                     |
+| `createdBy`   | Die Person, die die Aufgabe erstellt hat, abgeglichen über den Anmeldenamen                   |
+| `labels`      | Die [Labels](/help/labels) der Aufgabe                                                        |
+| `project`     | Das [Projekt](/help/projects) (nur in [gespeicherten Filtern](/help/saved-filters))           |
+| `reminders`   | Die [Erinnerungen](/help/dates-and-reminders), die für die Aufgabe gesetzt sind               |
+| `created`     | Wann die Aufgabe erstellt wurde                                                               |
+| `updated`     | Wann die Aufgabe zuletzt geändert wurde                                                       |
+
+Zeichenketten mit Leerzeichen oder Sonderzeichen müssen in Anführungszeichen stehen: `"2024-03-11"`, `"waiting on others"`.
+
+Nutze `createdBy = alice` für Aufgaben von einer bestimmten Person oder `createdBy in alice, bob` für Aufgaben, die eine der beiden Personen erstellt hat. Der Editor schlägt dir beim Tippen passende Anmeldenamen vor.
+
+### Operatoren
+
+|          |                                                    |
+|----------|----------------------------------------------------|
+| `=`      | Gleich                                             |
+| `!=`     | Ungleich                                           |
+| `>`      | Größer als                                         |
+| `>=`     | Größer oder gleich                                 |
+| `<`      | Kleiner als                                        |
+| `<=`     | Kleiner oder gleich                                |
+| `like`   | Passt auf ein Muster (`%` als Platzhalter)         |
+| `in`     | Passt auf einen der Werte in einer kommagetrennten Liste |
+| `not in` | Passt auf keinen der Werte in einer kommagetrennten Liste |
+
+## Relative Datumsangaben
+
+Statt ein festes Datum einzutippen, nimm `now`, damit dein Filter automatisch aktuell bleibt.
+
+Mit Einheiten wie `d` (Tage), `w` (Wochen) oder `M` (Monate) addierst oder subtrahierst du Zeit von `now`:
+
+|                    |                                  |
+|--------------------|----------------------------------|
+| `now`              | Genau jetzt                      |
+| `now+1d`           | Morgen                           |
+| `now-1d`           | Gestern                          |
+| `now+7d`           | In einer Woche                   |
+| `now+1M`           | In einem Monat                   |
+
+Mit `/d` rundest du auf den Tagesbeginn ab. Das ist praktisch für Filter wie „heute“ oder „diese Woche“:
+
+|                    |                                  |
+|--------------------|----------------------------------|
+| `now/d`            | Beginn des heutigen Tages        |
+| `now+7d/d`         | Beginn des Tages in 7 Tagen      |
+
+<DateMathExamples />
+
+### Alle Zeiteinheiten
+
+|     |          |
+|-----|----------|
+| `s` | Sekunden |
+| `m` | Minuten  |
+| `h` | Stunden  |
+| `d` | Tage     |
+| `w` | Wochen   |
+| `M` | Monate   |
+| `y` | Jahre    |
+
+## API-Referenz
+
+Wenn du Filter über die Vikunja-API statt über die Weboberfläche nutzt, findest du Feldnamen, Abfrageparameter und weitere Unterschiede in der [Filter-API-Referenz](/docs/filters).
