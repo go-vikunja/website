@@ -1,0 +1,201 @@
+---
+title: Einstellungen
+slug: settings
+description: >-
+  Alle Einstellungen für deinen Account: allgemeine Einstellungen, Passwort, Zwei-Faktor-Authentifizierung,
+  E-Mail-Adresse, Avatar, Datenexport, Import, CalDAV, MCP, API-Tokens und Account löschen.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+import Callout from '@/components/Callout.astro';
+
+Um deine Einstellungen zu öffnen, klick oben rechts auf deinen Anmeldenamen und wähl **Einstellungen**.
+
+<Screenshot src="settings-entry-point" alt="Eintrag „Einstellungen“ im Benutzermenü" />
+
+## Diese Einstellungen solltest du zuerst prüfen
+
+Hier lohnt sich zuerst ein Blick:
+
+- **Standardansicht:** Leg fest, ob Projekte in der Ansicht Liste, Gantt, Tabelle oder Kanban geöffnet werden.
+- **Zeitzone:** Achte darauf, dass sie zu deinem Standort passt, sonst stimmen Fälligkeitsdaten und Erinnerungen vielleicht nicht.
+- **Zwei-Faktor-Authentifizierung:** Schütz einen lokalen Account zusätzlich zu deinem Passwort mit einem Code aus einer Authenticator-App.
+- **E-Mail-Erinnerungen:** Schalt sie ein, wenn du Erinnerungen und Zusammenfassungen überfälliger Aufgaben per E-Mail bekommen möchtest.
+- **Quick Add Magic Modus:** Wähl Kürzel im Vikunja- oder Todoist-Stil, um beim Tippen Datumsangaben, Labels und andere Aufgabendetails festzulegen.
+- **Privatsphäre:** Entscheide, ob andere dich über deinen Namen oder deine E-Mail-Adresse finden können, wenn sie dich zu einem Team oder Projekt hinzufügen möchten.
+
+Der Rest dieser Seite folgt derselben Reihenfolge wie die Abschnitte in den Einstellungen.
+
+## Allgemein
+
+<Screenshot src="settings-general" alt="Tab „Allgemeine Einstellungen“" />
+
+Im Tab **Allgemeine Einstellungen** findest du die meisten alltäglichen Einstellungen für deinen Account.
+
+### Name
+
+Ändere den Anzeigenamen, den andere überall in Vikunja sehen.
+
+<Callout type="info">
+Wenn du über einen externen Login-Provider angemeldet bist (zum Beispiel Vikunja Cloud), verwaltet dieser Provider deinen Anzeigenamen. Du musst ihn dann dort ändern.
+</Callout>
+
+### Standardprojekt
+
+Wähl das Projekt, in dem Aufgaben landen, die du im [Dashboard](/help/dashboard) erstellst.
+
+### Standardansicht
+
+Leg die [Ansicht](/help/views) fest, die angezeigt wird, wenn du ein Projekt zum ersten Mal öffnest. Zur Wahl stehen Liste, Gantt, Tabelle und Kanban.
+
+### Standard-Fälligkeitsuhrzeit
+
+Wähl die Uhrzeit, die Vikunja verwendet, wenn du ein [Fälligkeitsdatum](/help/dates-and-reminders#due-date) ohne Uhrzeit festlegst, sowohl bei der Auswahl im Datumswähler als auch bei Datumsangaben, die [Quick Add Magic](/help/quick-add-magic) erkennt. Eine ausdrücklich eingegebene Uhrzeit hat immer Vorrang.
+
+### Minimal sichtbare Aufgaben-Priorität
+
+Bestimme, bei welchen Aufgaben in den Projektansichten ein farbiges Prioritäts-Badge angezeigt wird. Aufgaben unterhalb dieser Stufe werden trotzdem angezeigt, nur eben ohne Badge.
+
+Wenn du hier zum Beispiel **Hoch** einstellst, zeigen nur Aufgaben mit Hoch, Dringend oder JETZT ERLEDIGEN ein Prioritäts-Badge. Aufgaben mit der Priorität Niedrig oder Mittel stehen weiterhin in der Liste, aber ohne sichtbare Prioritätsanzeige.
+
+### E-Mail-Erinnerungen
+
+Leg fest, ob [Erinnerungen](/help/dates-and-reminders) an Aufgaben per E-Mail verschickt werden. Du kannst auch eine tägliche Zusammenfassung überfälliger Aufgaben aktivieren.
+
+### Sprache
+
+Leg die Sprache der Vikunja-Oberfläche fest.
+
+### Zeitzone
+
+Stell deine Zeitzone ein, damit Datum und Uhrzeit richtig angezeigt werden. Wenn deine Fälligkeitsdaten oder Erinnerungen um ein paar Stunden danebenliegen, prüf das als Erstes.
+
+### Woche beginnt am
+
+Wähl, an welchem Tag deine Woche beginnt (zum Beispiel Sonntag oder Montag).
+
+### Datumsformat
+
+Wähl, wie Datumsangaben angezeigt werden.
+
+### Farbschema
+
+Wähl zwischen **System** (richtet sich nach der Einstellung deines Betriebssystems), **Hell** oder **Dunkel**.
+
+### Quick Add Magic Modus
+
+Wähl zwischen Kürzeln im Vikunja- und im Todoist-Stil. Die vollständige Syntax findest du unter [Quick Add Magic](/help/quick-add-magic).
+
+### Standard-Aufgabenbeziehungstyp
+
+Leg den [Beziehungstyp](/help/task-relations) fest, der beim Erstellen von Aufgabenbeziehungen voreingestellt ist.
+
+### Immer die Anzahl der Aufgaben pro Kanban-Spalte anzeigen
+
+Wenn diese Option aktiv ist, zeigt jede [Kanban](/help/views#kanban-view)-Spalte ihre Aufgabenanzahl an, auch ohne WIP-Limit.
+
+### Zuletzt angesehene Projekte auf der Übersichtsseite anzeigen
+
+Damit legst du fest, ob der Abschnitt **Zuletzt angesehen** in deinem [Dashboard](/help/dashboard#recently-viewed-projects) erscheint. Schalt ihn aus, wenn du ein aufgeräumteres Dashboard mit nur der Begrüßung und deinen anstehenden Aufgaben möchtest. Die Option ist standardmäßig aktiviert und ab Vikunja **2.3.0** verfügbar.
+
+### Hintergrundhelligkeit
+
+Pass die Helligkeit eigener Projekthintergründe an, damit alles gut lesbar bleibt.
+
+### Privatsphäre
+
+Diese Optionen bestimmen, ob andere deinen Account finden können, wenn sie Personen zu Teams oder Projekten hinzufügen:
+
+- **Erlaube anderen Benutzer:innen, mich als Mitglied zu Teams oder Projekten hinzuzufügen, wenn sie nach meinem Namen suchen:** Andere können nach deinem Anzeigenamen (oder einem Teil davon) suchen, um deinen Account zu finden.
+- **Erlaube anderen Benutzer:innen, mich als Mitglied zu Teams oder Projekten hinzuzufügen, wenn sie nach meiner vollständigen E-Mail Adresse suchen:** Andere können dich finden, indem sie deine genaue E-Mail-Adresse eintippen.
+
+Wenn beide Optionen deaktiviert sind, können andere dich nur über deinen genauen Anmeldenamen finden. Auf gemeinsam genutzten Instanzen erleichtert es die Zusammenarbeit meistens, wenn mindestens eine davon aktiviert bleibt.
+
+## Passwort und E-Mail-Adresse
+
+Ändere dein Passwort oder die E-Mail-Adresse deines Accounts. Um dein Passwort zu ändern, gib zuerst dein aktuelles Passwort ein.
+
+### Deine E-Mail-Adresse ändern
+
+Ab Vikunja **2.6.0** wird eine neue E-Mail-Adresse erst wirksam, wenn du sie bestätigst. Sobald du die Änderung angefordert hast, passiert Folgendes:
+
+- Deine alte Adresse bleibt aktiv. Du bekommst weiterhin Benachrichtigungen dorthin und meldest dich weiter damit an.
+- Die neue Adresse bekommt eine Bestätigungs-E-Mail. Klick auf den Link darin, um die Änderung abzuschließen.
+- Deine alte Adresse bekommt eine E-Mail, dass eine Änderung angefordert wurde, damit du es merkst, falls du das nicht warst.
+
+Solange die Bestätigung aussteht, zeigt die Einstellungsseite die neue Adresse an, zusammen mit Buttons, um die Bestätigungs-E-Mail **erneut zu senden** oder die Änderung **abzubrechen**. Wie oft du erneut senden kannst, ist begrenzt, eventuell musst du also zwischen zwei Versuchen kurz warten.
+
+Wenn auf deiner Instanz kein E-Mail-Versand eingerichtet ist, gibt es nichts zu bestätigen und die neue Adresse gilt sofort.
+
+<Callout type="info">
+Wenn dein Account eine externe Authentifizierung nutzt (zum Beispiel Vikunja Cloud), kümmert sich dieser Provider um Passwort und E-Mail-Adresse. Diese Abschnitte sind in Vikunja dann deaktiviert. Nimm Änderungen stattdessen bei deinem Provider vor.
+</Callout>
+
+## Zwei-Faktor-Authentifizierung
+
+Lokale Accounts können zusätzlich zum Passwort einen sechsstelligen Code aus einer Authenticator-App verlangen. Wie du das einrichtest und wie Anmeldung, CalDAV und Wiederherstellung funktionieren, erfährst du unter [Zwei-Faktor-Authentifizierung](/help/two-factor-authentication).
+
+## Avatar
+
+<Screenshot src="settings-avatar-options" alt="Avatar-Optionen mit Initialen, Gravatar, Murmel und Hochladen" />
+
+Wähl, wie dein Avatar überall in Vikunja aussieht:
+
+- **Initialen:** erzeugt einen Avatar aus den Initialen deines Namens
+- **Standard:** ein allgemeines Platzhalterbild
+- **Gravatar:** nutzt den Avatar, der auf [gravatar.com](https://gravatar.com) mit deiner E-Mail-Adresse verknüpft ist
+- **Murmel:** ein bunter Avatar mit Farbverlauf, der für deinen Account erzeugt wird
+- **Hochladen:** lad ein eigenes Bild als Avatar hoch
+
+## Datenexport
+
+Exportiere all deine Daten aus Vikunja. Die einzelnen Schritte und unterstützten Formate findest du unter [Import & Export](/help/import-and-export).
+
+## Import
+
+Importiere Daten aus anderen Diensten. Unterstützte Formate und eine Anleitung findest du unter [Import & Export](/help/import-and-export).
+
+## CalDAV
+
+Dieser Tab zeigt dir die CalDAV-Daten, die du brauchst, um externe Kalender- oder Aufgaben-Apps mit Vikunja zu verbinden. Du kannst hier entweder ein eigenes CalDAV-Token erstellen oder ein [API-Token](#api-tokens) verwenden, das die Berechtigung **CalDAV** enthält.
+
+Alles über unterstützte Eigenschaften, URLs, kompatible Clients und die Authentifizierung mit einem API-Token findest du unter [CalDAV](/help/caldav).
+
+## MCP
+
+Verbinde KI-Clients mit deinen Aufgaben und Projekten. Dieser Tab zeigt deinen MCP-Endpunkt, erstellt Tokens mit den Berechtigungen, die du auswählst, und liefert Anleitungen zum Einrichten der Clients.
+
+Unterstützte Clients, die Einrichtung und wie du den Zugriff widerrufst, findest du unter [MCP](/help/mcp/).
+
+## API-Tokens
+
+Erstelle API-Tokens, damit Skripte, Automatisierungen und Integrationen ohne dein Passwort auf die Vikunja-API zugreifen können.
+
+Beim Erstellen eines Tokens kannst du:
+
+- ihm einen aussagekräftigen **Titel** geben
+- gezielt **Berechtigungen** auswählen, um einzuschränken, was das Token tun darf
+
+Eine der verfügbaren Berechtigungsgruppen ist **CalDAV > Access**. Ein Token mit dieser Berechtigung kannst du als Passwort verwenden, wenn du einen [CalDAV](/help/caldav)-Client verbindest, statt ein separates CalDAV-Token zu erstellen. Tokens mit der CalDAV-Berechtigungsgruppe können zusätzlich weitere Berechtigungen haben, sodass ein einziges Token sowohl API-Automatisierungen als auch die CalDAV-Synchronisation abdecken kann.
+
+<Callout type="info">
+Der Wert des Tokens wird nur einmal angezeigt, direkt nach dem Erstellen. Vikunja speichert das Token nicht im Klartext, du musst es also sofort kopieren und sichern. Wenn du es verlierst, musst du ein neues Token erstellen.
+</Callout>
+
+### Warnungen vor dem Ablauf
+
+Wenn ein Token ein Ablaufdatum hat, erinnert Vikunja dich vorher daran, damit du genug Zeit hast, es zu ersetzen. Du bekommst **7 Tage** vor dem Ablauf einen Hinweis und **1 Tag** vorher eine letzte Erinnerung, beides per E-Mail.
+
+Warnungen vor dem Ablauf gibt es ab Vikunja **2.3.0**.
+
+Mehr über die Nutzung der API erfährst du in der [API-Dokumentation](/docs/api-documentation).
+
+## Account löschen
+
+<Screenshot src="settings-delete-account" alt="Abschnitt zum Löschen des Accounts am Ende der Einstellungen" />
+
+Ganz unten auf der Einstellungsseite kannst du deinen Account endgültig löschen. Das lässt sich nicht rückgängig machen.
+
+<Callout type="info">
+Wenn dein Account von einem externen Login-Provider verwaltet wird (zum Beispiel Vikunja Cloud), ist das Löschen des Accounts in Vikunja eventuell deaktiviert. Du musst deinen Account dann über diesen Provider löschen.
+</Callout>
