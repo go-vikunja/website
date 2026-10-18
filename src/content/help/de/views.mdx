@@ -1,0 +1,188 @@
+---
+title: Ansichten
+slug: views
+description: >-
+  Leg fest, wie Aufgaben angezeigt werden: Listen-, Tabellen-, Gantt- und
+  Kanban-Ansicht, jeweils mit optionalen Filtern.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+
+Ansichten bestimmen, wie [Aufgaben](/help/tasks) in einem [Projekt](/help/projects) angezeigt werden. Jedes Projekt startet mit vier Standardansichten, zwischen denen du über die Tabs oben im Projekt wechselst.
+
+<Screenshot src="views-tabs" alt="Tabs für die Ansichten oben in einem Projekt" />
+
+### Welche Ansicht passt zu mir?
+
+| Ansicht | Am besten für | Besonderheit |
+|------|----------|-------------|
+| **[Liste](#list-view)** | Einfache Aufgabenlisten, schnelles Erfassen | Per Drag & Drop sortieren, [Quick Add Magic](/help/quick-add-magic) |
+| **[Tabelle](#table-view)** | Viele Aufgabeneigenschaften vergleichen | Anpassbare Spalten, wie eine Tabellenkalkulation |
+| **[Kanban](#kanban-view)** | Arbeitsphasen (Zu erledigen / In Arbeit / Erledigt) | Aufgaben zwischen Spalten ziehen |
+| **[Gantt](#gantt-view)** | Planung nach Datum | Zeitachse, auf der du Aufgaben per Drag & Drop verschiebst |
+
+Welche Projektansicht standardmäßig geöffnet wird, legst du in deinen [Einstellungen](/help/settings) fest.
+
+Überfällige Aufgaben werden in allen Ansichten hervorgehoben, damit du sie sofort siehst.
+
+## Ansichten verwalten
+
+Um Ansichten zu verwalten, öffne das Drei-Punkte-Menü neben dem Projekttitel und wähl **Ansichten**.
+
+Dort kannst du:
+
+- **Eine neue Ansicht erstellen:** Gib ihr einen Titel, wähl den Typ (Liste, Tabelle, Kanban) und leg bei Bedarf einen Filter fest.
+- **Eine Ansicht bearbeiten:** Ändere ihren Titel, Typ oder Filter.
+- **Eine Ansicht löschen:** Lösch Ansichten, die du nicht mehr brauchst.
+- **Ansichten neu anordnen:** Zieh sie am Griff rechts neben jeder Ansicht in der Liste an die gewünschte Stelle.
+
+Jede Ansicht kann ihren eigenen Filter haben. In der Ansicht erscheinen dann nur passende Aufgaben. Die Filtersyntax findest du unter [Filter](/help/filters).
+
+### Gespeicherte Ansichtseinstellungen
+
+Vikunja merkt sich den Zustand jeder Ansicht einzeln in deinem Browser. Listen- und Tabellenansichten behalten ihre Sortierung, ihren Filter, ihre Suche und die aktuelle Seite. Gantt-Ansichten behalten ihren Zeitraum und ob Aufgaben ohne Datum angezeigt werden. Wenn du die Seite neu lädst, die Desktop-App neu startest oder über die Seitenleiste zurückkommst, stellt Vikunja den vorherigen Zustand der Ansicht wieder her.
+
+Der gespeicherte Zustand gilt nur für diesen Browser oder diese Desktop-App. Er wandert also nicht mit deinem Account auf ein anderes Gerät. Query-Parameter in einer URL, die du als Lesezeichen gespeichert oder geteilt hast, haben Vorrang vor dem gespeicherten Zustand.
+
+## Listenansicht
+
+<Screenshot src="views-list" alt="Listenansicht mit Aufgaben in einer einfachen Liste" />
+
+Die Listenansicht zeigt Aufgaben untereinander in einer Liste. Sie ist die einfachste Ansicht und für die meisten Projekte eine gute Wahl.
+
+- **Per Drag & Drop** ordnest du Aufgaben innerhalb des Projekts neu an.
+- **Aufgaben in ein anderes Projekt verschieben** kannst du, indem du sie auf ein Projekt in der Seitenleiste ziehst.
+- **Fahr mit der Maus** über eine Aufgabe, um eine Vorschau mit Titel, Beschreibung, Ersteller:in und Labels zu sehen.
+- **Mit dem Eingabefeld** oben erstellst du Aufgaben und kannst [Quick Add Magic](/help/quick-add-magic) nutzen.
+
+Standardmäßig blendet die Listenansicht erledigte Aufgaben aus. Das kannst du ändern, indem du den Filter der Ansicht bearbeitest.
+
+### Die Liste sortieren
+
+<Screenshot src="views-list-sort-popup" alt="Geöffnetes Sortier-Popup der Listenansicht mit den Sortieroptionen" />
+
+Klick im Kopf der Liste auf **Sortieren**, um die Reihenfolge der Aufgaben zu ändern. Du kannst sortieren nach:
+
+- **Manuell** (Standard, damit kannst du Aufgaben per Drag & Drop in jede beliebige Reihenfolge bringen)
+- **Titel**, von A bis Z oder von Z bis A
+- **Fälligkeitsdatum**, **Startdatum** oder **Enddatum**, früheste oder späteste zuerst
+- **Priorität**, höchste oder niedrigste zuerst
+- **% erledigt**, am meisten oder am wenigsten erledigte zuerst
+- **Erstellt** oder **Aktualisiert**, neueste oder älteste zuerst
+
+Die Listenansicht sortiert immer nur nach einem Feld. Deine Auswahl wird für diese Ansicht gespeichert und in die URL geschrieben. So kannst du eine Liste mit einer bestimmten Sortierung als Lesezeichen speichern oder den Link mit anderen teilen.
+
+Die Sortierung gibt es seit Vikunja **2.3.0**. In der [Tabellenansicht](#table-view) kannst du weiterhin direkt auf die Spaltenköpfe klicken, um zu sortieren. Halte dabei `Ctrl` oder `Cmd` gedrückt, um nach mehreren Spalten gleichzeitig zu sortieren.
+
+## Gantt-Ansicht
+
+<Screenshot src="views-gantt" alt="Gantt-Ansicht mit Aufgaben auf einer Zeitachse" />
+
+Die Gantt-Ansicht zeigt Aufgaben anhand ihres [Start- und Enddatums](/help/dates-and-reminders) auf einer Zeitachse. Nutze sie, wenn dir die Zeitplanung wichtiger ist als eine einfache Liste.
+
+- **Zeitraum festlegen:** Nutze dafür die Steuerelemente oben links.
+- **Hierarchie von Unteraufgaben:** Unteraufgaben werden unter ihrer übergeordneten Aufgabe gruppiert. Klapp Gruppen ein oder aus, um festzulegen, wie viele Details du siehst. Übergeordnete Aufgaben zeigen einen Zusammenfassungsbalken mit rautenförmigen Enden, der den Zeitraum ihrer Unteraufgaben abdeckt.
+- **Abhängigkeitspfeile:** [Beziehungen](/help/task-relations) zwischen Aufgaben erscheinen als Pfeile im Diagramm. Die Pfeile passen sich sofort an, wenn du eine Aufgabe verschiebst oder ihre Länge änderst.
+- **Unvollständige Datumsangaben:** Aufgaben, die nur ein Startdatum oder nur ein Enddatum haben, laufen auf der offenen Seite mit einem Farbverlauf aus.
+- **Datumsangaben visuell anpassen:** Zieh eine Aufgabe auf der Zeitachse, um ihr Start- und Enddatum zu ändern.
+- **Aufgabendetails öffnen:** Klick doppelt auf eine Aufgabe in der Zeitachse, um ihre Detailansicht zu öffnen.
+- **Aufgaben erstellen** kannst du über das Eingabefeld unten links.
+
+In der Gantt-Ansicht kannst du nicht filtern.
+
+## Tabellenansicht
+
+<Screenshot src="views-table" alt="Tabellenansicht mit Aufgaben in einem tabellenartigen Layout" />
+
+Die Tabellenansicht zeigt Aufgaben wie in einer Tabellenkalkulation.
+
+- **Anpassbare Spalten:** Zeig nur die Felder an, die dich interessieren.
+- **Filtern:** Mit der Filteroption oben rechts grenzt du die angezeigten Aufgaben ein.
+- **Sortieren:** Klick auf einen Spaltenkopf, um danach zu sortieren. Halte beim Klicken `Ctrl` oder `Cmd` gedrückt, um nach mehreren Spalten zu sortieren. Die Sortierung wird für diese Ansicht gespeichert.
+
+Nimm die Tabellenansicht, wenn du viele Aufgabenfelder nebeneinander vergleichen willst.
+
+## Kanban-Ansicht
+
+<Screenshot src="views-kanban" alt="Kanban-Ansicht mit Aufgaben, die in Spalten sortiert sind" />
+
+Die Kanban-Ansicht sortiert Aufgaben in Spalten. Das passt gut zu Arbeitsabläufen wie **Zu erledigen**, **In Arbeit** und **Erledigt**.
+
+### Mit Aufgaben arbeiten
+
+- **Per Drag & Drop** ziehst du Aufgaben zwischen Spalten, um ihren Status zu ändern.
+- **Klick auf eine Karte**, um die Detailansicht der Aufgabe zu öffnen.
+- Aufgabenkarten zeigen Details wie Farbe, Fälligkeitsdatum, Anzahl der Kommentare, Labels und weitere Status-Icons.
+
+### Spalten verwalten
+
+Um eine Spalte zu erstellen, gib ganz rechts auf dem Board einen Titel in das Feld ein. Um eine Spalte umzubenennen, klick auf ihren Titel und bearbeite ihn direkt.
+
+Jede Spalte hat ein Drei-Punkte-Menü. Dort kannst du ein WIP-Limit setzen, sie als Standard-Spalte oder Erledigt-Spalte markieren, sie einklappen oder sie löschen.
+
+<Screenshot src="views-kanban-bucket-menu" alt="Drei-Punkte-Menü einer Kanban-Spalte mit seinen Optionen" />
+
+Du kannst Spalten neu anordnen, indem du sie an ihrem Kopf ziehst.
+
+#### Eine Spalte löschen
+
+Wenn du eine Spalte löschst, landen ihre Aufgaben in der Standard-Spalte. Die letzte Spalte einer Kanban-Ansicht kannst du nicht löschen.
+
+#### WIP-Limits
+
+<Screenshot src="views-kanban-wip-limit" alt="Kanban-Spalte mit Anzeige des WIP-Limits" />
+
+Mit einem Work-in-Progress-Limit (WIP-Limit) legst du fest, wie viele Aufgaben höchstens in einer Spalte liegen sollen.
+
+Wenn eine Spalte ihr Limit erreicht:
+
+- Die Aufgabenzahl im Spaltenkopf wird rot
+- Der Button „Eine Aufgabe hinzufügen“ ist deaktiviert
+- Aufgaben lassen sich nicht mehr aus anderen Spalten hineinziehen
+
+Aus einer vollen Spalte kannst du Aufgaben aber weiterhin herausziehen oder sie darin neu anordnen.
+
+Der Spaltenkopf zeigt die aktuelle Anzahl der Aufgaben neben dem Limit an (zum Beispiel „5/10“). In deinen [Einstellungen](/help/settings) kannst du eine Option aktivieren, damit die Aufgabenzahl immer angezeigt wird, auch wenn kein Limit gesetzt ist.
+
+#### Standard-Spalte
+
+In der Standard-Spalte landen neue Aufgaben, die ohne bestimmte Spalte erstellt werden, zum Beispiel in der Listen- oder Tabellenansicht. Dorthin wandern auch Aufgaben, deren Spalte gelöscht wird.
+
+Wenn du keine Standard-Spalte festlegst, wird die erste Spalte verwendet.
+
+#### Erledigt-Spalte
+
+Wenn du eine Spalte als „Erledigt-Spalte“ markierst, ist sie mit dem Erledigen von Aufgaben verknüpft:
+
+- Ziehst du eine Aufgabe in die Erledigt-Spalte, wird sie automatisch als erledigt markiert.
+- Markierst du eine Aufgabe woanders als erledigt (zum Beispiel, indem du sie in der Listenansicht abhakst), wandert sie automatisch in die Erledigt-Spalte.
+- Markierst du eine Aufgabe in der Erledigt-Spalte als nicht erledigt, wandert sie zurück in die Standard-Spalte.
+
+#### Spalten einklappen
+
+Klapp eine Spalte ein, um ihren Inhalt auszublenden und Platz zu sparen. Ein erneuter Klick klappt sie wieder aus. Ob eine Spalte eingeklappt ist, speichert dein Browser.
+
+### Titelbilder
+
+Du kannst einer Aufgabenkarte ein Titelbild geben:
+
+1. Lade ein Bild als Anhang der Aufgabe hoch.
+2. Klick auf das Icon am Anhang, um ihn als Titelbild festzulegen.
+
+Das Bild erscheint dann auf der Kanban-Karte.
+
+### Filterbasierte Spalten
+
+Kanban-Spalten können auf zwei Arten funktionieren:
+
+- **Manuelle Spaltenverwaltung (Standard):** Du verschiebst Aufgaben selbst.
+- **Filterbasierte Spalten:** Spalten werden automatisch über Filterabfragen gefüllt. In diesem Modus kannst du Aufgaben nicht zwischen Spalten ziehen.
+
+## Gespeicherte Filter vs. Ansichten
+
+In Vikunja gibt es zwei Möglichkeiten, die Darstellung von Aufgaben anzupassen:
+
+- **Ansichten** sind Darstellungseinstellungen pro Projekt. Sie legen fest, wie die Aufgaben eines bestimmten Projekts angezeigt werden, und lassen sich mit allen teilen, die Zugriff auf das Projekt haben.
+- **[Gespeicherte Filter](/help/saved-filters)** sind persönliche, projektübergreifende Filterabfragen. Sie erscheinen in deiner Seitenleiste. Mit ihnen und der [Filtersyntax](/help/filters) erstellst du eigene gefilterte Listen über alle deine Projekte hinweg. Gespeicherte Filter kannst du nicht mit anderen teilen.
+
+Mehr dazu, wie du gespeicherte Filter erstellst und verwaltest, findest du unter [Gespeicherte Filter](/help/saved-filters).
