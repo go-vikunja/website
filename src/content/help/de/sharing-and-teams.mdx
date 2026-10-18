@@ -1,0 +1,117 @@
+---
+title: Teilen & Teams
+slug: sharing-and-teams
+description: >-
+  Teile Projekte mit Benutzer:innen, Teams oder per Linkfreigabe mit allen.
+  Mit Berechtigungsstufen und Teamverwaltung.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+import Callout from '@/components/Callout.astro';
+
+Hier erfährst du, wie du anderen Personen Zugriff auf deine [Projekte](/help/projects) gibst.
+
+### Wie teile ich ein Projekt?
+
+Öffne das **Drei-Punkte-Menü** neben dem Projekttitel, wähl **Teilen** und such dir dann einen dieser Wege aus:
+
+<Screenshot src="sharing-three-dot-menu" alt="Drei-Punkte-Menü eines Projekts mit der Option „Teilen“" />
+
+| Weg | Passt, wenn |
+|--------|----------|
+| **[Mit Benutzer:innen](#sharing-with-users)** | Du willst mit einer bestimmten Person teilen, die Vikunja nutzt |
+| **[Mit einem Team](#sharing-with-teams)** | Du willst mit einer ganzen Gruppe auf einmal teilen |
+| **[Per Linkfreigabe](#link-shares)** | Alle mit dem Link sollen auf das Projekt zugreifen können, ganz ohne Account |
+
+Jeder Weg nutzt dieselben Berechtigungsstufen: **Nur Leserechte**, **Lesen & Schreiben** oder **Admin**. Details findest du unter [Berechtigungen](/help/permissions).
+
+## Mit Benutzer:innen teilen
+
+<Screenshot src="sharing-settings-panel" alt="Freigabeeinstellungen eines Projekts" />
+
+In den Freigabeeinstellungen kannst du Personen über ihren Anmeldenamen suchen. Wenn die andere Person es in ihren Privatsphäre-Einstellungen erlaubt, kannst du auch nach ihrem Namen oder ihrer E-Mail-Adresse suchen.
+
+Sobald du die Person gefunden hast, wähl eine Berechtigungsstufe und füg die Freigabe hinzu.
+
+Für Benutzer:innen, Teams und Linkfreigaben gelten dieselben Berechtigungsstufen.
+
+## Mit Teams teilen
+
+Du kannst ein Projekt mit jedem Team teilen, in dem du Mitglied bist. Such das Team über seinen Namen, wähl die Berechtigungsstufe und füg die Freigabe hinzu. Alle Teammitglieder bekommen dann Zugriff mit dieser Stufe. Wenn auf deiner Instanz öffentliche Teams aktiviert sind, kannst du auch mit einem öffentlichen Team teilen, in dem du kein Mitglied bist.
+
+Die verfügbaren Berechtigungsstufen sind für Benutzer:innen, Teams und Linkfreigaben dieselben.
+
+## Linkfreigaben
+
+Eine Linkfreigabe erzeugt eine URL, über die man ohne Vikunja-Account auf ein Projekt zugreifen kann.
+
+### Eine Linkfreigabe erstellen
+
+<Screenshot src="sharing-link-create" alt="Eine neue Linkfreigabe erstellen" />
+
+Beim Erstellen einer Linkfreigabe kannst du festlegen:
+
+- **Name** (optional): Damit erkennst du Kommentare, die über die Linkfreigabe geschrieben wurden.
+- **Passwort** (optional): Muss eingegeben werden, bevor jemand das Projekt öffnen kann.
+- **Berechtigung**: Wähl eine der Berechtigungsstufen Nur Leserechte, Lesen & Schreiben oder Admin, die weiter unten beschrieben sind.
+
+Nach dem Erstellen kopierst du den erzeugten Link und gibst ihn an alle weiter, die Zugriff brauchen.
+
+### Linkfreigaben verwalten
+
+<Screenshot src="sharing-link-list" alt="Liste der bestehenden Linkfreigaben eines Projekts" />
+
+Alle Linkfreigaben eines Projekts sind in den Freigabeeinstellungen aufgelistet. Jeder Eintrag zeigt den Namen der Freigabe, wer sie erstellt hat, die Berechtigungsstufe und den Link. Um diese Liste zu sehen, brauchst du die Admin-Berechtigung für das Projekt, denn der Link selbst gewährt genau die Berechtigung, mit der die Freigabe erstellt wurde.
+
+Für jede Linkfreigabe kannst du:
+
+- **den Link** in deine Zwischenablage **kopieren**
+- **die Standardansicht ändern**: Leg fest, welche Ansicht sich öffnet, wenn jemand dem Link folgt
+- **die Freigabe löschen**: Löscht die Linkfreigabe komplett und entzieht allen, die sie nutzen, sofort den Zugriff
+
+Linkfreigaben lassen sich nach dem Erstellen nicht mehr bearbeiten. Um Name, Passwort oder Berechtigungsstufe zu ändern, lösch die bestehende Freigabe und erstell eine neue.
+
+### Was Empfänger:innen sehen
+
+Wer eine Linkfreigabe öffnet, kann das Projekt im Rahmen der Berechtigungsstufe nutzen, die du festgelegt hast, ganz ohne Vikunja-Account.
+
+Wenn der Link passwortgeschützt ist, muss das Passwort eingegeben werden, bevor das Projekt angezeigt wird.
+
+## Berechtigungsstufen
+
+Egal, wie du teilst (mit Benutzer:innen, Teams oder per Linkfreigabe), du legst immer eine von drei Berechtigungsstufen fest: **Nur Leserechte**, **Lesen & Schreiben** oder **Admin**. Was jede Stufe genau erlaubt, erfährst du unter [Berechtigungen](/help/permissions).
+
+## Teams
+
+Mit Teams fasst du Personen zu einer Gruppe zusammen, damit du Projekte mit allen auf einmal teilen kannst.
+
+Teams öffnest du über das linke Seitenmenü.
+
+### Ein Team erstellen
+
+Um ein Team zu erstellen, öffne den Bereich **Teams** und klick auf den Button zum Erstellen. Gib dem Team einen Namen, und schon ist es erstellt.
+
+Ein Team kann auch eine Beschreibung haben.
+
+### Teammitglieder verwalten
+
+<Screenshot src="sharing-team-settings" alt="Teameinstellungen mit der Verwaltung der Mitglieder" />
+
+Sobald ein Team existiert, kannst du in den Teameinstellungen Mitglieder hinzufügen oder entfernen.
+
+Ob du eine Person findest, hängt von ihren Privatsphäre-Einstellungen ab. Nach dem genauen Anmeldenamen kannst du immer suchen, manchmal auch nach Name oder E-Mail-Adresse.
+
+### Rolle als Team-Admin
+
+Jedes Teammitglied kann auf Wunsch auch **Team-Admin** sein. Ein Team-Admin kann:
+
+- Mitglieder zum Team hinzufügen und aus dem Team entfernen
+- festlegen, ob andere Mitglieder Team-Admins sind
+
+<Callout type="info">
+Als Team-Admin verwaltest du das Team selbst. Berechtigungen auf Projektebene steuerst du getrennt davon über die oben beschriebenen Freigabeeinstellungen.
+</Callout>
+
+### Projekte mit Teams teilen
+
+Um ein Projekt mit einem Team zu teilen, öffne die Freigabeeinstellungen des Projekts, such den Bereich für Teams, wähl die Berechtigungsstufe und füg die Freigabe hinzu. Alle aktuellen und künftigen Mitglieder des Teams bekommen dann Zugriff.
