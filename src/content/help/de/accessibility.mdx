@@ -1,0 +1,115 @@
+---
+title: Barrierefreiheit
+slug: accessibility
+description: >-
+  So nutzt du Vikunja mit der Tastatur, passt Anzeige und Ton an und erfährst,
+  was mit Screenreadern funktioniert, wo es noch hakt und wie du Probleme meldest.
+---
+import Callout from '@/components/Callout.astro';
+
+Vikunja funktioniert auch ohne Maus und passt sich daran an, wie du die Oberfläche liest und hörst. Auf dieser Seite findest du die Tastenkürzel, die Anzeige- und Toneinstellungen und was aktuell mit assistiven Technologien funktioniert, inklusive der Stellen, die noch holprig sind.
+
+## Vikunja mit der Tastatur nutzen
+
+Du kannst jede Aufgabe erreichen und öffnen, ohne zu ziehen, zu klicken oder zu zeigen. Die Tastenkürzel unten funktionieren in der ganzen App. Drück jederzeit `?`, um die Übersicht der Tastenkürzel für die Stelle zu öffnen, an der du gerade bist.
+
+### Auf jeder Seite
+
+| Tasten | Aktion |
+|------|--------|
+| `Ctrl+K` / `Cmd+K` | Suche und Schnellaktionen öffnen |
+| `Ctrl+E` / `Cmd+E` | Menü ein- oder ausblenden |
+| `?` | Übersicht der Tastenkürzel öffnen |
+
+Die Suche ist gleichzeitig eine Befehlspalette. Mit `Ctrl+K` kommst du also auch über den Namen zu jeder Aufgabe und jedem Projekt und kannst neue erstellen, ohne die Seite zu verlassen.
+
+### Navigieren
+
+Das sind Tastenfolgen: Drück die erste Taste, lass sie los und drück dann die zweite.
+
+| Tasten | Führt zu |
+|------|---------|
+| `g`, dann `o` | Übersicht |
+| `g`, dann `u` | Anstehend |
+| `g`, dann `p` | Projekte |
+| `g`, dann `a` | Labels |
+| `g`, dann `m` | Teams |
+
+Innerhalb eines Projekts wechselst du nach demselben Muster die [Ansicht](/help/views): `g`, dann `l` für Liste, `g`, dann `t` für Tabelle, `g`, dann `k` für Kanban und `g`, dann `g` für Gantt.
+
+### In der Listenansicht
+
+| Tasten | Aktion |
+|------|--------|
+| `j` | Nächste Aufgabe hervorheben |
+| `k` | Vorherige Aufgabe hervorheben |
+| `Enter` | Hervorgehobene Aufgabe öffnen |
+
+### In einer Aufgabe
+
+Wenn eine Aufgabe offen ist, springst du mit einzelnen Tasten direkt zu jedem Feld. So musst du nie mit Tab durch die ganze Seite, nur um eine Sache zu ändern.
+
+| Tasten | Aktion |
+|------|--------|
+| `t` | Als erledigt oder unerledigt markieren |
+| `a` | Jemandem zuweisen |
+| `l` | Labels hinzufügen |
+| `d` | Fälligkeitsdatum ändern |
+| `Alt+R` / `Shift+R` | Erinnerungen verwalten |
+| `e` | Beschreibung bearbeiten |
+| `p` | Priorität ändern |
+| `c` | Farbe ändern |
+| `f` | Anhang hinzufügen |
+| `r` | Verwandte Aufgaben bearbeiten |
+| `m` | In ein anderes Projekt verschieben |
+| `s` | Favorit an- oder abwählen |
+| `u` | Projekt der Aufgabe öffnen |
+| `Ctrl+S` / `Cmd+S` | Speichern |
+| `Delete` / `Backspace` | Aufgabe löschen |
+
+Mit `.` kopierst du die Aufgabennummer. Drück zweimal für Nummer und Titel, dreimal, um zusätzlich die URL mitzunehmen. `Ctrl+.` / `Cmd+.` kopiert nur die URL der Aufgabe.
+
+### Ohne Drag & Drop
+
+Fast alles, was du ziehen kannst, geht auch mit der Tastatur:
+
+- **Aufgabe zwischen Kanban-Spalten verschieben:** Öffne die Aufgabe und nutz das Spalten-Auswahlmenü in der Pfadzeile ganz oben. Du musst die Karte nicht ziehen.
+- **Termine in der Gantt-Ansicht verschieben:** Drück `Tab`, bis du auf einem Aufgabenbalken landest, und verschieb ihn dann mit den Pfeiltasten links und rechts um jeweils einen Tag. Für Start und Ende gibt es eigene Buttons, um die Länge zu ändern. Halte `Shift` zusammen mit einer Pfeiltaste gedrückt, um den Balken zu verlängern, oder `Ctrl` / `Cmd`, um ihn zu verkürzen.
+- **Daten ohne Kalenderraster setzen:** In jeder Datumsauswahl kannst du das Datum direkt eintippen. Es gibt auch eigene Steuerelemente für Monat, Jahr und Uhrzeit, falls du sie lieber Schritt für Schritt durchgehst.
+- **Beschreibungen per Tastatur schreiben:** Der Rich-Text-Editor lässt sich komplett ohne Maus bedienen. Markdown-Kürzel funktionieren direkt beim Tippen (`#` für Überschriften, `-` für einen Aufzählungspunkt, `1.` für eine nummerierte Liste, `[]` für eine Checkbox), `Ctrl+S` / `Cmd+S` speichert, und `Tab` bewegt den Fokus aus dem Editor heraus, statt dich darin festzuhalten.
+
+In Safari überspringt `Tab` standardmäßig Links, deshalb kann es sich so anfühlen, als würden bei der Tastaturnavigation Stellen fehlen. Schalte unter Safari → Einstellungen → Erweitert die Option „Über Tabulator jedes Objekt auf einer Webseite hervorheben“ ein, um mit Tab durch alles zu springen, oder halte `Option` gedrückt, während du `Tab` drückst.
+
+## Anzeige und Ton
+
+- **Farbschema:** Wähl unter Einstellungen → Allgemeine Einstellungen → Farbschema zwischen Hell, Dunkel oder System (folgt deinem Betriebssystem). Siehe [Einstellungen](/help/settings#color-scheme).
+- **Zoom:** Bei 200 % Browser-Zoom passt sich das Layout an, ohne dass Inhalte abgeschnitten werden oder verschwinden. Du kannst Text also einfach mit dem Zoom deines Browsers vergrößern.
+- **Erledigt-Ton:** Das Plopp-Geräusch, das beim Erledigen einer Aufgabe ertönt, kannst du unter Einstellungen → Allgemeine Einstellungen ausschalten.
+
+## Screenreader und assistive Technologien
+
+Vikunja hat eine semantische Struktur, die assistive Technologien nutzen können: Seitenbereiche (Landmarks), beschriftete Bedienelemente, einen Link zum Überspringen bis zum Hauptinhalt und Live-Regionen, die das Ergebnis einer Aktion vorlesen. Das Gantt-Diagramm hat eine ARIA-Beschreibung dessen, was es zeigt. Bildern, die du in eine Aufgabenbeschreibung einfügst, kannst du einen Alternativtext geben: Wähl das Bild aus und klick im eingeblendeten Menü auf **Alternativer Text**.
+
+Wenn du dir eine Kombination aussuchst: VoiceOver funktioniert am besten mit Safari, NVDA mit Chrome oder Firefox. VoiceOver zusammen mit Firefox liest Überschriften und Sprachen schlecht vor. Das ist eine Einschränkung des Browsers und nichts, was wir in Vikunja beheben können.
+
+<Callout type="info">
+Bisher haben wir automatisierte Prüfungen sowie manuelle Audits der Tastaturbedienung und des Accessibility-Baums gemacht. Wir bauen unsere Tests mit Screenreadern gerade aus. Wenn sich also etwas in deinem Screenreader schlecht anhört, wollen wir davon erfahren.
+</Callout>
+
+## Was noch nicht funktioniert
+
+Wir sagen es dir lieber direkt, als dass du dich mit der Oberfläche herumschlagen musst:
+
+- **Karten innerhalb einer Kanban-Spalte umsortieren** und **die Listenansicht manuell umsortieren** geht nur per Drag & Drop. Als Workaround kannst du stattdessen sortieren: Wähl eine [Sortierung](/help/views#sorting-the-list), und die Aufgaben ordnen sich von selbst.
+- **Eine Kanban-Spalte umbenennen** geht noch nicht ohne Maus oder Touch.
+- An einigen Problemen mit Farbkontrast und Ansagen arbeiten wir noch. Ein Barrierefreiheits-Audit im Juli 2026 hat eine Reihe von Verbesserungen angestoßen, und die Arbeit daran läuft weiter.
+
+## Ein Barrierefreiheitsproblem melden
+
+Wenn dir etwas im Weg steht, meld es genauso wie jeden anderen Fehler:
+
+- Erstell ein Issue auf [GitHub](https://github.com/go-vikunja/vikunja)
+- Schreib im [Community-Forum](https://community.vikunja.io)
+- Schick eine E-Mail an [hello@vikunja.io](mailto:hello@vikunja.io)
+
+Alle diese Wege sind textbasiert, du kannst uns also so erreichen, wie es für dich am besten passt.
