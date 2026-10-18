@@ -1,0 +1,167 @@
+---
+title: Aufgaben
+slug: tasks
+description: >-
+  Alles rund um Aufgaben: die Detailansicht, Beschreibungen, Labels, Prioritäten,
+  Zugewiesene, Kommentare, Checklisten und mehr.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+
+Aufgaben sind die zentralen Bausteine in Vikunja. Jedes To-do, jeder Arbeitsschritt und jedes Stück Arbeit ist eine Aufgabe in einem [Projekt](/help/projects).
+
+### Kurzübersicht
+
+- **Aufgabe öffnen:** Klick sie in einer beliebigen [Ansicht](/help/views) an. In Gantt brauchst du einen Doppelklick.
+- **Aufgabe erstellen:** Nutze das Eingabefeld oben in der Listenansicht oder im [Dashboard](/help/dashboard).
+- **Details beim Tippen festlegen:** Mit [Quick Add Magic](/help/quick-add-magic) setzt du Daten, Labels, Prioritäten und mehr.
+- **Aufgabe verschieben:** Ändere ihr Projekt in der Detailansicht oder zieh sie in der Listen- oder Kanban-Ansicht auf ein anderes Projekt.
+
+## Eine Aufgabe öffnen
+
+Klick in der Listen-, Kanban- oder Tabellen[ansicht](/help/views) auf eine Aufgabe, um die **Aufgabendetails** zu öffnen. In der Gantt-Ansicht klickst du die Aufgabe stattdessen doppelt an.
+
+In der Detailansicht bearbeitest du Titel, Beschreibung, Daten, Labels, Zugewiesene, Anhänge und alles andere.
+
+<Screenshot src="tasks-detail-view" alt="Aufgabendetails mit Titel, Beschreibung und Feldern in der Seitenleiste" />
+
+## Titel
+
+Der Titel der Aufgabe steht oben in der Detailansicht. Klick darauf, um ihn direkt zu bearbeiten.
+
+## Beschreibung
+
+Unter dem Titel findest du den Editor für die Beschreibung. Hat die Aufgabe noch keine Beschreibung, öffnet sich der Editor direkt im Bearbeitungsmodus, sodass du sofort lostippen kannst.
+
+Der Editor unterstützt die üblichen Formatierungen wie Überschriften, **fett**, *kursiv* und Listen. Markdown-Kürzel funktionieren auch, und eingefügtes Markdown wird automatisch umgewandelt.
+
+Anhänge kannst du direkt im Editor hochladen, indem du eine Datei hineinziehst oder den Upload-Button nutzt.
+
+## Rechte Seitenleiste
+
+<Screenshot src="tasks-right-sidebar" alt="Rechte Seitenleiste einer Aufgabe mit Eigenschaften und Aktions-Buttons" />
+
+In der rechten Seitenleiste findest du die Eigenschaften und Aktionen der Aufgabe.
+
+### Eine Aufgabe als erledigt markieren
+
+Klick oben in der rechten Seitenleiste auf **Als erledigt markieren**, um die Aufgabe abzuschließen. Klick noch mal, um sie wieder zu öffnen.
+
+### Eine Aufgabe abonnieren
+
+Klick auf **Abonnieren**, um Änderungen an der Aufgabe zu verfolgen. Wer eine Aufgabe abonniert hat, bekommt Benachrichtigungen zu Kommentaren, Änderungen und ausgelösten [Erinnerungen](/help/dates-and-reminders).
+
+Du abonnierst eine Aufgabe automatisch, wenn du sie erstellst, wenn sie dir zugewiesen wird und wenn du das Projekt abonniert hast, zu dem sie gehört (oder eines seiner übergeordneten Projekte). Aufgaben, die über eine Linkfreigabe erstellt werden, haben keine Person dahinter, die sie abonnieren könnte. In diesem Fall wird also niemand automatisch eingetragen.
+
+Wenn dein Abonnement vom Projekt kommt und nicht von der Aufgabe selbst, kannst du trotzdem nur diese eine Aufgabe abbestellen. Klick dort auf **Abbestellen**, und für alles andere bleibt dein Projektabonnement bestehen.
+
+### Eine Aufgabe zu den Favoriten hinzufügen
+
+Klick auf **Zu Favoriten hinzufügen**, um die Aufgabe ins Projekt **Favoriten** in der Seitenleiste aufzunehmen. Das ist praktisch für Aufgaben, zu denen du oft zurückkehrst.
+
+### Eine Aufgabe duplizieren
+
+Klick in der rechten Seitenleiste auf **Duplizieren**, um eine Kopie der Aufgabe zu erstellen. Die Kopie übernimmt alle Eigenschaften: Labels, Zugewiesene, Anhänge, Beziehungen und das Titelbild.
+
+### Labels
+
+Mit Labels ordnest du Aufgaben ein und kannst später Filter darauf aufbauen.
+
+Klick in der rechten Seitenleiste auf das Labels-Feld, um bestehende Labels zu suchen und hinzuzufügen oder direkt neue zu erstellen.
+
+Mehr zum Erstellen und Verwalten von Labels findest du unter [Labels](/help/labels).
+
+### Priorität
+
+Setz eine Priorität von **Nicht eingestellt** bis **Jetzt erledigen**.
+
+Die Priorität kannst du auch in [Filtern](/help/filters) nutzen.
+
+### Fortschritt
+
+Setz einen Prozentwert zwischen **0** und **100**, um den Fortschritt von Hand festzuhalten.
+
+### Farbe
+
+Gib der Aufgabe eine Farbe, damit sie auffällt, vor allem in der **Kanban**- und **Gantt**-[Ansicht](/help/views).
+
+### Zugewiesene
+
+Weise die Aufgabe einer oder mehreren Personen zu, die sich darum kümmern.
+
+Zuweisen kannst du nur Personen, die schon Zugriff auf das Projekt haben. Wie du anderen Zugriff gibst, erfährst du unter [Teilen & Teams](/help/sharing-and-teams).
+
+### Daten
+
+Eine Aufgabe kann ein Startdatum, ein Enddatum und ein Fälligkeitsdatum haben. Details findest du unter [Termine & Erinnerungen](/help/dates-and-reminders).
+
+### Anhänge
+
+Klick in der Seitenleiste auf **Anhänge hinzufügen** (oder drück `f`), um die Dateiauswahl zu öffnen und Dateien hochzuladen. Du kannst Dateien auch in den Editor für die Beschreibung ziehen.
+
+Wenn du auf einen hochgeladenen Anhang klickst, öffnet sich nach Möglichkeit eine Vorschau:
+
+- **Bilder** (`jpg`, `jpeg`, `png`, `gif`, `bmp`) öffnen sich in einer Vorschau, in der du mit Maus oder Tastatur zoomen und den Ausschnitt verschieben kannst. Ab Vikunja **2.6.0**.
+- **PDFs** öffnen sich direkt in einem Modal mit dem eingebauten PDF-Viewer deines Browsers. So kannst du scrollen, zoomen und suchen, ohne die Aufgabe zu verlassen. PDF-Vorschauen gibt es ab Vikunja **2.3.0**.
+- **Videos** öffnen sich in einem Modal und laufen dort, solange dein Browser das Format unterstützt. Video-Anhänge zeigen in der Anhangsliste ein Play-Icon. Ab Vikunja **2.6.0**.
+- **Audio** läuft direkt in der Zeile des Anhangs. Klickst du einen anderen Audio-Anhang an, stoppt der erste. Ab Vikunja **2.6.0**.
+- **Andere Dateitypen** werden direkt heruntergeladen.
+
+Jede Zeile in der Anhangsliste zeigt den Dateinamen. Dateigröße, Typ und wer die Datei hochgeladen hat, siehst du im Tooltip der Zeile.
+
+Neben jedem Anhang gibt es einen eigenen Download-Button, der die Datei immer herunterlädt, egal ob es eine Vorschau gibt.
+
+### Beziehungen
+
+Mit Beziehungen verknüpfst du Aufgaben miteinander, zum Beispiel als Unteraufgaben, übergeordnete Aufgaben, Blocker oder verwandte Arbeit.
+
+Klick auf **Beziehung hinzufügen**, such die andere Aufgabe und wähl dann die Art der Beziehung.
+
+Alle verfügbaren Beziehungsarten und wie du sie nutzt, findest du unter [Aufgabenbeziehungen](/help/task-relations).
+
+## Eine Aufgabe verschieben
+
+Du kannst eine Aufgabe auf zwei Wegen in ein anderes Projekt verschieben:
+
+- **In der Detailansicht:** Wähl über das Projektfeld in der rechten Seitenleiste ein anderes Projekt.
+- **In der Listen- oder Kanban-Ansicht:** Zieh die Aufgabe auf ein anderes Projekt in der Seitenleiste.
+
+<Screenshot src="tasks-drag-to-project" alt="Eine Aufgabe wird auf ein anderes Projekt in der Seitenleiste gezogen" />
+
+## Die Kanban-Spalte ändern
+
+<Screenshot src="tasks-kanban-bucket-picker" alt="Geöffnete Spaltenauswahl neben dem Projektnamen in den Aufgabendetails" />
+
+Hat das Projekt der Aufgabe eine manuelle [Kanban-Ansicht](/help/views#kanban-view), zeigt die Detailansicht neben dem Projektnamen, direkt unter dem Titel der Aufgabe, eine kleine Spaltenauswahl. Klick darauf, um die Aufgabe in eine andere Spalte zu verschieben, ohne die Detailansicht zu verlassen.
+
+Das hat dieselbe Wirkung, wie die Aufgabe auf dem Kanban-Board zu ziehen: Verschiebst du sie in die [Erledigt-Spalte](/help/views#done-bucket), wird sie als erledigt markiert, und holst du sie wieder heraus, gilt sie wieder als nicht erledigt.
+
+Die Auswahl erscheint nur bei Projekten mit einer normalen Kanban-Ansicht, deren Spalten du von Hand verwaltest. Projekte mit [filterbasierten Spalten](/help/views#filter-based-buckets) zeigen sie nicht an, weil dort Filter bestimmen, welche Aufgabe in welcher Spalte landet.
+
+## Kommentare
+
+<Screenshot src="tasks-comments" alt="Kommentarbereich einer Aufgabe" />
+
+Kommentare stehen unter der Beschreibung der Aufgabe und nutzen denselben Editor.
+
+Du kannst **andere erwähnen**, indem du `@` und ihren Anmeldenamen tippst. Wer erwähnt wird, bekommt eine [Benachrichtigung](/help/search-and-navigation#notifications).
+
+<Screenshot src="tasks-comments-mention" alt="Jemanden mit @ in einem Kommentar erwähnen" />
+
+Sobald eine Aufgabe Kommentare hat, kannst du die Reihenfolge zwischen „Älteste zuerst“ und „Neueste zuerst“ umschalten.
+
+## Checklisten
+
+Mit der Option „Aufgabenliste“ im Editor für die Beschreibung erstellst du eine Checkliste.
+
+Der Fortschritt der Checkliste erscheint auf der Aufgabenkarte in der Listenansicht, sodass du auf einen Blick siehst, wie weit du bist.
+
+## Quick Add Magic
+
+Daten, Labels, Prioritäten, Zugewiesene und mehr kannst du schon beim Tippen des Aufgabentitels festlegen. Die komplette Syntax findest du unter [Quick Add Magic](/help/quick-add-magic).
+
+## Hover-Vorschau
+
+<Screenshot src="tasks-hover-preview" alt="Hover-Vorschau einer Aufgabe mit Titel, Beschreibung und Labels" />
+
+Wenn du in der Listenansicht mit der Maus über eine Aufgabe fährst, öffnet sich eine kleine Vorschau mit Titel, Beschreibung, Ersteller:in, Labels und anderen wichtigen Details.
