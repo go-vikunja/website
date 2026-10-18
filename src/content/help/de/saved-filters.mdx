@@ -1,0 +1,68 @@
+---
+title: Gespeicherte Filter
+slug: saved-filters
+description: >-
+  Gespeicherte Filter sind persönliche, projektübergreifende Aufgabenansichten,
+  die auf Filterabfragen basieren.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+import Callout from '@/components/Callout.astro';
+
+Mit gespeicherten Filtern erstellst du persönliche, projektübergreifende Aufgabenansichten auf Basis einer [Filterabfrage](/help/filters). Anders als [Ansichten](/help/views), die zu einem einzelnen Projekt gehören und mit dessen Mitgliedern geteilt werden, sind gespeicherte Filter privat für deinen Account und holen Aufgaben aus all deinen Projekten auf einmal.
+
+Das ist praktisch für Dinge wie „alle Aufgaben mit hoher Priorität aus allen Projekten“ oder „Aufgaben, die mir zugewiesen sind und diese Woche fällig werden“.
+
+## Einen gespeicherten Filter erstellen
+
+Um einen gespeicherten Filter zu erstellen, geh zur Projektübersicht und klick auf **Neuer gespeicherter Filter**. Dann füllst du Folgendes aus:
+
+- **Titel** (Pflichtfeld): ein Name für den Filter, bis zu 250 Zeichen
+- **Beschreibung** (optional): eine längere Erklärung, wofür der Filter da ist, mit Textformatierung
+- **Filter-Abfrage**: der [Filterausdruck](/help/filters), der bestimmt, welche Aufgaben angezeigt werden
+
+<Screenshot src="saved-filters-create-form" alt="Formular zum Erstellen eines gespeicherten Filters mit Titel, Beschreibung und Filter-Abfrage" />
+
+Die Filter-Abfrage nutzt dieselbe Syntax wie die Filter in Projektansichten. Du kannst alle verfügbaren [Filterfelder](/help/filters#fields) verwenden, auch das Feld `project`. Das gibt es nur in gespeicherten Filtern, und damit grenzt du die Ergebnisse auf bestimmte Projekte ein.
+
+<Callout type="info">
+Der Standardfilter für neue gespeicherte Filter ist `done = false`. Er zeigt nur unerledigte Aufgaben.
+</Callout>
+
+## Einen gespeicherten Filter bearbeiten
+
+Um einen gespeicherten Filter zu bearbeiten, öffne ihn über die Seitenleiste, klick auf das Drei-Punkte-Menü neben seinem Titel und wähl **Bearbeiten**. Dort kannst du Titel, Beschreibung und Filter-Abfrage ändern.
+
+## Einen gespeicherten Filter löschen
+
+Öffne die Bearbeitungsseite des Filters und klick unten auf **Löschen**. Bevor der Filter gelöscht wird, musst du das noch bestätigen.
+
+## Seitenleiste und Navigation
+
+<Screenshot src="saved-filters-sidebar" alt="Gespeicherte Filter in der linken Seitenleiste" />
+
+Gespeicherte Filter erscheinen in der linken Seitenleiste neben deinen Projekten und sind mit einem Filter-Icon markiert. Du findest sie auch über die Quick Actions (Ctrl+K oder Cmd+K unter macOS).
+
+## Ansichten in gespeicherten Filtern
+
+Jeder gespeicherte Filter bekommt automatisch mehrere Ansichten, genau wie ein normales Projekt. Über die Tabs oben wechselst du zwischen den Ansichten **Liste**, **Gantt**, **Tabelle** und **Kanban**.
+
+In der Kanban-Ansicht eines gespeicherten Filters kannst du Spalten genauso erstellen und verwalten wie in einem normalen Projekt. Vikunja hält das Kanban-Board automatisch mit dem Filter synchron: Aufgaben, die neu zum Filter passen, landen in der Standardspalte, und Aufgaben, die nicht mehr passen, werden entfernt.
+
+## Favoriten
+
+Du kannst einen gespeicherten Filter als Favoriten markieren, indem du in der Seitenleiste auf das Stern-Icon neben seinem Titel klickst. Favorisierte Filter erscheinen oben in der Seitenleiste im Bereich **Favoriten**, damit du schnell drankommst.
+
+## Gespeicherte Filter im Dashboard nutzen
+
+Mit einem gespeicherten Filter legst du fest, welche Aufgaben in deinem [Dashboard](/help/dashboard) erscheinen. So geht's:
+
+1. Erstell einen gespeicherten Filter mit der gewünschten Abfrage.
+2. Öffne deine **[Einstellungen](/help/settings)** und wähl ihn dort als Filter für die Startseite aus.
+
+Das ist praktisch, wenn du nach dem Anmelden nur bestimmte Aufgaben sehen willst statt alles aus allen Projekten.
+
+## Einschränkungen
+
+- Gespeicherte Filter sind **persönlich**: Nur du kannst deine gespeicherten Filter sehen und bearbeiten. Du kannst sie nicht mit anderen Personen oder Teams teilen und auch nicht über Linkfreigaben.
+- Über Linkfreigaben sind gespeicherte Filter **überhaupt nicht verfügbar**.
