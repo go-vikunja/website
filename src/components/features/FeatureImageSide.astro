@@ -12,26 +12,16 @@ const {image, darkImage, orientation: origOrientation, alt} = Astro.props
 
 const orientation = origOrientation ?? 'right'
 ---
-<div class="md:flex items-center text-left mb-8 md:mb-32 my-8 gap-8">
-	{orientation === 'left' ?
-            <div class="w-full md:w-1/2 mt-4 md:mt-0">
-                <Screenshot
-                    src={image}
-                    darkSrc={darkImage}
-                    class="object-contain object-top w-full"
-                    alt={alt}
-                />
-            </div> : ''}
-    <div class={'w-full md:w-1/2 ' + (orientation === 'left' ? 'pr-4' : 'pl-4')}>
+<div class={'flex flex-col items-center text-left gap-6 md:gap-8 mt-8 mb-16 md:mb-32 ' + (orientation === 'left' ? 'md:flex-row-reverse' : 'md:flex-row')}>
+    <div class={'w-full md:w-1/2 ' + (orientation === 'left' ? 'md:pr-4' : 'md:pl-4')}>
         <slot/>
     </div>
-	{orientation === 'right' ?
-            <div class="w-full md:w-1/2 mt-4 md:mt-0">
-                <Screenshot
-                    src={image}
-                    darkSrc={darkImage}
-                    class="object-contain object-top w-full"
-                    alt={alt}
-                />
-            </div> : ''}
+    <div class="w-full md:w-1/2">
+        <Screenshot
+            src={image}
+            darkSrc={darkImage}
+            class="object-contain object-top w-full"
+            alt={alt}
+        />
+    </div>
 </div>
