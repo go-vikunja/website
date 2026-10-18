@@ -1,0 +1,105 @@
+---
+title: Projekte
+slug: projects
+description: >-
+  Projekte erstellen und ordnen, Unterprojekte verschachteln, Hintergründe setzen,
+  archivieren, duplizieren und mehr.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+import Callout from '@/components/Callout.astro';
+
+Ein Projekt ist in Vikunja der zentrale Ort für deine [Aufgaben](/help/tasks). Du kannst so viele Projekte erstellen, wie du brauchst, und sie in einer Hierarchie anordnen.
+
+### Was du mit Projekten machen kannst
+
+- **Projekte erstellen**, um zusammengehörige Aufgaben zu bündeln.
+- **Unterprojekte verschachteln**, um eine Hierarchie wie `Büroumzug > Packen & Logistik > 3. Stock` aufzubauen.
+- **Projekte** mit anderen Personen oder Teams **teilen**. Siehe [Teilen & Teams](/help/sharing-and-teams).
+- **Festlegen, wie Aufgaben angezeigt werden**, über [Ansichten](/help/views) (Liste, Kanban, Gantt, Tabelle).
+
+<Callout type="info">
+**Projekte vs. gespeicherte Filter:** Ein Projekt enthält Aufgaben. Ein [gespeicherter Filter](/help/saved-filters) ist eine persönliche Ansicht, die passende Aufgaben aus all deinen Projekten zeigt. Willst du Aufgaben bündeln, nimm ein Projekt. Willst du Aufgaben aus mehreren Projekten an einem Ort sehen, nimm einen gespeicherten Filter.
+</Callout>
+
+## Das Projekt „Eingang“
+
+Alle haben ein Projekt namens **Eingang**. Wenn du im [Dashboard](/help/dashboard) eine Aufgabe erstellst, ohne ein Projekt auszuwählen, landet sie dort.
+
+Nutz den Eingang, um Dinge schnell festzuhalten, und verschieb die Aufgaben später in andere Projekte.
+
+## Ein Projekt erstellen
+
+Öffne **Projekte** in der Seitenleiste und erstell dann über den Button oben rechts ein neues Projekt.
+
+<Screenshot src="projects-overview" alt="Projektübersicht mit allen Projekten" />
+
+## Projekteinstellungen
+
+Um die Projekteinstellungen zu öffnen, klick auf das **Drei-Punkte-Menü** neben dem Projekttitel und wähl **Bearbeiten**.
+
+<Screenshot src="projects-context-menu" alt="Kontextmenü eines Projekts mit den verfügbaren Aktionen" />
+
+<Screenshot src="projects-settings-form" alt="Formular mit den Projekteinstellungen" />
+
+Das kannst du ändern:
+
+- **Titel:** Der angezeigte Name des Projekts.
+- **Übergeordnetes Projekt:** Mach dieses Projekt zum Unterprojekt eines anderen Projekts. Das geht auch per Drag & Drop in der Seitenleiste.
+- **Beschreibung:** Eine optionale Textbeschreibung für das Projekt.
+- **Projektbezeichner:** Ein Kürzel (z. B. `UMZUG`), das mit den Aufgabennummern zu eindeutigen Verweisen wie `UMZUG-42` kombiniert wird. Diese Verweise erscheinen in den Aufgabendetails und machen es leichter, in Gesprächen oder Kommentaren auf bestimmte Aufgaben zu verweisen. Sie sind über alle Projekte hinweg eindeutig.
+- **Farbe:** Wird in der Seitenleiste und in der Projektübersicht angezeigt.
+
+## Unterprojekte
+
+Du kannst Projekte verschachteln, um eine Hierarchie aufzubauen. Es gibt zwei Wege, ein Projekt unter ein anderes zu schieben:
+
+- **Per Drag & Drop** ziehst du das Projekt in der Seitenleiste unter ein übergeordnetes Projekt.
+- **In den Projekteinstellungen** wählst du das gewünschte übergeordnete Projekt aus.
+
+Um direkt ein Unterprojekt zu erstellen, öffne das **Drei-Punkte-Menü** neben einem Projekt und wähl **Projekt erstellen**.
+
+## Hintergrundbilder
+
+<Screenshot src="projects-background-dialog" alt="Dialog für Hintergrundbilder mit Upload und Unsplash-Suche" />
+
+Über das **Drei-Punkte-Menü** kannst du für jedes Projekt ein Hintergrundbild festlegen.
+
+- **Lade** ein Bild von deinem Gerät **hoch**.
+- **Such auf Unsplash** nach einem Foto.
+
+<Callout type="info">
+Die Unsplash-Integration braucht einen API-Schlüssel, der auf der Instanz eingerichtet ist. In Vikunja Cloud funktioniert das ohne weiteres Zutun.
+</Callout>
+
+## Ein Projekt archivieren
+
+Beim Archivieren verschwindet ein Projekt aus den normalen Arbeitsansichten und kann nur noch gelesen werden.
+
+Öffne das **Drei-Punkte-Menü** und wähl **Archivieren**. Über dasselbe Menü kannst du die Archivierung später wieder aufheben.
+
+## Ein Projekt duplizieren
+
+Um ein Projekt zu kopieren, öffne das **Drei-Punkte-Menü** und wähl **Duplizieren**. Vikunja erstellt ein neues Projekt mit Kopien seiner Aufgaben, Ansichten, Unterprojekte und Einstellungen.
+
+## Ein Projekt zu den Favoriten hinzufügen
+
+<Screenshot src="projects-favorite-icon" alt="Stern-Icon, um ein Projekt zu den Favoriten hinzuzufügen" />
+
+Um ein Projekt zu den Favoriten hinzuzufügen, fahr in der **Seitenleiste** oder in der **Projektübersicht** mit der Maus darüber und klick auf das **Stern**-Icon. Favorisierte Projekte erscheinen oben in der Seitenleiste.
+
+## Ein Projekt löschen
+
+Um ein Projekt zu löschen, öffne das **Drei-Punkte-Menü** und wähl **Löschen**. Damit löschst du das Projekt und alle seine Aufgaben endgültig.
+
+<Callout type="info">
+Das Löschen eines Projekts lässt sich nicht rückgängig machen. Stell sicher, dass du das Projekt und seine Aufgaben nicht mehr brauchst, bevor du es löschst.
+</Callout>
+
+## Verwandte Funktionen
+
+Verwandte Seiten:
+
+- [Teilen und Teams](/help/sharing-and-teams) - Projekte mit anderen Personen oder Teams teilen.
+- [Ansichten](/help/views) - Festlegen, wie Aufgaben in einem Projekt angezeigt werden (Liste, Kanban, Gantt, Tabelle).
+- [Webhooks](/help/webhooks) - Webhooks einrichten, um externe Dienste über Ereignisse in einem Projekt zu informieren.
