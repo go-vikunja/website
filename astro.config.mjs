@@ -8,6 +8,7 @@ import cloudflare from '@astrojs/cloudflare'
 import tailwindcss from '@tailwindcss/vite'
 import {defaultLocale, locales} from './src/i18n/locales.ts'
 import {rehypeLocalizeLinks} from './src/i18n/rehype-localize-links.ts'
+import {rehypeSourceHeadingIds} from './src/i18n/rehype-source-heading-ids.ts'
 
 // https://astro.build/config
 export default defineConfig({
@@ -56,6 +57,7 @@ export default defineConfig({
 		processor: unified({
 			rehypePlugins: [
 				rehypeLocalizeLinks,
+				rehypeSourceHeadingIds,
 				rehypeSlug,
 				[
 					rehypeAutolinkHeadings,
