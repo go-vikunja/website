@@ -1,0 +1,129 @@
+---
+title: CalDAV
+slug: caldav
+description: >-
+  Synchronisiere Aufgaben per CalDAV mit externen Apps. Mit unterstützten
+  Eigenschaften, URLs und kompatiblen Clients.
+---
+import Screenshot from '@/components/Screenshot.astro'
+import {VIKUNJA_CLOUD_LINK} from '@/helpers/vikunjaCloudLink'
+import Callout from '@/components/Callout.astro'
+
+
+> **Warnung:** Die CalDAV-Integration ist noch in einer frühen Alpha-Phase und hat Fehler.
+> Mit manchen Clients funktioniert sie gut, mit anderen gibt es Probleme.
+> Wenn du auf Probleme stößt, [melde sie bitte](https://code.vikunja.io/api/issues/new?body=[caldav])
+
+Vikunja unterstützt die Verwaltung von [Aufgaben](/help/tasks) über die [CalDAV-Erweiterung VTODO](https://tools.ietf.org/html/rfc5545#section-3.6.2).
+
+Deine CalDAV-Verbindungsdaten findest du in deinen [Einstellungen](/help/settings) im Tab CalDAV.
+
+<Screenshot src="caldav-connection-details" alt="CalDAV-Verbindungsdaten in den Einstellungen" />
+
+## Authentifizierung
+
+Wenn du einen CalDAV-Client verbindest, nutze deinen Vikunja-**Anmeldenamen** und als Passwort eine dieser Möglichkeiten:
+
+- **Dein Account-Passwort** – die einfachste Variante und unsere Empfehlung, wann immer sie bei dir funktioniert. Lokale Accounts, auch solche, die über LDAP eingerichtet wurden, können direkt ihr normales Passwort verwenden. Wenn du dich über einen externen Identitätsanbieter (OIDC) anmeldest – zum Beispiel bei <a href={VIKUNJA_CLOUD_LINK}>Vikunja Cloud</a> –, zeigt dir der CalDAV-Tab in den Einstellungen einen Hinweis, dass du stattdessen ein eigenes Token verwenden sollst, weil dein Passwort nicht in Vikunja gespeichert ist. Passwörter funktionieren außerdem nicht, wenn die Zwei-Faktor-Authentifizierung für deinen Account aktiviert ist.
+- **Ein eigenes CalDAV-Token**, das du im CalDAV-Tab der Einstellungen erstellst. Nutze es, wenn du dich über OIDC anmeldest oder die Zwei-Faktor-Authentifizierung aktiviert hast.
+- **Ein [API-Token](/help/settings#api-tokens) mit der CalDAV-Berechtigungsgruppe**, verfügbar ab Vikunja **2.3.0**. Verwende den Wert des Tokens (er beginnt mit `tk_`) als Passwort. Das ist praktisch, wenn du alle Zugangsdaten für deine Automatisierungen an einem Ort verwalten willst oder ein einziges Token sowohl für die CalDAV-Synchronisation als auch für den API-Zugriff nutzen möchtest.
+
+## Fehlgeschlagene Anmeldungen und Rate Limits
+
+Ab Vikunja **2.6.0** sind fehlgeschlagene CalDAV-Anmeldungen pro IP-Adresse begrenzt. Standardmäßig sind 10 Fehlversuche pro Minute erlaubt, auch wenn der allgemeine Rate Limiter der Instanz deaktiviert ist. Ist das Limit erreicht, antworten CalDAV-Anfragen von dieser IP mit `429 Too Many Requests`, bis die aktuelle Minute vorbei ist.
+
+Normaler Sync-Verkehr verbraucht dieses Limit nicht. Anfragen ohne Zugangsdaten bekommen nur die übliche Authentifizierungsaufforderung, und erfolgreiche Anfragen werden dem Zähler wieder gutgeschrieben. Ein Client kann also so viele erfolgreiche `PROPFIND`- und `REPORT`-Anfragen senden, wie er braucht.
+
+Wenn ein Client nach mehreren Passwort- oder Token-Fehlern plötzlich kaputt wirkt, prüf die gespeicherten Zugangsdaten und warte, bis das Zeitfenster des Rate Limits zurückgesetzt ist. Vikunjas authentifizierte Benachrichtigungs-Feeds teilen sich für diese IP dasselbe Kontingent an Fehlversuchen.
+
+## URLs
+
+Alle URLs liegen unter dem Pfad `/dav`.
+
+Die URLs sind:
+
+* `/principals/<username>/`: Liefert die URLs, über die Projekte gefunden werden. *Nutze diese URL, wenn du einen neuen Client verbindest.*
+* `/projects/`: Zum Verwalten von [Projekten](/help/projects)
+* `/projects/<Project ID>/`: Zum Verwalten eines einzelnen Projekts
+* `/projects/<Project ID>/<Task UID>`: Zum Verwalten einer Aufgabe in einem Projekt
+
+## Einrichtung unter iOS
+
+<Callout type="info">
+Für die Synchronisation mit iPhone und iPad brauchst du Vikunja 2.2.0 oder neuer.
+</Callout>
+
+Deine Vikunja-Aufgaben erscheinen in der Erinnerungen-App. Jedes Projekt wird dort zu einer Liste.
+
+Erstelle zuerst ein CalDAV-Token in Vikunja:
+
+1. Klick oben rechts auf deinen Anmeldenamen und wähl „Einstellungen“.
+2. Öffne den Tab „CalDAV“.
+3. Kopier die „CalDAV URL“ oben auf der Seite und merk dir den Anmeldenamen, der darunter steht.
+4. Klick auf „CalDAV-Token erstellen“ und kopier das Token. Du wirst es nicht noch einmal sehen.
+
+Füg dann den Account auf deinem iPhone oder iPad hinzu:
+
+1. Öffne die Einstellungen-App und geh zu „Apps“ → „Kalender“ → „Kalender-Accounts“. Unter iOS 17 und älter gehst du stattdessen zu „Kalender“ → „Accounts“.
+2. Tipp auf „Account hinzufügen“ → „Andere“ → „CalDAV-Account hinzufügen“.
+3. Füll die Felder aus:
+   - Server: die kopierte CalDAV URL, zum Beispiel `https://vikunja.example.com/api/v1/dav/principals/yourname/`
+   - Benutzername: dein Vikunja-Anmeldename
+   - Passwort: das CalDAV-Token
+   - Beschreibung: ein beliebiger Name, zum Beispiel „Vikunja“
+4. Tipp auf „Weiter“ und warte, bis iOS den Account überprüft hat.
+5. Aktiviere „Erinnerungen“ und tipp auf „Sichern“.
+
+Öffne die Erinnerungen-App. Deine Vikunja-Projekte erscheinen unter der Beschreibung des Accounts. Die erste Synchronisation kann einen Moment dauern.
+
+Wenn die Überprüfung fehlschlägt, prüf, ob im Feld „Server“ die vollständige URL samt `https://` und abschließendem Schrägstrich steht. Nach mehreren Fehlversuchen sperrt Vikunja weitere Anmeldungen von deiner IP vorübergehend (siehe [Rate Limits](#failed-authentication-and-rate-limits)). Warte also eine Minute, bevor du es noch einmal versuchst.
+
+## Unterstützte Eigenschaften
+
+Vikunja unterstützt derzeit diese Eigenschaften:
+
+* `UID`
+* `SUMMARY`
+* `DESCRIPTION`
+* `PRIORITY`
+* `CATEGORIES`
+* `COMPLETED`
+* `CREATED` (nur Vikunja → Client)
+* `DUE` ([Fälligkeitsdatum](/help/dates-and-reminders))
+* `DURATION`
+* `DTSTAMP`
+* `DTSTART`
+* `LAST-MODIFIED` (nur Vikunja → Client)
+* `RELATED-TO` (Beziehungen zwischen über- und untergeordneten Aufgaben)
+* `RRULE` (Wiederholung) (nur Vikunja → Client)
+* `STATUS` (nur der Status `COMPLETED`, um Aufgaben als erledigt zu markieren)
+* `VALARM` ([Erinnerungen](/help/dates-and-reminders))
+
+Diese Eigenschaften unterstützt Vikunja **derzeit nicht**:
+
+* `ATTACH`
+* `CLASS`
+* `COMMENT`
+* `CONTACT`
+* `GEO`
+* `LOCATION`
+* `ORGANIZER` (deaktiviert)
+* `PERCENT-COMPLETE`
+* `RECURRENCE-ID`
+* `RESOURCES`
+* `SEQUENCE`
+* `URL`
+
+## Getestete Clients
+
+### Funktionieren
+
+* [Evolution](https://wiki.gnome.org/Apps/Evolution/)
+* [OpenTasks](https://opentasks.app/) & [DAVx⁵](https://www.davx5.com/)
+* [Tasks (Android)](https://tasks.org/)
+* [Korganizer](https://apps.kde.org/korganizer/)
+* Apple Erinnerungen unter iOS (ab Vikunja 2.2.0, siehe [Einrichtung unter iOS](#set-up-on-ios))
+
+### Funktionieren nicht
+
+* [Thunderbird (68)](https://www.thunderbird.net/)
