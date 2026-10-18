@@ -1,0 +1,53 @@
+---
+title: Aufgabenbeziehungen
+slug: task-relations
+description: >-
+  Verknüpf Aufgaben miteinander, zum Beispiel als Unteraufgabe, blockierend,
+  zugehörig und mehr.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+import Callout from '@/components/Callout.astro';
+
+Mit Aufgabenbeziehungen verknüpfst du [Aufgaben](/help/tasks) miteinander, um Abhängigkeiten, Hierarchien oder andere Zusammenhänge abzubilden. Beziehungen fügst du in der rechten Seitenleiste der Aufgabendetails hinzu.
+
+## Eine Beziehung hinzufügen
+
+1. Öffne eine Aufgabe und scroll in der rechten Seitenleiste zum Bereich **Verwandte Aufgaben**.
+2. Klick auf **Beziehung hinzufügen**.
+3. Such nach der Aufgabe, die du verknüpfen willst.
+4. Wähl die Art der Beziehung im Auswahlmenü.
+
+<Screenshot src="relations-type-dropdown" alt="Auswahlmenü für die Beziehungsart mit den verfügbaren Optionen" />
+
+Die Beziehung gilt sofort. Die verknüpfte Aufgabe zeigt automatisch die umgekehrte Beziehung an. Verknüpfst du zum Beispiel „Neue Möbel bestellen“ über die Art **Blockiert** mit „Besprechungsräume einrichten“, zeigt „Besprechungsräume einrichten“ **Blockiert von** „Neue Möbel bestellen“ an.
+
+## Eine Beziehung entfernen
+
+Um eine bestehende Beziehung zu entfernen, öffne die Aufgabendetails und klick auf den Entfernen-Button neben der Beziehung, die du loswerden willst.
+
+## Standard-Beziehungsart
+
+Wenn du eine Beziehung hinzufügst, nutzt Vikunja eine Standard-Beziehungsart. Die kannst du unter **[Einstellungen](/help/settings) → Allgemeine Einstellungen → Standard-Aufgabenbeziehungstyp** ändern.
+
+## Verfügbare Beziehungsarten
+
+| Art | Beschreibung | Gegenstück |
+|------|-------------|----------|
+| **Unteraufgabe** | Die Aufgabe ist eine Unteraufgabe der anderen Aufgabe. | Übergeordnete Aufgabe |
+| **Übergeordnete Aufgabe** | Die Aufgabe ist der anderen Aufgabe übergeordnet. | Unteraufgabe |
+| **Zugehörige Aufgabe** | Die beiden Aufgaben hängen zusammen. Wie genau, wird nicht festgelegt. | Zugehörige Aufgabe |
+| **Duplikat von** | Die Aufgabe ist ein Duplikat der anderen Aufgabe. | Dupliziert |
+| **Dupliziert** | Die Aufgabe dupliziert die andere Aufgabe. | Duplikat von |
+| **Blockiert** | Die Aufgabe blockiert die andere Aufgabe. | Blockiert von |
+| **Blockiert von** | Die Aufgabe wird von der anderen Aufgabe blockiert. | Blockiert |
+| **Vorgänger von** | Die Aufgabe kommt vor der anderen Aufgabe. | Folgt |
+| **Folgt** | Die Aufgabe kommt nach der anderen Aufgabe. | Vorgänger von |
+| **Kopiert von** | Die Aufgabe wurde von der anderen Aufgabe kopiert. | Kopiert nach |
+| **Kopiert nach** | Die Aufgabe wurde in die andere Aufgabe kopiert. | Kopiert von |
+
+<Callout type="info">
+Die Art **Zugehörige Aufgabe** ist symmetrisch und liest sich von beiden Seiten gleich. Alle anderen Arten haben ein gerichtetes Gegenstück, das automatisch bei der verknüpften Aufgabe gesetzt wird.
+</Callout>
+
+Unteraufgaben kannst du auch mit eingerückter Eingabe in [Quick Add Magic](/help/quick-add-magic) erstellen.
