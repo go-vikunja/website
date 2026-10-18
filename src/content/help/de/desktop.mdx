@@ -1,0 +1,61 @@
+---
+title: Desktop-App
+slug: desktop
+description: >-
+  Anmelden, das Schnelleingabefenster, das Tray-Symbol und Kommandozeilenoptionen
+  in der Vikunja-Desktop-App nutzen.
+---
+import Callout from '@/components/Callout.astro';
+import {VIKUNJA_CLOUD_LINK} from '@/helpers/vikunjaCloudLink';
+
+Für Linux, macOS und Windows gibt es eine eigene Desktop-App von Vikunja. Wie du sie herunterlädst und installierst, erfährst du unter [Desktop-Pakete](/docs/desktop-packages).
+
+## Anmelden
+
+<Callout type="info">
+Die OAuth-basierte Anmeldung in der Desktop-App gibt es ab Vikunja **2.3.0**.
+</Callout>
+
+Wenn du die Desktop-App zum ersten Mal öffnest, fragt sie dich, mit welchem Server du dich verbinden möchtest:
+
+- **Vikunja Cloud:** Verbinde dich mit dem gehosteten Dienst <a href={VIKUNJA_CLOUD_LINK}>Vikunja Cloud</a>.
+- **Demo ausprobieren:** Verbinde dich mit `try.vikunja.io`, der öffentlichen Demo-Instanz.
+- **Eigene Server-URL:** Gib die URL deiner selbst gehosteten Vikunja-Instanz ein.
+
+Sobald du einen Server gewählt hast, öffnet die Desktop-App deinen Browser, damit du dich anmelden kannst. Wenn deine Instanz einen externen Login-Provider nutzt (zum Beispiel ein Single-Sign-on-System), kannst du dich hier auch damit anmelden. Nachdem du die Anmeldung bestätigt hast, schickt dich der Browser zurück zur Desktop-App und du bist angemeldet.
+
+## Schnelleingabefenster
+
+<Callout type="info">
+Das Schnelleingabefenster gibt es ab Vikunja **2.3.0**.
+</Callout>
+
+Die Desktop-App hat ein eigenes **Schnelleingabefenster**: ein kleines Popup, das du von überall auf deinem System öffnen kannst, um eine Aufgabe hinzuzufügen, ohne erst ins Hauptfenster von Vikunja zu wechseln. Es ist dieselbe Schnelleingabe, die du in Vikunja schon mit `Ctrl` / `Cmd` + `K` öffnen kannst. Die Desktop-App stellt sie nur als eigenständiges Fenster bereit, das immer im Vordergrund bleibt, sodass du es auch erreichst, wenn Vikunja gerade nicht aktiv ist.
+
+### Das Popup öffnen
+
+Drück das globale Tastenkürzel, um das Popup zu öffnen. Standardmäßig ist das `Ctrl` + `Shift` + `A` (oder `Cmd` + `Shift` + `A` unter macOS).
+
+Du kannst das Tastenkürzel unter **Einstellungen > Allgemeine Einstellungen** im Abschnitt **Desktop-App** ändern. Klick auf das Feld **Quick Entry Tastenkombination** und drück die Tastenkombination, die du verwenden möchtest.
+
+Du kannst das Popup auch über das [Tray-Symbol](#system-tray) öffnen oder die App mit der Option [`--quick-entry`](#command-line-flags) starten.
+
+### Eine Aufgabe erstellen
+
+Das Popup funktioniert genauso wie die [Schnelleingabe im Dashboard](/help/dashboard#quick-add-bar). Du kannst also mit [Quick Add Magic](/help/quick-add-magic) schon beim Tippen Fälligkeitsdaten, Labels, Prioritäten, Zugewiesene und das Zielprojekt festlegen.
+
+- **Enter** erstellt die Aufgabe und schließt das Popup.
+- **`Ctrl`** / **`Cmd`** + **Enter** erstellt die Aufgabe und öffnet sie im Hauptfenster von Vikunja.
+- **Esc** schließt das Popup, ohne eine Aufgabe zu erstellen.
+
+## Tray-Symbol
+
+Die Desktop-App legt im Infobereich deiner Taskleiste (System Tray) ein Symbol mit diesen Einträgen ab:
+
+- **Show Vikunja:** öffnet das Hauptfenster oder holt es in den Vordergrund.
+- **Quick Add Task:** öffnet das [Schnelleingabefenster](#quick-entry-window). Neben dem Menüeintrag siehst du das aktuelle globale Tastenkürzel.
+- **Quit:** beendet die App komplett.
+
+## Kommandozeilenoptionen
+
+- `--quick-entry`: startet die App und öffnet sofort das [Schnelleingabefenster](#quick-entry-window). Wenn Vikunja schon läuft, öffnet sich das Popup in der laufenden Instanz, statt eine zweite zu starten. Das ist praktisch, wenn du dein eigenes Tastenkürzel oder einen Launcher mit dem Schnelleingabefenster verknüpfen möchtest.
