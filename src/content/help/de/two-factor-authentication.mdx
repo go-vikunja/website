@@ -1,0 +1,45 @@
+---
+title: Zwei-Faktor-Authentifizierung
+slug: two-factor-authentication
+description: >-
+  Schütz einen lokalen Vikunja-Account mit zeitbasierten Einmalpasswörtern und
+  erfahre, wie Einrichtung, Anmeldung, CalDAV und Wiederherstellung funktionieren.
+---
+import Callout from '@/components/Callout.astro';
+
+Vikunja unterstützt Zwei-Faktor-Authentifizierung mit zeitbasierten Einmalpasswörtern (TOTP). Nachdem du dein Passwort eingegeben hast, gibst du zusätzlich einen sechsstelligen Code aus einer Authenticator-App ein.
+
+Du kannst sie für lokale Vikunja-Accounts aktivieren, die keinen externen Anbieter für die Anmeldung nutzen. Wenn du dich über LDAP oder einen OpenID-Anbieter anmeldest, kümmert sich stattdessen dieser Anbieter um die Zwei-Faktor-Authentifizierung.
+
+## Zwei-Faktor-Authentifizierung aktivieren
+
+1. Klick oben rechts auf deinen Anmeldenamen und wähl **Einstellungen**.
+2. Öffne **Zwei-Faktor-Authentifizierung** und klick auf **Aktivieren**.
+3. Scann den QR-Code mit deiner Authenticator-App. Du kannst den angezeigten Schlüssel auch von Hand eingeben.
+4. Gib einen Code aus der App ein und klick auf **Bestätigen**.
+
+Sobald du die Einrichtung abschließt, meldet Vikunja dich überall ab. Melde dich danach wieder mit deinem Passwort und einem Code aus der Authenticator-App an.
+
+<Callout type="info">
+Ab Vikunja 2.6.0 sind QR-Code und Schlüssel nur während der Einrichtung der Zwei-Faktor-Authentifizierung verfügbar. Ist die Einrichtung abgeschlossen, kannst du sie nicht mehr aufrufen. Richte also alle Authenticator-Apps ein, die du nutzen willst, bevor du den ersten Code bestätigst.
+</Callout>
+
+## Anmelden
+
+Gib wie gewohnt deinen Anmeldenamen und dein Passwort ein. Danach fragt Vikunja nach dem aktuellen Code aus deiner Authenticator-App.
+
+Jeder Code funktioniert nur einmal. Wenn du dich innerhalb desselben 30-Sekunden-Fensters zweimal anmeldest, warte vor der zweiten Anmeldung, bis die App einen neuen Code erzeugt.
+
+## CalDAV
+
+Sobald du die Zwei-Faktor-Authentifizierung aktiviert hast, funktioniert dein Account-Passwort nicht mehr für [CalDAV](/help/caldav). CalDAV-Clients können nicht nach einem Code für den zweiten Faktor fragen. Nutze stattdessen ein eigenes CalDAV-Token oder ein API-Token mit der Berechtigung **CalDAV > Access**.
+
+## Zwei-Faktor-Authentifizierung deaktivieren
+
+Öffne **Einstellungen**, wähl **Zwei-Faktor-Authentifizierung** und klick auf **Deaktivieren**. Gib zur Bestätigung dein aktuelles Account-Passwort ein.
+
+Wenn du nach der Einrichtung zu einer neuen Authenticator-App wechseln willst, deaktiviere die Zwei-Faktor-Authentifizierung und aktiviere sie dann neu. Dabei entsteht ein neuer Schlüssel.
+
+## Wenn du deinen Authenticator verlierst
+
+Vikunja bietet keine Wiederherstellungscodes. Wenn du noch irgendwo angemeldet bist und dein Passwort kennst, deaktiviere die Zwei-Faktor-Authentifizierung dort und aktiviere sie dann neu. Ansonsten wende dich an die Admins deiner Vikunja-Instanz.
