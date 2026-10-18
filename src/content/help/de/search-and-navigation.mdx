@@ -1,0 +1,89 @@
+---
+title: Suche & Navigation
+slug: search-and-navigation
+description: >-
+  Finde Aufgaben und Projekte mit der globalen Suche, Tastenkürzeln und
+  Benachrichtigungen.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+import Callout from '@/components/Callout.astro';
+
+Mit der globalen Suche findest du Dinge schnell, mit Tastenkürzeln kommst du flotter voran und Benachrichtigungen halten dich über Änderungen auf dem Laufenden.
+
+## Globale Suche
+
+<Screenshot src="search-global-dialog" alt="Dialog der globalen Suche mit Ergebnissen" />
+
+Öffne die globale Suche mit `Ctrl+K` oder `Cmd+K` oder klick oben rechts auf das Such-Icon.
+
+Die Suche umfasst deine Projekte und Aufgaben. Die Ergebnisse sind nach Typ gruppiert, Projekte und Aufgaben erscheinen also getrennt.
+
+Mit den Pfeiltasten gehst du durch die Ergebnisse, mit `Enter` öffnest du eins.
+
+### Gezielt suchen
+
+Du kannst die Ergebnisse eingrenzen, indem du Präfixe für Projekte, Labels, Zugewiesene oder Prioritäten direkt ins Suchfeld tippst. Welche Präfixe gelten, hängt von deinem [Quick-Add-Magic-Modus](/help/settings#quick-add-magic-mode) ab:
+
+**Vikunja-Modus (Standard):**
+
+- `+Projektname` grenzt auf ein Projekt ein
+- `*Labelname` grenzt auf ein Label ein
+- `@Anmeldename` grenzt auf eine zugewiesene Person ein
+- `!3` grenzt auf eine Priorität ein
+
+**Todoist-Modus:**
+
+- `#Projektname` grenzt auf ein Projekt ein
+- `@Labelname` grenzt auf ein Label ein
+- `+Anmeldename` grenzt auf eine zugewiesene Person ein
+- `!3` grenzt auf eine Priorität ein
+
+Zum Beispiel findet `+"Büroumzug" Packplan` Aufgaben im Projekt „Büroumzug“, die zu „Packplan“ passen. Mit `*dringend` findest du Aufgaben mit dem Label „dringend“.
+
+### Quick Actions
+
+<Screenshot src="search-quick-actions" alt="Menü mit Quick Actions zum Erstellen von Aufgaben, Projekten und Teams" />
+
+Im Suchdialog kannst du außerdem:
+
+- eine neue [Aufgabe](/help/tasks) erstellen
+- ein neues [Projekt](/help/projects) erstellen
+- ein neues [Team](/help/sharing-and-teams) erstellen
+
+<Callout type="info">
+Der Suchdialog funktioniert auch als Befehlspalette. So kannst du neue Einträge erstellen, ohne die Seite zu verlassen, auf der du gerade bist.
+</Callout>
+
+## Tastenkürzel
+
+<Screenshot src="navigation-keyboard-shortcuts" alt="Übersicht der Tastenkürzel" />
+
+Vikunja unterstützt überall in der Oberfläche Tastenkürzel.
+
+Um die Tastenkürzel für deine aktuelle Ansicht zu sehen, klick auf das kleine Icon unten rechts in der Oberfläche.
+
+### Kontextabhängige Tastenkürzel
+
+Welche Tastenkürzel funktionieren, hängt davon ab, wo du in der App bist:
+
+- **Allgemeine Tastenkürzel** funktionieren auf jeder Seite.
+- **Tastenkürzel für Aufgaben** funktionieren nur, wenn eine Aufgabe geöffnet ist.
+
+Das Tastenkürzel-Popup zeigt immer die Kürzel für deinen aktuellen Kontext.
+
+## Benachrichtigungen
+
+<Screenshot src="navigation-notifications" alt="Benachrichtigungsbereich mit den letzten Neuigkeiten" />
+
+Über das Glocken-Icon oben rechts erreichst du deine Benachrichtigungen.
+
+Du bekommst Benachrichtigungen, wenn:
+
+- **dich jemand** in einem Kommentar zu einer Aufgabe **mit `@` erwähnt**.
+- **sich etwas** an einer Aufgabe oder einem Projekt **ändert**, das du abonniert hast.
+- **eine [Erinnerung](/help/dates-and-reminders) fällig wird**, die du vorher für eine Aufgabe gesetzt hast.
+
+### Aufgaben und Projekte abonnieren
+
+Wenn du auch dann auf dem Laufenden bleiben willst, wenn dir die Arbeit nicht direkt zugewiesen ist, kannst du [Aufgaben abonnieren](/help/tasks#subscribing-to-a-task) oder gleich ganze [Projekte](/help/projects).
