@@ -1,0 +1,136 @@
+---
+title: 'Vikunja 2.7.1: 41 security fixes, plus a pile of bugfixes'
+date: 2026-10-20T12:00:00.000Z
+slug: /vikunja-2.7.1-was-released
+isRelease: true
+description: >-
+  Vikunja 2.7.1 fixes 41 security issues found in an internal audit, reworks
+  attachment previews, signs the release Docker images and fixes a long list of
+  bugs.
+---
+
+Not even three weeks after 2.7.0, here's 2.7.1. It's a patch release on paper, but a big one: 264 commits, 150 of them fixes. Most of that is the result of reported security issues and an automated security audit, which together fixed 41 security issues. Please update as soon as you can.
+
+Speaking of security, we now have a security-announcement-only newsletter! Sign up at the bottom of the page to get notified a few days in advance when we push a new release with fixed security issues.
+
+## Security
+
+Sixteen reports from third-party contributors, 25 from an automated security scan. We checked and verified each one.
+That makes 41 advisories in total: 2 high, 24 medium, 15 low. Most are small on their own.
+The earlier announcement said 13. That number grew to 41 once the scanner results were triaged.
+
+Nine were introduced in features added in the last year (v2 API, bot users), the rest have been there since the code was first written.
+
+The two high ones:
+
+- **Deleting an account could hand a project to someone else.** Vikunja promoted a read-only share to admin or owner on every project the deleted account could see, not just its own. Anyone could trigger this by deleting a bot. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-hq66-9qg8-jwqg), thanks to [@lissy93](https://github.com/lissy93) and [@dagadjno](https://github.com/dagadjno)!) This issue has existed since account deletion was added (v0.18.0, September 2021).
+- **Any task on the instance could be read through a webhook.** A crafted Kanban move sent the task from the request body to the project's webhooks, and payloads included related tasks the webhook owner can't see. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-5q33-h98p-rgh9), [advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-66cq-j6rw-pjch), thanks to [@M7Saad](https://github.com/M7Saad) and [@lissy93](https://github.com/lissy93)!) This has existed since webhooks were added (v0.22.0, December 2023).
+
+### Access control and sharing
+
+- Read-only members could see webhook target URLs, which for Slack or Discord are the credential. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-586f-48mj-3rwr))
+- A token scoped to project webhooks could manage account-wide webhooks too. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-5f6v-j6xm-wwj9))
+- API token permissions meant different things on v1 and v2, so a read-only token could delete through v2. The keys are renamed now and existing tokens migrated. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-j5v7-qcwp-5g32), thanks to [@dylanzonix](https://github.com/dylanzonix)!)
+- Bot tokens kept working after their owner was disabled. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-5fc2-w2j4-6r8w))
+- Tasks could be moved into another project's bucket. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-w64q-7p4m-j8g8), thanks to [@manus-pi](https://github.com/manus-pi)!)
+- Deleting a bucket via another view's URL skipped the last-bucket check. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-9xh7-5jg8-mf43))
+- Anyone could flag a team as SSO-managed, after which its members can't be removed. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-fjrf-gjmg-9v6g), thanks to [@EclipsSec](https://github.com/EclipsSec) and [@l1ght-man](https://github.com/l1ght-man)!)
+- Trying to leave a team you're not in revealed whether it exists. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-v3r6-33v3-79c2))
+
+### Sessions, login and 2FA
+
+- Login session tokens kept working for a while after logout, password change or being disabled, and could mint new credentials in that window. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-4qvp-948j-4cgv), thanks to [@r1alfarraj](https://github.com/r1alfarraj)!)
+- Enabling 2FA didn't ask for the password, so a stolen session could lock you out. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-h4q3-mc9r-q7vv), thanks to [@dagadjno](https://github.com/dagadjno)!)
+- Password re-checks on sensitive actions had no rate limit, and 2FA could be disabled with the password alone. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-49pj-52x6-8gpj), thanks to [@M7Saad](https://github.com/M7Saad)!)
+- A cross-site form could log your browser into the attacker's account on the v2 API. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-frf4-3prf-3vch))
+- Changing the API URL sent your stored tokens to the new server. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-rj93-wmch-2crq))
+- Migration callbacks weren't bound to the user who started them. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-xgw3-ccqg-f6ww))
+
+### Secrets in logs and files on disk
+
+- Password reset, email confirmation and account deletion tokens ended up in access logs. They're in the URL fragment now, old links still work. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-qf5p-grf5-wcq4))
+- Link share hashes landed in access logs too. The log now writes the route template instead of the raw path. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-ff52-3296-2fvr))
+- Stored files and the SQLite database were world-readable. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-9rfw-7hv4-3vv3))
+- So was the `vikunja dump` archive. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-rp64-xg8g-9mpr))
+- Export archives were never cleaned up, not even after account deletion. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-7gmh-4fw6-8xc5))
+- With a custom root path, plugins and logs used the working directory instead. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-hrw2-p27j-8mj8))
+- The release build toolchain was pulled by a mutable tag. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-h8wj-3gwg-jjjg))
+
+### Making the server fall over
+
+- Image decoding had no memory or concurrency bound. A few tiny images could cost gigabytes. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-9hxw-pxcq-4q8q), [advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-7f23-p76f-cx74), thanks to [@manus-use](https://github.com/manus-use)!)
+- Avatars were cached once per requested size, forever. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-3x3m-2j93-w46j), thanks to [@NotAFlightRisk](https://github.com/NotAFlightRisk)!)
+- Imports had no item limit and migrations downloaded attachments without a size limit. New `migration.maxitems` setting. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-g2xc-jv9q-46wq), [advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-wqjr-22r7-5437), [advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-mqq8-869v-48q8), thanks to [@manus-use](https://github.com/manus-use)!)
+- One CalDAV task with thousands of relations created a placeholder task for each. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-c934-xjq2-mrg3))
+- Unlimited Kanban buckets, two queries each on every read. Now capped at 100 manual and 50 filter buckets per view. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-p697-wq4x-grpj))
+- A bucket configuration without a filter crashed the view. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-hm4w-h7v8-ch43))
+- `page=0` on the v1 API returned everything. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-v579-5fwc-gr28), thanks to [@Ravin06](https://github.com/Ravin06)!)
+
+### Content injection
+
+- A crafted table cell color could inject CSS into every viewer's browser, enough for a fake login overlay. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-p23m-cq25-pc4j), thanks to [@r1alfarraj](https://github.com/r1alfarraj)!)
+- Images in descriptions could make every viewer's browser probe localhost and LAN addresses. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-2f75-93c9-xf32))
+- Titles weren't escaped in the header of comment and mention emails. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-rp33-8f2m-hm6j), thanks to [@LeoWSY-hashblue](https://github.com/LeoWSY-hashblue)!)
+
+### veans
+
+Four in [veans](/docs/veans), the agent CLI:
+
+- Server discovery could fall back from https to http. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-wqw2-rgwv-99qx))
+- A `.veans.yml` in an untrusted repo could send `VEANS_TOKEN` to an attacker's server. veans now asks before talking to a new server. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-3rrq-h284-5vpx))
+- Task and project titles went straight into the agent's instructions. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-cvh3-hf56-g9xm))
+- `veans init` followed symlinks and could write outside the repo. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-rxwp-q2qg-98vw))
+
+## Attachment previews
+
+Image previews for attachments and Kanban cover images used to be generated on demand and cached in the keyvalue store, which meant Redis filled up with image blobs that never expired. Previews are now stored next to the file itself, all sizes are generated from a single decode, and they're streamed instead of loaded into memory first. Cover images on Kanban cards only load once the card is visible ([#4147](https://github.com/go-vikunja/vikunja/pull/4147), [#4146](https://github.com/go-vikunja/vikunja/pull/4146), [#4148](https://github.com/go-vikunja/vikunja/pull/4148)).
+This could lead to DoS when some preconditions were met, which is why it is also covered by advisories above.
+
+If you use Redis, `vikunja repair attachment-previews` removes the old cached previews. It scans every key, so run it once things are quiet.
+
+## Signed Docker images
+
+Release Docker images are now signed with cosign and come with a build provenance attestation, so you can verify an image really came from our CI ([#4151](https://github.com/go-vikunja/vikunja/pull/4151)).
+
+## Fixes and improvements
+
+- LDAP users and groups are now matched by an immutable directory id instead of their name, and group sync only queries the groups the user is in ([#4096](https://github.com/go-vikunja/vikunja/pull/4096), [#4095](https://github.com/go-vikunja/vikunja/pull/4095)).
+- The MCP server has a new `filter_syntax` tool so your assistant can look up how filters work instead of guessing, and read tools can return only the fields you ask for ([#4182](https://github.com/go-vikunja/vikunja/pull/4182), [#4181](https://github.com/go-vikunja/vikunja/pull/4181)).
+- Editor toolbar buttons that don't fit move into a "More" menu instead of wrapping ([#4167](https://github.com/go-vikunja/vikunja/pull/4167)).
+- The time entry list shows the date of each entry ([#4205](https://github.com/go-vikunja/vikunja/pull/4205)).
+- Bulk updates no longer clear assignees, reminders or favorites you didn't mention ([#4166](https://github.com/go-vikunja/vikunja/pull/4166)).
+- Tasks synced over CalDAV with more than one category now get all of them as labels. Thanks to [@Tyagiquamar](https://github.com/Tyagiquamar) for contributing this in [#4183](https://github.com/go-vikunja/vikunja/pull/4183)!
+- Bot users got default reminder settings, which fixes a crash in the reminder parser. Thanks to [@Tyagiquamar](https://github.com/Tyagiquamar) for contributing this in [#4089](https://github.com/go-vikunja/vikunja/pull/4089), and for [#4119](https://github.com/go-vikunja/vikunja/pull/4119) too!
+- Monthly repeating tasks on the 31st no longer skip months. Thanks to [@Kshot3000](https://github.com/Kshot3000) for contributing this in [#4107](https://github.com/go-vikunja/vikunja/pull/4107)!
+- Gantt bars are always at least one day wide. Thanks to [@creightonfrance](https://github.com/creightonfrance) for contributing this in [#4116](https://github.com/go-vikunja/vikunja/pull/4116)!
+- Escape closes Quick Actions reliably. Thanks to [@busslina](https://github.com/busslina) for contributing this in [#4129](https://github.com/go-vikunja/vikunja/pull/4129)!
+- The PWA install banner stays hidden until you're logged in. Thanks to [@mnkprs](https://github.com/mnkprs) for contributing this in [#3964](https://github.com/go-vikunja/vikunja/pull/3964)!
+- Postgres passwords with special characters work in the connection URL ([#4092](https://github.com/go-vikunja/vikunja/pull/4092)).
+- Migrations on MySQL skip indexes on text columns instead of aborting ([#4133](https://github.com/go-vikunja/vikunja/pull/4133)).
+- Dragging a task on a phone auto-scrolls between Kanban buckets ([#4164](https://github.com/go-vikunja/vikunja/pull/4164)).
+- A timer started with a custom start time actually starts there ([#4157](https://github.com/go-vikunja/vikunja/pull/4157)).
+- Quick Add Magic no longer reads a date range as the due date ([#4134](https://github.com/go-vikunja/vikunja/pull/4134)).
+- From this release on, Vikunja is built with Go 1.27.3, which protects against the [eMudhra Intermediate CA Compromise](https://emudhra.we-have-a-problem.com/).
+
+## Things to check when upgrading
+
+A few of the security fixes change behavior you might rely on:
+
+- API token permission keys were renamed. Existing tokens are migrated, but if you create tokens via the API, check the new names.
+- The access log writes the route template instead of the raw URI.
+- New limits: 100 manual buckets and 50 filter buckets per view, and `migration.maxitems` (default 100000) per import.
+- The v2 attachment download route now ignores `preview_size`. Previews come from `/tasks/{task}/attachments/{attachment}/preview?size=`.
+
+## How to Upgrade
+
+To get the upgrade, simply replace the Vikunja binary with the new release from the [downloads page](https://dl.vikunja.io/vikunja/v2.7.1/) or pull the `:latest` docker image.
+
+You can also check out [the update docs](/docs/installing#updating) for more information about the process.
+
+## Closing
+
+As usual, you can find the full changelog [in the GitHub repo](https://github.com/go-vikunja/vikunja/blob/main/CHANGELOG.md#271---2026-10-20).
+
+If you have any questions about this release, please reach out either [in the community forum](https://community.vikunja.io), [Bluesky](https://bsky.app/profile/vikunja.io), or [Mastodon](https://social.linux.pizza/@vikunja).
+
+Thank you for using Vikunja, and I look forward to bringing you more enhancements in future updates!
