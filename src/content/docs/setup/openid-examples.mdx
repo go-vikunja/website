@@ -185,3 +185,43 @@ auth:
         scope: openid profile email
         forceuserinfo: false
 ```
+
+## Hideez
+
+[Hideez](https://hideez.com/pages/hideez-authentication-service) is a passwordless identity provider that supports OpenID Connect and SAML 2.0.
+You need a Hideez tenant with an administrator account, and `service.publicurl` must be set in your Vikunja config, because Vikunja builds the redirect URL from it.
+
+Vikunja Config:
+
+```yaml
+auth:
+  openid:
+    enabled: true
+    providers:
+      hideez:
+        name: Hideez
+        authurl: https://<tenant>.<us|eu>.hideez.io/
+        clientid: <hideez-client-id>
+        clientsecret: <hideez-client-secret>
+```
+
+Hideez Config:
+
+- In the admin portal, go to `Integrations` > `OIDC`, click `Create App Integration`, choose `Web Application` and click `Next`
+- Enter a name, for example `Vikunja`, and leave the grant type `Authorization Code`
+- Set the `Redirect Uri` to `https://vikunja.mydomain.com/auth/openid/hideez`. The last part must match the provider key (`hideez`) in the Vikunja config. Hideez accepts one redirect URI per application
+- Clear `Proof Key for Code Exchange (PKCE)`. Vikunja does not send a code challenge, and Hideez rejects the login when PKCE is required
+- Click `Create`. On the `Settings` tab, copy the `Client Id` and the `Client Secret`. The secret is shown unmasked only right after creation, you can issue a new one later with `Regenerate`
+- Open the `Parameters` tab and copy the `Issuer`. This is the `authurl`. Vikunja finds all other endpoints through OpenID Discovery
+- Give your users access to the application. If your tenant uses groups, go to `User Management` > `Groups`, add the users to a group and assign the application to it on the `Applications` tab. Users who are not assigned see "Access to the application is denied" when they sign in
+
+Logging in:
+
+The Vikunja login page now shows a `Log in with Hideez` button. After signing in at Hideez, users return to Vikunja.
+The first login creates the Vikunja account with the email address from the ID token. Later logins use the same account.
+
+Note: The default scopes `openid profile email` work.
+Hideez sends `sub` and `email` in the ID token, but no `preferred_username`, so Vikunja generates a random username for new users. `forceuserinfo` is not needed.
+This was tested with Vikunja 2.7.1.
+
+Also see the [Hideez documentation](https://hideez.gitbook.io/hideez-enterprise-authentication/integrations/oidc-openid-connect).
