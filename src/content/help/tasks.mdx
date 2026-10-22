@@ -168,7 +168,7 @@ Available since Vikunja 2.8.0.
 You can add a bookmark to your browser that turns the page you're reading into a task. Create a new bookmark, name it something like "Add to Vikunja", and paste this as its URL. Replace `https://vikunja.example.com` with the address of your Vikunja instance, including the subdirectory if you [host Vikunja under one](/docs/running-vikunja-in-a-subdirectory).
 
 ```js
-javascript:(()=>{const u=new URL('https://vikunja.example.com/tasks/new');u.searchParams.set('title',document.title);u.searchParams.set('url',location.href);u.searchParams.set('description',String(getSelection()));window.open(u,'vikunja','width=700,height=500')})()
+javascript:(()=>{const u=new URL('https://vikunja.example.com/');u.searchParams.set('title',document.title);u.searchParams.set('url',location.href);u.searchParams.set('description',String(getSelection()));window.open(u,'vikunja','width=700,height=500')})()
 ```
 
 Click the bookmark on any page. Vikunja opens in a small window with a new task filled in:
@@ -184,7 +184,7 @@ On Android, install Vikunja as an app from your browser's menu. Vikunja then sho
 
 ### Building your own links
 
-The bookmarklet opens `/tasks/new` with these query parameters, all optional:
+The bookmarklet opens the Vikunja home page with these query parameters. Any one of them is enough to open the new task dialog:
 
 | Parameter | Used for |
 | --- | --- |
@@ -192,7 +192,7 @@ The bookmarklet opens `/tasks/new` with these query parameters, all optional:
 | `url` | Link added at the top of the description |
 | `description` | Plain text added to the description, below the link |
 
-For example, `https://vikunja.example.com/tasks/new?title=Call%20the%20dentist` opens the new task dialog with that title. The task is only created once you press Enter.
+For example, `https://vikunja.example.com/?title=Call%20the%20dentist` opens the new task dialog with that title. The task is only created once you press Enter.
 
 ## Hover preview
 
