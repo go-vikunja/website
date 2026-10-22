@@ -15,6 +15,7 @@ Tasks are the core building blocks in Vikunja. Every to-do item, action item, or
 - **Open a task:** Click it in any [view](/help/views). In Gantt, double-click.
 - **Create a task:** Use the input at the top of the list view or on the [dashboard](/help/dashboard).
 - **Set details while typing:** Use [Quick Add Magic](/help/quick-add-magic) for dates, labels, priorities, and more.
+- **Save a web page as a task:** Use the [bookmarklet](#saving-a-web-page-as-a-task) or your phone's share menu.
 - **Move a task:** Change its project in the detail view, or drag it to another project from list and Kanban views.
 
 ## Opening a task
@@ -159,6 +160,39 @@ Checklist progress appears on the task card in the list view, so you can see com
 ## Quick Add Magic
 
 You can set dates, labels, priorities, assignees, and more while typing a task title. See [Quick Add Magic](/help/quick-add-magic) for the full syntax.
+
+## Saving a web page as a task
+
+Available since Vikunja 2.8.0.
+
+You can add a bookmark to your browser that turns the page you're reading into a task. Create a new bookmark, name it something like "Add to Vikunja", and paste this as its URL. Replace `https://vikunja.example.com` with the address of your Vikunja instance, including the subdirectory if you [host Vikunja under one](/docs/running-vikunja-in-a-subdirectory).
+
+```js
+javascript:(()=>{const u=new URL('https://vikunja.example.com/tasks/new');u.searchParams.set('title',document.title);u.searchParams.set('url',location.href);u.searchParams.set('description',String(getSelection()));window.open(u,'vikunja','width=700,height=500')})()
+```
+
+Click the bookmark on any page. Vikunja opens in a small window with a new task filled in:
+
+- The page title becomes the task title. It's wrapped in quotes so [Quick Add Magic](/help/quick-add-magic) doesn't turn words like "tomorrow" into a due date. Remove the quotes if you want it to.
+- A link to the page goes into the description, followed by any text you had selected.
+
+The link and the selected text show up below the title. Click the × next to them to leave them out. Press Enter to save the task in your default project.
+
+### From your phone
+
+On Android, install Vikunja as an app from your browser's menu. Vikunja then shows up in the share menu, and sharing a page fills in a new task the same way.
+
+### Building your own links
+
+The bookmarklet opens `/tasks/new` with these query parameters, all optional:
+
+| Parameter | Used for |
+| --- | --- |
+| `title` | Task title |
+| `url` | Link added at the top of the description |
+| `description` | Plain text added to the description, below the link |
+
+For example, `https://vikunja.example.com/tasks/new?title=Call%20the%20dentist` opens the new task dialog with that title. The task is only created once you press Enter.
 
 ## Hover preview
 
