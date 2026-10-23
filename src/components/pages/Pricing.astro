@@ -1,0 +1,88 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Plans from '../partials/Plans.astro'
+import CloudOrSelfHosted from '../partials/CloudOrSelfHosted.astro'
+import FAQSection from '../FAQSection.astro'
+import {useTranslations} from '../../i18n'
+import {localizedHref, parsePathname} from '../../i18n/routes'
+
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
+
+const links = {
+    licenseUrl: 'https://code.vikunja.io/vikunja/blob/main/LICENSE',
+    proUrl: localizedHref(locale, '/pro'),
+    demoUrl: 'https://try.vikunja.io/demo-account-create/',
+    contactUrl: 'mailto:hello@vikunja.io',
+    convinceUrl: localizedHref(locale, '/convince'),
+}
+const pricingFaqs = (['free', 'cloudVsSelfHosted', 'family', 'whatIsPro', 'trial', 'switch', 'atWork'] as const).map(id => ({
+    question: t(`pricing.faq.${id}.question`),
+    answer: t(`pricing.faq.${id}.answer`, links),
+}))
+
+const yes = t('pricing.comparison.yes')
+const no = '\u2014'
+const comparison: [feature: string, selfHosted: string, cloud: string, pro: string][] = [
+    [t('pricing.comparison.unlimited'), yes, yes, yes],
+    [t('pricing.comparison.views'), yes, yes, yes],
+    [t('pricing.comparison.reminders'), yes, yes, yes],
+    [t('pricing.comparison.labels'), yes, yes, yes],
+    [t('pricing.comparison.teams'), yes, t('pricing.comparison.teamsCloud'), yes],
+    [t('pricing.comparison.caldav'), yes, yes, yes],
+    [t('pricing.comparison.import'), yes, yes, yes],
+    [t('pricing.comparison.managedHosting'), no, yes, t('pricing.comparison.managedHostingPro')],
+    [t('pricing.comparison.prioritySupport'), no, t('pricing.comparison.organizationPlan'), t('pricing.comparison.businessAndUp')],
+    [t('pro.feature.adminPanel'), no, no, t('pricing.comparison.allProPlans')],
+    [t('pro.feature.auditLogs'), no, no, t('pricing.comparison.businessAndUp')],
+    [t('pro.feature.timeTracking'), no, no, t('pricing.comparison.allProPlans')],
+    [t('pricing.comparison.dedicatedInstance'), no, no, t('pricing.comparison.paidAddOn')],
+    [t('pricing.comparison.gdpr'), no, no, 'Enterprise'],
+    [t('pricing.comparison.training'), no, no, 'Enterprise'],
+]
+---
+<Layout title={t('nav.pricing')} description={t('pricing.description')}>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0" id="main-content">
+        <div class="pt-32 pb-8 px-4 text-center">
+            <h1 class="text-4xl font-display">
+                {t('pricing.hero.title')}
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-balance">
+                {t('pricing.hero.subtitle')}
+            </p>
+        </div>
+
+        <Plans />
+
+        <section class="mt-24 mb-16">
+            <h2 class="font-display text-3xl text-center mb-12">{t('pricing.comparison.title')}</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th class="py-3 px-4 font-display text-lg"></th>
+                            <th class="py-3 px-4 font-display text-lg">{t('pricing.comparison.selfHosted')}</th>
+                            <th class="py-3 px-4 font-display text-lg">Cloud<span class="block font-sans font-normal text-sm text-gray-500 dark:text-gray-400">{t('pricing.comparison.cloudSubtitle')}</span></th>
+                            <th class="py-3 px-4 font-display text-lg"><a href={localizedHref(locale, '/pro')} class="underline">Pro</a><span class="block font-sans font-normal text-sm text-gray-500 dark:text-gray-400">{t('pricing.comparison.proSubtitle')}</span></th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700 dark:text-gray-300">
+                        {comparison.map(([feature, ...cells], i) => (
+                            <tr class={i < comparison.length - 1 ? 'border-b border-gray-100 dark:border-gray-800' : undefined}>
+                                <td class="py-3 px-4 font-medium">{feature}</td>
+                                {cells.map(cell => <td class="py-3 px-4">{cell}</td>)}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <FAQSection faqs={pricingFaqs} />
+
+        <div class="pb-20 flex items-center justify-center flex-col text-center">
+            <h2 class="font-display text-3xl mb-8">{t('pricing.getStarted')}</h2>
+            <CloudOrSelfHosted />
+        </div>
+    </main>
+</Layout>
