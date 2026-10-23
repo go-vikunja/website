@@ -9,6 +9,7 @@ import '../styles/global.css'
 
 import Footer from '../components/Footer.astro'
 import Header from '../components/Header.astro'
+import {getOgPages, OG_DEFAULT_ROUTE, pathnameToOgRoute} from '../helpers/ogPages'
 
 interface Props {
 	title: string;
@@ -19,9 +20,11 @@ interface Props {
 
 const {title, type, description, image} = Astro.props
 
+const ogPages = await getOgPages()
+const ogRoute = pathnameToOgRoute(Astro.url.pathname)
 const imageUrl = image
 	? image
-	: new URL('/images/vikunja.jpg', Astro.url)
+	: new URL(`/og/${ogRoute in ogPages ? ogRoute : OG_DEFAULT_ROUTE}.webp`, Astro.site).href
 
 const canonical = (new URL(Astro.url.pathname, Astro.site)).toString()
 ---
@@ -61,6 +64,11 @@ const canonical = (new URL(Astro.url.pathname, Astro.site)).toString()
     <!-- Images -->
     <meta itemprop="image" content={imageUrl}/>
     <meta property="og:image" content={imageUrl}/>
+	{!image &&
+            <meta property="og:image:type" content="image/webp"/>
+            <meta property="og:image:width" content="1200"/>
+            <meta property="og:image:height" content="630"/>
+	}
     <meta name="twitter:image" content={imageUrl}/>
     <meta name="twitter:image:src" content={imageUrl}/>
     <meta name="twitter:card" content="summary_large_image"/>
