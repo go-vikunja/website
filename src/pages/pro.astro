@@ -178,8 +178,13 @@ const enterprisePlan: ProPlan = {
     ctaLabel: 'Get in touch',
     ctaHref: 'mailto:hello@vikunja.io',
 }
+
+export const meta = {
+	title: 'Vikunja Pro',
+	description: 'Pro features for self-hosted Vikunja: audit logs, admin panel, time tracking. For homelabbers, teams, and companies running their own instance. Not yet available on Vikunja Cloud. AGPLv3 licensed.',
+}
 ---
-<Layout title="Vikunja Pro" description="Pro features for self-hosted Vikunja: audit logs, admin panel, time tracking. For homelabbers, teams, and companies running their own instance. Not yet available on Vikunja Cloud. AGPLv3 licensed.">
+<Layout {...meta}>
     <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0" id="main-content">
 
         <!-- Hero -->

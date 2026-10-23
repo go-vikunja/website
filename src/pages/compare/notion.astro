@@ -17,8 +17,13 @@ const faqs = [
         answer: 'No. Every task has a rich-text description with markdown support, but Vikunja is a task manager, not a documentation tool.',
     },
 ]
+
+export const meta = {
+	title: 'Vikunja vs Notion: Fast Task Management You Can Self-Host',
+	description: 'Notion alternative for teams that just need task management. Four views, sub-100ms speed, self-hostable. No bloat, no slow loading, no US-only data.',
+}
 ---
-<Layout title="Vikunja vs Notion: Fast Task Management You Can Self-Host" description="Notion alternative for teams that just need task management. Four views, sub-100ms speed, self-hostable. No bloat, no slow loading, no US-only data.">
+<Layout {...meta}>
     <Fragment slot="head">
         <script type="application/ld+json" set:html={JSON.stringify({
             "@context": "https://schema.org",

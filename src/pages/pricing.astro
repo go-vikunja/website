@@ -34,8 +34,13 @@ const pricingFaqs = [
         answer: 'Check out the [Convince Your Boss](/convince) page \u2014 it has everything you need to make the case internally.',
     },
 ]
+
+export const meta = {
+	title: 'Pricing',
+	description: 'Vikunja pricing for individuals, teams, and enterprises. Self-host for free or let us run it for you. Enterprise features without the enterprise price tag.',
+}
 ---
-<Layout title="Pricing" description="Vikunja pricing for individuals, teams, and enterprises. Self-host for free or let us run it for you. Enterprise features without the enterprise price tag.">
+<Layout {...meta}>
     <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-0" id="main-content">
         <div class="pt-32 pb-8 px-4 text-center">
             <h1 class="text-4xl font-display">

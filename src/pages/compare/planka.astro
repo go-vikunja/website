@@ -30,8 +30,13 @@ const faqs = [
         answer: 'Planka 2.2.0 deactivates SSO-only users because they no longer have a password login. Planka documents how to [create a new admin user](https://docs.planka.cloud/docs/configuration/admin-user) via environment variables, so do that first to regain access and export your data. In Vikunja, OIDC users are regular users: they can be admins, they can be added to teams, and switching auth methods does not deactivate anyone.',
     },
 ]
+
+export const meta = {
+	title: 'Vikunja vs Planka: Self-Hosted Kanban With SSO That Stays Free',
+	description: 'Looking for a Planka alternative after SSO moved to Pro? Vikunja is an open-source, self-hosted task manager with Kanban, Gantt, List, and Table views. OIDC and LDAP are in the free version and stay there.',
+}
 ---
-<Layout title="Vikunja vs Planka: Self-Hosted Kanban With SSO That Stays Free" description="Looking for a Planka alternative after SSO moved to Pro? Vikunja is an open-source, self-hosted task manager with Kanban, Gantt, List, and Table views. OIDC and LDAP are in the free version and stay there.">
+<Layout {...meta}>
     <Fragment slot="head">
         <script type="application/ld+json" set:html={JSON.stringify({
             "@context": "https://schema.org",

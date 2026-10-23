@@ -22,8 +22,13 @@ const faqs = [
         answer: 'Vikunja works as a progressive web app on any device. Native apps are on the roadmap.',
     },
 ]
+
+export const meta = {
+	title: 'Vikunja vs Todoist: The Self-Hosted Alternative',
+	description: 'Todoist alternative you can self-host. Lists, labels, reminders, Kanban, Gantt. On your server, not theirs. Open-source, EU-hosted, no task limits on the free plan.',
+}
 ---
-<Layout title="Vikunja vs Todoist: The Self-Hosted Alternative" description="Todoist alternative you can self-host. Lists, labels, reminders, Kanban, Gantt. On your server, not theirs. Open-source, EU-hosted, no task limits on the free plan.">
+<Layout {...meta}>
     <Fragment slot="head">
         <script type="application/ld+json" set:html={JSON.stringify({
             "@context": "https://schema.org",

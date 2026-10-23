@@ -18,8 +18,13 @@ const faqs = [
         answer: `Self-host it for free with no limits on boards, tasks, or users. If you want managed hosting, [Vikunja Cloud](${VIKUNJA_CLOUD_LINK}) starts at 4 EUR/month with a 14-day free trial.`,
     },
 ]
+
+export const meta = {
+	title: 'Vikunja vs Trello: Self-Hosted Kanban and Beyond',
+	description: 'Trello alternative with Kanban, Gantt, list, and table views. Self-host it or use our EU cloud. No Power-Up tax, no Atlassian lock-in.',
+}
 ---
-<Layout title="Vikunja vs Trello: Self-Hosted Kanban and Beyond" description="Trello alternative with Kanban, Gantt, list, and table views. Self-host it or use our EU cloud. No Power-Up tax, no Atlassian lock-in.">
+<Layout {...meta}>
     <Fragment slot="head">
         <script type="application/ld+json" set:html={JSON.stringify({
             "@context": "https://schema.org",
