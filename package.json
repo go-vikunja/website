@@ -28,6 +28,8 @@
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.16",
     "astro": "^7.1.0",
+    "astro-og-canvas": "^0.13.2",
+    "canvaskit-wasm": "^0.42.0",
     "minisearch": "^7.2.0",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-slug": "^6.0.0",

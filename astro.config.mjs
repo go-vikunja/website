@@ -42,7 +42,8 @@ export default defineConfig({
 		mdx(),
 		sitemap(),
 	],
-	adapter: cloudflare(),
+	// astro-og-canvas reads its wasm via fs, unavailable in workerd.
+	adapter: cloudflare({prerenderEnvironment: 'node'}),
 	markdown: {
 		// Astro v7 makes Sätteri the default Markdown pipeline, which does not run
 		// remark/rehype plugins. Stay on the unified() processor so the rehype plugins
