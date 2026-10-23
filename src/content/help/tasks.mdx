@@ -6,7 +6,7 @@ description: >-
   assignees, comments, checklists, and more.
 ---
 import Screenshot from '../../components/Screenshot.astro'
-
+import Callout from '../../../components/Callout.astro';
 
 Tasks are the core building blocks in Vikunja. Every to-do item, action item, or piece of work lives as a task inside a [project](/help/projects).
 
@@ -161,11 +161,19 @@ Checklist progress appears on the task card in the list view, so you can see com
 
 You can set dates, labels, priorities, assignees, and more while typing a task title. See [Quick Add Magic](/help/quick-add-magic) for the full syntax.
 
+## Hover preview
+
+<Screenshot src="tasks-hover-preview" alt="Task hover preview showing title, description, and labels" />
+
+In the list view, hovering over a task opens a small preview with the title, description, creator, labels, and other key details.
+
 ## Saving a web page as a task
 
+<Callout type="info">
 Available since Vikunja 2.8.0.
+</Callout>
 
-You can add a bookmark to your browser that turns the page you're reading into a task. Create a new bookmark, name it something like "Add to Vikunja", and paste this as its URL. Replace `https://vikunja.example.com` with the address of your Vikunja instance, including the subdirectory if you [host Vikunja under one](/docs/running-vikunja-in-a-subdirectory).
+You can add a browser bookmark that turns the page you're reading into a task. Create a new bookmark, name it something like "Add to Vikunja", and paste this as its URL. Replace `https://vikunja.example.com` with the address of your Vikunja instance, including the subdirectory if you [host Vikunja under one](/docs/running-vikunja-in-a-subdirectory).
 
 ```js
 javascript:(()=>{const u=new URL('https://vikunja.example.com/');u.searchParams.set('title',document.title);u.searchParams.set('url',location.href);u.searchParams.set('description',String(getSelection()));window.open(u,'vikunja','width=700,height=500')})()
@@ -173,14 +181,14 @@ javascript:(()=>{const u=new URL('https://vikunja.example.com/');u.searchParams.
 
 Click the bookmark on any page. Vikunja opens in a small window with a new task filled in:
 
-- The page title becomes the task title. It's wrapped in quotes so [Quick Add Magic](/help/quick-add-magic) doesn't turn words like "tomorrow" into a due date. Remove the quotes if you want it to.
+- The page title becomes the task title. It's wrapped in quotes so [Quick Add Magic](/help/quick-add-magic) doesn't turn words like "tomorrow" into a due date. The quotes are stripped when you create the task. Remove them if you want quick add magic to work.
 - A link to the page goes into the description, followed by any text you had selected.
 
 The link and the selected text show up below the title. Click the × next to them to leave them out. Press Enter to save the task in your default project.
 
 ### From your phone
 
-On Android, install Vikunja as an app from your browser's menu. Vikunja then shows up in the share menu, and sharing a page fills in a new task the same way.
+On Android, install Vikunja from your browser's menu to your home screen. Vikunja then shows up in the share menu, and sharing a page fills in a new task the same way the browser bookmark does.
 
 ### Building your own links
 
@@ -193,9 +201,3 @@ The bookmarklet opens the Vikunja home page with these query parameters. Any one
 | `description` | Plain text added to the description, below the link |
 
 For example, `https://vikunja.example.com/?title=Call%20the%20dentist` opens the new task dialog with that title. The task is only created once you press Enter.
-
-## Hover preview
-
-<Screenshot src="tasks-hover-preview" alt="Task hover preview showing title, description, and labels" />
-
-In the list view, hovering over a task opens a small preview with the title, description, creator, labels, and other key details.
