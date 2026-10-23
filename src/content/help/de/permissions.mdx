@@ -1,0 +1,46 @@
+---
+title: Berechtigungen
+slug: permissions
+description: >-
+  Was die Berechtigungsstufen Nur Leserechte, Lesen & Schreiben und Admin beim
+  Teilen von Projekten erlauben.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+
+Wenn du ein [Projekt](/help/projects) mit jemandem teilst (einer Person, einem Team oder über eine Linkfreigabe), legst du fest, welche Zugriffsstufe dabei gilt.
+
+## Berechtigungsstufen
+
+<Screenshot src="permissions-dropdown" alt="Auswahlmenü für die Berechtigung mit den Optionen Nur Leserechte, Lesen & Schreiben und Admin" />
+
+Es gibt drei Zugriffsstufen:
+
+### Nur Leserechte
+
+Die Person oder das Team kann alles im Projekt sehen (Aufgaben, Labels usw.), aber nichts ändern.
+Das ist die Standardeinstellung, wenn du ein Projekt teilst.
+
+### Lesen & Schreiben
+
+Die Person oder das Team kann das Projekt sehen und bearbeiten. Sie können Aufgaben erstellen, bearbeiten und löschen, Labels hinzufügen und andere Inhalte im Projekt ändern.
+
+### Admin
+
+Voller Zugriff auf das Projekt. Zusätzlich zu allem, was Lesen & Schreiben erlaubt, können Admins auch das Teilen verwalten: andere Benutzer:innen und Teams hinzufügen oder entfernen und ihre Berechtigungsstufen ändern.
+
+## Wo Berechtigungen gelten
+
+- **Teilen mit Benutzer:innen:** Wenn du ein Projekt direkt mit einer anderen Person teilst, gilt die Berechtigungsstufe für diese Person.
+- **Teilen mit Teams:** Wenn du mit einem Team teilst, bekommen alle Mitglieder des Teams die festgelegte Berechtigungsstufe.
+- **Linkfreigaben:** Wenn du einen teilbaren Link erstellst, gilt die Berechtigungsstufe für alle, die den Link öffnen.
+
+Wie du ein Projekt teilst und diese Berechtigungen festlegst, erfährst du unter [Teilen & Teams](/help/sharing-and-teams).
+
+## Team-Admins
+
+Innerhalb eines Teams können Mitglieder zu Team-Admins gemacht werden. Das ist unabhängig von den oben beschriebenen Berechtigungsstufen für Projekte. Details findest du unter [Teilen & Teams: Rolle als Team-Admin](/help/sharing-and-teams#team-admin-role).
+
+## Weiterlesen
+
+Die technische API-Referenz zu Berechtigungen (Zahlenwerte, Query-Parameter) findest du in der [API-Referenz zu Berechtigungen](/docs/permissions).

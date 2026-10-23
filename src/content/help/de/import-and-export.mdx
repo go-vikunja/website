@@ -1,0 +1,112 @@
+---
+title: Import & Export
+slug: import-and-export
+description: >-
+  Exportiere deine Vikunja-Daten oder importiere Aufgaben aus CSV-Dateien, TickTick, WeKan,
+  Planka, Todoist, Trello und Microsoft To Do.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+import Callout from '@/components/Callout.astro';
+
+Mit Vikunja kannst du all deine Daten exportieren und Aufgaben aus anderen Diensten importieren. So sicherst du deine Arbeit ganz einfach oder ziehst von einem anderen Tool um.
+
+## Export
+
+<Screenshot src="import-export-data-export" alt="Bereich für den Datenexport in den Einstellungen" />
+
+Du kannst all deine Daten aus Vikunja exportieren, darunter [Projekte](/help/projects), [Aufgaben](/help/tasks), Anhänge und mehr.
+
+So startest du einen Export:
+
+1. Öffne deine **[Einstellungen](/help/settings)** und geh zum Bereich **Exportiere deine Vikunja-Daten**.
+2. Bestätige dein Passwort, um fortzufahren.
+
+<Callout type="info">
+Wenn du dich über einen externen Anbieter anmeldest (zum Beispiel bei Vikunja Cloud), siehst du statt der Passwortabfrage einen Bestätigungsschritt.
+</Callout>
+
+Sobald du bestätigt hast, erstellt Vikunja eine ZIP-Datei mit all deinen Daten. Du kannst sie herunterladen und als Backup aufbewahren oder deine Daten später damit wieder in Vikunja importieren.
+
+## Import
+
+<Screenshot src="import-export-import-tab" alt="Import-Tab in den Einstellungen" />
+
+So importierst du Daten in Vikunja:
+
+1. Öffne deine **[Einstellungen](/help/settings)** und geh zum Tab **Aus anderen Diensten importieren**.
+2. Wähl die Quelle aus, aus der du importieren möchtest.
+3. Folge den Schritten auf dem Bildschirm, um den Import abzuschließen.
+
+Vikunja kann aus diesen Quellen importieren:
+
+- **Vikunja-Export:** Importiere eine früher exportierte ZIP-Datei erneut.
+- **CSV:** Importiere Aufgaben aus einer beliebigen CSV-Datei mit eigener Spaltenzuordnung.
+- **TickTick**
+- **WeKan** (verfügbar ab Version 2.3.0)
+- **Planka** (verfügbar ab Version 2.6.0)
+- **Todoist**
+- **Trello**
+- **Microsoft To Do**
+
+Du kannst Aufgaben auch per [CalDAV](/help/caldav) mit externen Apps synchronisieren.
+
+### Aus CSV importieren
+
+<Callout type="info">
+Diese Funktion gibt es ab Vikunja **2.3.0** (oder in Unstable-Builds).
+</Callout>
+
+Mit dem CSV-Import holst du Aufgaben aus jeder Tabellenkalkulation oder jedem Tool in Vikunja, das CSV-Dateien exportieren kann. Das geht in drei Schritten:
+
+1. **CSV-Datei hochladen.** Wähl eine `.csv`- oder `.txt`-Datei aus. Vikunja erkennt Trennzeichen, Datumsformat und Spaltenzuordnung automatisch.
+2. **Zuordnung prüfen und anpassen.** Jede Spalte deiner Datei kannst du einem Aufgabenattribut zuordnen: Titel, Beschreibung, Fälligkeitsdatum, Anfangsdatum, Enddatum, Priorität, Labels, Projekt, Erinnerung, oder du setzt sie auf „Ignorieren“. Die Vorschau unter der Zuordnung aktualisiert sich automatisch, wenn du Einstellungen änderst.
+3. **Importieren.** Wenn dir die Vorschau gefällt, klick auf „Aufgaben importieren“, um alle Aufgaben in Vikunja zu erstellen.
+
+#### Parsing-Optionen
+
+Diese Einstellungen kannst du anpassen, falls die automatische Erkennung danebenliegt:
+
+- **Trennzeichen:** Komma, Semikolon, Tab oder Pipe.
+- **Datumsformat:** Wähl das Format, das zu den Datumsangaben in deiner Datei passt (z. B. YYYY-MM-DD, DD/MM/YYYY, MM/DD/YYYY usw.).
+- **Zeilen überspringen:** Überspring eine bestimmte Anzahl von Zeilen am Anfang der Datei, wenn dort Metadaten oder Kopfzeilen stehen, die nicht zu deinen Aufgabendaten gehören.
+
+#### Spaltenzuordnung
+
+Damit der Import funktioniert, muss mindestens eine Spalte dem Feld **Titel** zugeordnet sein. Alle anderen Attribute sind optional:
+
+- **Labels** werden als kommagetrennte Werte innerhalb einer einzelnen Spalte gelesen.
+- **Priorität** akzeptiert Zahlen (0–5) oder Text wie „low“, „medium“, „high“, „urgent“.
+- **Fertig** akzeptiert Werte wie „true“, „yes“, „1“, „done“ oder „completed“.
+- **Projekt** gruppiert Aufgaben in Unterprojekte. Wenn keine Projektspalte zugeordnet ist oder alle Aufgaben denselben Projektwert haben, landen sie in einem einzigen Projekt namens „Imported from CSV“.
+
+### Aus WeKan importieren
+
+<Callout type="info">
+Diese Funktion gibt es ab Vikunja **2.3.0** (oder in Unstable-Builds).
+</Callout>
+
+Um ein WeKan-Board zu importieren, exportier es zuerst in WeKan als JSON (Board-Menü > Export board > JSON). Wähl dann auf der Importseite das WeKan-Symbol aus und lade die Datei hoch.
+
+Jeder Board-Export wird zu einem Vikunja-Projekt. Listen werden zu Kanban-Spalten, Karten zu Aufgaben, und Labels, Checklisten, Kommentare und Datumsangaben bleiben alle erhalten.
+
+### Aus Planka importieren
+
+<Callout type="info">
+Diese Funktion gibt es ab Vikunja **2.6.0** (oder in Unstable-Builds).
+</Callout>
+
+Vikunja importiert direkt aus einer laufenden Planka-Instanz (ab Version 2). Du musst also keine Datei exportieren. Wähl auf der Importseite das Planka-Symbol aus, gib die URL deiner Planka-Instanz ein und leg fest, wie sich Vikunja anmelden soll:
+
+- **API-Schlüssel:** Eine Person mit Admin-Rechten in Planka muss einen API-Schlüssel für deinen Account erstellen. Ein aus dem Browser kopiertes Token funktioniert nicht.
+- **Anmeldename und Passwort:** Funktioniert nur bei lokalen Planka-Accounts ohne Zwei-Faktor-Authentifizierung, die sich mindestens einmal bei Planka angemeldet haben. Accounts mit Single Sign-on brauchen einen API-Schlüssel.
+
+Deine Zugangsdaten werden nur für diesen Import verwendet und nicht gespeichert.
+
+Alles landet in einem Projekt namens **Migrated from Planka**. Ein Planka-Projekt mit einem einzigen Board wird zu einem Vikunja-Projekt; ein Projekt mit mehreren Boards wird zu einem übergeordneten Projekt mit einem Unterprojekt pro Board. Listen werden zu Kanban-Spalten, Karten zu Aufgaben, und Labels, Fälligkeitsdaten, Kommentare, Anhänge und Titelbilder bleiben erhalten.
+
+Karten in einer geschlossenen oder archivierten Liste werden als erledigt importiert; die Papierkorb-Liste wird übersprungen. Checklisten, benutzerdefinierte Felder und Link-Anhänge werden in die Aufgabenbeschreibung übernommen. Kommentare behalten den Namen der Person, die sie geschrieben hat, aber nicht ihren Account. Zugewiesene und Board-Mitglieder werden nicht importiert.
+
+<Callout type="info">
+Wenn deine Planka-Instanz in einem privaten Netzwerk läuft, muss die Person, die deine Vikunja-Instanz administriert, eventuell ausgehende Anfragen an nicht routbare Adressen erlauben, damit der Import sie erreicht.
+</Callout>

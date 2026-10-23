@@ -1,0 +1,111 @@
+---
+title: Webhooks
+slug: webhooks
+description: >-
+  Schick automatisch Benachrichtigungen an externe Dienste, wenn Aufgaben
+  erstellt, erledigt oder geändert werden.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+
+Mit Webhooks schickt Vikunja automatisch Benachrichtigungen an andere Dienste, sobald in deinen Projekten etwas passiert, zum Beispiel wenn eine Aufgabe erstellt, erledigt oder kommentiert wird. So kannst du Vikunja mit Chat-Tools, Automatisierungsplattformen oder eigenen Skripten verbinden.
+
+## Arten von Webhooks
+
+Vikunja kennt zwei Arten von Webhooks:
+
+- **Projekt-Webhooks:** Werden ausgelöst, wenn in einem bestimmten Projekt etwas passiert (z. B. eine Aufgabe erstellt oder ein Kommentar hinzugefügt wird). Diese richtest du in den Projekteinstellungen ein.
+- **Persönliche Webhooks:** Werden bei Ereignissen ausgelöst, die dich persönlich betreffen, etwa wenn eine Erinnerung für eine Aufgabe fällig wird oder Aufgaben überfällig werden. Diese richtest du in deinen Account-Einstellungen ein.
+
+## Einen Webhook erstellen
+
+### Projekt-Webhooks
+
+<Screenshot src="webhooks-settings-section" alt="Bereich „Webhooks“ in den Projekteinstellungen" />
+
+1. Öffne das [Projekt](/help/projects), in dem du den Webhook einrichten willst.
+2. Geh in die Projekteinstellungen und wähl **Webhooks**.
+<Screenshot src="webhooks-create-form" alt="Formular zum Erstellen eines Webhooks mit Feldern für URL, Ereignisse und Schlüssel" />
+
+3. Füll das Formular aus:
+   - **Ziel-URL** (Pflichtfeld): Die URL, an die Vikunja die Daten schickt (muss mit `http://` oder `https://` beginnen).
+   - **Ereignisse** (Pflichtfeld): Wähl aus, welche Ereignisse den Webhook auslösen sollen.
+   - **Schlüssel** (optional): Ein gemeinsames Geheimnis, mit dem sich prüfen lässt, ob Anfragen wirklich von Vikunja kommen. Siehe [Signieren](#signing) weiter unten.
+   - **Basic Auth** (optional): Klick auf **Basic Auth verwenden?**, um einen Anmeldenamen und ein Passwort einzugeben, falls die Ziel-URL das verlangt.
+4. Klick auf **Webhook erstellen**.
+
+### Persönliche Webhooks
+
+1. Öffne deine **[Einstellungen](/help/settings)** und geh zum Bereich **Webhook-Benachrichtigungen**.
+2. Füll dasselbe Formular wie oben aus. Persönliche Webhooks erlauben nur Ereignisse, die dich persönlich betreffen (Erinnerungen und Benachrichtigungen über überfällige Aufgaben).
+
+## Verfügbare Ereignisse
+
+### Projektereignisse
+
+Diese Ereignisse gibt es für Projekt-Webhooks:
+
+|                            |                                                    |
+|----------------------------|----------------------------------------------------|
+| `task.created`             | Eine Aufgabe wurde erstellt                        |
+| `task.updated`             | Eine Aufgabe wurde aktualisiert                    |
+| `task.deleted`             | Eine Aufgabe wurde gelöscht                        |
+| `task.assignee.created`    | Einer Aufgabe wurde jemand zugewiesen              |
+| `task.assignee.deleted`    | Eine zugewiesene Person wurde von einer Aufgabe entfernt |
+| `task.comment.created`     | Einer Aufgabe wurde ein Kommentar hinzugefügt      |
+| `task.comment.edited`      | Ein Kommentar wurde bearbeitet                     |
+| `task.comment.deleted`     | Ein Kommentar wurde gelöscht                       |
+| `task.attachment.created`  | Einer Aufgabe wurde ein Anhang hinzugefügt         |
+| `task.attachment.deleted`  | Ein Anhang wurde von einer Aufgabe entfernt        |
+| `task.relation.created`    | Eine Beziehung zwischen Aufgaben wurde erstellt    |
+| `task.relation.deleted`    | Eine Beziehung zwischen Aufgaben wurde entfernt    |
+| `project.updated`          | Das Projekt wurde aktualisiert                     |
+| `project.deleted`          | Das Projekt wurde gelöscht                         |
+| `project.shared.user`      | Das Projekt wurde mit einer Person geteilt         |
+| `project.shared.team`      | Das Projekt wurde mit einem Team geteilt           |
+
+### Persönliche Ereignisse
+
+Diese Ereignisse gibt es für persönliche Webhooks:
+
+|                            |                                                    |
+|----------------------------|----------------------------------------------------|
+| `task.reminder.fired`      | Eine Erinnerung für eine Aufgabe wurde ausgelöst   |
+| `task.overdue`             | Eine Aufgabe ist überfällig geworden               |
+| `tasks.overdue`            | Mehrere Aufgaben sind überfällig geworden          |
+
+## Webhooks bearbeiten und löschen
+
+Um einen Webhook zu bearbeiten oder zu löschen, geh auf dieselbe Einstellungsseite, auf der du ihn erstellt hast (Projekteinstellungen für Projekt-Webhooks, Account-Einstellungen für persönliche Webhooks). Dort sind deine bestehenden Webhooks aufgelistet, und du kannst sie ändern oder entfernen.
+
+## Signieren
+
+Wenn du beim Erstellen des Webhooks einen **Schlüssel** angibst, schickt Vikunja bei jeder Anfrage einen `X-Vikunja-Signature`-Header mit. Dieser Header enthält eine HMAC-SHA256-Signatur des Request-Bodys, mit der der empfangende Dienst prüfen kann, ob die Anfrage wirklich von Vikunja stammt.
+
+Auf [webhooks.fyi](https://webhooks.fyi/security/hmac) erfährst du, wie du HMAC-Signaturen prüfst.
+
+## Payload-Format
+
+Jede Webhook-Anfrage schickt einen JSON-Body mit dieser Struktur:
+
+```json
+{
+  "event_name": "task.created",
+  "time": "2023-10-17T19:39:32.924194436+02:00",
+  "data": {}
+}
+```
+
+- `event_name`: Welches Ereignis den Webhook ausgelöst hat.
+- `time`: Wann der Webhook verschickt wurde, im ISO-8601-Format.
+- `data`: Die Ereignisdaten mit den jeweils relevanten Objekten (Aufgabe, Projekt, Benutzer:in usw.), je nach Ereignistyp.
+
+## API-Referenz
+
+Wenn du Webhooks per Code erstellen und verwalten willst, schau in die [Webhooks-API-Referenz](/docs/webhooks). In deinen Einstellungen kannst du [API-Tokens](/help/settings#api-tokens) erstellen, um dich bei der API zu authentifizieren.
+
+## Hinweise
+
+- Webhooks werden nur einmal verschickt. Wenn die Zustellung fehlschlägt (z. B. weil die Ziel-URL nicht erreichbar ist), versucht Vikunja es nicht erneut.
+- Über Linkfreigaben lassen sich keine Webhooks erstellen. Dafür brauchst du einen Account.
+- Admins einer Instanz können Timeouts und Proxy-Einstellungen für Webhooks konfigurieren. Details findest du in den [Konfigurationsoptionen für Webhooks](/docs/config-options#0--webhooks).

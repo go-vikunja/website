@@ -1,0 +1,16 @@
+---
+import {type CollectionEntry, render} from 'astro:content'
+import Help from '../../../layouts/Help.astro'
+import {getStaticPathsFor} from '../../../i18n/content'
+
+export function getStaticPaths() {
+    return getStaticPathsFor('help', 'de')
+}
+type Props = CollectionEntry<'help'>
+
+const post = Astro.props
+const {Content, headings} = await render(post)
+---
+<Help headings={headings} {...post.data}>
+    <Content/>
+</Help>

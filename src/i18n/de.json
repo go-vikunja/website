@@ -95,5 +95,11 @@
 	"home.card.install.alt": "Nahaufnahme eines Alpakas mit lockigem braunem Fell auf dem Kopf. Das Alpaka hat einen weißen Körper und blickt mit großen, ausdrucksstarken Augen direkt in die Kamera.",
 	"home.card.features": "Funktionen",
 	"home.card.features.alt": "Weite Landschaft mit einer Herde Alpakas oder Lamas, die auf einer grünen Wiese grasen. Im Hintergrund sanfte Hügel und Berge mit kargen und bewachsenen Flächen.",
-	"home.card.hosted.alt": "Zwei Lamas oder Alpakas auf einem nebligen grünen Feld. Eines liegt im Vordergrund, das andere grast im Hintergrund. Dahinter sind im Nebel alte Steinbauten oder Ruinen zu sehen."
+	"home.card.hosted.alt": "Zwei Lamas oder Alpakas auf einem nebligen grünen Feld. Eines liegt im Vordergrund, das andere grast im Hintergrund. Dahinter sind im Nebel alte Steinbauten oder Ruinen zu sehen.",
+	"layout.toggleMenu": "Menü umschalten",
+	"layout.onThisPage": "Auf dieser Seite",
+	"help.overview": "Hilfe-Übersicht",
+	"copyMarkdown.title": "Seiteninhalt als Markdown kopieren",
+	"copyMarkdown.label": "Als Markdown kopieren",
+	"copyMarkdown.copied": "Kopiert!"
 }

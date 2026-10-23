@@ -1,0 +1,71 @@
+---
+title: Dashboard / Startseite
+slug: dashboard
+description: >-
+  Die Startseite, die du nach dem Anmelden siehst. Sie zeigt anstehende Aufgaben,
+  eine Schnelleingabe und zuletzt angesehene Projekte.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+
+Nach dem Anmelden bringt Vikunja dich zum Dashboard (der Startseite). Hier behältst du den Überblick über deine Aufgaben aus allen Projekten.
+
+## Überblick
+
+<Screenshot src="dashboard-full" alt="Vikunja-Dashboard mit Begrüßung, Schnelleingabe und anstehenden Aufgaben" />
+
+Ab Vikunja **2.3.0** wechselt die Begrüßung oben jeden Tag. Wenn du dich an einem neuen Tag anmeldest, siehst du also jedes Mal eine andere Formulierung für die aktuelle Tageszeit.
+
+### Schnelleingabe
+
+Mit dem Eingabefeld oben erstellst du eine neue Aufgabe, ohne vorher in ein bestimmtes Projekt wechseln zu müssen. Du kannst hier die [Quick Add Magic](/help/quick-add-magic)-Syntax nutzen, um Fälligkeitsdaten, Labels, Prioritäten und mehr direkt beim Eintippen festzulegen.
+
+Aufgaben, die du im Dashboard erstellst, landen in deinem **Standardprojekt**. Wie du es änderst, erfährst du weiter unten unter [Standardprojekt](#default-project).
+
+### Anstehende Aufgaben
+
+Unter der Schnelleingabe findest du alle Aufgaben aus jedem Projekt, auf das du Zugriff hast. Sie sind nach Fälligkeitsdatum sortiert:
+
+1. **Überfällige Aufgaben** stehen ganz oben.
+2. Die übrigen Aufgaben sind so sortiert, dass die am frühesten fälligen oben stehen.
+
+<Screenshot src="dashboard-upcoming-overdue" alt="Dashboard mit anstehenden und überfälligen Aufgaben" />
+
+So siehst du auf einen Blick, was gerade deine Aufmerksamkeit braucht und was als Nächstes ansteht.
+
+## Standardprojekt
+
+Aufgaben, die du im Dashboard erstellst, landen in deinem [Standardprojekt](/help/projects#the-inbox-project). Welches Projekt das ist, kannst du in deinen [Einstellungen](/help/settings) ändern.
+
+## Den Filter der Startseite anpassen
+
+Standardmäßig zeigt das Dashboard alle anstehenden Aufgaben aus allen Projekten. Wenn du das eingrenzen möchtest, kannst du einen eigenen Filter für die Startseite festlegen:
+
+1. [Erstelle einen gespeicherten Filter](/help/saved-filters), der nur die Aufgaben zeigt, die du sehen möchtest.
+2. Öffne deine **[Einstellungen](/help/settings)** und such die Option **Gespeicherter Filter, der für die Startseite verwendet wird**.
+3. Wähl dort den gespeicherten Filter aus, den du vorher erstellt hast, damit er im Dashboard angezeigt wird.
+
+Das ist praktisch, wenn du in vielen Projekten arbeitest, im Dashboard aber nur bestimmte Prioritäten oder [Labels](/help/labels) sehen möchtest.
+
+## Ansicht „Anstehend“ (Seitenmenü)
+
+<Screenshot src="dashboard-upcoming-sidebar" alt="Ansicht „Anstehend“ im Seitenmenü" />
+
+Im linken Seitenmenü gibt es den Eintrag **Anstehend**, der deine Aufgaben in einer eigenen, seitenfüllenden Ansicht zeigt. Standardmäßig siehst du dort unerledigte Aufgaben, die zwischen heute und nächster Woche fällig sind.
+
+Anders als das Dashboard bietet dir die Ansicht „Anstehend“ Optionen, mit denen du anpasst, was du siehst:
+
+- **Datumsbereich wählen:** Leg ein eigenes Start- und Enddatum fest. Wähl zum Beispiel die nächsten zwei Wochen, um vorauszuplanen.
+- **Aufgaben ohne Datum anzeigen:** Zeigt auch Aufgaben ohne Fälligkeitsdatum an.
+- **Überfällige Aufgaben anzeigen:** Zeigt auch Aufgaben an, deren Fälligkeitsdatum schon vorbei ist.
+
+Nutz diese Ansicht, wenn du dich auf einen bestimmten Zeitraum konzentrieren möchtest, ohne die anderen Bereiche des Dashboards.
+
+## Zuletzt angesehene Projekte
+
+<Screenshot src="dashboard-recent-projects" alt="Abschnitt mit zuletzt angesehenen Projekten im Dashboard" />
+
+Sobald du ein paar [Projekte](/help/projects) geöffnet hast, zeigt das Dashboard außerdem den Abschnitt **Zuletzt angesehen**.
+So springst du schnell zurück zu Projekten, an denen du gearbeitet hast, ohne sie im Seitenmenü suchen zu müssen.
+
+Wenn du ein aufgeräumteres Dashboard magst, kannst du diesen Abschnitt in deinen [Einstellungen](/help/settings) unter **Zuletzt angesehene Projekte auf der Übersichtsseite anzeigen** ausblenden. Diese Einstellung gibt es ab Vikunja **2.3.0**.
