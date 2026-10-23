@@ -792,5 +792,18 @@
 	"compare.planka.faq.future.question": "Wird Vikunja SSO jemals in Pro verschieben?",
 	"compare.planka.faq.future.answer": "Die Lizenz macht das strukturell schwierig. Vikunja steht unter AGPL-3 ohne Contributor License Agreement, mir fehlen also die Rechte, die ich bräuchte, um beigesteuerten Code neu zu lizenzieren. Vikunja Pro liegt im selben öffentlichen Repository unter derselben Lizenz. Warum dieses Setup Vikunja offen hält, habe ich in [Vikunja stays open]({blogUrl}) beschrieben. Dieselbe Überlegung gilt für die Aufteilung von Funktionen auf Tarife.",
 	"compare.planka.faq.lockedOut.question": "Mein Planka-Admin-Account lief über SSO und ich bin ausgesperrt. Was jetzt?",
-	"compare.planka.faq.lockedOut.answer": "Planka 2.2.0 deaktiviert reine SSO-Accounts, weil sie keinen Passwort-Login mehr haben. Planka dokumentiert, wie du über Umgebungsvariablen [einen neuen Admin-Account erstellst]({adminUrl}). Mach das zuerst, um wieder Zugriff zu bekommen und deine Daten zu exportieren. In Vikunja sind OIDC-Accounts ganz normale Accounts: Sie können Admins sein und zu Teams hinzugefügt werden, und ein Wechsel der Anmeldemethode deaktiviert niemanden."
+	"compare.planka.faq.lockedOut.answer": "Planka 2.2.0 deaktiviert reine SSO-Accounts, weil sie keinen Passwort-Login mehr haben. Planka dokumentiert, wie du über Umgebungsvariablen [einen neuen Admin-Account erstellst]({adminUrl}). Mach das zuerst, um wieder Zugriff zu bekommen und deine Daten zu exportieren. In Vikunja sind OIDC-Accounts ganz normale Accounts: Sie können Admins sein und zu Teams hinzugefügt werden, und ein Wechsel der Anmeldemethode deaktiviert niemanden.",
+	"search.title": "Dokumentation durchsuchen",
+	"search.placeholder": "Dokumentation durchsuchen...",
+	"search.label": "Dokumentation durchsuchen",
+	"search.resultsLabel": "Suchergebnisse",
+	"search.loading": "Suchindex wird geladen...",
+	"search.empty": "Fang an zu tippen, um die Dokumentation zu durchsuchen",
+	"search.noResults": "Keine Ergebnisse gefunden",
+	"search.oneResult": "1 Ergebnis gefunden",
+	"search.results": "{count} Ergebnisse gefunden",
+	"search.hintNavigate": "zum Navigieren",
+	"search.hintSelect": "zum Auswählen",
+	"search.hintClose": "zum Schließen",
+	"search.button": "Suchen"
 }

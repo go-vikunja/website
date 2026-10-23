@@ -1,5 +1,7 @@
 import MiniSearch from 'minisearch'
-import type { SearchIndexItem } from '../pages/api/search-index.json'
+import type { SearchIndexItem } from '../helpers/search-index'
+import { defaultLocale } from '../i18n/locales'
+import { parsePathname } from '../i18n/paths'
 
 export interface SearchResult {
   id: string
@@ -36,7 +38,8 @@ export async function initializeSearch(): Promise<void> {
   if (isInitialized) return
 
   try {
-    const response = await fetch('/api/search-index.json')
+    const { locale } = parsePathname(window.location.pathname)
+    const response = await fetch(locale === defaultLocale ? '/api/search-index.json' : `/${locale}/api/search-index.json`)
     if (!response.ok) {
       throw new Error('Failed to load search index')
     }
@@ -80,9 +83,9 @@ export async function initializeSearch(): Promise<void> {
 }
 
 /**
- * Search documents, optionally filtering by URL prefix (e.g. '/help/' or '/docs/')
+ * Search documents, optionally limited to a section like '/help' or '/docs' in any locale
  */
-export function search(query: string, pathPrefix?: string): SearchResult[] {
+export function search(query: string, section?: string): SearchResult[] {
   if (!miniSearch || !query || query.trim().length < MIN_QUERY_LENGTH) {
     return []
   }
@@ -90,8 +93,11 @@ export function search(query: string, pathPrefix?: string): SearchResult[] {
   const startTime = isDev ? performance.now() : 0
 
   let results = miniSearch.search(query.trim()) as MiniSearchResult[]
-  if (pathPrefix) {
-    results = results.filter(r => r.id.startsWith(pathPrefix))
+  if (section) {
+    results = results.filter(r => {
+      const { path } = parsePathname(r.id)
+      return path === section || path.startsWith(`${section}/`)
+    })
   }
   const parsed = results.slice(0, 10).map(result => parseSearchResult(result, query))
 

@@ -1,8 +1,18 @@
 ---
 // Search modal component - will be hydrated with client-side JS
+import {useTranslations} from '../i18n'
+import {parsePathname} from '../i18n/routes'
+
+const t = useTranslations(parsePathname(Astro.url.pathname).locale)
 ---
 
-<div id="search-modal" class="fixed inset-0 z-50 hidden">
+<div
+  id="search-modal"
+  class="fixed inset-0 z-50 hidden"
+  data-message-no-results={t('search.noResults')}
+  data-message-one-result={t('search.oneResult')}
+  data-message-results={t('search.results')}
+>
   <!-- Backdrop -->
   <div
     id="search-backdrop"
@@ -20,7 +30,7 @@
       aria-labelledby="search-modal-title"
     >
       <!-- Visually hidden title for screen readers -->
-      <h2 id="search-modal-title" class="sr-only">Search Documentation</h2>
+      <h2 id="search-modal-title" class="sr-only">{t('search.title')}</h2>
 
       <!-- Search Input -->
       <div class="p-4 border-b border-gray-200 dark:border-gray-700">
@@ -38,10 +48,10 @@
           <input
             id="search-input"
             type="text"
-            placeholder="Search documentation..."
+            placeholder={t('search.placeholder')}
             autocomplete="off"
             class="w-full pl-10 pr-4 py-3 bg-transparent border-none focus:outline-none focus:ring-0 text-gray-900 dark:text-gray-100 placeholder-gray-400"
-            aria-label="Search documentation"
+            aria-label={t('search.label')}
             aria-autocomplete="list"
             aria-controls="search-results"
           />
@@ -60,7 +70,7 @@
         id="search-results"
         class="flex-1 overflow-y-auto p-2"
         role="listbox"
-        aria-label="Search results"
+        aria-label={t('search.resultsLabel')}
       >
         <!-- Loading state -->
         <div id="search-loading" class="hidden p-8 text-center text-gray-500 dark:text-gray-400">
@@ -68,17 +78,17 @@
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
-          <p>Loading search index...</p>
+          <p>{t('search.loading')}</p>
         </div>
 
         <!-- Empty state -->
         <div id="search-empty" class="p-8 text-center text-gray-500 dark:text-gray-400">
-          <p>Start typing to search documentation</p>
+          <p>{t('search.empty')}</p>
         </div>
 
         <!-- No results -->
         <div id="search-no-results" class="hidden p-8 text-center text-gray-500 dark:text-gray-400">
-          <p>No results found</p>
+          <p>{t('search.noResults')}</p>
         </div>
 
         <!-- Results will be inserted here by JS -->
@@ -92,16 +102,16 @@
           <span class="flex items-center gap-1">
             <kbd class="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded">↑</kbd>
             <kbd class="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded">↓</kbd>
-            to navigate
+            {t('search.hintNavigate')}
           </span>
           <span class="flex items-center gap-1">
             <kbd class="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded">↵</kbd>
-            to select
+            {t('search.hintSelect')}
           </span>
         </div>
         <span class="flex items-center gap-1">
           <kbd class="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded">ESC</kbd>
-          to close
+          {t('search.hintClose')}
         </span>
       </div>
     </div>
