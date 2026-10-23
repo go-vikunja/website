@@ -7,37 +7,25 @@ export interface OgPage {
 
 export const OG_DEFAULT_ROUTE = 'default'
 
-// .astro pages have no frontmatter to glob, keep in sync with their <Layout> props.
-const astroPages: Record<string, OgPage> = {
-	[OG_DEFAULT_ROUTE]: {
-		title: 'Vikunja',
-		description: 'The open-source, self-hostable task manager.',
-	},
-	'index': {
-		title: 'The task manager you actually own',
-		description: 'Open-source task management you can self-host. Lists, Kanban, Gantt, and more — on your server or ours.',
-	},
-	'features': {title: 'Features', description: 'Stay organized, collaborate, and customize your workflow with multiple views.'},
-	'pricing': {title: 'Pricing', description: 'Self-host for free or let us run it for you.'},
-	'pro': {title: 'Vikunja Pro', description: 'Audit logs, admin panel, time tracking for self-hosted Vikunja.'},
-	'install': {title: 'Install Vikunja Server', description: 'Get the Vikunja server up and running in minutes.'},
-	'convince': {title: 'Convince Your Boss', description: 'Everything you need to bring Vikunja to your team at work.'},
-	'changelog': {title: 'Changelog', description: 'The latest on Vikunja\'s product development and releases.'},
-	'compare/notion': {title: 'Vikunja vs Notion'},
-	'compare/planka': {title: 'Vikunja vs Planka'},
-	'compare/todoist': {title: 'Vikunja vs Todoist'},
-	'compare/trello': {title: 'Vikunja vs Trello'},
-	'compare/wekan': {title: 'Vikunja vs WeKan'},
+// Lazy so Layout -> ogPages -> page -> Layout doesn't hit a circular import.
+const pageModules = {
+	...import.meta.glob<OgPage | undefined>('/src/pages/**/*.{md,mdx}', {import: 'frontmatter'}),
+	...import.meta.glob<OgPage | undefined>('/src/pages/**/*.astro', {import: 'meta'}),
 }
 
-const markdownPages = import.meta.glob<{frontmatter: OgPage}>('/src/pages/**/*.{md,mdx}', {eager: true})
-
 export async function getOgPages(): Promise<Record<string, OgPage>> {
-	const pages: Record<string, OgPage> = {...astroPages}
+	const pages: Record<string, OgPage> = {
+		[OG_DEFAULT_ROUTE]: {
+			title: 'Vikunja',
+			description: 'The open-source, self-hostable task manager.',
+		},
+	}
 
-	for (const [path, page] of Object.entries(markdownPages)) {
-		const route = path.replace('/src/pages/', '').replace(/\.mdx?$/, '')
-		pages[route] = {title: page.frontmatter.title, description: page.frontmatter.description}
+	for (const [path, load] of Object.entries(pageModules)) {
+		const page = await load()
+		if (page) {
+			pages[path.replace('/src/pages/', '').replace(/\.(mdx?|astro)$/, '')] = {title: page.title, description: page.description}
+		}
 	}
 
 	for (const collection of ['docs', 'help', 'changelog'] as const) {

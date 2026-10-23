@@ -37,8 +37,13 @@ const carouselImages = [
 	{src: VikunjaQuickAdd, darkSrc: VikunjaQuickAddDark, alt: 'Command search interface overlay for quick task and project management.'},
 	{src: VikunjaTaskKanbanBackground, darkSrc: VikunjaTaskKanbanBackgroundDark, alt: 'Kanban board view of tasks overlaid on an aerial forest image background.'},
 ]
+
+export const meta = {
+	title: 'Vikunja: The task manager you actually own',
+	description: 'Vikunja is open-source task management you can self-host. Lists, Kanban, Gantt, and more — on your server or ours. Made and hosted in the EU.',
+}
 ---
-<Layout title="Vikunja: The task manager you actually own" description="Vikunja is open-source task management you can self-host. Lists, Kanban, Gantt, and more — on your server or ours. Made and hosted in the EU.">
+<Layout {...meta}>
     <Fragment slot="head">
         <script type="application/ld+json" set:html={JSON.stringify({
             "@context": "https://schema.org",

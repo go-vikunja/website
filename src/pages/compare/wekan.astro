@@ -30,8 +30,13 @@ const faqs = [
         answer: 'The importer brings over your tasks, labels, and buckets. You\'ll want to double-check a board or two after import, but in most cases everything lands where you expect it.',
     },
 ]
+
+export const meta = {
+	title: 'Vikunja vs WeKan: A Stable Alternative for Self-Hosters',
+	description: 'Looking for a WeKan alternative? Vikunja is an open-source, self-hosted task manager with Kanban, Gantt, and table views, plus a built-in WeKan importer to bring your boards over in minutes.',
+}
 ---
-<Layout title="Vikunja vs WeKan: A Stable Alternative for Self-Hosters" description="Looking for a WeKan alternative? Vikunja is an open-source, self-hosted task manager with Kanban, Gantt, and table views, plus a built-in WeKan importer to bring your boards over in minutes.">
+<Layout {...meta}>
     <Fragment slot="head">
         <script type="application/ld+json" set:html={JSON.stringify({
             "@context": "https://schema.org",
