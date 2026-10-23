@@ -3,12 +3,18 @@ import NavItem from './NavItem.astro'
 import {VIKUNJA_CLOUD_LINK} from '../helpers/vikunjaCloudLink'
 import ButtonGetStarted from './partials/ButtonGetStarted.astro'
 import DarkModeSwitch from './partials/DarkModeSwitch.astro'
+import LanguageSwitcher from './LanguageSwitcher.astro'
+import {useTranslations} from '../i18n'
+import {parsePathname} from '../i18n/routes'
+
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
 ---
 <button
         id="navbar-burger"
         class="block sm:hidden fixed top-2 right-2 cursor-pointer p-3 pr-4 bg-gray-50 dark:bg-gray-900 rounded-full z-40"
         data-target="navbar-menu"
-        aria-label="Open Menu"
+        aria-label={t('nav.openMenu')}
 >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8">
         <path fill-rule="evenodd"
@@ -17,29 +23,29 @@ import DarkModeSwitch from './partials/DarkModeSwitch.astro'
     </svg>
 </button>
 
-<nav class="hidden sm:block fixed sm:static top-0 bottom-0 left-0 right-0 sm:size-fit sm:m-auto z-50" id="navbar-menu" aria-label="Main navigation">
+<nav class="hidden sm:block fixed sm:static top-0 bottom-0 left-0 right-0 sm:size-fit sm:m-auto z-50" id="navbar-menu" aria-label={t('nav.label')}>
     <div class="relative p-2 bg-gray-200 dark:bg-gray-800 sm:bg-gray-700/5 sm:dark:bg-gray-200/5 sm:rounded-lg h-full box-border">
         <div class="relative w-full text-gray-600 dark:text-gray-300">
             <ul class="flex flex-col gap-2 tracking-wide sm:flex-row sm:gap-0 sm:text-sm">
-                <NavItem href="/">Home</NavItem>
-                <NavItem href="/features">Features</NavItem>
-                <NavItem href="/help">Help</NavItem>
-                <NavItem href="/docs">Docs</NavItem>
-                <NavItem href="/pricing">Pricing</NavItem>
-                <NavItem href="/changelog">Changelog</NavItem>
+                <NavItem href="/">{t('nav.home')}</NavItem>
+                <NavItem href="/features">{t('nav.features')}</NavItem>
+                <NavItem href="/help">{t('nav.help')}</NavItem>
+                <NavItem href="/docs">{t('nav.docs')}</NavItem>
+                <NavItem href="/pricing">{t('nav.pricing')}</NavItem>
+                <NavItem href="/changelog">{t('nav.changelog')}</NavItem>
                 <li>
                     <a class="sm:h-9 rounded-md hover:bg-gray-700/5 dark:hover:bg-gray-300/5 hover:text-gray-950 dark:hover:text-gray-50 block transition group overflow-hidden"
                        href="https://try.vikunja.io/demo-account-create/">
                         <div class="py-2 px-4 sm:group-hover:py-0 transition-all flex items-center">
                             <span>
-                                Demo
+                                {t('nav.demo')}
                             </span>
                             <span class="sm:hidden text-xs text-primary-lighter pl-2">
-                                No sign-up required
+                                {t('nav.demoNoSignUpLong')}
                             </span>
                         </div>
                         <div class="hidden sm:block text-xs text-primary text-center text-nowrap h-0 group-hover:h-auto transition-all">
-                            No sign-up
+                            {t('nav.demoNoSignUp')}
                         </div>
                     </a>
                 </li>
@@ -47,6 +53,7 @@ import DarkModeSwitch from './partials/DarkModeSwitch.astro'
             </ul>
         </div>
         <div class="flex sm:hidden flex-col p-4 gap-6">
+            <LanguageSwitcher/>
             <DarkModeSwitch showText={true}/>
             <ButtonGetStarted/>
         </div>
