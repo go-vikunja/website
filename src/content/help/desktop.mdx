@@ -5,16 +5,14 @@ description: >-
   Sign in, use the quick-entry window, the system tray, and command-line flags
   in the Vikunja desktop app.
 ---
-import Callout from '../../components/Callout.astro';
+import AvailableFrom from '../../components/AvailableFrom.astro';
 import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink';
 
 Vikunja has a dedicated desktop application for Linux, macOS, and Windows. For download and installation instructions, see [Desktop Packages](/docs/desktop-packages).
 
 ## Logging in
 
-<Callout type="info">
-The OAuth-based desktop login is available from Vikunja **2.3.0** onwards.
-</Callout>
+<AvailableFrom version="2.3.0">The OAuth-based desktop login</AvailableFrom>
 
 The first time you open the desktop app, you'll be asked to pick which server to connect to:
 
@@ -26,9 +24,7 @@ After you pick a server, the desktop app opens your browser to sign in. If your 
 
 ## Quick-entry window
 
-<Callout type="info">
-The quick-entry window is available from Vikunja **2.3.0** onwards.
-</Callout>
+<AvailableFrom version="2.3.0">The quick-entry window</AvailableFrom>
 
 The desktop app has a dedicated **quick-entry window**: a small popup you can open from anywhere on your system to add a task without first switching to the main Vikunja window. It's the same quick-entry overlay you can already open from inside Vikunja with `Ctrl` / `Cmd` + `K` — the desktop app just makes it available as a standalone, always-on-top window so you can reach it even when Vikunja isn't focused.
 

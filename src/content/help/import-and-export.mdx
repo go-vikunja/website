@@ -8,6 +8,7 @@ description: >-
 import Screenshot from '../../components/Screenshot.astro'
 
 import Callout from '../../components/Callout.astro';
+import AvailableFrom from '../../components/AvailableFrom.astro';
 
 Vikunja lets you export all of your data and import tasks from other services, making it easy to back up your work or migrate from another tool.
 
@@ -53,9 +54,7 @@ You can also sync tasks with external apps using [CalDAV](/help/caldav).
 
 ### Importing from CSV
 
-<Callout type="info">
-This feature is available from Vikunja **2.3.0** onwards (or unstable builds).
-</Callout>
+<AvailableFrom version="2.3.0" />
 
 The CSV import lets you bring tasks into Vikunja from any spreadsheet or tool that can export CSV files. It works in three steps:
 
@@ -82,9 +81,7 @@ At least one column must be mapped to **Title** for the import to work. All othe
 
 ### Importing from WeKan
 
-<Callout type="info">
-This feature is available from Vikunja **2.3.0** onwards (or unstable builds).
-</Callout>
+<AvailableFrom version="2.3.0" />
 
 To import a WeKan board, first export it as JSON in WeKan (board menu > Export board > JSON), then select the WeKan icon on the import page and upload the file.
 
@@ -92,9 +89,7 @@ Each board export creates one Vikunja project. Lists become kanban buckets, card
 
 ### Importing from Planka
 
-<Callout type="info">
-This feature is available from Vikunja **2.6.0** onwards (or unstable builds).
-</Callout>
+<AvailableFrom version="2.6.0" />
 
 Vikunja imports directly from a running Planka instance (version 2 or later). There is no file to export. Select the Planka icon on the import page, enter the URL of your Planka instance and choose how Vikunja should log in:
 

@@ -6,6 +6,7 @@ description: >-
   configuring providers, required claims, and automatic team assignment.
 ---
 import Callout from '../../../components/Callout.astro';
+import AvailableFrom from '../../../components/AvailableFrom.astro';
 
 Vikunja allows for authentication with an external identity source such as Authentik, Keycloak or similar via the
 [OpenID Connect](https://openid.net/developers/specs/) standard.
@@ -330,9 +331,7 @@ Verify that the `authorization_endpoint`, `token_endpoint`, and `userinfo_endpoi
 
 ### Vikunja can't reach the provider through a proxy
 
-<Callout type="info">
-Routing OpenID Connect requests through a proxy is available from Vikunja **2.7.0** onwards (or unstable builds).
-</Callout>
+<AvailableFrom version="2.7.0">Routing OpenID Connect requests through a proxy</AvailableFrom>
 
 If you configured an [outgoing proxy](/docs/outgoing-proxy), Vikunja sends all requests to your provider through it. When `outgoingrequests.proxyurl` is set, this includes providers on your internal network. Either make sure the proxy can reach the provider, or configure the proxy with the `HTTPS_PROXY` environment variable and add the provider's host to `NO_PROXY`.
 

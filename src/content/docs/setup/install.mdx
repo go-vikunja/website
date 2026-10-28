@@ -6,6 +6,7 @@ description: >-
   various methods including binary, Docker, and native packages.
 ---
 import Callout from '../../../components/Callout.astro';
+import AvailableFrom from '../../../components/AvailableFrom.astro';
 import CloudHostingAffiliate from '../../../components/partials/CloudHostingAffiliate.astro';
 
 Architecturally, Vikunja is made up of two parts: [API](https://code.vikunja.io/vikunja)
@@ -247,9 +248,7 @@ Check out the [docker examples](/docs/full-docker-example) for more advanced con
 
 Vikunja is available as a deb package for installation on Debian-like systems.
 
-<Callout type="info">
-Package repositories are only available from Vikunja **2.4.0** onwards.
-</Callout>
+<AvailableFrom version="2.4.0">Installing from a package repository</AvailableFrom>
 
 Available architectures: `amd64`, `arm64`, `armhf`.
 
@@ -287,9 +286,7 @@ You must either set [`service.publicurl`](/docs/config-options#1-service-publicu
 
 Vikunja is available as an rpm package for installation on Fedora, CentOS, RHEL and others.
 
-<Callout type="info">
-Package repositories are only available from Vikunja **2.4.0** onwards.
-</Callout>
+<AvailableFrom version="2.4.0">Installing from a package repository</AvailableFrom>
 
 Available architectures: `x86_64`, `aarch64`, `armv7`.
 
@@ -328,9 +325,7 @@ You must either set [`service.publicurl`](/docs/config-options#1-service-publicu
 
 Vikunja provides a pacman repository for Arch Linux.
 
-<Callout type="info">
-Package repositories are only available from Vikunja **2.4.0** onwards.
-</Callout>
+<AvailableFrom version="2.4.0">Installing from a package repository</AvailableFrom>
 
 Available architectures: `x86_64`, `aarch64`, `armv7`.
 
@@ -366,9 +361,7 @@ You must either set [`service.publicurl`](/docs/config-options#1-service-publicu
 
 Vikunja provides an Alpine package repository.
 
-<Callout type="info">
-Package repositories are only available from Vikunja **2.4.0** onwards.
-</Callout>
+<AvailableFrom version="2.4.0">Installing from a package repository</AvailableFrom>
 
 Available architectures: `x86_64`, `aarch64`, `armv7`.
 

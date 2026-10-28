@@ -6,6 +6,7 @@ description: >-
   This guide covers plugin interfaces, event system integration, API routes, database migrations, and configuration.
 ---
 import Callout from '../../../components/Callout.astro';
+import AvailableFrom from '../../../components/AvailableFrom.astro';
 
 This guide covers everything you need to implement and deploy plugins for Vikunja.
 
@@ -16,9 +17,7 @@ Vikunja supports two plugin loaders:
 - **Yaegi** (recommended): Interprets Go source files at runtime using [Yaegi](https://github.com/traefik/yaegi). No compilation step needed.
 - **Native** (deprecated): Uses [Go's native plugin system](https://pkg.go.dev/plugin) to load compiled `.so` shared libraries.
 
-<Callout type="info">
-Yaegi plugin support is only available from Vikunja **2.3.0** onwards.
-</Callout>
+<AvailableFrom version="2.3.0">Yaegi plugin support</AvailableFrom>
 
 ## Quick Start
 
@@ -342,9 +341,7 @@ func (p *MyPlugin) Init() error {
 
 ### Yaegi Plugins (Recommended)
 
-<Callout type="info">
-Yaegi plugin support is only available from Vikunja **2.3.0** onwards.
-</Callout>
+<AvailableFrom version="2.3.0">Yaegi plugin support</AvailableFrom>
 
 No build step is required. Copy your plugin source directory into the configured plugins directory and restart Vikunja:
 

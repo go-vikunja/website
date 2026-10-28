@@ -6,6 +6,7 @@ description: >-
   instance admins on a self-hosted Vikunja install.
 ---
 import Callout from '../../../components/Callout.astro';
+import AvailableFrom from '../../../components/AvailableFrom.astro';
 
 Vikunja Pro is an optional set of features for self-hosted instances. The free,
 AGPL-licensed version of Vikunja is fully functional on its own. Pro gates a small
@@ -70,10 +71,7 @@ connection.
 
 ### Behind a proxy
 
-<Callout type="info">
-Proxy support for the license check is available from Vikunja **2.7.0** onwards
-(or unstable builds).
-</Callout>
+<AvailableFrom version="2.7.0">Proxy support for the license check</AvailableFrom>
 
 If your server can only reach the internet through a forward proxy, set the
 `HTTPS_PROXY` environment variable or the `outgoingrequests.proxyurl` config
