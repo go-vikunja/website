@@ -1,0 +1,20 @@
+---
+import Callout from './Callout.astro'
+import {isReleased} from '../helpers/releases'
+
+interface Props {
+	version: string
+}
+
+const {version} = Astro.props
+const released = await isReleased(version)
+---
+
+<Callout type="info">
+	<p>
+		<slot>This feature</slot>
+		{released
+			? <Fragment>is available from Vikunja <strong>{version}</strong> onwards (or <a href="/docs/versions">unstable builds</a>).</Fragment>
+			: <Fragment>is currently only available in <a href="/docs/versions">unstable builds</a>. It will be part of the next release.</Fragment>}
+	</p>
+</Callout>
