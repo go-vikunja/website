@@ -7,11 +7,9 @@ description: >-
   PKCE.
 ---
 
-import Callout from '../../../components/Callout.astro'
+import AvailableFrom from '../../../components/AvailableFrom.astro';
 
-<Callout type="info">
-This feature is available from Vikunja **2.3.0** onwards (or unstable builds).
-</Callout>
+<AvailableFrom version="2.3.0" />
 
 Vikunja can act as an OAuth 2.0 Authorization Server, implementing the [Authorization Code flow](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1) with mandatory [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) (Proof Key for Code Exchange, S256 only).
 This allows native apps and third-party integrations to authenticate users and obtain access tokens without handling user credentials directly.

@@ -5,7 +5,7 @@ description: >-
   Technical reference for Vikunja webhooks: API usage, payload structure,
   signature verification, and hosting security.
 ---
-import Callout from '../../../components/Callout.astro';
+import AvailableFrom from '../../../components/AvailableFrom.astro';
 
 This page covers the technical details of working with Vikunja webhooks programmatically. For an introduction to what webhooks are and how to set them up in the UI, see the [Webhooks help page](/help/webhooks).
 
@@ -74,9 +74,9 @@ outgoingrequests:
   proxypassword: "your-proxy-password"
 ```
 
-<Callout type="info">
-The `outgoingrequests.*` options replace the deprecated `webhooks.proxyurl` and `webhooks.proxypassword`, which still work. Credentials in the proxy URL, `HTTP_PROXY`/`HTTPS_PROXY` support, and proxies on a private network are available from Vikunja **2.7.0** onwards (or unstable builds).
-</Callout>
+The `outgoingrequests.*` options replace the deprecated `webhooks.proxyurl` and `webhooks.proxypassword`, which still work.
+
+<AvailableFrom version="2.7.0">Support for credentials in the proxy URL, `HTTP_PROXY`/`HTTPS_PROXY`, and proxies on a private network</AvailableFrom>
 
 See [outgoing requests through a proxy](/docs/outgoing-proxy) for all proxy options.
 
