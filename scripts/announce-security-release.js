@@ -33,12 +33,16 @@ function formatReleaseDate(date) {
 }
 
 // The list is open for anyone to subscribe, so this must not contain any details about the vulnerabilities.
-function buildAnnouncement(version, releaseDate, severity) {
-	return `<p>Vikunja ${version} will be released on <strong>${releaseDate}</strong>. It contains security fixes, the most severe of them rated <strong>${severity}</strong>.</p>
+function buildAnnouncement(title, version, releaseDate, severity) {
+	return `# ${title}
 
-<p>Please plan to upgrade your instance on that day.</p>
+Hey there,
 
-<p>To give everyone time to upgrade, I'll only publish details about the vulnerabilities together with the release. You'll get another email with a summary of what was fixed once it is out.</p>
+We plan to release Vikunja ${version} on **${releaseDate}**. It contains security fixes, the most severe of them rated **${severity}**.
+
+Please plan to upgrade your instance on that day. We will publish Security Advisories and full details of the vulnerabilities on release day.
+
+As per our [security policy](https://vikunja.io/security/#security-announcements), this is the pre-announcement of that fix.
 `
 }
 
@@ -65,7 +69,7 @@ async function main() {
 
 	const releaseDate = formatReleaseDate(values.date)
 	const title = `Security release: Vikunja ${version} on ${releaseDate}`
-	const announcement = buildAnnouncement(version, releaseDate, values.severity)
+	const announcement = buildAnnouncement(title, version, releaseDate, values.severity)
 
 	console.log(`Subject: ${title}\n`)
 	console.log(announcement)
@@ -80,7 +84,7 @@ async function main() {
 		return
 	}
 
-	const url = await postToListmonkSecurityList(announcement, title)
+	const url = await postToListmonkSecurityList(announcement, title, 'markdown')
 	if (!url) {
 		process.exit(1)
 	}

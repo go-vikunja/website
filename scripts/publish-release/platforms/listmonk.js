@@ -4,11 +4,11 @@ export function postToListmonk(htmlContent, version, title) {
 	return createDraftCampaign(htmlContent, title, listmonkConfig.listIds, 'LISTMONK_LIST_IDS')
 }
 
-export function postToListmonkSecurityList(htmlContent, title) {
-	return createDraftCampaign(htmlContent, title, listmonkConfig.securityListIds, 'LISTMONK_SECURITY_LIST_ID')
+export function postToListmonkSecurityList(content, title, contentType = 'html') {
+	return createDraftCampaign(content, title, listmonkConfig.securityListIds, 'LISTMONK_SECURITY_LIST_ID', contentType)
 }
 
-async function createDraftCampaign(htmlContent, title, listIds, listIdsEnvName) {
+async function createDraftCampaign(content, title, listIds, listIdsEnvName, contentType = 'html') {
 	if (!listmonkConfig.url || !listmonkConfig.apiUser || !listmonkConfig.apiToken) {
 		console.log('Skipping Listmonk: LISTMONK_URL, LISTMONK_API_USER, or LISTMONK_API_TOKEN not set')
 		return null
@@ -30,8 +30,8 @@ async function createDraftCampaign(htmlContent, title, listIds, listIdsEnvName) 
 			subject: title,
 			lists: listIds,
 			type: 'regular',
-			content_type: 'html',
-			body: htmlContent,
+			content_type: contentType,
+			body: content,
 		}),
 	})
 
