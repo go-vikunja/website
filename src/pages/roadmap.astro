@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Button from '../components/Button.astro'
+import {fetchRoadmap, type RoadmapColumn} from '../helpers/roadmap'
+import {formatDate} from '../helpers/formatDate'
+
+type Tone = 'now' | 'next' | 'later' | 'shipped'
+
+// Keyed by board column title. The page order is fixed here, independent of the board.
+const STAGES: Record<string, {caption: string, tone: Tone}> = {
+	Now: {caption: 'Being built right now', tone: 'now'},
+	Next: {caption: 'Up after that', tone: 'next'},
+	Later: {caption: 'Planned, no timing yet', tone: 'later'},
+	Shipped: {caption: 'Released in the last 90 days', tone: 'shipped'},
+}
+const ORDER = Object.keys(STAGES)
+const rank = (c: RoadmapColumn) => ORDER.includes(c.title) ? ORDER.indexOf(c.title) : ORDER.length
+
+const columns = await fetchRoadmap()
+const visible = columns
+	.filter(c => c.items.length > 0)
+	.toSorted((a, b) => rank(a) - rank(b))
+	.map(c => ({...c, ...(STAGES[c.title] ?? {caption: '', tone: 'next' as Tone})}))
+
+const panel: Record<Tone, string> = {
+	now: 'bg-white dark:bg-gray-800 border-primary',
+	next: 'bg-white dark:bg-gray-800 border-gray-100 dark:border-gray-800',
+	later: 'border-dashed border-gray-300 dark:border-gray-700',
+	shipped: 'bg-white dark:bg-gray-800 border-gray-100 dark:border-gray-800',
+}
+
+export const meta = {
+	title: 'Roadmap',
+	description: 'What we\'re working on for Vikunja right now, what comes next, and what has shipped recently.',
+}
+---
+<Layout {...meta}>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-6" id="main-content">
+        <div class="pt-24 pb-16 text-center">
+            <h1 class="text-4xl font-display">Roadmap</h1>
+            <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 text-balance max-w-2xl mx-auto">
+                What we're working on, what comes next, and what shipped recently.
+                These are outlook only, we can't promise these things.
+            </p>
+            <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                Updated {formatDate(new Date())} · Items marked <span class="pro-pill">Pro</span> are part of <a href="/pro" class="underline">Vikunja Pro</a>
+            </p>
+        </div>
+
+        {visible.length === 0 ? (
+            <p class="pb-24 text-center text-gray-600 dark:text-gray-400">The roadmap couldn't be loaded.</p>
+        ) : (
+            <div class="grid gap-6 items-start md:grid-cols-2 lg:grid-cols-none lg:grid-flow-col lg:auto-cols-fr">
+                {visible.map(column => (
+                    <section class={`rounded-sm border ${panel[column.tone]}`}>
+                        <header class="px-6 pt-6 pb-4">
+                            <div class="flex items-baseline justify-between gap-4">
+                                <h2 class="font-display text-2xl">{column.title}</h2>
+                                <span class="text-sm tabular-nums text-gray-500 dark:text-gray-400">{column.items.length}</span>
+                            </div>
+                            {column.caption && (
+                                <p class="mt-1 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                                    {column.caption}
+                                </p>
+                            )}
+                        </header>
+                        <ul class={`border-t divide-y ${column.tone === 'later'
+                            ? 'border-dashed border-gray-300 divide-dashed divide-gray-300 dark:border-gray-700 dark:divide-gray-700'
+                            : 'border-gray-100 divide-gray-100 dark:border-gray-700 dark:divide-gray-700'}`}>
+                            {column.items.map(item => {
+                                const row = 'flex items-start gap-3 px-6 py-3.5'
+                                const text = column.tone === 'later' ? 'text-gray-600 dark:text-gray-400' : 'text-gray-800 dark:text-gray-200'
+                                const body = (
+                                    <>
+                                        {column.tone === 'shipped' && <span class="text-primary" aria-hidden="true">✓</span>}
+                                        <span class="flex-1">
+                                            <span class={`block ${text}`}>{item.title}</span>
+                                            {item.summary && (
+                                                <span class="mt-0.5 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">{item.summary}</span>
+                                            )}
+                                        </span>
+                                        {item.pro && <span class="pro-pill mt-0.5 shrink-0">Pro</span>}
+                                    </>
+                                )
+                                return (
+                                    <li>
+                                        {item.link ? (
+                                            <a href={item.link} target="_blank" rel="noopener" class={`${row} group transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-gray-700/40`}>
+                                                {body}
+                                                <svg class="mt-1 size-4 shrink-0 text-gray-400 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                                    <path d="M5 11 11 5M6 5h5v5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                                <span class="sr-only">(opens in a new tab)</span>
+                                            </a>
+                                        ) : (
+                                            <div class={row}>{body}</div>
+                                        )}
+                                    </li>
+                                )
+                            })}
+                        </ul>
+                    </section>
+                ))}
+            </div>
+        )}
+
+        <div class="py-24 text-center">
+            <h2 class="font-display text-3xl">Missing something?</h2>
+            <p class="mt-4 text-gray-600 dark:text-gray-400 text-balance">
+                Request features and vote on existing ideas in the community forum.
+            </p>
+            <div class="mt-8">
+                <Button href="https://community.vikunja.io">Go to the forum</Button>
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    @reference '../styles/global.css';
+
+    .pro-pill {
+        @apply align-middle whitespace-nowrap rounded-sm bg-primary/10 px-1.5 py-0.5 text-xs text-primary dark:bg-primary/20 dark:text-blue-300;
+    }
+</style>
