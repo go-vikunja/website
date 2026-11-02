@@ -30,12 +30,12 @@ export const meta = {
                         <h2 class="text-2xl font-display mb-4">{column.title}</h2>
                         <ul class="space-y-3">
                                 {column.items.map(item => (
-                                    <li class="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                                    <li class="flex items-center justify-between gap-3 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
                                         {item.link ? (
                                             <a href={item.link} class="hover:underline" rel="noopener">{item.title}</a>
                                         ) : item.title}
                                         {item.pro && (
-                                            <a href="/pro" class="ml-2 rounded bg-primary/10 px-2 py-0.5 text-xs font-bold uppercase text-primary">Pro</a>
+                                            <a href="/pro" class="shrink-0 rounded bg-primary/10 px-2 py-0.5 text-xs font-bold uppercase text-primary">Pro</a>
                                         )}
                                     </li>
                                 ))}
