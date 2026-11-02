@@ -4,6 +4,7 @@ const VIEW_ID = 645
 const SHIPPED_DAYS = 90
 const PUBLIC_LABEL = 'public'
 const LINK_PATTERN = /https:\/\/(?:github\.com\/go-vikunja|community\.vikunja\.io)\/[^\s"'<>]+/
+const SUMMARY_PREFIX = /^public:\s*/i
 
 interface ApiTask {
 	title: string
@@ -23,12 +24,30 @@ interface ApiBucket {
 export interface RoadmapItem {
 	title: string
 	pro: boolean
+	summary?: string
 	link?: string
 }
 
 export interface RoadmapColumn {
 	title: string
 	items: RoadmapItem[]
+}
+
+const ENTITIES: Record<string, string> = {amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'", nbsp: ' '}
+
+// Only the description's first line is public, and only if it starts with "Public:".
+export function publicSummary(description: string | undefined): string | undefined {
+	const firstLine = (description ?? '')
+		.replace(/<\/(p|h\d|li|div)>|<br\s*\/?>/gi, '\n')
+		.replace(/<[^>]+>/g, '')
+		.replace(/&(amp|lt|gt|quot|#39|nbsp);/g, (_, e) => ENTITIES[e])
+		.split('\n')
+		.map(l => l.trim())
+		.find(l => l !== '')
+	if (!firstLine || !SUMMARY_PREFIX.test(firstLine)) {
+		return undefined
+	}
+	return firstLine.replace(SUMMARY_PREFIX, '') || undefined
 }
 
 async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
@@ -68,10 +87,11 @@ export async function fetchRoadmap(): Promise<RoadmapColumn[]> {
 
 			return {
 				title: bucket.title,
-				// Descriptions hold internal notes, so only a link is taken from them.
+				// Descriptions hold internal notes, so only the summary and a link are taken from them.
 				items: visible.map(t => ({
 					title: t.title,
 					pro: t.labels?.some(l => l.title === 'pro') ?? false,
+					summary: publicSummary(t.description),
 					link: t.description?.match(LINK_PATTERN)?.[0],
 				})),
 			}
