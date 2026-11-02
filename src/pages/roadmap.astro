@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro'
+import {fetchRoadmap} from '../helpers/roadmap'
+
+const columns = await fetchRoadmap()
+
+export const meta = {
+	title: 'Roadmap',
+	description: 'What I\'m working on for Vikunja right now, what comes next, and what has shipped recently.',
+}
+---
+<Layout {...meta}>
+    <main class="max-w-(--breakpoint-xl) mx-auto px-4 md:px-6" id="main-content">
+        <div class="pt-24 pb-12 text-center">
+            <h1 class="text-4xl font-display">Roadmap</h1>
+            <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 text-balance">
+                What I'm working on, what comes next, and what shipped recently. Plans change, so nothing here is a promise.
+            </p>
+            <p class="mt-2 text-sm text-gray-500">
+                Missing something? <a href="https://community.vikunja.io" class="text-primary hover:underline">Request or vote on features in the forum</a>.
+            </p>
+        </div>
+
+        {columns.length === 0 ? (
+            <p class="pb-24 text-center text-gray-600 dark:text-gray-400">The roadmap couldn't be loaded.</p>
+        ) : (
+            <div class="grid gap-6 pb-24 md:grid-cols-2 lg:grid-cols-4">
+                {columns.map(column => (
+                    <section>
+                        <h2 class="text-2xl font-display mb-4">{column.title}</h2>
+                        {column.items.length === 0 ? (
+                            <p class="text-gray-500">Nothing here right now.</p>
+                        ) : (
+                            <ul class="space-y-3">
+                                {column.items.map(item => (
+                                    <li class="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                                        {item.link ? (
+                                            <a href={item.link} class="hover:underline" rel="noopener">{item.title}</a>
+                                        ) : item.title}
+                                        {item.pro && (
+                                            <a href="/pro" class="ml-2 rounded bg-primary/10 px-2 py-0.5 text-xs font-bold uppercase text-primary">Pro</a>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </section>
+                ))}
+            </div>
+        )}
+    </main>
+</Layout>
