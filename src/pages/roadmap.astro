@@ -60,12 +60,6 @@ export const meta = {
                             </div>
                             {column.caption && (
                                 <p class="mt-1 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                                    {column.tone === 'now' && (
-                                        <span class="relative flex size-2" aria-hidden="true">
-                                            <span class="absolute inline-flex size-full rounded-full bg-primary opacity-60 motion-safe:animate-ping"></span>
-                                            <span class="relative inline-flex size-2 rounded-full bg-primary"></span>
-                                        </span>
-                                    )}
                                     {column.caption}
                                 </p>
                             )}
