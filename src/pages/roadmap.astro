@@ -24,14 +24,11 @@ export const meta = {
         {columns.length === 0 ? (
             <p class="pb-24 text-center text-gray-600 dark:text-gray-400">The roadmap couldn't be loaded.</p>
         ) : (
-            <div class="grid gap-6 pb-24 md:grid-cols-2 lg:grid-cols-4">
-                {columns.map(column => (
+            <div class="grid gap-6 pb-24 md:grid-cols-2 lg:grid-cols-none lg:grid-flow-col lg:auto-cols-fr">
+                {columns.filter(column => column.items.length > 0).map(column => (
                     <section>
                         <h2 class="text-2xl font-display mb-4">{column.title}</h2>
-                        {column.items.length === 0 ? (
-                            <p class="text-gray-500">Nothing here right now.</p>
-                        ) : (
-                            <ul class="space-y-3">
+                        <ul class="space-y-3">
                                 {column.items.map(item => (
                                     <li class="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
                                         {item.link ? (
@@ -42,8 +39,7 @@ export const meta = {
                                         )}
                                     </li>
                                 ))}
-                            </ul>
-                        )}
+                        </ul>
                     </section>
                 ))}
             </div>
