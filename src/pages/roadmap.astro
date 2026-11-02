@@ -51,8 +51,8 @@ export const meta = {
             <p class="pb-24 text-center text-gray-600 dark:text-gray-400">The roadmap couldn't be loaded.</p>
         ) : (
             <div class="grid gap-6 items-start md:grid-cols-2 lg:grid-cols-none lg:grid-flow-col lg:auto-cols-fr">
-                {visible.map((column, i) => (
-                    <section class={`stage rounded-sm border ${panel[column.tone]}`} style={`--delay: ${i * 80}ms`}>
+                {visible.map(column => (
+                    <section class={`rounded-sm border ${panel[column.tone]}`}>
                         <header class="px-6 pt-6 pb-4">
                             <div class="flex items-baseline justify-between gap-4">
                                 <h2 class="font-display text-2xl">{column.title}</h2>
@@ -127,19 +127,5 @@ export const meta = {
 
     .pro-pill {
         @apply align-middle whitespace-nowrap rounded-sm bg-primary/10 px-1.5 py-0.5 text-xs text-primary dark:bg-primary/20 dark:text-blue-300;
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-        .stage {
-            animation: rise 400ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
-            animation-delay: var(--delay);
-        }
-    }
-
-    @keyframes rise {
-        from {
-            opacity: 0;
-            transform: translateY(8px);
-        }
     }
 </style>
