@@ -98,6 +98,29 @@ Keycloak Config:
 - Set `Valid redirect URIs` to `/auth/openid/keycloak`
 - Create the client then navigate to the credentials tab and copy the `Client secret`
 
+### Keycloak with simple 1:1 group mapping
+
+Vikunja Config:
+
+```yaml
+auth:
+  openid:
+    enabled: true
+    providers:
+      keycloak:
+        name: Keycloak
+        authurl: https://keycloak.mydomain.com/realms/<realm-name>
+        logouturl: https://keycloak.mydomain.com/realms/<realm-name>/protocol/openid-connect/logout
+        clientid: <vikunja-id>
+        clientsecret: <vikunja secret>
+        scope: openid profile email groups
+```
+
+Keycloak Config:
+
+All the steps above, plus this additional step:
+- Under `Client Scopes`, click `Add client scope`, select `groups` and click `Add` -> `Optional`
+
 ## Authentik
 
 Authentik Config:
