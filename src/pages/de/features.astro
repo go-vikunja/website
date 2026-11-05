@@ -1,4 +1,7 @@
 ---
 import Features from '../../components/pages/Features.astro'
+import {translateMeta} from '../../i18n'
+
+export const meta = translateMeta('de', {title: 'nav.features', description: 'features.description'})
 ---
-<Features/>
+<Features {...meta}/>
