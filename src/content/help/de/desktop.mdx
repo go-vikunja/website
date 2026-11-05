@@ -5,16 +5,14 @@ description: >-
   Anmelden, das Schnelleingabefenster, das Tray-Symbol und Kommandozeilenoptionen
   in der Vikunja-Desktop-App nutzen.
 ---
-import Callout from '@/components/Callout.astro';
+import AvailableFrom from '@/components/AvailableFrom.astro';
 import {VIKUNJA_CLOUD_LINK} from '@/helpers/vikunjaCloudLink';
 
 Für Linux, macOS und Windows gibt es eine eigene Desktop-App von Vikunja. Wie du sie herunterlädst und installierst, erfährst du unter [Desktop-Pakete](/docs/desktop-packages).
 
 ## Anmelden
 
-<Callout type="info">
-Die OAuth-basierte Anmeldung in der Desktop-App gibt es ab Vikunja **2.3.0**.
-</Callout>
+<AvailableFrom version="2.3.0">Die OAuth-basierte Anmeldung in der Desktop-App</AvailableFrom>
 
 Wenn du die Desktop-App zum ersten Mal öffnest, fragt sie dich, mit welchem Server du dich verbinden möchtest:
 
@@ -26,9 +24,7 @@ Sobald du einen Server gewählt hast, öffnet die Desktop-App deinen Browser, da
 
 ## Schnelleingabefenster
 
-<Callout type="info">
-Das Schnelleingabefenster gibt es ab Vikunja **2.3.0**.
-</Callout>
+<AvailableFrom version="2.3.0">Das Schnelleingabefenster</AvailableFrom>
 
 Die Desktop-App hat ein eigenes **Schnelleingabefenster**: ein kleines Popup, das du von überall auf deinem System öffnen kannst, um eine Aufgabe hinzuzufügen, ohne erst ins Hauptfenster von Vikunja zu wechseln. Es ist dieselbe Schnelleingabe, die du in Vikunja schon mit `Ctrl` / `Cmd` + `K` öffnen kannst. Die Desktop-App stellt sie nur als eigenständiges Fenster bereit, das immer im Vordergrund bleibt, sodass du es auch erreichst, wenn Vikunja gerade nicht aktiv ist.
 
