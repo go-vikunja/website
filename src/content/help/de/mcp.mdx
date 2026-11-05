@@ -5,11 +5,9 @@ description: >-
   Verbinde einen KI-Assistenten per MCP mit Vikunja und leg fest, was er lesen oder ändern darf.
 ---
 
-import Callout from '@/components/Callout.astro';
+import AvailableFrom from '@/components/AvailableFrom.astro';
 
-<Callout type="info">
-MCP gibt es ab Vikunja **2.7.0** oder in Unstable-Builds.
-</Callout>
+<AvailableFrom version="2.7.0">MCP</AvailableFrom>
 
 Mit MCP (Model Context Protocol) kann ein KI-Assistent mit deinen Vikunja-Aufgaben, -Projekten und -Labels arbeiten. Um einen zu verbinden, erstellst du ein API-Token mit den Berechtigungen, die du ihm geben willst.
 
