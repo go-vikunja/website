@@ -3,7 +3,8 @@ title: Einstellungen
 slug: settings
 description: >-
   Alle Einstellungen für deinen Account: allgemeine Einstellungen, Passwort, Zwei-Faktor-Authentifizierung,
-  E-Mail-Adresse, Avatar, Datenexport, Import, CalDAV, MCP, API-Tokens und Account löschen.
+  E-Mail-Adresse, Avatar, verknüpfte Accounts, Datenexport, Import, CalDAV, MCP,
+  API-Tokens und Account löschen.
 ---
 import Screenshot from '@/components/Screenshot.astro'
 
@@ -146,6 +147,39 @@ Wähl, wie dein Avatar überall in Vikunja aussieht:
 - **Gravatar:** nutzt den Avatar, der auf [gravatar.com](https://gravatar.com) mit deiner E-Mail-Adresse verknüpft ist
 - **Murmel:** ein bunter Avatar mit Farbverlauf, der für deinen Account erzeugt wird
 - **Hochladen:** lad ein eigenes Bild als Avatar hoch
+
+## Verknüpfte Accounts
+
+Ab Vikunja **2.8.0** kannst du deinen Vikunja-Account mit einem Account bei einem Login-Provider verknüpfen, den deine Instanz anbietet, zum Beispiel dem Single Sign-on deiner Firma. Danach kannst du dich mit deinem Passwort oder über diesen Provider anmelden. Beides öffnet denselben Vikunja-Account mit denselben Projekten und Aufgaben.
+
+Diesen Tab siehst du nur, wenn du dich mit einem Vikunja-Passwort anmeldest und auf deiner Instanz mindestens ein Login-Provider eingerichtet ist.
+
+### Einen Account verknüpfen
+
+1. Öffne die **Einstellungen** und wähl **Verknüpfte Accounts**.
+2. Klick auf den Button **Verknüpfen** mit dem Namen des Providers, den du nutzen willst.
+3. Melde dich beim Provider an. Wenn du dort mehr als einen Account hast, wähl den aus, den du verknüpfen willst.
+4. Prüf nach der Rückkehr zu Vikunja den Account, der neben **Zu verknüpfender Account** angezeigt wird.
+5. Gib dein aktuelles Passwort ein. Wenn du die [Zwei-Faktor-Authentifizierung](/help/two-factor-authentication) nutzt, gib außerdem den Code aus deiner Authenticator-App ein.
+6. Klick auf **Account verknüpfen**.
+
+Der Provider erscheint jetzt in der Tabelle, zusammen mit dem Datum der Verknüpfung. Außerdem schickt dir Vikunja eine E-Mail zur neuen Verknüpfung. Wenn du den Account nicht selbst verknüpft hast, ändere sofort dein Passwort und heb die Verknüpfung auf.
+
+Ab dann öffnet die Anmeldung über diesen Provider deinen bestehenden Vikunja-Account. Wenn du die Zwei-Faktor-Authentifizierung nutzt, fragt Vikunja trotzdem nach deinem Code.
+
+Dabei gibt es ein paar Einschränkungen:
+
+- Du kannst pro Provider nur einen Account verknüpfen.
+- Ein Account beim Provider lässt sich nur mit einem Vikunja-Account verknüpfen. Wenn du dich schon früher damit angemeldet hast und Vikunja dafür einen eigenen Account erstellt hat, schlägt die Verknüpfung fehl. Bitte die Admins deiner Instanz, diesen separaten Account zu löschen, und versuch es dann noch einmal.
+- Schließ die Verknüpfung innerhalb weniger Minuten ab, nachdem du vom Provider zurückgekommen bist. Wenn es nicht klappt, fang unter **Verknüpfte Accounts** noch einmal von vorn an.
+
+### Eine Verknüpfung aufheben
+
+Klick neben dem Provider auf **Verknüpfung aufheben**. Gib dein aktuelles Passwort ein, dazu deinen Zwei-Faktor-Code, falls du ihn nutzt, und klick noch einmal auf **Verknüpfung aufheben**. Mit diesem Provider-Account kannst du dich dann nicht mehr anmelden. Dein Vikunja-Account und alles darin bleiben, wie sie sind.
+
+<Callout type="info">
+Manche Instanzen haben Provider-Anmeldungen früher automatisch mit bestehenden Accounts verbunden, anhand der E-Mail-Adresse oder des Anmeldenamens. Diese Option fällt in einer künftigen Vikunja-Version weg. Wenn du dich sowohl mit Passwort als auch über einen Provider anmeldest, verknüpf den Provider hier. Sonst erstellt deine nächste Anmeldung über den Provider womöglich einen neuen, leeren Account.
+</Callout>
 
 ## Datenexport
 
