@@ -102,5 +102,9 @@
 	"help.overview": "Help overview",
 	"copyMarkdown.title": "Copy page content as Markdown",
 	"copyMarkdown.label": "Copy as Markdown",
-	"copyMarkdown.copied": "Copied!"
+	"copyMarkdown.copied": "Copied!",
+	"availableFrom.thisFeature": "This feature",
+	"availableFrom.released": "{feature} is available from Vikunja {version} onwards (or {unstable}).",
+	"availableFrom.unreleased": "{feature} is currently only available in {unstable}. It will be part of the next release.",
+	"availableFrom.unstableBuilds": "unstable builds"
 }
