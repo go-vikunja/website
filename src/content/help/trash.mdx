@@ -1,0 +1,132 @@
+---
+title: Trash
+slug: trash
+description: >-
+  Deleted tasks and projects go to the trash for 30 days. Restore them, delete
+  them forever, or empty the trash.
+---
+import Callout from '../../components/Callout.astro';
+import AvailableFrom from '../../components/AvailableFrom.astro';
+
+When you delete a task or a [project](/help/projects), Vikunja moves it to the trash. It stays there for 30 days. Until then, you can restore it. After 30 days, Vikunja deletes it permanently.
+
+<AvailableFrom version="2.8.0">The trash</AvailableFrom>
+
+### Quick reference
+
+- **Open the trash:** Click **Trash** in the left sidebar.
+- **Undo a delete right away:** Click **Undo** in the message that appears after you delete something.
+- **Restore later:** Open the trash and click **Restore** next to the task or project.
+- **Get rid of something now:** Click **Delete forever**, or use **Empty trash**.
+
+## Where to find the trash
+
+Click **Trash** in the left sidebar. The trash has two tabs:
+
+- **Tasks:** Deleted tasks, with the project they belong to.
+- **Projects:** Deleted projects. If a project's sub-projects were deleted with it, click **+2 sub-projects** (or similar) to see them.
+
+Each entry shows who deleted it, when, and how many days are left before it is deleted permanently. Hover over the date to see the exact time.
+
+## Deleting a task
+
+Open the task and click **Delete** in the right sidebar. You can also press `Delete` (or `Backspace` on a Mac) while the task is open.
+
+There is no confirmation dialog. Vikunja goes back to the task's project and shows the message "The task has been moved to the trash." Click **Undo** in that message to bring the task back.
+
+You need **Read & Write** permission on the project to delete a task. See [Permissions](/help/permissions).
+
+## Deleting a project
+
+Open the **three-dot menu** next to the project title and select **Delete**.
+
+The dialog tells you what will move to the trash, for example: "Moves this project, 2 sub-projects and 14 tasks to the trash. They are deleted permanently after 30 days." If people logged time on the project, it also says how many time entries are affected and that they are kept.
+
+After you confirm, Vikunja shows "The project has been moved to the trash." Click **Undo** to bring the project back.
+
+Things to know:
+
+- **Sub-projects go with it:** Deleting a project also moves all of its sub-projects to the trash.
+- **Admins only:** You need **Admin** permission on the project to delete it.
+- **Default projects:** You can delete your own default project. You can't delete a project that another user owns and uses as their default project. If you delete your default project, you no longer have one. Restoring it does not set it as your default again. You can pick a new default in [Settings](/help/settings).
+
+## Restoring from the trash
+
+Open the trash, find the task or project, and click **Restore** (the arrow icon).
+
+- **Tasks** go back to their project. In a [Kanban view](/help/views#kanban-view), a restored task goes into the default bucket, or into the done bucket if the task is done.
+- **Projects** come back with all of their sub-projects that are in the trash, including sub-projects that were deleted on their own before. Tasks that were deleted on their own stay in the trash. Restore them from the **Tasks** tab.
+
+If you open a deleted task or project, for example from a bookmark or a notification, Vikunja shows a notice like "This task is in the trash." It tells you when it was deleted and how many days are left. If you are allowed to restore it, the notice has a **Restore** button and an **Open trash** button.
+
+### Restoring a task whose project is in the trash
+
+When a project is in the trash, its tasks are not shown on the **Tasks** tab, even tasks you deleted on their own. To get them back, restore the project first.
+
+If you open a task from a deleted project, you see the notice "This project is in the trash." Click **Restore** there to restore the project. The task opens again once the project is back.
+
+### Restoring a sub-project whose parent is in the trash
+
+You can't restore a sub-project on its own while its parent project is in the trash. If you open such a sub-project, the notice offers **Restore parent project** instead. This restores the topmost deleted parent and everything under it, including the sub-project you opened. The button only shows up if you have **Admin** permission on that parent project.
+
+### Archived projects
+
+You can't restore a task while its project is [archived](/help/projects#archiving-a-project), and those tasks don't show up on the **Tasks** tab. Unarchive the project first.
+
+The same goes for a project whose parent project is archived: unarchive the parent, then restore the project.
+
+## Deleting permanently
+
+To delete something before the 30 days are up, click **Delete forever** (the trash can icon) next to it in the trash. Vikunja asks you to confirm.
+
+- **A task** is deleted with its comments, attachments, reminders, and relations. Its time entries stay with the project.
+- **A project** is deleted with its sub-projects, tasks, views, and shares. Time entries stay with the people who logged them, but no longer belong to a project.
+
+This cannot be undone.
+
+### Emptying the trash
+
+Click **Empty trash** at the top of the trash. This empties the tab you are on, so emptying the **Tasks** tab does not touch the **Projects** tab.
+
+The dialog tells you how many items will be deleted. By default, it only deletes items you moved to the trash yourself. If other people moved items to the trash too, the dialog says how many and shows a checkbox, for example **Also delete tasks other people moved to the trash**. Check it to delete those as well.
+
+Emptying only affects items you are allowed to delete permanently. See [who can do what](#who-can-do-what).
+
+## Who can do what
+
+What you see in the trash depends on your [permission](/help/permissions) on the project.
+
+| | Tasks | Projects |
+|---|---|---|
+| See it in the trash | Read & Write | Admin |
+| Restore | Read & Write | Admin |
+| Delete forever or empty the trash | Admin | Admin |
+
+If you can restore a task but not delete it forever, the **Delete forever** button is not shown.
+
+People who use a [link share](/help/sharing-and-teams#link-shares) don't have a trash and can't open it.
+
+## Automatic deletion after 30 days
+
+Items in the trash are deleted permanently 30 days after they were deleted. Vikunja checks for expired items every hour. The 30 days are fixed and can't be changed.
+
+The trash shows how many days are left for each item. On the last day, it says "deleted permanently today".
+
+## While something is in the trash
+
+- **Link shares stop working:** Link shares of a deleted project stop working while it is in the trash. They work again after you restore the project. Deleting the project forever removes them.
+- **No reminders:** Tasks in a deleted project don't send [reminders](/help/dates-and-reminders) or overdue notifications.
+- **Running timers stop:** If someone has a timer running on a task when it is deleted, the timer stops.
+- **Time entries are read-only:** Time entries for deleted tasks or projects are marked **In trash** and can't be edited. While a project is in the trash, only the person who logged a time entry can see it.
+- **Project identifiers stay reserved:** A deleted project keeps its identifier. You can't give the same identifier to another project until the deleted one is gone for good.
+
+<Callout type="info">
+The trash does not replace backups. If you host Vikunja yourself, see [What to backup](/docs/what-to-backup).
+</Callout>
+
+## Related pages
+
+- [Tasks](/help/tasks)
+- [Projects](/help/projects)
+- [Permissions](/help/permissions)
+- [Webhooks](/help/webhooks): Get notified when tasks or projects are deleted, restored, or deleted permanently.

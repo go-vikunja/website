@@ -49,7 +49,9 @@ These events are available for project webhooks:
 |----------------------------|----------------------------------------------------|
 | `task.created`             | A task was created                                 |
 | `task.updated`             | A task was updated                                 |
-| `task.deleted`             | A task was deleted                                 |
+| `task.deleted`             | A task was moved to the [trash](/help/trash)       |
+| `task.restored`            | A task was restored from the trash                 |
+| `task.purged`              | A task was deleted permanently                     |
 | `task.assignee.created`    | An assignee was added to a task                    |
 | `task.assignee.deleted`    | An assignee was removed from a task                |
 | `task.comment.created`     | A comment was added to a task                      |
@@ -60,7 +62,9 @@ These events are available for project webhooks:
 | `task.relation.created`    | A relation between tasks was created               |
 | `task.relation.deleted`    | A relation between tasks was removed               |
 | `project.updated`          | The project was updated                            |
-| `project.deleted`          | The project was deleted                            |
+| `project.deleted`          | The project was moved to the trash                 |
+| `project.restored`         | The project was restored from the trash            |
+| `project.purged`           | The project was deleted permanently                |
 | `project.shared.user`      | The project was shared with a user                 |
 | `project.shared.team`      | The project was shared with a team                 |
 

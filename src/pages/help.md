@@ -57,6 +57,7 @@ Use these pages as your main starting points:
 
 - [Tasks](/help/tasks) for task details, comments, labels, assignees, and attachments
 - [Projects](/help/projects) for project structure, backgrounds, archiving, and favorites
+- [Trash](/help/trash) for restoring deleted tasks and projects
 - [Views](/help/views) for list, table, kanban, and Gantt
 - [Sharing & Teams](/help/sharing-and-teams) for collaboration and permissions
 - [MCP](/help/mcp/) for connecting AI clients to your tasks and projects

@@ -3,11 +3,12 @@ title: Projects
 slug: projects
 description: >-
   Create and organize projects, nest sub-projects, set backgrounds, archive,
-  duplicate, and more.
+  duplicate, delete, and more.
 ---
 import Screenshot from '../../components/Screenshot.astro'
 
 import Callout from '../../components/Callout.astro';
+import AvailableFrom from '../../components/AvailableFrom.astro';
 
 A project is the main place where [tasks](/help/tasks) live in Vikunja. You can create as many projects as you need and arrange them in a hierarchy.
 
@@ -90,11 +91,13 @@ To favorite a project, hover over it in the **sidebar** or on the **project over
 
 ## Deleting a project
 
-To delete a project, open the **three-dot menu** and select **Delete**. This permanently removes the project and all of its tasks.
+To delete a project, open the **three-dot menu** and select **Delete**. You need **Admin** permission on the project.
 
-<Callout type="info">
-Deleting a project cannot be undone. Make sure you no longer need the project or its tasks before deleting it.
-</Callout>
+The dialog shows how many sub-projects and tasks will be deleted with it. After you confirm, the project and its sub-projects and tasks move to the [trash](/help/trash). Click **Undo** in the message that appears to bring them back right away.
+
+Deleted projects stay in the trash for 30 days. You can restore them from there until then. After 30 days, they are deleted permanently. See [Trash](/help/trash) for details.
+
+<AvailableFrom version="2.8.0">The trash</AvailableFrom>
 
 ## Related features
 
@@ -103,3 +106,4 @@ Related pages:
 - [Sharing and Teams](/help/sharing-and-teams) - Share projects with other users or teams.
 - [Views](/help/views) - Configure how tasks are displayed within a project (list, kanban, gantt, table).
 - [Webhooks](/help/webhooks) - Set up webhooks to notify external services of events in a project.
+- [Trash](/help/trash) - Restore deleted projects and tasks.
