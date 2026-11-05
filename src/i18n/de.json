@@ -789,7 +789,7 @@
 	"compare.planka.switch.step5": "Vikunja holt deine Projekte, Boards, Karten, Labels, Checklisten, Kommentare und Anhänge. Boards werden zu Projekten, Listen zu Kanban-Spalten, erledigte Karten bleiben erledigt",
 	"compare.planka.switch.outro": "Was nicht übernommen wird: Zugewiesene, Mitgliedschaften und Avatare, da die Accounts deines Teams in Vikunja noch nicht existieren. Der Importer funktioniert mit Planka v2; bei v1-Instanzen bricht er mit einer klaren Meldung ab, statt etwas halb richtig zu importieren. Details findest du auf der {help}.",
 	"compare.planka.switch.help": "Hilfeseite zum Planka-Import",
-	"compare.planka.cta.text": "Verbinde es mit deinem Identity Provider, hol ein Board rüber und schau, wie es sich anfühlt.",
+	"compare.planka.cta.text": "Verbinde es mit deinem Identitätsanbieter, hol ein Board rüber und schau, wie es sich anfühlt.",
 	"compare.planka.faq.import.question": "Kann ich meine Planka-Boards in Vikunja importieren?",
 	"compare.planka.faq.import.answer": "Ja. Planka hat keinen nativen Export ([offenes Issue]({issueUrl})), nur eine REST-API, deshalb spricht der [Planka-Importer]({importUrl}) von Vikunja direkt mit dieser API. Du gibst deine Planka-URL und einen API-Schlüssel (oder Anmeldename und Passwort) ein, und er holt Projekte, Boards, Karten, Labels, Checklisten, Kommentare und Anhänge rüber. Die Zugangsdaten werden nur für die Migration verwendet und nie gespeichert.",
 	"compare.planka.faq.sso.question": "Ist SSO in Vikunja wirklich kostenlos?",
