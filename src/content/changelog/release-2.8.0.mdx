@@ -1,0 +1,160 @@
+---
+title: 'Vikunja 2.8.0: Nineteen security fixes, task and project trash, and OIDC account linking'
+date: 2026-11-05T12:00:00.000Z
+slug: /vikunja-2.8.0-was-released
+isRelease: true
+description: >-
+  Vikunja 2.8.0 fixes nineteen security issues, adds a trash bin with undo for
+  tasks and projects, lets you link your SSO account to your local one, and
+  locks accounts after repeated failed logins.
+---
+
+Just over two weeks after 2.7.1, here's 2.8.0. This release contains 340 commits: 75 features, 140 fixes, and 33 dependency updates. It also fixes nineteen security issues, so please update as soon as you can.
+
+We've been on a run here with these security fixes. Given the current state of software development and AI, I don't expect that to change any time soon.
+
+## Security
+
+Nineteen advisories in total: 3 high, 11 medium and 5 low. Most are small on their own, but a few are serious, hence the quick follow-up release. All are fixed in this release.
+
+### Crafted requests could read any file or create an admin bot (GHSA-fppf-ghrf-8wp7)
+
+The v1 API accepted XML bodies in a way that bypassed fields marked as read-only. Any logged-in user could use this to read arbitrary files on the instance, since file IDs are sequential and every attachment, avatar and data export could be reached. This file access issue goes back to 0.14.0. On instances licensed for the admin panel, they could also create a bot user with admin permissions, which meant full instance-admin access.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-fppf-ghrf-8wp7).
+
+### Overdue-task webhooks leaked other users' private projects (GHSA-pp3p-qw5m-rgm2)
+
+Any registered user could register a webhook for overdue tasks and, as soon as one of their own overdue tasks triggered, receive the full project records of every other user whose overdue reminder fired in the same minute, including private projects they have no access to. Since most people use the default reminder time, a webhook on the same schedule would pick up most of the instance's overdue-task projects every day. Webhook targets can point to any external server, so the data could leave the instance entirely.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-pp3p-qw5m-rgm2).
+
+### Data leaking through notifications, webhooks and link shares
+
+- Deleting a task included related tasks from projects the recipient cannot read in the notification and webhook payload. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-2cgh-9vgx-r9gg))
+- The link-share list showed the share creator's email address to project admins. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-8g2q-76h7-8fh7))
+
+### SSO login could land you in someone else's account (GHSA-8pm4-w983-mx58)
+
+If your instance has an OpenID provider with the email fallback enabled and the mailer disabled, someone could register a local account with your email address. On your first SSO login, Vikunja would link the SSO identity to that account and log you into it, and the attacker keeps password access to everything you create there.
+
+To mitigate this problem, we strongly recommend disabling the fallback options in favor of the [new account linking feature](#link-your-sso-account-to-your-local-one) introduced in this release. The fallback options themselves are now deprecated and will be removed in a future release.
+
+For more details, see the [security advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-8pm4-w983-mx58). Thanks to [@hariprasanth9317-tech](https://github.com/hariprasanth9317-tech) for reporting this!
+
+### Calendar sync could be abused to overload the server
+
+- A calendar upload with a property carrying tens of thousands of parameters took seconds to minutes of CPU to parse. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-hgmr-qmpr-jg4j))
+- Rendering a task with many reminders over CalDAV got slower with each reminder added. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-p8p5-vphv-6g4f))
+- Asking for the same calendar property many times in one sync request multiplied the response size by that count. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-25jc-rq67-h3v6))
+
+### Imports and exports could exhaust the server
+
+- A Planka import with duplicate list IDs multiplied memory allocations until the Vikunja server process ran out of memory. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-q472-pmpr-4h46))
+- A CSV import with duplicate label column mappings did far more work per row than it should, before the item limit kicked in. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-m7x3-5229-2qr8))
+- Exporting your data inlined the full content of related tasks once per relation, which could crash the instance with an out-of-memory error for tasks with many or circular relations. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-mmvj-p6vj-f83v))
+
+### Login and 2FA
+
+- On instances with an OpenID provider configured, a crafted link could silently log your browser into the attacker's account when you opened it. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-597v-7qmv-777g))
+- A used 2FA code could be replayed in a slightly modified form within its validity window. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-cxqw-2wh9-h8c9))
+
+### A third-party token in the logs
+
+- A failed Trello migration logged the user's Trello API token, which was embedded in the request URL, to the application logs and Sentry. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-rwwc-w83j-9f95))
+
+### More ways to make the server fall over
+
+- A date filter with a huge business-day offset burned CPU on every request. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-4f8c-84wp-h6q5))
+- Previewing an extremely wide image could use gigabytes of memory and kill the process. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-gw9w-6587-g336))
+- A crafted task description or comment could take seconds of CPU to parse, on every edit and every notification built from it. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-5q86-52c5-vgfc), thanks to [@hhellll](https://github.com/hhellll)!)
+- Setting a project position below 0.1 triggered a recalculation of all project positions on the whole instance, once per request. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-fqwr-p5xj-xx36))
+- A crafted table in a task description using huge row or column spans could use up way more memory and CPU than what the task actually warranted, every time the task was read, exported, or synced over CalDAV. ([advisory](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-3598-wrmp-2pp2))
+
+## Highlights
+
+### Trash for tasks and projects
+
+Deleted tasks and projects now go to a [trash bin](/help/trash) first instead of disappearing right away. Deleting offers an undo button, you can [restore things](/help/trash#restoring-from-the-trash) from the new trash pages, and [who can permanently delete](/help/trash#who-can-do-what) depends on their permissions.
+
+Anything left in the trash is [deleted for good after 30 days](/help/trash#automatic-deletion-after-30-days). ([#4169](https://github.com/go-vikunja/vikunja/pull/4169), [#4172](https://github.com/go-vikunja/vikunja/pull/4172), [#4173](https://github.com/go-vikunja/vikunja/pull/4173))
+
+{/* TODO: screenshot 2.8.0-task-trash.png */}
+
+### Link your SSO account to your local one
+
+If you log in with OpenID Connect, you can now [link that identity to your existing local account](/help/settings#linked-accounts) from the settings instead of relying on the email fallback to match accounts silently. This allows you to use OpenID to log into your local account, making the switch easy.
+
+The old email and username fallback options are now deprecated and will be removed in the next major release. We strongly recommend disabling them now, because the new explicit link functionality gives users more control over which OpenID account gets access to the local data.
+
+Admins can find the details in the OpenID docs on [linked accounts](/docs/openid#linked-accounts) and the [deprecated fallback options](/docs/openid#email-and-username-fallback-deprecated). ([#4330](https://github.com/go-vikunja/vikunja/pull/4330), [#4331](https://github.com/go-vikunja/vikunja/pull/4331), [#4333](https://github.com/go-vikunja/vikunja/pull/4333), [#4329](https://github.com/go-vikunja/vikunja/pull/4329))
+
+{/* TODO: screenshot 2.8.0-oidc-linking.png */}
+
+### Teams from your provider's groups claim
+
+Vikunja can now create teams and assign users to them from the standard `groups` claim most identity providers already send, like Keycloak. [Add `groups` to your provider's `scope`](/docs/openid#using-the-standard-groups-claim) and each group becomes a team. Before, this needed the custom `vikunja_groups` claim.
+
+If your provider's scope already includes `groups` and you rely on `vikunja_groups`, teams now come from `groups` instead. On their next login, users join new teams named after the groups and leave the teams created from `vikunja_groups`. Check your setup before upgrading.
+
+Thanks to [@s-seidel](https://github.com/s-seidel) for contributing this in [#4311](https://github.com/go-vikunja/vikunja/pull/4311)!
+
+### Account lockout after failed logins
+
+After 10 failed password attempts, the account is now always locked until the password is reset. Vikunja ends all of the account's sessions and emails the owner a reset link. This closes the door on unlimited password guessing. ([#4305](https://github.com/go-vikunja/vikunja/pull/4305))
+
+### Faster ways to add tasks
+
+[Quick Add Magic](/help/quick-add-magic#dates-and-times) now parses things like "in two weeks" into due dates ([#4175](https://github.com/go-vikunja/vikunja/pull/4175)). There's also a quick-add input below the table view ([#4221](https://github.com/go-vikunja/vikunja/pull/4221)), and new tasks can be [prefilled from URL parameters](/help/tasks#building-your-own-links). On Android, the installed web app uses that to [show up in the share menu](/help/tasks#from-your-phone), so you can create tasks from other apps ([#4228](https://github.com/go-vikunja/vikunja/pull/4228)).
+
+### Time tracking shows who logged what
+
+Time entries now show which user tracked them ([#4225](https://github.com/go-vikunja/vikunja/pull/4225)). A running timer is visible on its task and can be stopped from there ([#4168](https://github.com/go-vikunja/vikunja/pull/4168)), and entries no longer require a project or task ([#4171](https://github.com/go-vikunja/vikunja/pull/4171)).
+
+### Smaller new things
+
+- Search on Postgres is now accent-insensitive if the [`unaccent` extension](/docs/installing#accent-insensitive-search-on-postgresql) is enabled, so searching for "cafe" finds tasks containing "café". ([#4162](https://github.com/go-vikunja/vikunja/pull/4162))
+- Legal links like imprint and privacy are now [configurable as a list](/docs/config-options#0--legal); the old single-URL settings are deprecated and will be removed in the next major release. ([#4272](https://github.com/go-vikunja/vikunja/pull/4272))
+- Health endpoints can now be [protected with basic auth](/docs/config-options#0--health). ([#4304](https://github.com/go-vikunja/vikunja/pull/4304))
+- Transparent images in the lightbox now show a checkerboard behind them. Thanks to [@HannesOberreiter](https://github.com/HannesOberreiter) for contributing this in [#4292](https://github.com/go-vikunja/vikunja/pull/4292)!
+
+### Less reliance on red and green
+
+A few places in Vikunja used red vs. green as the only signal, which doesn't work if you can't tell them apart. Overdue dates now get an icon instead of only red text, and full Kanban buckets show an icon instead of only a red count. Label colors use a colorblind-safe palette, and randomly picked label colors no longer produce pairs that are hard to tell apart. ([#4281](https://github.com/go-vikunja/vikunja/pull/4281))
+
+We also reworked how the success and error notifications look throughout Vikunja and have given them a fresher, cleaner look.
+
+### Reminders now follow task subscriptions
+
+Unsubscribing from a task now stops its reminders and overdue notifications, even if you created the task or are assigned to it. Before, creators and assignees got them no matter what. ([#4231](https://github.com/go-vikunja/vikunja/pull/4231))
+
+During the upgrade, Vikunja subscribes creators and assignees to their existing tasks so nobody loses reminders. 
+This means, if you created a task and unsubscribed from it explicitly, you'll be subscribed again and need to unsubscribe once more.
+
+## Smaller fixes and improvements
+
+- Dragging a task on a Kanban board now auto-scrolls to off-screen buckets ([#4217](https://github.com/go-vikunja/vikunja/pull/4217)) and expands collapsed buckets you drag over ([#4328](https://github.com/go-vikunja/vikunja/pull/4328)).
+- Copying rich text now puts markdown on the plain-text clipboard. ([#4213](https://github.com/go-vikunja/vikunja/pull/4213))
+- Pressing Enter on Quick Actions' new-task command now creates the task instead of opening a project that happens to match the title. ([commit](https://github.com/go-vikunja/vikunja/commit/4258ea3c672013a2c0299b442d5273b4952ae9fd))
+
+## New to Vikunja?
+
+Vikunja is the open-source, self-hostable to-do app.
+It lets you organize all kinds of things, from your shopping list to a multi-month project with multiple team members.
+Different ways to view, filter and share your tasks make this a breeze.
+
+Check out [the features page](https://vikunja.io/features) to learn more about all of its features.
+
+## How to Upgrade
+
+To get the upgrade, simply replace the Vikunja binary with the new release from the [downloads page](https://dl.vikunja.io/vikunja/v2.8.0/) or pull the `:latest` docker image.
+
+You can also check out [the update docs](/docs/installing#updating) for more information about the process.
+
+## Closing
+
+As usual, you can find the full changelog [in the GitHub repo](https://github.com/go-vikunja/vikunja/blob/main/CHANGELOG.md#280---2026-11-05).
+
+If you have any questions about this release, please reach out either [in the community forum](https://community.vikunja.io), [Bluesky](https://bsky.app/profile/vikunja.io), or [Mastodon](https://social.linux.pizza/@vikunja).
+
+Thank you for using Vikunja, and I look forward to bringing you more enhancements in future updates!
