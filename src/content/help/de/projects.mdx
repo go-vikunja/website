@@ -3,11 +3,12 @@ title: Projekte
 slug: projects
 description: >-
   Projekte erstellen und ordnen, Unterprojekte verschachteln, Hintergründe setzen,
-  archivieren, duplizieren und mehr.
+  archivieren, duplizieren, löschen und mehr.
 ---
 import Screenshot from '@/components/Screenshot.astro'
 
 import Callout from '@/components/Callout.astro';
+import AvailableFrom from '@/components/AvailableFrom.astro';
 
 Ein Projekt ist in Vikunja der zentrale Ort für deine [Aufgaben](/help/tasks). Du kannst so viele Projekte erstellen, wie du brauchst, und sie in einer Hierarchie anordnen.
 
@@ -90,11 +91,13 @@ Um ein Projekt zu den Favoriten hinzuzufügen, fahr in der **Seitenleiste** oder
 
 ## Ein Projekt löschen
 
-Um ein Projekt zu löschen, öffne das **Drei-Punkte-Menü** und wähl **Löschen**. Damit löschst du das Projekt und alle seine Aufgaben endgültig.
+Um ein Projekt zu löschen, öffne das **Drei-Punkte-Menü** und wähl **Löschen**. Dafür brauchst du die Berechtigung **Admin** für das Projekt.
 
-<Callout type="info">
-Das Löschen eines Projekts lässt sich nicht rückgängig machen. Stell sicher, dass du das Projekt und seine Aufgaben nicht mehr brauchst, bevor du es löschst.
-</Callout>
+Der Dialog zeigt dir, wie viele Unterprojekte und Aufgaben mitgelöscht werden. Nachdem du bestätigt hast, landen das Projekt, seine Unterprojekte und Aufgaben im [Papierkorb](/help/trash). Klick in der Meldung, die dann erscheint, auf **Rückgängig**, um sie sofort zurückzuholen.
+
+Gelöschte Projekte bleiben 30 Tage lang im Papierkorb. Bis dahin kannst du sie von dort wiederherstellen. Nach 30 Tagen werden sie endgültig gelöscht. Mehr dazu findest du unter [Papierkorb](/help/trash).
+
+<AvailableFrom version="2.8.0">Der Papierkorb</AvailableFrom>
 
 ## Verwandte Funktionen
 
@@ -103,3 +106,4 @@ Verwandte Seiten:
 - [Teilen und Teams](/help/sharing-and-teams) - Projekte mit anderen Personen oder Teams teilen.
 - [Ansichten](/help/views) - Festlegen, wie Aufgaben in einem Projekt angezeigt werden (Liste, Kanban, Gantt, Tabelle).
 - [Webhooks](/help/webhooks) - Webhooks einrichten, um externe Dienste über Ereignisse in einem Projekt zu informieren.
+- [Papierkorb](/help/trash) - Gelöschte Projekte und Aufgaben wiederherstellen.
