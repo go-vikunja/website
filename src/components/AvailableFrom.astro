@@ -1,6 +1,9 @@
 ---
 import Callout from './Callout.astro'
+import Trans from './Trans.astro'
 import {isReleased} from '../helpers/releases'
+import {useTranslations} from '../i18n'
+import {parsePathname} from '../i18n/routes'
 
 interface Props {
 	version: string
@@ -8,13 +11,18 @@ interface Props {
 
 const {version} = Astro.props
 const released = await isReleased(version)
+const t = useTranslations(parsePathname(Astro.url.pathname).locale)
+const feature = Astro.slots.has('default')
+	? await Astro.slots.render('default')
+	: t('availableFrom.thisFeature').replace(/&/g, '&amp;').replace(/</g, '&lt;')
 ---
 
 <Callout type="info">
 	<p>
-		<slot>This feature</slot>
-		{released
-			? <Fragment>is available from Vikunja <strong>{version}</strong> onwards (or <a href="/docs/versions">unstable builds</a>).</Fragment>
-			: <Fragment>is currently only available in <a href="/docs/versions">unstable builds</a>. It will be part of the next release.</Fragment>}
+		<Trans message={released ? 'availableFrom.released' : 'availableFrom.unreleased'}>
+			<Fragment slot="feature" set:html={feature}/>
+			<strong slot="version">{version}</strong>
+			<a slot="unstable" href="/docs/versions">{t('availableFrom.unstableBuilds')}</a>
+		</Trans>
 	</p>
 </Callout>
