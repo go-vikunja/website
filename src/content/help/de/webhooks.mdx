@@ -49,7 +49,9 @@ Diese Ereignisse gibt es für Projekt-Webhooks:
 |----------------------------|----------------------------------------------------|
 | `task.created`             | Eine Aufgabe wurde erstellt                        |
 | `task.updated`             | Eine Aufgabe wurde aktualisiert                    |
-| `task.deleted`             | Eine Aufgabe wurde gelöscht                        |
+| `task.deleted`             | Eine Aufgabe wurde in den [Papierkorb](/help/trash) verschoben |
+| `task.restored`            | Eine Aufgabe wurde aus dem Papierkorb wiederhergestellt |
+| `task.purged`              | Eine Aufgabe wurde endgültig gelöscht              |
 | `task.assignee.created`    | Einer Aufgabe wurde jemand zugewiesen              |
 | `task.assignee.deleted`    | Eine zugewiesene Person wurde von einer Aufgabe entfernt |
 | `task.comment.created`     | Einer Aufgabe wurde ein Kommentar hinzugefügt      |
@@ -60,7 +62,9 @@ Diese Ereignisse gibt es für Projekt-Webhooks:
 | `task.relation.created`    | Eine Beziehung zwischen Aufgaben wurde erstellt    |
 | `task.relation.deleted`    | Eine Beziehung zwischen Aufgaben wurde entfernt    |
 | `project.updated`          | Das Projekt wurde aktualisiert                     |
-| `project.deleted`          | Das Projekt wurde gelöscht                         |
+| `project.deleted`          | Das Projekt wurde in den Papierkorb verschoben     |
+| `project.restored`         | Das Projekt wurde aus dem Papierkorb wiederhergestellt |
+| `project.purged`           | Das Projekt wurde endgültig gelöscht               |
 | `project.shared.user`      | Das Projekt wurde mit einer Person geteilt         |
 | `project.shared.team`      | Das Projekt wurde mit einem Team geteilt           |
 
