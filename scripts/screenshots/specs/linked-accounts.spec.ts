@@ -35,11 +35,15 @@ test('Linked accounts settings and confirmation', async ({authenticatedPage: pag
   await page.goto('/user/settings/linked-accounts')
   await expect(page.locator('.card table')).toContainText('Authentik')
   await expect(page.getByRole('button', {name: 'Link GitLab.com', exact: true})).toBeVisible()
-  await screenshot('settings-linked-accounts', page, {animations: 'disabled'})
+  await screenshot('settings-linked-accounts', page.locator('.card').filter({has: page.locator('table')}), {padding: 12, animations: 'disabled'})
 
   await page.getByRole('button', {name: 'Link GitLab.com', exact: true}).click()
   await expect(page.getByText('lisa@example.com', {exact: true})).toBeVisible()
   await expect(page.locator('#linkIdentityPassword')).toBeVisible()
   await expect(page.getByRole('button', {name: 'Link account', exact: true})).toBeVisible()
-  await screenshot('settings-link-account-confirmation', page.locator('form').filter({has: page.locator('#linkIdentityPassword')}), {padding: 0, animations: 'disabled'})
+  await screenshot('settings-link-account-confirmation', page.locator('form').filter({has: page.locator('#linkIdentityPassword')}), {
+    padding: 24,
+    animations: 'disabled',
+    style: '.api-config { visibility: hidden; }',
+  })
 })
