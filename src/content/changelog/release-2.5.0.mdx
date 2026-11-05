@@ -11,11 +11,11 @@ description: >-
 
 A bit over two weeks after 2.4.0, here's 2.5.0. This is a cleanup release: 203 commits, 58 of them dependency updates and 105 of them fixes. There's one security fix and one real new feature, so let's start with the security one.
 
-## Security fix: a share link could act as another user
+## Security fix: a share link could act as another user (CVE-2026-76216)
 
 A [share link](/help/sharing-and-teams#link-shares) is its own kind of login, and internally it got an ID from the same number range as user accounts. Three permission checks compared that ID against user IDs without checking which kind they were looking at, so a share link whose ID matched a user's ID was treated as that user. Whoever held the link could remove that user from their teams, delete that user's bot users, and read the member list of any team they're in.
 
-This is the same class of bug as [the API token issue in 2.4.0](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-vvcv-vpph-h844), at three places that fix didn't touch. Share links are now rejected everywhere a real user account is required, and their internal ID can no longer collide with a user ID. Everything up to and including 2.4.0 is affected. No CVE has been assigned yet. [Check out the full advisory on GitHub](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-32r8-5843-4qw2) to learn more about the details. Thanks to [@manus-use](https://github.com/manus-use) for reporting this!
+This is the same class of bug as [the API token issue in 2.4.0 (CVE-2026-68581)](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-vvcv-vpph-h844), at three places that fix didn't touch. Share links are now rejected everywhere a real user account is required, and their internal ID can no longer collide with a user ID. Everything up to and including 2.4.0 is affected. [Check out the full advisory on GitHub](https://github.com/go-vikunja/vikunja/security/advisories/GHSA-32r8-5843-4qw2) to learn more about the details. Thanks to [@manus-use](https://github.com/manus-use) for reporting this!
 
 ## Creating many tasks at once
 
