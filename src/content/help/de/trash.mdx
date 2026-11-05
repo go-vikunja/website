@@ -1,0 +1,132 @@
+---
+title: Papierkorb
+slug: trash
+description: >-
+  Gelöschte Aufgaben und Projekte landen für 30 Tage im Papierkorb. Stell sie
+  wieder her, lösch sie endgültig oder leer den Papierkorb.
+---
+import Callout from '@/components/Callout.astro';
+import AvailableFrom from '@/components/AvailableFrom.astro';
+
+Wenn du eine Aufgabe oder ein [Projekt](/help/projects) löschst, verschiebt Vikunja es in den Papierkorb. Dort bleibt es 30 Tage lang. Bis dahin kannst du es wiederherstellen. Nach 30 Tagen löscht Vikunja es endgültig.
+
+<AvailableFrom version="2.8.0">Der Papierkorb</AvailableFrom>
+
+### Kurzübersicht
+
+- **Papierkorb öffnen:** Klick in der linken Seitenleiste auf **Papierkorb**.
+- **Löschen sofort rückgängig machen:** Klick in der Meldung, die nach dem Löschen erscheint, auf **Rückgängig**.
+- **Später wiederherstellen:** Öffne den Papierkorb und klick neben der Aufgabe oder dem Projekt auf **Wiederherstellen**.
+- **Sofort loswerden:** Klick auf **Endgültig löschen** oder nutze **Papierkorb leeren**.
+
+## Wo du den Papierkorb findest
+
+Klick in der linken Seitenleiste auf **Papierkorb**. Der Papierkorb hat zwei Tabs:
+
+- **Aufgaben:** Gelöschte Aufgaben, zusammen mit dem Projekt, zu dem sie gehören.
+- **Projekte:** Gelöschte Projekte. Wurden die Unterprojekte eines Projekts mitgelöscht, klick auf **+2 Unterprojekte** (oder Ähnliches), um sie zu sehen.
+
+Bei jedem Eintrag siehst du, wer ihn wann gelöscht hat und wie viele Tage bleiben, bis er endgültig gelöscht wird. Fahr mit der Maus über das Datum, um die genaue Uhrzeit zu sehen.
+
+## Eine Aufgabe löschen
+
+Öffne die Aufgabe und klick in der rechten Seitenleiste auf **Löschen**. Du kannst auch `Delete` (oder `Backspace` auf dem Mac) drücken, während die Aufgabe geöffnet ist.
+
+Es gibt keine Rückfrage. Vikunja wechselt zurück zum Projekt der Aufgabe und zeigt die Meldung „Die Aufgabe wurde in den Papierkorb verschoben.“ an. Klick in dieser Meldung auf **Rückgängig**, um die Aufgabe zurückzuholen.
+
+Um eine Aufgabe zu löschen, brauchst du die Berechtigung **Lesen & Schreiben** für das Projekt. Siehe [Berechtigungen](/help/permissions).
+
+## Ein Projekt löschen
+
+Öffne das **Drei-Punkte-Menü** neben dem Projekttitel und wähl **Löschen**.
+
+Der Dialog zeigt dir, was in den Papierkorb verschoben wird, zum Beispiel: „Verschiebt dieses Projekt, 2 Unterprojekte und 14 Aufgaben in den Papierkorb. Sie werden nach 30 Tagen endgültig gelöscht.“ Wenn jemand für das Projekt Zeit erfasst hat, steht dort auch, wie viele Zeiteinträge betroffen sind und dass sie erhalten bleiben.
+
+Nachdem du bestätigt hast, zeigt Vikunja „Das Projekt wurde in den Papierkorb verschoben.“ an. Klick auf **Rückgängig**, um das Projekt zurückzuholen.
+
+Gut zu wissen:
+
+- **Unterprojekte kommen mit:** Wenn du ein Projekt löschst, landen auch alle seine Unterprojekte im Papierkorb.
+- **Nur für Admins:** Um ein Projekt zu löschen, brauchst du die Berechtigung **Admin** für das Projekt.
+- **Standardprojekte:** Dein eigenes Standardprojekt kannst du löschen. Ein Projekt, das einer anderen Person gehört und das sie als Standardprojekt nutzt, kannst du nicht löschen. Wenn du dein Standardprojekt löschst, hast du keins mehr. Stellst du es wieder her, wird es nicht automatisch wieder dein Standardprojekt. Ein neues Standardprojekt kannst du in den [Einstellungen](/help/settings) auswählen.
+
+## Aus dem Papierkorb wiederherstellen
+
+Öffne den Papierkorb, such die Aufgabe oder das Projekt und klick auf **Wiederherstellen** (das Pfeil-Icon).
+
+- **Aufgaben** kehren in ihr Projekt zurück. In einer [Kanban-Ansicht](/help/views#kanban-view) landet eine wiederhergestellte Aufgabe in der Standard-Spalte oder, wenn sie erledigt ist, in der Erledigt-Spalte.
+- **Projekte** kommen mit allen ihren Unterprojekten zurück, die im Papierkorb liegen, auch mit Unterprojekten, die vorher einzeln gelöscht wurden. Aufgaben, die einzeln gelöscht wurden, bleiben im Papierkorb. Stell sie über den Tab **Aufgaben** wieder her.
+
+Wenn du eine gelöschte Aufgabe oder ein gelöschtes Projekt öffnest, zum Beispiel über ein Lesezeichen oder eine Benachrichtigung, zeigt Vikunja einen Hinweis wie „Diese Aufgabe ist im Papierkorb.“ an. Dort steht, wann sie gelöscht wurde und wie viele Tage noch bleiben. Wenn du sie wiederherstellen darfst, hat der Hinweis einen Button **Wiederherstellen** und einen Button **Papierkorb öffnen**.
+
+### Eine Aufgabe wiederherstellen, deren Projekt im Papierkorb liegt
+
+Solange ein Projekt im Papierkorb liegt, werden seine Aufgaben nicht im Tab **Aufgaben** angezeigt, auch keine Aufgaben, die du einzeln gelöscht hast. Um sie zurückzuholen, stell zuerst das Projekt wieder her.
+
+Wenn du eine Aufgabe aus einem gelöschten Projekt öffnest, siehst du den Hinweis „Dieses Projekt ist im Papierkorb.“ Klick dort auf **Wiederherstellen**, um das Projekt wiederherzustellen. Sobald das Projekt zurück ist, öffnet sich die Aufgabe wieder.
+
+### Ein Unterprojekt wiederherstellen, dessen übergeordnetes Projekt im Papierkorb liegt
+
+Solange das übergeordnete Projekt im Papierkorb liegt, kannst du ein Unterprojekt nicht einzeln wiederherstellen. Wenn du so ein Unterprojekt öffnest, bietet dir der Hinweis stattdessen **Übergeordnetes Projekt wiederherstellen** an. Damit stellst du das oberste gelöschte übergeordnete Projekt und alles darunter wieder her, auch das Unterprojekt, das du geöffnet hast. Der Button erscheint nur, wenn du die Berechtigung **Admin** für dieses übergeordnete Projekt hast.
+
+### Archivierte Projekte
+
+Solange das Projekt einer Aufgabe [archiviert](/help/projects#archiving-a-project) ist, kannst du die Aufgabe nicht wiederherstellen, und solche Aufgaben erscheinen auch nicht im Tab **Aufgaben**. Heb zuerst die Archivierung des Projekts auf.
+
+Dasselbe gilt für ein Projekt, dessen übergeordnetes Projekt archiviert ist: Heb die Archivierung des übergeordneten Projekts auf und stell dann das Projekt wieder her.
+
+## Endgültig löschen
+
+Um etwas vor Ablauf der 30 Tage zu löschen, klick im Papierkorb daneben auf **Endgültig löschen** (das Mülleimer-Icon). Vikunja fragt dich, ob du sicher bist.
+
+- **Eine Aufgabe** wird mit ihren Kommentaren, Anhängen, Erinnerungen und Verknüpfungen gelöscht. Ihre Zeiteinträge bleiben beim Projekt.
+- **Ein Projekt** wird mit seinen Unterprojekten, Aufgaben, Ansichten und Freigaben gelöscht. Zeiteinträge bleiben bei den Personen, die sie erfasst haben, gehören aber zu keinem Projekt mehr.
+
+Das kann nicht rückgängig gemacht werden.
+
+### Den Papierkorb leeren
+
+Klick oben im Papierkorb auf **Papierkorb leeren**. Damit leerst du den Tab, in dem du gerade bist. Wenn du also den Tab **Aufgaben** leerst, bleibt der Tab **Projekte** unberührt.
+
+Der Dialog zeigt dir, wie viele Einträge gelöscht werden. Standardmäßig werden nur Einträge gelöscht, die du selbst in den Papierkorb verschoben hast. Wenn auch andere Personen Einträge in den Papierkorb verschoben haben, zeigt der Dialog an, wie viele es sind, und bietet eine Checkbox an, zum Beispiel **Auch Aufgaben löschen, die andere in den Papierkorb verschoben haben**. Aktivier sie, um auch diese zu löschen.
+
+Beim Leeren werden nur Einträge gelöscht, die du endgültig löschen darfst. Siehe [Wer was darf](#who-can-do-what).
+
+## Wer was darf
+
+Was du im Papierkorb siehst, hängt von deiner [Berechtigung](/help/permissions) für das Projekt ab.
+
+| | Aufgaben | Projekte |
+|---|---|---|
+| Im Papierkorb sehen | Lesen & Schreiben | Admin |
+| Wiederherstellen | Lesen & Schreiben | Admin |
+| Endgültig löschen oder Papierkorb leeren | Admin | Admin |
+
+Wenn du eine Aufgabe wiederherstellen, aber nicht endgültig löschen darfst, wird der Button **Endgültig löschen** nicht angezeigt.
+
+Wer eine [Linkfreigabe](/help/sharing-and-teams#link-shares) nutzt, hat keinen Papierkorb und kann ihn nicht öffnen.
+
+## Automatisches Löschen nach 30 Tagen
+
+Einträge im Papierkorb werden 30 Tage nach dem Löschen endgültig gelöscht. Vikunja prüft jede Stunde, ob Einträge abgelaufen sind. Die 30 Tage sind fest und lassen sich nicht ändern.
+
+Der Papierkorb zeigt bei jedem Eintrag an, wie viele Tage noch bleiben. Am letzten Tag steht dort „wird heute endgültig gelöscht“.
+
+## Solange etwas im Papierkorb liegt
+
+- **Linkfreigaben funktionieren nicht mehr:** Linkfreigaben eines gelöschten Projekts funktionieren nicht, solange es im Papierkorb liegt. Nachdem du das Projekt wiederhergestellt hast, funktionieren sie wieder. Wenn du das Projekt endgültig löschst, werden sie entfernt.
+- **Keine Erinnerungen:** Aufgaben in einem gelöschten Projekt verschicken keine [Erinnerungen](/help/dates-and-reminders) und keine Benachrichtigungen über überfällige Aufgaben.
+- **Laufende Timer stoppen:** Läuft bei einer Aufgabe ein Timer, wenn sie gelöscht wird, stoppt der Timer.
+- **Zeiteinträge sind schreibgeschützt:** Zeiteinträge gelöschter Aufgaben oder Projekte sind als **Im Papierkorb** markiert und lassen sich nicht bearbeiten. Solange ein Projekt im Papierkorb liegt, sieht nur die Person einen Zeiteintrag, die ihn erfasst hat.
+- **Projektbezeichner bleiben reserviert:** Ein gelöschtes Projekt behält seinen Bezeichner. Du kannst denselben Bezeichner erst dann einem anderen Projekt geben, wenn das gelöschte Projekt endgültig weg ist.
+
+<Callout type="info">
+Der Papierkorb ersetzt keine Backups. Wenn du Vikunja selbst hostest, findest du unter [Was du sichern solltest](/docs/what-to-backup) die nötigen Infos.
+</Callout>
+
+## Verwandte Seiten
+
+- [Aufgaben](/help/tasks)
+- [Projekte](/help/projects)
+- [Berechtigungen](/help/permissions)
+- [Webhooks](/help/webhooks): Lass dich benachrichtigen, wenn Aufgaben oder Projekte gelöscht, wiederhergestellt oder endgültig gelöscht werden.
