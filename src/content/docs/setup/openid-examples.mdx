@@ -118,8 +118,12 @@ auth:
 
 Keycloak Config:
 
-All the steps above, plus this additional step:
-- Under `Client Scopes`, click `Add client scope`, select `groups` and click `Add` -> `Optional`
+All the steps above, plus these. Keycloak does not ship a `groups` client scope, so you need to create one:
+
+- Go to `Client scopes` and click `Create client scope`. Set the name to `groups`, the protocol to `OpenID Connect` and save.
+- In the new scope, open the `Mappers` tab and add a mapper `By configuration` of type `Group Membership`.
+- Set `Token Claim Name` to `groups`, turn `Full group path` off and make sure `Add to ID token` is on. With `Full group path` on, Vikunja would use paths like `/parent/team` as team names.
+- Go back to your Vikunja client, open its `Client scopes` tab, click `Add client scope`, select `groups` and add it as `Optional` or `Default`.
 
 ## Authentik
 
