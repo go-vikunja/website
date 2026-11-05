@@ -31,7 +31,7 @@ test.describe('Trash screenshots', () => {
     await page.goto('/trash/tasks')
     await expect(page.locator('[data-cy="trashedTask"]')).toHaveCount(4)
     await expect(page.getByText(/Deleted by Sarah Miller/)).toBeVisible()
-    await screenshot('trash-tasks', page, {animations: 'disabled'})
+    await screenshot('trash-tasks', page.locator('.content').filter({has: page.locator('.trash-header')}), {animations: 'disabled'})
 
     await page.locator('[data-cy="emptyTaskTrash"]').click()
     await expect(page.locator('[data-cy="emptyTrashText"]')).toContainText('4 tasks')
@@ -52,7 +52,7 @@ test.describe('Trash screenshots', () => {
     await expect(page.locator('[data-cy="trashedProject"]')).toHaveCount(2)
     await page.locator('[data-cy="toggleTrashedSubProjects"]').click()
     await expect(page.locator('[data-cy="trashedSubProjects"]')).toContainText('IT Setup')
-    await screenshot('trash-projects', page, {animations: 'disabled'})
+    await screenshot('trash-projects', page.locator('.content').filter({has: page.locator('.trash-header')}), {animations: 'disabled'})
   })
 
   test('Task deletion undo and deleted task notice', async ({authenticatedPage: page, screenshot}) => {
