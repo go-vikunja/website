@@ -1,0 +1,4 @@
+interface:
+  display_name: "Changelog CVEs"
+  short_description: "Check changelog advisories for newly assigned CVEs"
+  default_prompt: "Use $changelog-cves to check all changelog advisories for assigned CVEs missing from the posts."
