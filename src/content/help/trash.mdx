@@ -7,6 +7,7 @@ description: >-
 ---
 import Callout from '../../components/Callout.astro';
 import AvailableFrom from '../../components/AvailableFrom.astro';
+import Screenshot from '../../components/Screenshot.astro';
 
 When you delete a task or a [project](/help/projects), Vikunja moves it to the trash. It stays there for 30 days. Until then, you can restore it. After 30 days, Vikunja deletes it permanently.
 
@@ -28,11 +29,17 @@ Click **Trash** in the left sidebar. The trash has two tabs:
 
 Each entry shows who deleted it, when, and how many days are left before it is deleted permanently. Hover over the date to see the exact time.
 
+<Screenshot src="trash-tasks" alt="Trash with the Tasks tab selected, showing deleted tasks, who deleted them, days remaining, and restore and delete forever buttons" />
+
+<Screenshot src="trash-projects" alt="The Projects tab in the trash with Office Move expanded to show its deleted Furniture and IT Setup sub-projects" />
+
 ## Deleting a task
 
 Open the task and click **Delete** in the right sidebar. You can also press `Delete` (or `Backspace` on a Mac) while the task is open.
 
 There is no confirmation dialog. Vikunja goes back to the task's project and shows the message "The task has been moved to the trash." Click **Undo** in that message to bring the task back.
+
+<Screenshot src="trash-task-undo" alt="The task deletion message with an Undo button" />
 
 You need **Read & Write** permission on the project to delete a task. See [Permissions](/help/permissions).
 
@@ -41,6 +48,8 @@ You need **Read & Write** permission on the project to delete a task. See [Permi
 Open the **three-dot menu** next to the project title and select **Delete**.
 
 The dialog tells you what will move to the trash, for example: "Moves this project, 2 sub-projects and 14 tasks to the trash. They are deleted permanently after 30 days." If people logged time on the project, it also says how many time entries are affected and that they are kept.
+
+<Screenshot src="projects-delete-confirmation" alt="Project deletion dialog showing that two sub-projects and fourteen tasks will move to the trash for 30 days" />
 
 After you confirm, Vikunja shows "The project has been moved to the trash." Click **Undo** to bring the project back.
 
@@ -58,6 +67,8 @@ Open the trash, find the task or project, and click **Restore** (the arrow icon)
 - **Projects** come back with all of their sub-projects that are in the trash, including sub-projects that were deleted on their own before. Tasks that were deleted on their own stay in the trash. Restore them from the **Tasks** tab.
 
 If you open a deleted task or project, for example from a bookmark or a notification, Vikunja shows a notice like "This task is in the trash." It tells you when it was deleted and how many days are left. If you are allowed to restore it, the notice has a **Restore** button and an **Open trash** button.
+
+<Screenshot src="trash-task-notice" alt="A deleted task notice with its deletion date, days remaining, Restore button, and Open trash button" />
 
 ### Restoring a task whose project is in the trash
 
@@ -88,7 +99,9 @@ This cannot be undone.
 
 Click **Empty trash** at the top of the trash. This empties the tab you are on, so emptying the **Tasks** tab does not touch the **Projects** tab.
 
-The dialog tells you how many items will be deleted. By default, it only deletes items you moved to the trash yourself. If other people moved items to the trash too, the dialog says how many and shows a checkbox, for example **Also delete tasks other people moved to the trash**. Check it to delete those as well.
+The dialog tells you how many items will be deleted. If other people moved items to the trash too, the dialog says how many and shows a checked checkbox, for example **Also delete tasks other people moved to the trash**. Uncheck it to delete only items you moved to the trash yourself.
+
+<Screenshot src="trash-empty-confirmation" alt="Empty trash confirmation for four tasks, including a checked option to also delete the task someone else moved to the trash" />
 
 Emptying only affects items you are allowed to delete permanently. See [who can do what](#who-can-do-what).
 
