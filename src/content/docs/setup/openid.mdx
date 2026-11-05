@@ -389,7 +389,7 @@ You should see "(OIDC)" written next to each team you were assigned through OIDC
 
 If you want full control over the mapping, you can follow the guide written by the kind people from Makerspace Darmstadt e.V. on [how to create a mapper for Vikunja here](https://github.com/makerspace-darmstadt/keycloak-vikunja-mapper).
 
-For a simple mapping using the [standard groups claim](#using-the-standard-groups-claim), edit the client, go to "Client Scopes" and add the client scope "groups". It does not matter whether it's set to "Optional" or "Default". You will still need to include `groups` in the Vikunja OIDC config `scope` attribute, otherwise the groups won't be read by Vikunja.
+For a simple mapping using the [standard groups claim](#using-the-standard-groups-claim), create a `groups` client scope with a `Group Membership` mapper and add it to your Vikunja client. It does not matter whether it's set to "Optional" or "Default". You will still need to include `groups` in the Vikunja OIDC config `scope` attribute, otherwise the groups won't be read by Vikunja. See the [Keycloak example](/docs/openid-example-configurations#keycloak-with-simple-11-group-mapping) for the steps.
 
 ## Troubleshooting
 
