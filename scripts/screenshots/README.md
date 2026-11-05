@@ -96,3 +96,31 @@ To replace them, drop in new JPEG files with the same filenames and re-run the s
 5. Use locator targets for cropped shots of specific UI elements
 6. Use `page.screenshot({ clip })` via the options parameter for custom-cropped areas
 7. Run the spec to verify the screenshot looks correct
+
+## Vikunja 2.8.0 help screenshots
+
+`trash.spec.ts` captures the task and project trash, expanded sub-projects,
+task deletion undo, the deleted-task notice, and project deletion and empty-trash
+confirmations. `linked-accounts.spec.ts` captures linked accounts settings and
+the provider account confirmation. Both generate light and dark variants.
+
+Run against a disposable **Vikunja 2.8.0** instance with the testing token enabled.
+The factories truncate tables; use a separate database from your normal instance.
+Set `VIKUNJA_RATELIMIT_NOAUTHLIMIT=1000` on that test instance to allow repeated
+capture runs. The release binary includes the frontend, so it can serve both URLs:
+
+```bash
+cd scripts/screenshots
+pnpm --ignore-workspace install --frozen-lockfile
+pnpm --ignore-workspace exec playwright install chromium
+BASE_URL=http://localhost:3456 API_URL=http://localhost:3456/api/v1/ \
+  pnpm --ignore-workspace exec playwright test specs/trash.spec.ts specs/linked-accounts.spec.ts
+```
+
+The linked-accounts spec supplies sample provider configuration, linked identity,
+and identity preview responses, and redirects the provider authorization back to
+Vikunja. It renders the real settings and confirmation UI without an external
+identity provider. Trash screenshots use the real API and seeded data.
+
+The other help changes in 2.8.0 (shortcuts, permissions, natural-language dates,
+and webhook events) are adequately explained by their text and existing images.
