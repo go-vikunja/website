@@ -24,7 +24,7 @@ export async function getOgPages(): Promise<Record<string, OgPage>> {
 	for (const [path, load] of Object.entries(pageModules)) {
 		const page = await load()
 		if (page) {
-			pages[path.replace('/src/pages/', '').replace(/\.(mdx?|astro)$/, '')] = {title: page.title, description: page.description}
+			pages[path.replace('/src/pages/', '').replace(/\.(mdx?|astro)$/, '').replace(/\/index$/, '')] = {title: page.title, description: page.description}
 		}
 	}
 
