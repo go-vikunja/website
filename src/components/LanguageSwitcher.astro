@@ -1,0 +1,11 @@
+---
+import {localeNames} from '../i18n/locales'
+import {localizedHref, parsePathname, translationsOf} from '../i18n/routes'
+
+const {locale, path} = parsePathname(Astro.url.pathname)
+const otherLocales = translationsOf(path).filter(l => l !== locale)
+---
+{otherLocales.map(l => (
+    <a href={localizedHref(l, path)} hreflang={l} lang={l}
+       class="text-gray-800 dark:text-gray-200 hover:text-primary underline leading-tight">{localeNames[l]}</a>
+))}
