@@ -1,4 +1,6 @@
 import {getCollection} from 'astro:content'
+import {parseEntryId} from '../i18n/entry-ids'
+import {defaultLocale} from '../i18n/locales'
 
 export interface OgPage {
 	title: string
@@ -28,9 +30,17 @@ export async function getOgPages(): Promise<Record<string, OgPage>> {
 		}
 	}
 
-	for (const collection of ['docs', 'help', 'changelog'] as const) {
+	for (const collection of ['docs', 'changelog'] as const) {
 		for (const entry of await getCollection(collection)) {
 			pages[`${collection}/${entry.id.replace(/^\/|\/$/g, '')}`] = entry.data
+		}
+	}
+
+	for (const [collection, prefix] of [['help', 'help/'], ['pages', '']] as const) {
+		for (const entry of await getCollection(collection)) {
+			const {locale, slug} = parseEntryId(entry.id)
+			const route = `${prefix}${slug}`.replace(/\/$/, '')
+			pages[locale === defaultLocale ? route : `${locale}/${route}`] = entry.data
 		}
 	}
 

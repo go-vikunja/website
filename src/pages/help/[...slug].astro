@@ -1,15 +1,10 @@
 ---
-import {type CollectionEntry, getCollection, render} from 'astro:content'
+import {type CollectionEntry, render} from 'astro:content'
 import Help from '../../layouts/Help.astro'
+import {getStaticPathsFor} from '../../i18n/content'
 
-export async function getStaticPaths() {
-    const help = await getCollection('help')
-    return help.map((entry) => ({
-        params: {
-            slug: entry.id,
-        },
-        props: entry,
-    }))
+export function getStaticPaths() {
+    return getStaticPathsFor('help', 'en')
 }
 type Props = CollectionEntry<'help'>
 

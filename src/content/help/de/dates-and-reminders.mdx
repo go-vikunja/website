@@ -1,0 +1,67 @@
+---
+title: Termine & Erinnerungen
+slug: dates-and-reminders
+description: Fälligkeitsdaten, Start- und Enddatum, Erinnerungen und wiederkehrende Aufgaben.
+---
+import Screenshot from '@/components/Screenshot.astro'
+
+import Callout from '@/components/Callout.astro';
+
+Aufgaben können ein Fälligkeitsdatum, ein Start- und Enddatum, Erinnerungen und Wiederholungen haben. Hier erfährst du, wie das jeweils funktioniert.
+
+## Fälligkeitsdatum
+
+Das Fälligkeitsdatum ist der Zeitpunkt, zu dem eine Aufgabe erledigt sein muss. Ist es verstrichen, gilt die Aufgabe als überfällig. Überfällige Aufgaben werden hervorgehoben, damit du schnell siehst, worum du dich kümmern musst.
+
+<Screenshot src="dates-overdue-highlight" alt="Überfällige Aufgabe, hervorgehoben in der Aufgabenliste" />
+
+Wenn du es in den Einstellungen aktiviert hast, bekommst du jeden Morgen eine E-Mail mit einer Liste deiner überfälligen Aufgaben.
+
+Fälligkeitsdaten werden außerdem zum Sortieren in der Ansicht **Anstehend** und im **[Dashboard](/help/dashboard)** verwendet, damit du leicht siehst, was als Nächstes ansteht.
+
+### Standard-Fälligkeitsuhrzeit
+
+Wenn deine Aufgaben meistens zur selben Tageszeit fällig sind, stell unter **Einstellungen > Allgemeine Einstellungen > Projekte & Aufgaben** eine **Standard-Fälligkeitsuhrzeit** ein. Vikunja verwendet sie, wenn du ein Datum ohne Uhrzeit auswählst, auch bei Datumsangaben, die du mit [Quick Add Magic](/help/quick-add-magic) hinzufügst.
+
+Uhrzeiten, die du ausdrücklich eingibst, bleiben unverändert. Wenn du die Einstellung leer lässt, wählt Vikunja wie gewohnt die nächstgelegene Tageszeit.
+
+## Start- und Enddatum
+
+Start- und Enddatum legen den Zeitraum fest, in dem du an einer Aufgabe arbeiten willst. Ein Bericht, der am 31. März fällig ist (Fälligkeitsdatum), kann zum Beispiel als Startdatum den 20. März und als Enddatum den 28. März haben. Du planst die Arbeit also für diese Woche ein.
+
+Diese Daten werden vor allem in der Ansicht **[Gantt](/help/views#gantt-view)** verwendet. Dort erscheint jede Aufgabe als Balken auf der Zeitachse, der von ihrem Start- bis zu ihrem Enddatum reicht.
+
+## Erinnerungen
+
+<Screenshot src="dates-reminder-config" alt="Erinnerungseinstellungen mit absoluten und relativen Optionen" />
+
+Du kannst jeder Aufgabe eine oder mehrere Erinnerungen geben. Wenn eine Erinnerung fällig wird, bekommst du in der Vikunja-Oberfläche eine [Benachrichtigung](/help/search-and-navigation#notifications). Wenn du E-Mail-Benachrichtigungen in deinen [Einstellungen](/help/settings) aktiviert hast, bekommst du zusätzlich eine E-Mail.
+
+Es gibt zwei Arten von Erinnerungen:
+
+- **Absolute Erinnerungen**: Gelten für ein bestimmtes Datum und eine bestimmte Uhrzeit (z. B. „Erinnere mich am 5. März um 9:00 Uhr“).
+- **Relative Erinnerungen**: Beziehen sich auf eines der Datumsfelder der Aufgabe (Fälligkeitsdatum, Startdatum oder Enddatum). Zum Beispiel „Erinnere mich 1 Stunde vor dem Fälligkeitsdatum“ oder „Erinnere mich 2 Tage vor dem Startdatum“.
+
+<Callout type="info">
+Für relative Erinnerungen muss das entsprechende Datumsfeld der Aufgabe gesetzt sein. Eine Erinnerung relativ zum Fälligkeitsdatum wird zum Beispiel nicht ausgelöst, wenn kein Fälligkeitsdatum gesetzt ist.
+</Callout>
+
+## Wiederkehrende Aufgaben
+
+<Screenshot src="dates-repeating-task" alt="Einstellungen für eine wiederkehrende Aufgabe" />
+
+Aufgaben können sich regelmäßig wiederholen. Vikunja unterstützt die gleiche Art von Wiederholungsregeln, die du aus Kalender-Apps kennst. Ein paar Beispiele:
+
+- Jeden Tag
+- Jede Woche
+- Jeden Monat
+- Alle 2 Wochen am Dienstag
+- Erster Dienstag im Monat
+
+Wenn du eine wiederkehrende Aufgabe als erledigt markierst, erstellt Vikunja automatisch die nächste Wiederholung anhand der Regel.
+
+## Quick Add Magic
+
+Fälligkeitsdaten, Erinnerungen und Wiederholungen kannst du alle direkt beim Erstellen einer Aufgabe mit Quick Add Magic festlegen. Statt Felder einzeln auszufüllen, schreibst du alles in natürlicher Sprache direkt in den Aufgabentitel. Datumsangaben erkennt Vikunja dabei auf Englisch.
+
+Die vollständige Liste der unterstützten Schlüsselwörter und Datumsformate findest du unter [Quick Add Magic](/help/quick-add-magic).

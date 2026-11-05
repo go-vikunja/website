@@ -1,6 +1,7 @@
 import {defineCollection} from 'astro:content'
 import {glob} from 'astro/loaders'
 import {z} from 'astro/zod'
+import {generateLocalizedId, localizedContentPattern} from './i18n/entry-ids'
 
 const docsCollection = defineCollection({
 	loader: glob({pattern: '**/[^_]*.mdx', base: './src/content/docs'}),
@@ -12,12 +13,21 @@ const docsCollection = defineCollection({
 })
 
 const helpCollection = defineCollection({
-	loader: glob({pattern: '**/[^_]*.mdx', base: './src/content/help'}),
+	loader: glob({pattern: localizedContentPattern, base: './src/content/help', generateId: generateLocalizedId}),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
 		hideInMenu: z.boolean().optional(),
 		sortOrder: z.number().optional(),
+	}),
+})
+
+const pagesCollection = defineCollection({
+	loader: glob({pattern: localizedContentPattern, base: './src/content/pages', generateId: generateLocalizedId}),
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		image: z.string().optional(),
 	}),
 })
 
@@ -35,4 +45,5 @@ export const collections = {
 	'docs': docsCollection,
 	'help': helpCollection,
 	'changelog': changelogCollection,
+	'pages': pagesCollection,
 }
