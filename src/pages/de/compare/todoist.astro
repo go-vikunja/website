@@ -1,4 +1,7 @@
 ---
 import Todoist from '../../../components/pages/compare/Todoist.astro'
+import {translateMeta} from '../../../i18n'
+
+export const meta = translateMeta('de', {title: 'compare.todoist.title', description: 'compare.todoist.description'})
 ---
-<Todoist/>
+<Todoist {...meta}/>

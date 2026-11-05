@@ -1,4 +1,7 @@
 ---
 import Wekan from '../../../components/pages/compare/Wekan.astro'
+import {translateMeta} from '../../../i18n'
+
+export const meta = translateMeta('de', {title: 'compare.wekan.title', description: 'compare.wekan.description'})
 ---
-<Wekan/>
+<Wekan {...meta}/>
