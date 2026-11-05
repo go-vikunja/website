@@ -57,6 +57,7 @@ Diese Seiten sind gute Einstiegspunkte:
 
 - [Aufgaben](/help/tasks) für Aufgabendetails, Kommentare, Labels, Zugewiesene und Anhänge
 - [Projekte](/help/projects) für Projektstruktur, Hintergründe, Archivieren und Favoriten
+- [Papierkorb](/help/trash), um gelöschte Aufgaben und Projekte wiederherzustellen
 - [Ansichten](/help/views) für Liste, Tabelle, Kanban und Gantt
 - [Teilen & Teams](/help/sharing-and-teams) für Zusammenarbeit und Berechtigungen
 - [MCP](/help/mcp/), um KI-Clients mit deinen Aufgaben und Projekten zu verbinden
