@@ -8,6 +8,7 @@ description: >-
 import Screenshot from '@/components/Screenshot.astro'
 
 import Callout from '@/components/Callout.astro';
+import AvailableFrom from '@/components/AvailableFrom.astro';
 
 Mit Vikunja kannst du all deine Daten exportieren und Aufgaben aus anderen Diensten importieren. So sicherst du deine Arbeit ganz einfach oder ziehst von einem anderen Tool um.
 
@@ -53,9 +54,7 @@ Du kannst Aufgaben auch per [CalDAV](/help/caldav) mit externen Apps synchronisi
 
 ### Aus CSV importieren
 
-<Callout type="info">
-Diese Funktion gibt es ab Vikunja **2.3.0** (oder in Unstable-Builds).
-</Callout>
+<AvailableFrom version="2.3.0" />
 
 Mit dem CSV-Import holst du Aufgaben aus jeder Tabellenkalkulation oder jedem Tool in Vikunja, das CSV-Dateien exportieren kann. Das geht in drei Schritten:
 
@@ -82,9 +81,7 @@ Damit der Import funktioniert, muss mindestens eine Spalte dem Feld **Titel** zu
 
 ### Aus WeKan importieren
 
-<Callout type="info">
-Diese Funktion gibt es ab Vikunja **2.3.0** (oder in Unstable-Builds).
-</Callout>
+<AvailableFrom version="2.3.0" />
 
 Um ein WeKan-Board zu importieren, exportier es zuerst in WeKan als JSON (Board-Menü > Export board > JSON). Wähl dann auf der Importseite das WeKan-Symbol aus und lade die Datei hoch.
 
@@ -92,9 +89,7 @@ Jeder Board-Export wird zu einem Vikunja-Projekt. Listen werden zu Kanban-Spalte
 
 ### Aus Planka importieren
 
-<Callout type="info">
-Diese Funktion gibt es ab Vikunja **2.6.0** (oder in Unstable-Builds).
-</Callout>
+<AvailableFrom version="2.6.0" />
 
 Vikunja importiert direkt aus einer laufenden Planka-Instanz (ab Version 2). Du musst also keine Datei exportieren. Wähl auf der Importseite das Planka-Symbol aus, gib die URL deiner Planka-Instanz ein und leg fest, wie sich Vikunja anmelden soll:
 
