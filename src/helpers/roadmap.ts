@@ -1,3 +1,5 @@
+import {getCollection} from 'astro:content'
+
 const API = 'https://my.vikunja.cloud/api/v2'
 const PROJECT_ID = 210
 const VIEW_ID = 645
@@ -73,6 +75,13 @@ export async function fetchRoadmap(): Promise<RoadmapColumn[]> {
 		{headers: {Authorization: `Bearer ${token}`}},
 	)
 
+	const changelogLinks = new Map<string, string>()
+	for (const entry of await getCollection('changelog')) {
+		const version = entry.filePath?.match(/release-(\d+\.\d+\.\d+)\.mdx$/)?.[1]
+		if (version) {
+			changelogLinks.set(version, `/changelog/${entry.id.replace(/^\/+|\/+$/g, '')}/`)
+		}
+	}
 	const shippedSince = new Date(Date.now() - SHIPPED_DAYS * 86_400_000).toISOString()
 	let hidden = 0
 
@@ -88,12 +97,17 @@ export async function fetchRoadmap(): Promise<RoadmapColumn[]> {
 			return {
 				title: bucket.title,
 				// Descriptions hold internal notes, so only the summary and a link are taken from them.
-				items: visible.map(t => ({
-					title: t.title,
-					pro: t.labels?.some(l => l.title === 'pro') ?? false,
-					summary: publicSummary(t.description),
-					link: t.description?.match(LINK_PATTERN)?.[0],
-				})),
+				items: visible.map(t => {
+					const shippedVersion = t.labels
+						?.find(l => /^shipped\/v\d+\.\d+\.\d+$/.test(l.title))
+						?.title.slice('shipped/v'.length)
+					return {
+						title: t.title,
+						pro: t.labels?.some(l => l.title === 'pro') ?? false,
+						summary: publicSummary(t.description),
+						link: changelogLinks.get(shippedVersion ?? '') ?? t.description?.match(LINK_PATTERN)?.[0],
+					}
+				}),
 			}
 		})
 
