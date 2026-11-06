@@ -50,15 +50,17 @@ Relative reminders require the corresponding date field to be set on the task. F
 
 <Screenshot src="dates-repeating-task" alt="Repeating task configuration" />
 
-Tasks can repeat on a schedule. Vikunja supports the same kind of recurrence rules you know from calendar applications. Some examples:
+Tasks can repeat on a schedule. Use the quick buttons (**Every Day**, **Every Week**, **Every 30 Days**) or enter your own interval in hours, days, or weeks. The **Repeat mode** controls how the next dates are calculated:
 
-- Every day
-- Every week
-- Every month
-- Every 2 weeks on Tuesday
-- First Tuesday of the month
+- **Default**: Repeats after a fixed interval, counted from the task's current dates. For example, a task due Monday that repeats every week will be due the following Monday.
+- **Monthly**: Repeats on the same day of every month. The interval is ignored. If a month is shorter, the date moves to the last day of that month.
+- **From completion date**: Repeats after a fixed interval, counted from when you mark the task done. Use this for tasks like "water the plants every 3 days", where the next time depends on when you last did it.
 
-When a repeating task is marked as done, Vikunja automatically creates the next occurrence based on the recurrence rule.
+When you mark a repeating task as done, Vikunja does not create a new task. Instead, it keeps the same task open and moves its due, start, and end dates and its reminders forward to the next occurrence. Any checklist in the description is unchecked so you can start fresh.
+
+<Callout type="info">
+More flexible rules, like "every 2 weeks on Tuesday" or "the first Tuesday of the month", are not supported yet. They are on the [roadmap](/roadmap).
+</Callout>
 
 ## Quick Add Magic
 
