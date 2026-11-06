@@ -4,6 +4,7 @@ import Layout from '../../layouts/Layout.astro'
 import Prose from '../../components/Prose.astro'
 import {formatDate} from '../../helpers/formatDate'
 import Callout from '../../components/Callout.astro'
+import TableOfContents from '../../components/TableOfContents.astro'
 import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
 
 export async function getStaticPaths() {
@@ -33,12 +34,12 @@ async function getNewestEntry() {
 
 const newestRelease = await getNewestEntry()
 
-const {Content} = await render(post)
+const {Content, headings} = await render(post)
 // @ts-ignore: Property exists
 const description = post.data.description || Astro.props?.frontmatter?.description || Astro.props.description
 ---
 <Layout title={post.data.title} description={description}>
-    <div class="flex flex-col lg:flex-row max-w-(--breakpoint-lg) mx-auto mt-6">
+    <div class="flex flex-col lg:flex-row max-w-(--breakpoint-xl) mx-auto mt-6">
         <div class="w-full lg:w-1/5 pl-4 lg:pl-0 lg:pt-4">
             <a href="/changelog" class="underline hover:text-primary flex items-center text-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -50,7 +51,7 @@ const description = post.data.description || Astro.props?.frontmatter?.descripti
                 </span>
             </a>
         </div>
-        <main class="w-full lg:w-4/5 p-4 pt-6 lg:pt-2 order-3 lg:order-2" id="main-content">
+        <main class="w-full lg:w-3/5 p-4 pt-6 lg:pt-2 order-3 lg:order-2" id="main-content">
             <h1 class="font-display text-4xl font-bold">{post.data.title}</h1>
             <p class="text-gray-500">{formatDate(post.data.date)}</p>
 
@@ -76,5 +77,8 @@ const description = post.data.description || Astro.props?.frontmatter?.descripti
                 <Content/>
             </Prose>
         </main>
+        <div class="w-full lg:w-1/5 pl-4 lg:pt-2 order-2 lg:order-3">
+            <TableOfContents headings={headings}/>
+        </div>
     </div>
 </Layout>
