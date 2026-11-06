@@ -68,6 +68,7 @@ export const meta = {
                             ? 'border-dashed border-gray-300 divide-dashed divide-gray-300 dark:border-gray-700 dark:divide-gray-700'
                             : 'border-gray-100 divide-gray-100 dark:border-gray-700 dark:divide-gray-700'}`}>
                             {column.items.map(item => {
+                                const external = item.link?.startsWith('https://')
                                 const row = 'flex items-start gap-3 px-6 py-3.5'
                                 const text = column.tone === 'later' ? 'text-gray-600 dark:text-gray-400' : 'text-gray-800 dark:text-gray-200'
                                 const body = (
@@ -85,12 +86,12 @@ export const meta = {
                                 return (
                                     <li>
                                         {item.link ? (
-                                            <a href={item.link} target="_blank" rel="noopener" class={`${row} group transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-gray-700/40`}>
+                                            <a href={item.link} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined} class={`${row} group transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-gray-700/40`}>
                                                 {body}
                                                 <svg class="mt-1 size-4 shrink-0 text-gray-400 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                                                     <path d="M5 11 11 5M6 5h5v5" stroke-linecap="round" stroke-linejoin="round"/>
                                                 </svg>
-                                                <span class="sr-only">(opens in a new tab)</span>
+                                                {external && <span class="sr-only">(opens in a new tab)</span>}
                                             </a>
                                         ) : (
                                             <div class={row}>{body}</div>
