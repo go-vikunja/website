@@ -1,0 +1,49 @@
+# Disposable Vikunja instance for screenshot runs. Specs truncate tables, never point them at real data.
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: vikunja
+      POSTGRES_PASSWORD: vikunja
+      POSTGRES_DB: vikunja
+    tmpfs:
+      - /var/lib/postgresql
+    healthcheck:
+      test: pg_isready -U vikunja
+      interval: 1s
+      retries: 30
+
+  vikunja:
+    image: vikunja/vikunja:${VIKUNJA_VERSION:-2.8.0}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${VIKUNJA_PORT:-3456}:3456"
+    environment:
+      VIKUNJA_SERVICE_TESTINGTOKEN: averyLongSecretToSe33dtheDB
+      VIKUNJA_SERVICE_PUBLICURL: http://localhost:${VIKUNJA_PORT:-3456}/
+      VIKUNJA_SERVICE_ENABLECALDAV: "true"
+      VIKUNJA_RATELIMIT_NOAUTHLIMIT: "1000"
+      VIKUNJA_WEBHOOKS_ENABLED: "true"
+      VIKUNJA_FILES_BASEPATH: /tmp/files
+      # SQLite locks under the async notification writes some specs trigger.
+      VIKUNJA_DATABASE_TYPE: postgres
+      VIKUNJA_DATABASE_HOST: db
+      VIKUNJA_DATABASE_USER: vikunja
+      VIKUNJA_DATABASE_PASSWORD: vikunja
+      VIKUNJA_DATABASE_DATABASE: vikunja
+      # Dummy credentials: these migrators only show on the import page when configured.
+      VIKUNJA_MIGRATION_TODOIST_ENABLE: "true"
+      VIKUNJA_MIGRATION_TODOIST_CLIENTID: dummy
+      VIKUNJA_MIGRATION_TODOIST_CLIENTSECRET: dummy
+      VIKUNJA_MIGRATION_TODOIST_REDIRECTURL: http://localhost:${VIKUNJA_PORT:-3456}/migrate/todoist
+      VIKUNJA_MIGRATION_TRELLO_ENABLE: "true"
+      VIKUNJA_MIGRATION_TRELLO_KEY: dummy
+      VIKUNJA_MIGRATION_TRELLO_REDIRECTURL: http://localhost:${VIKUNJA_PORT:-3456}/migrate/trello
+      VIKUNJA_MIGRATION_MICROSOFTTODO_ENABLE: "true"
+      VIKUNJA_MIGRATION_MICROSOFTTODO_CLIENTID: dummy
+      VIKUNJA_MIGRATION_MICROSOFTTODO_CLIENTSECRET: dummy
+      VIKUNJA_MIGRATION_MICROSOFTTODO_REDIRECTURL: http://localhost:${VIKUNJA_PORT:-3456}/migrate/microsoft-todo
+      VIKUNJA_BACKGROUNDS_PROVIDERS_UNSPLASH_ENABLED: ${UNSPLASH_ACCESS_TOKEN:+true}
+      VIKUNJA_BACKGROUNDS_PROVIDERS_UNSPLASH_ACCESSTOKEN: ${UNSPLASH_ACCESS_TOKEN:-}
