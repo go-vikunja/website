@@ -1,8 +1,6 @@
 import {test, expect} from '../support/fixtures'
 import {ProjectFactory} from '../factories/project'
 import {TaskFactory} from '../factories/task'
-import {UserFactory} from '../factories/user'
-import {createDefaultViews} from '../support/seed-helpers'
 import type {Page} from '@playwright/test'
 
 function daysAgo(days: number) {
@@ -18,15 +16,16 @@ async function dialogClip(page: Page) {
 }
 
 test.describe('Trash screenshots', () => {
-  test('Deleted tasks and empty trash confirmation', async ({authenticatedPage: page, screenshot}) => {
-    await ProjectFactory.create(1, {title: 'Office Move'})
-    await createDefaultViews(1)
-    await UserFactory.create(1, {id: 2, username: 'sarah', name: 'Sarah Miller'}, false)
+  test('Deleted tasks and empty trash confirmation', async ({base, authenticatedPage: page, screenshot}) => {
+    const sarah = base.extraUsers[0]
     await TaskFactory.create(4, {
-      title: (i: number) => ['Get quotes from moving companies', 'Order new desk furniture', 'Pack shared kitchen supplies', 'Hand in old office keys'][i - 1],
+      id: (i: number) => 200 + i,
+      index: (i: number) => 200 + i,
+      project_id: base.project.id,
+      title: (i: number) => ['Book moving truck', 'Order packing boxes', 'Cancel old cleaning contract', 'Hand in old office keys'][i - 1],
       deleted_at: (i: number) => daysAgo(i * 3),
-      deleted_by_id: (i: number) => i === 2 ? 2 : 1,
-    })
+      deleted_by_id: (i: number) => i === 2 ? sarah.id : 1,
+    }, false)
 
     await page.goto('/trash/tasks')
     await expect(page.locator('[data-cy="trashedTask"]')).toHaveCount(4)
@@ -41,12 +40,12 @@ test.describe('Trash screenshots', () => {
 
   test('Deleted projects with expanded sub-projects', async ({authenticatedPage: page, screenshot}) => {
     await ProjectFactory.create(4, {
-      title: (i: number) => ['Office Move', 'Furniture', 'IT Setup', 'Team Retreat Planning'][i - 1],
-      parent_project_id: (i: number) => i === 2 || i === 3 ? 1 : 0,
+      id: (i: number) => 50 + i,
+      title: (i: number) => ['Old Office', 'Furniture', 'IT Setup', 'Holiday Party'][i - 1],
+      parent_project_id: (i: number) => i === 2 || i === 3 ? 51 : 0,
       deleted_at: daysAgo(5),
       deleted_by_id: 1,
-    })
-    await TaskFactory.truncate()
+    }, false)
 
     await page.goto('/trash/projects')
     await expect(page.locator('[data-cy="trashedProject"]')).toHaveCount(2)
@@ -55,12 +54,8 @@ test.describe('Trash screenshots', () => {
     await screenshot('trash-projects', page.locator('.content').filter({has: page.locator('.trash-header')}), {animations: 'disabled'})
   })
 
-  test('Task deletion undo and deleted task notice', async ({authenticatedPage: page, screenshot}) => {
-    await ProjectFactory.create(1, {title: 'Office Move'})
-    const views = await createDefaultViews(1)
-    await TaskFactory.create(3, {
-      title: (i: number) => ['Get quotes from moving companies', 'Order new desk furniture', 'Pack shared kitchen supplies'][i - 1],
-    })
+  test('Task deletion undo and deleted task notice', async ({base, authenticatedPage: page, screenshot}) => {
+    const {views} = base
 
     await page.goto(`/projects/1/${views.list.id}`)
     await page.locator('.tasks .task').filter({hasText: 'Get quotes from moving companies'}).getByRole('link').first().click()
@@ -69,22 +64,27 @@ test.describe('Trash screenshots', () => {
     await expect(notification.getByRole('button', {name: 'Undo'})).toBeVisible()
     await screenshot('trash-task-undo', notification, {animations: 'disabled'})
 
-    await page.goto('/tasks/1')
+    await page.goto(`/tasks/${base.tasks[0].id}`)
     const notice = page.locator('[data-cy="taskInTrashNotice"]')
     await expect(notice.getByRole('button', {name: 'Restore', exact: true})).toBeVisible()
     await screenshot('trash-task-notice', notice, {animations: 'disabled'})
   })
 
-  test('Project deletion confirmation with sub-project counts', async ({authenticatedPage: page, screenshot}) => {
-    await ProjectFactory.create(3, {
-      title: (i: number) => ['Office Move', 'Furniture', 'IT Setup'][i - 1],
-      parent_project_id: (i: number) => i > 1 ? 1 : 0,
-    })
-    const views = await createDefaultViews(1)
-    await TaskFactory.create(14, {project_id: (i: number) => (i % 3) + 1})
+  test('Project deletion confirmation with sub-project counts', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project, views} = base
+    await ProjectFactory.create(2, {
+      id: (i: number) => 60 + i,
+      title: (i: number) => ['Furniture', 'IT Setup'][i - 1],
+      parent_project_id: project.id,
+    }, false)
+    await TaskFactory.create(6, {
+      id: (i: number) => 300 + i,
+      index: (i: number) => 300 + i,
+      project_id: (i: number) => 61 + (i % 2),
+    }, false)
 
-    await page.goto(`/projects/1/${views.list.id}`)
-    await page.goto('/projects/1/settings/delete')
+    await page.goto(`/projects/${project.id}/${views.list.id}`)
+    await page.goto(`/projects/${project.id}/settings/delete`)
     await expect(page.locator('[data-cy="projectDeleteNotice"]')).toContainText('2 sub-projects and 14 tasks')
     await screenshot('projects-delete-confirmation', page, {clip: await dialogClip(page), animations: 'disabled'})
   })
