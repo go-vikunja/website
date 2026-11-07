@@ -1,9 +1,8 @@
 import {test, expect} from '../support/fixtures'
-import {createPopulatedProject} from '../support/seed-helpers'
 
 test.describe('Quick-add magic screenshots', () => {
-  test('Quick-add with parsed preview', async ({authenticatedPage: page, screenshot}) => {
-    const {project, views} = await createPopulatedProject()
+  test('Quick-add with parsed preview', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project, views} = base
 
     await page.goto(`/projects/${project.id}/${views.list.id}`)
     await page.waitForLoadState('networkidle')
@@ -22,8 +21,8 @@ test.describe('Quick-add magic screenshots', () => {
     await screenshot('quick-add-magic-parsed', taskAddArea, {padding: 10})
   })
 
-  test('Multiline subtask creation', async ({authenticatedPage: page, screenshot}) => {
-    const {project, views} = await createPopulatedProject()
+  test('Multiline subtask creation', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project, views} = base
 
     await page.goto(`/projects/${project.id}/${views.list.id}`)
     await page.waitForLoadState('networkidle')
