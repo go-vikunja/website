@@ -4,13 +4,17 @@ Automated screenshot capture for the Vikunja website using Playwright.
 
 ## Prerequisites
 
-- Vikunja backend running on `:3456` with testing token enabled:
-  ```yaml
-  service:
-    testingtoken: averyLongSecretToSe33dtheDB
-    interface: ":3456"
-  ```
-- Vikunja frontend served on `:4173` (e.g. `pnpm build && pnpm preview` or `pnpm dev`)
+Start the disposable test instance from `docker-compose.yml`. It serves API and frontend on one port:
+
+```bash
+cd scripts/screenshots
+UNSPLASH_ACCESS_TOKEN=$(cat ~/.unsplash-key) docker compose up -d
+export BASE_URL=http://localhost:3456 API_URL=http://localhost:3456/api/v1/
+```
+
+- Set `VIKUNJA_PORT` if `3456` is taken, and adjust `BASE_URL`/`API_URL` to match.
+- `UNSPLASH_ACCESS_TOKEN` is optional, but without it the background picker screenshot is empty.
+- Before every test, all tables are wiped and the same base dataset is seeded (`seedBaseData()` in `support/seed-helpers.ts`): Lisa plus three teammates, the Office Move, Team Retreat Planning and Personal projects with tasks, labels, assignees, comments, an attachment, kanban buckets and the "My Open Tasks" saved filter. Specs get it through the `base` fixture and only add extras on top, without truncating.
 
 ## Usage
 
@@ -91,7 +95,7 @@ To replace them, drop in new JPEG files with the same filenames and re-run the s
 
 1. Create a new spec file in `specs/` (or add to an existing one)
 2. Use the `test` and `screenshot` fixtures from `support/fixtures.ts`
-3. Use `createPopulatedProject()` from `support/seed-helpers.ts` to seed realistic data
+3. Use the `base` fixture for data; seed extras with `truncate = false` and ids that don't clash with the base dataset
 4. Pass `{dir: 'your/subdir'}` to `screenshot()` for non-help output directories
 5. Use locator targets for cropped shots of specific UI elements
 6. Use `page.screenshot({ clip })` via the options parameter for custom-cropped areas
