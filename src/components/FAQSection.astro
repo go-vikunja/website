@@ -1,34 +1,21 @@
 ---
 import {marked} from 'marked'
 import {VIKUNJA_CLOUD_LINK} from '../helpers/vikunjaCloudLink'
+import {useTranslations} from '../i18n'
+import {localizedHref, parsePathname} from '../i18n/routes'
 
 interface Props {
 	faqs?: {question: string, answer: string}[]
 	showTitle?: boolean
 }
 
-const defaultFaqs = [
-	{
-		question: 'What is Vikunja?',
-		answer: 'Vikunja is an open-source, self-hostable to-do app. It helps you organize your tasks and projects with features like list, kanban, gantt, and table views — all while keeping your data under your control.',
-	},
-	{
-		question: 'Is Vikunja free and open source?',
-		answer: `Yes. Vikunja is licensed under the AGPLv3 and completely free to self-host. If you prefer not to manage your own server, [Vikunja Cloud](${VIKUNJA_CLOUD_LINK}) offers a paid hosted option.`,
-	},
-	{
-		question: 'How do I install Vikunja?',
-		answer: `You can install Vikunja using Docker, native binaries for your platform, or sign up for [Vikunja Cloud](${VIKUNJA_CLOUD_LINK}). Use the [install wizard](/install) for a guided setup.`,
-	},
-	{
-		question: 'Do I have to self-host Vikunja?',
-		answer: `No. While self-hosting is a great option, [Vikunja Cloud](${VIKUNJA_CLOUD_LINK}) gives you a fully managed instance with automatic updates, backups, and zero maintenance. It's the easiest way to get started and directly supports the continued development of Vikunja.`,
-	},
-	{
-		question: 'Can I import tasks from Todoist, Trello, or Microsoft To-Do?',
-		answer: 'Yes. Vikunja has built-in migration support for Todoist, Trello, Microsoft To-Do, and other platforms. You can import your existing tasks and projects directly from the Vikunja interface.',
-	},
-]
+const {locale} = parsePathname(Astro.url.pathname)
+const t = useTranslations(locale)
+const links = {cloudLink: VIKUNJA_CLOUD_LINK, installUrl: localizedHref(locale, '/install')}
+const defaultFaqs = (['whatIs', 'free', 'install', 'selfHost', 'import'] as const).map(id => ({
+	question: t(`faq.${id}.question`),
+	answer: t(`faq.${id}.answer`, links),
+}))
 
 const {faqs = defaultFaqs, showTitle = true} = Astro.props
 
@@ -39,7 +26,7 @@ const parsedFaqs = faqs.map(faq => ({
 ---
 
 <section class="w-full max-w-3xl mt-16 mb-24 px-4 mx-auto">
-	{showTitle && <h2 class="text-3xl font-display mb-8">Frequently Asked Questions</h2>}
+	{showTitle && <h2 class="text-3xl font-display mb-8">{t('faq.title')}</h2>}
 	{parsedFaqs.map((faq, index) => (
 		<details class:list={['faq-item group', index > 0 && 'border-t border-gray-200 dark:border-gray-700']}>
 			<summary class="flex cursor-pointer items-center justify-between py-5 text-lg font-display list-none [&::-webkit-details-marker]:hidden">
