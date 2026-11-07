@@ -1,41 +1,26 @@
 import {test, expect} from '../support/fixtures'
-import {createPopulatedProject} from '../support/seed-helpers'
 
 test.describe('Webhooks screenshots', () => {
-  test('Project webhooks settings section', async ({authenticatedPage: page, screenshot}) => {
-    const {project} = await createPopulatedProject()
+  // The forms are taller than the default viewport.
+  test.use({viewport: {width: 1280, height: 1600}})
+
+  test('Project webhooks settings section', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project} = base
 
     await page.goto(`/projects/${project.id}/settings/webhooks`)
     await page.waitForLoadState('networkidle')
 
-    // Focus on the card
     const card = page.locator('.card').first()
-    if (await card.isVisible()) {
-      await screenshot('webhooks-settings-section', card)
-    } else {
-      const content = page.locator('.app-content').first()
-      await screenshot('webhooks-settings-section', content)
-    }
+    await expect(card.getByRole('button', {name: 'Cancel'})).toBeVisible()
+    await screenshot('webhooks-settings-section', card, {padding: 0})
   })
 
   test('Webhook creation form', async ({authenticatedPage: page, screenshot}) => {
     await page.goto('/user/settings/webhooks')
     await page.waitForLoadState('networkidle')
 
-    // Click create new webhook button
-    const createButton = page.locator('text=Create, text=New Webhook, text=Add Webhook').first()
-    if (await createButton.isVisible()) {
-      await createButton.click()
-      await page.waitForTimeout(300)
-    }
-
-    // Focus on the card
     const card = page.locator('.card').first()
-    if (await card.isVisible()) {
-      await screenshot('webhooks-create-form', card)
-    } else {
-      const content = page.locator('.app-content').first()
-      await screenshot('webhooks-create-form', content)
-    }
+    await expect(card.getByRole('button', {name: 'Create webhook'})).toBeVisible()
+    await screenshot('webhooks-create-form', card, {padding: 0})
   })
 })
