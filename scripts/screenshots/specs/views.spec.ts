@@ -1,30 +1,19 @@
 import {test, expect} from '../support/fixtures'
-import {createPopulatedProject, createDefaultViews} from '../support/seed-helpers'
-import {BucketFactory} from '../factories/bucket'
-import {TaskFactory} from '../factories/task'
-import {TaskBucketFactory} from '../factories/task_buckets'
-import {ProjectFactory} from '../factories/project'
 
 test.describe('Views screenshots', () => {
-  test('View tabs at the top', async ({authenticatedPage: page, screenshot}) => {
-    const {project, views} = await createPopulatedProject()
+  test('View tabs at the top', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project, views} = base
 
     await page.goto(`/projects/${project.id}/${views.list.id}`)
     await page.waitForLoadState('networkidle')
 
-    // Capture the view switcher tabs
-    const tabBar = page.locator('.project-view-tabs, .views-tabs, [data-cy="viewTabs"]').first()
-    if (await tabBar.isVisible()) {
-      await screenshot('views-tabs', tabBar, {padding: 5})
-    } else {
-      // Fallback: crop top portion of content area
-      const content = page.locator('.app-content').first()
-      await screenshot('views-tabs', content)
-    }
+    const tabBar = page.locator('.switch-view').first()
+    await expect(tabBar).toBeVisible()
+    await screenshot('views-tabs', tabBar, {padding: 10})
   })
 
-  test('List view with tasks', async ({authenticatedPage: page, screenshot}) => {
-    const {project, views} = await createPopulatedProject()
+  test('List view with tasks', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project, views} = base
 
     await page.goto(`/projects/${project.id}/${views.list.id}`)
     await page.waitForLoadState('networkidle')
@@ -36,46 +25,11 @@ test.describe('Views screenshots', () => {
     await screenshot('views-list', content)
   })
 
-  test('Gantt chart view', async ({authenticatedPage: page, screenshot}) => {
-    // Create a custom project with start and end dates for gantt
-    const projects = await ProjectFactory.create(1, {title: 'Office Move'})
-    const project = projects[0]
-    const views = await createDefaultViews(project.id as number)
+  test('Gantt chart view', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project, views} = base
 
-    const now = new Date()
-    await TaskFactory.create(6, {
-      project_id: project.id,
-      title: (i: number) => [
-        'Get quotes from moving companies',
-        'Notify building management',
-        'Order new desk furniture',
-        'Set up meeting rooms',
-        'Transfer phone and internet lines',
-        'Create new seating chart',
-      ][i - 1],
-      start_date: (i: number) => {
-        // Tasks 2 and 5 have no start date (end-date only)
-        if (i === 2 || i === 5) return null
-        const d = new Date(now)
-        d.setDate(d.getDate() + (i * 3) - 8)
-        return d.toISOString()
-      },
-      end_date: (i: number) => {
-        // Tasks 3 and 6 have no end date (start-date only)
-        if (i === 3 || i === 6) return null
-        const d = new Date(now)
-        d.setDate(d.getDate() + (i * 3) - 8 + 4 + i) // Each task spans 4-10 days
-        return d.toISOString()
-      },
-      due_date: (i: number) => {
-        // Only set due_date for tasks that have an end_date
-        if (i === 3 || i === 6) return null
-        const d = new Date(now)
-        d.setDate(d.getDate() + (i * 3) - 8 + 4 + i)
-        return d.toISOString()
-      },
-    })
-
+    // Fit the whole gantt card.
+    await page.setViewportSize({width: 1280, height: 1100})
     await page.goto(`/projects/${project.id}/${views.gantt.id}`)
     await page.waitForLoadState('networkidle')
 
@@ -87,8 +41,8 @@ test.describe('Views screenshots', () => {
     await screenshot('views-gantt', content)
   })
 
-  test('Table view', async ({authenticatedPage: page, screenshot}) => {
-    const {project, views} = await createPopulatedProject()
+  test('Table view', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project, views} = base
 
     await page.goto(`/projects/${project.id}/${views.table.id}`)
     await page.waitForLoadState('networkidle')
@@ -98,8 +52,8 @@ test.describe('Views screenshots', () => {
     await screenshot('views-table', content)
   })
 
-  test('Kanban board', async ({authenticatedPage: page, screenshot}) => {
-    const {project, views} = await createPopulatedProject({withKanban: true})
+  test('Kanban board', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project, views} = base
 
     await page.goto(`/projects/${project.id}/${views.kanban.id}`)
     await page.waitForLoadState('networkidle')
@@ -112,8 +66,8 @@ test.describe('Views screenshots', () => {
     await screenshot('views-kanban', content)
   })
 
-  test('List view sort popup', async ({authenticatedPage: page, screenshot}) => {
-    const {project, views} = await createPopulatedProject()
+  test('List view sort popup', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project, views} = base
 
     await page.goto(`/projects/${project.id}/${views.list.id}`)
     await page.waitForLoadState('networkidle')
@@ -121,8 +75,10 @@ test.describe('Views screenshots', () => {
 
     // Open the sort popup by clicking the Sort button in the list header.
     const sortButton = page.locator('.filter-container button').filter({hasText: 'Sort'}).first()
+    const filtersButton = page.locator('.filter-container button').filter({hasText: /^Filters?$/i}).first()
     await expect(sortButton).toBeVisible()
     await sortButton.click()
+    await sortButton.blur()
 
     // Wait for the popup content to render.
     const sortPopup = page.locator('.sort-popup').first()
@@ -130,16 +86,18 @@ test.describe('Views screenshots', () => {
 
     // Capture a clip that includes the sort button and the popup beneath it.
     const buttonBox = await sortButton.boundingBox()
+    const filtersBox = (await filtersButton.boundingBox())!
     const popupBox = await sortPopup.boundingBox()
     if (buttonBox && popupBox) {
       const viewport = page.viewportSize()!
-      const left = Math.max(0, Math.min(buttonBox.x, popupBox.x) - 20)
+      // No margin: list text sits right next to the popup.
+      const left = Math.max(0, Math.min(buttonBox.x, popupBox.x) - 1)
       const top = Math.max(0, buttonBox.y - 20)
       const right = Math.max(
-        buttonBox.x + buttonBox.width,
+        filtersBox.x + filtersBox.width,
         popupBox.x + popupBox.width,
       ) + 20
-      const bottom = popupBox.y + popupBox.height + 20
+      const bottom = popupBox.y + popupBox.height + 2
       await screenshot('views-list-sort-popup', page, {
         clip: {
           x: left,
@@ -153,8 +111,8 @@ test.describe('Views screenshots', () => {
     }
   })
 
-  test('Kanban bucket three-dot menu', async ({authenticatedPage: page, screenshot}) => {
-    const {project, views} = await createPopulatedProject({withKanban: true})
+  test('Kanban bucket three-dot menu', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project, views} = base
 
     await page.goto(`/projects/${project.id}/${views.kanban.id}`)
     await page.waitForLoadState('networkidle')
@@ -166,64 +124,38 @@ test.describe('Views screenshots', () => {
       await page.waitForTimeout(200)
     }
 
-    // Capture just the bucket header with its open dropdown
-    const bucketWithMenu = page.locator('.bucket').first()
-    await screenshot('views-kanban-bucket-menu', bucketWithMenu)
+    // The bucket stretches to the viewport height; stop below its cards and the open menu.
+    const bucket = page.locator('.bucket').first()
+    const bucketBox = (await bucket.boundingBox())!
+    const addBox = (await bucket.getByRole('button', {name: /Add another task/i}).boundingBox())!
+    const menuBox = (await bucket.locator('.dropdown-menu').first().boundingBox())!
+    const bottom = Math.max(addBox.y + addBox.height, menuBox.y + menuBox.height) + 20
+    await screenshot('views-kanban-bucket-menu', page, {
+      clip: {x: bucketBox.x - 20, y: bucketBox.y - 20, width: bucketBox.width + 40, height: bottom - bucketBox.y + 20},
+    })
   })
 
-  test('Kanban WIP limit exceeded', async ({authenticatedPage: page, screenshot}) => {
-    const {project, views} = await createPopulatedProject({withKanban: false})
-
-    // Create a bucket with a low limit
-    const buckets = await BucketFactory.create(2, {
-      project_view_id: views.kanban.id,
-      title: (i: number) => ['To Do', 'Done'][i - 1],
+  test('Kanban WIP limit exceeded', async ({base, authenticatedPage: page, apiContext, userToken, screenshot}) => {
+    const {project, views, buckets} = base
+    // To Do holds four tasks, so a limit of three is exceeded.
+    const limit = await apiContext.post(`projects/${project.id}/views/${views.kanban.id}/buckets/${buckets[0].id}`, {
+      headers: {Authorization: `Bearer ${userToken}`},
+      data: {title: buckets[0].title, limit: 3},
     })
+    expect(limit.ok(), await limit.text()).toBe(true)
 
-    // Create more tasks than the limit
-    const tasks = await TaskFactory.create(5, {
-      project_id: project.id,
-      title: (i: number) => `Task ${i}`,
-    })
-
-    // Put all tasks in the first bucket (first call truncates)
-    for (let i = 0; i < tasks.length; i++) {
-      await TaskBucketFactory.create(1, {
-        task_id: tasks[i].id,
-        bucket_id: buckets[0].id,
-        project_view_id: views.kanban.id,
-      }, i === 0)
-    }
-
+    // Tall enough that the bucket doesn't scroll.
+    await page.setViewportSize({width: 1280, height: 1300})
     await page.goto(`/projects/${project.id}/${views.kanban.id}`)
     await page.waitForLoadState('networkidle')
 
-    // Set WIP limit via the bucket menu
-    const bucketHeader = page.locator('.bucket-header').first()
-    const menuButton = bucketHeader.locator('.dropdown.options, .options-button').first()
-    if (await menuButton.isVisible()) {
-      await menuButton.click()
-      await page.waitForTimeout(200)
-
-      // Look for the limit option
-      const limitOption = page.locator('text=Limit').first()
-      if (await limitOption.isVisible()) {
-        await limitOption.click()
-        await page.waitForTimeout(200)
-
-        // Set limit to 3
-        const limitInput = page.locator('input[type="number"]').first()
-        if (await limitInput.isVisible()) {
-          await limitInput.fill('3')
-          await limitInput.press('Enter')
-          await page.waitForTimeout(500)
-        }
-      }
-    }
-
-    // Focus on the top of the bucket showing the WIP limit indicator
     const bucket = page.locator('.bucket').first()
-    const bucketTop = page.locator('.bucket-header').first()
-    await screenshot('views-kanban-wip-limit', bucketTop, {padding: 30})
+    await expect(bucket.locator('.bucket-header')).toContainText('4/3')
+    // The bucket stretches to the viewport height; stop below its last button.
+    const bucketBox = (await bucket.boundingBox())!
+    const addBox = (await bucket.getByRole('button', {name: /Add another task/i}).boundingBox())!
+    await screenshot('views-kanban-wip-limit', page, {
+      clip: {x: bucketBox.x, y: bucketBox.y, width: bucketBox.width, height: addBox.y + addBox.height + 20 - bucketBox.y},
+    })
   })
 })
