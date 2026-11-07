@@ -23,8 +23,12 @@ test.describe('Settings screenshots', () => {
   })
 
   test('General settings tab', async ({authenticatedPage: page, screenshot}) => {
+    // The saved filter also enables the "saved filter on overview page" setting.
+    // Show the whole settings card.
+    await page.setViewportSize({width: 1280, height: 1300})
     await page.goto('/user/settings/general')
     await page.waitForLoadState('networkidle')
+    await expect(page.locator('.menu-list').getByText('My Open Tasks')).toBeVisible()
 
     await screenshot('settings-general', page)
   })
@@ -34,11 +38,8 @@ test.describe('Settings screenshots', () => {
     await page.waitForLoadState('networkidle')
 
     const card = page.locator('.card').first()
-    if (await card.isVisible()) {
-      await screenshot('settings-avatar-options', card)
-    } else {
-      await screenshot('settings-avatar-options', page)
-    }
+    await expect(card).toBeVisible()
+    await screenshot('settings-avatar-options', card, {padding: 0})
   })
 
   test('Delete account section', async ({authenticatedPage: page, screenshot}) => {
