@@ -1,3 +1,6 @@
+# Keep in sync with minimumReleaseAge in renovate.json
+minimumReleaseAge: 1440
+
 packages:
   - '.'
 
