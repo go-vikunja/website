@@ -1,11 +1,6 @@
 import {test, expect} from '../support/fixtures'
-import {ProjectFactory} from '../factories/project'
-import {TaskFactory} from '../factories/task'
 
 test('Linked accounts settings and confirmation', async ({authenticatedPage: page, screenshot}) => {
-  await ProjectFactory.truncate()
-  await TaskFactory.truncate()
-
   // Keep provider-specific data reproducible without an external SSO service.
   await page.route('**/api/v2/info', async route => {
     const response = await route.fetch()
