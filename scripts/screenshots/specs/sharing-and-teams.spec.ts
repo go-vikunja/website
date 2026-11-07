@@ -1,14 +1,12 @@
 import {test, expect} from '../support/fixtures'
-import {createPopulatedProject} from '../support/seed-helpers'
 import {LinkShareFactory} from '../factories/link_sharing'
 import {ProjectUserFactory} from '../factories/project_user'
 import {TeamFactory} from '../factories/team'
 import {TeamMemberFactory} from '../factories/team_member'
-import {UserFactory} from '../factories/user'
 
 test.describe('Sharing and teams screenshots', () => {
-  test('Three-dot menu with Share option', async ({authenticatedPage: page, screenshot}) => {
-    const {project, views} = await createPopulatedProject()
+  test('Three-dot menu with Share option', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project, views} = base
 
     await page.goto(`/projects/${project.id}/${views.list.id}`)
     await page.waitForLoadState('networkidle')
@@ -32,8 +30,8 @@ test.describe('Sharing and teams screenshots', () => {
     }
   })
 
-  test('Sharing settings panel', async ({authenticatedPage: page, screenshot}) => {
-    const {project, extraUsers} = await createPopulatedProject()
+  test('Sharing settings panel', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project, extraUsers} = base
 
     // Share the project with some users so the sharing table has entries
     await ProjectUserFactory.create(1, {user_id: extraUsers[0].id, project_id: project.id, permission: 1})
@@ -68,21 +66,22 @@ test.describe('Sharing and teams screenshots', () => {
     await page.setViewportSize({width: 1280, height: 900})
   })
 
-  test('Link share creation form', async ({authenticatedPage: page, screenshot}) => {
-    const {project} = await createPopulatedProject()
+  test('Link share creation form', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project} = base
+    await LinkShareFactory.create(2, {project_id: project.id, shared_by_id: 1})
 
     await page.setViewportSize({width: 1280, height: 1400})
 
     await page.goto(`/projects/${project.id}/settings/share`)
     await page.waitForLoadState('networkidle')
 
-    // Click "Create a link share" to show the creation form
     const createButton = page.getByText('Create a link share').first()
-    if (await createButton.isVisible()) {
-      await createButton.scrollIntoViewIfNeeded()
-      await createButton.click()
-      await page.waitForTimeout(500)
-    }
+    await createButton.scrollIntoViewIfNeeded()
+    await createButton.click()
+    await expect(page.getByText('Password (optional)')).toBeVisible()
+    // Drop the hover tooltip the click leaves behind.
+    await page.mouse.move(0, 0)
+    await page.waitForTimeout(300)
 
     // Crop from "Share Links" heading down to the bottom of the modal
     const shareLinksHeading = page.locator('.has-text-weight-bold').filter({hasText: 'Share Links'}).first()
@@ -108,8 +107,8 @@ test.describe('Sharing and teams screenshots', () => {
     await page.setViewportSize({width: 1280, height: 900})
   })
 
-  test('Link share management list', async ({authenticatedPage: page, screenshot}) => {
-    const {project} = await createPopulatedProject()
+  test('Link share management list', async ({base, authenticatedPage: page, screenshot}) => {
+    const {project} = base
 
     // Pre-seed some link shares
     await LinkShareFactory.create(2, {
@@ -151,17 +150,13 @@ test.describe('Sharing and teams screenshots', () => {
     await page.setViewportSize({width: 1280, height: 900})
   })
 
-  test('Team settings with member list', async ({authenticatedPage: page, screenshot}) => {
+  test('Team settings with member list', async ({base, authenticatedPage: page, screenshot}) => {
     const teams = await TeamFactory.create(1, {
       name: 'Office Admins',
       created_by_id: 1,
     })
 
-    const extraUsers = await UserFactory.create(3, {
-      id: (i: number) => 400 + i,
-      username: (i: number) => ['sarah', 'david', 'emma'][i - 1],
-      name: (i: number) => ['Sarah Miller', 'David Park', 'Emma Thompson'][i - 1],
-    }, false)
+    const {extraUsers} = base
 
     await TeamMemberFactory.create(1, {team_id: teams[0].id, user_id: 1, admin: true})
     await TeamMemberFactory.create(1, {team_id: teams[0].id, user_id: extraUsers[0].id}, false)
