@@ -1,11 +1,7 @@
 import {test, expect} from '../support/fixtures'
-import {createPopulatedProject} from '../support/seed-helpers'
-import {SavedFilterFactory} from '../factories/saved_filter'
 
 test.describe('Saved filters screenshots', () => {
   test('Saved filter creation form', async ({authenticatedPage: page, screenshot}) => {
-    await createPopulatedProject()
-
     await page.goto('/filters/new')
     await page.waitForLoadState('networkidle')
 
@@ -20,14 +16,6 @@ test.describe('Saved filters screenshots', () => {
   })
 
   test('Saved filter in sidebar', async ({authenticatedPage: page, screenshot}) => {
-    await createPopulatedProject()
-
-    await SavedFilterFactory.create(1, {
-      title: 'My Open Tasks',
-      filters: '{"done":false}',
-      owner_id: 1,
-    })
-
     await page.goto('/')
     await page.waitForLoadState('networkidle')
 
