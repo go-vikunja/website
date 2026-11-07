@@ -14,13 +14,9 @@ test.describe('Import/Export screenshots', () => {
     await page.goto('/user/settings/migrate')
     await page.waitForLoadState('networkidle')
 
-    const card = page.locator('.card').first()
-    if (await card.isVisible()) {
-      await screenshot('import-export-import-tab', card)
-    } else {
-      // Fallback: capture the content area
-      const content = page.locator('.app-content').first()
-      await screenshot('import-export-import-tab', content)
-    }
+    // Just the services, not the long settings sidebar.
+    const content = page.locator('.side-nav-shell .view .content').filter({hasText: 'Import from other services'})
+    await expect(content.getByText('Microsoft Todo')).toBeVisible()
+    await screenshot('import-export-import-tab', content, {padding: 40})
   })
 })
