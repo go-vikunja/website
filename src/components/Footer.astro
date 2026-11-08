@@ -2,6 +2,7 @@
 import LogoFull from './LogoFull.astro'
 import {Picture} from 'astro:assets'
 import footerAndes from '../assets/images/footer-andes.webp'
+import footerAndesDark from '../assets/images/footer-andes-dark.webp'
 import SubscribeToNewsletter from './partials/SubscribeToNewsletter.astro'
 import {VIKUNJA_CLOUD_LINK} from '../helpers/vikunjaCloudLink'
 
@@ -243,8 +244,10 @@ const footerArtClass = 'size-full object-cover object-bottom [mask-image:linear-
         </div>
     </div>
     <div class="h-[clamp(14rem,31vw,31.25rem)]">
-        {/* Multiply drops the white background so the art sits on the page bg. */}
-        <Picture src={footerAndes} {...footerArt} class:list={[footerArtClass, 'mix-blend-multiply']}/>
+        {/* Blend modes drop the white/black backgrounds so the art sits on the page bg.
+            Lazy + display:none means only the active theme's image is fetched. */}
+        <Picture src={footerAndes} {...footerArt} class:list={[footerArtClass, 'mix-blend-multiply dark:hidden']}/>
+        <Picture src={footerAndesDark} {...footerArt} class:list={[footerArtClass, 'hidden mix-blend-screen dark:block']}/>
     </div>
 </footer>
 
