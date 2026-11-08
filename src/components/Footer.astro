@@ -12,20 +12,21 @@ const footerArt = {
 	alt: '',
 	widths: [800, 1280, 1600, 2400, footerAndes.width],
 	// Below 42rem the 14rem min height × 3:1 cover renders wider than the viewport.
-	sizes: '(max-width: 42rem) 42rem, 100vw',
+	sizes: '(max-width: 42rem) 42rem, min(100vw, 100rem)',
 	// AVIF is ~25% larger than WebP for this dense hatching at q95.
 	formats: ['webp'],
 	fallbackFormat: 'jpg',
 	quality: 95,
 	loading: 'lazy',
 } as const
-const footerArtClass = 'size-full object-cover object-bottom [mask-image:linear-gradient(to_bottom,transparent,black_25%)]'
+// Art is capped at 100rem so peak and condors stay aligned with the content columns; fade the cut edges.
+const footerArtClass = 'size-full object-cover object-bottom min-[101rem]:[mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]'
 ---
 <footer class="mt-20">
     <div
-            class="mx-auto max-w-(--breakpoint-xl) border-t-2 border-gray-200 dark:border-gray-800 py-8 px-4 text-left text-sm text-gray-800 dark:text-gray-200 sm:flex sm:flex-wrap md:flex-nowrap"
+            class="relative z-10 mx-auto max-w-(--breakpoint-xl) border-t-2 border-gray-200 dark:border-gray-800 py-8 px-4 text-left text-sm text-gray-800 dark:text-gray-200 sm:flex sm:flex-wrap md:flex-nowrap lg:grid lg:grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr]"
     >
-        <div class="flex w-full flex-col md:w-2/5">
+        <div class="flex w-full flex-col md:w-2/5 lg:w-auto">
             <LogoFull class="h-8 w-28"/>
             <p class="py-4 text-gray-600 dark:text-gray-300">
                 &copy; {nowYear}<br/>
@@ -38,7 +39,7 @@ const footerArtClass = 'size-full object-cover object-bottom [mask-image:linear-
             <SubscribeToNewsletter/>
         </div>
         <div class="md:hidden basis-full h-0"></div>
-        <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5">
+        <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5 lg:w-auto">
             <h3 class="mb-4 font-display text-base font-bold md:mb-6">Support the Project</h3>
             <a
                     href="https://www.buymeacoffee.com/kolaente"
@@ -142,46 +143,8 @@ const footerArtClass = 'size-full object-cover object-bottom [mask-image:linear-
                 More ways to support
             </a>
         </div>
-        <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5">
-            <h3 class="mb-4 font-display text-base font-bold md:mb-6">Product</h3>
-            <a
-                    href="/features/#pricing"
-                    class="py-2 hover:underline md:pt-0"
-                    rel="noopener"
-            >Managed Service</a
-            >
-            <a
-                    href={`${VIKUNJA_CLOUD_LINK}&utm_source=io&utm_medium=io&utm_campaign=footer`}
-                    class="py-2 hover:underline md:pt-0"
-                    rel="noopener"
-            >
-                Get it Hosted
-            </a>
-            <a
-                href="/stickers"
-                rel="noopener"
-                class="py-2 hover:underline md:pt-0"
-            >
-                Buy Stickers
-            </a>
-            <a href="/features" class="py-2 hover:underline md:pt-0">Features</a>
-            <a href="/roadmap" class="py-2 hover:underline md:pt-0">Roadmap</a>
-            <a href="/convince" class="py-2 hover:underline md:pt-0">Convince Your Boss</a>
-            <a href="/compare/todoist" class="py-2 hover:underline md:pt-0">Vikunja vs Todoist</a>
-            <a href="/compare/trello" class="py-2 hover:underline md:pt-0">Vikunja vs Trello</a>
-            <a href="/compare/notion" class="py-2 hover:underline md:pt-0">Vikunja vs Notion</a>
-            <a href="/compare/wekan" class="py-2 hover:underline md:pt-0">Vikunja vs WeKan</a>
-            <a href="/compare/planka" class="py-2 hover:underline md:pt-0">Vikunja vs Planka</a>
-            <a 
-                href="https://code.vikunja.io/"
-                class="py-2 hover:underline md:pt-0"
-                rel="noopener"
-            >
-               Code 
-            </a>
-        </div>
-        <div class="md:hidden basis-full h-0"></div>
-        <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5">
+        {/* Track 3 stays empty for the peak; Product (tallest) sits far right where the ridge is low. */}
+        <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5 lg:w-auto lg:col-start-4">
             <h3 class="mb-4 font-display text-base font-bold md:mb-6">Social</h3>
             <a
                 href="https://community.vikunja.io"
@@ -232,7 +195,8 @@ const footerArtClass = 'size-full object-cover object-bottom [mask-image:linear-
                 Bluesky
             </a>
         </div>
-        <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5">
+        <div class="md:hidden basis-full h-0"></div>
+        <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5 lg:w-auto">
             <h3 class="mb-4 font-display text-base font-bold md:mb-6">About</h3>
             <a href="/" class="py-2 hover:underline md:pt-0">Home</a>
             <a href="/docs" class="py-2 hover:underline md:pt-0">Docs</a>
@@ -242,8 +206,47 @@ const footerArtClass = 'size-full object-cover object-bottom [mask-image:linear-
             <a href="/privacy" class="py-2 hover:underline md:pt-0">Privacy Policy</a>
             <a href="/imprint" class="py-2 hover:underline md:pt-0">Imprint</a>
         </div>
+        <div class="mt-4 flex w-full flex-col md:mt-0 sm:w-1/2 md:w-1/5 lg:w-auto">
+            <h3 class="mb-4 font-display text-base font-bold md:mb-6">Product</h3>
+            <a
+                    href="/features/#pricing"
+                    class="py-2 hover:underline md:pt-0"
+                    rel="noopener"
+            >Managed Service</a
+            >
+            <a
+                    href={`${VIKUNJA_CLOUD_LINK}&utm_source=io&utm_medium=io&utm_campaign=footer`}
+                    class="py-2 hover:underline md:pt-0"
+                    rel="noopener"
+            >
+                Get it Hosted
+            </a>
+            <a
+                href="/stickers"
+                rel="noopener"
+                class="py-2 hover:underline md:pt-0"
+            >
+                Buy Stickers
+            </a>
+            <a href="/features" class="py-2 hover:underline md:pt-0">Features</a>
+            <a href="/roadmap" class="py-2 hover:underline md:pt-0">Roadmap</a>
+            <a href="/convince" class="py-2 hover:underline md:pt-0">Convince Your Boss</a>
+            <a href="/compare/todoist" class="py-2 hover:underline md:pt-0">Vikunja vs Todoist</a>
+            <a href="/compare/trello" class="py-2 hover:underline md:pt-0">Vikunja vs Trello</a>
+            <a href="/compare/notion" class="py-2 hover:underline md:pt-0">Vikunja vs Notion</a>
+            <a href="/compare/wekan" class="py-2 hover:underline md:pt-0">Vikunja vs WeKan</a>
+            <a href="/compare/planka" class="py-2 hover:underline md:pt-0">Vikunja vs Planka</a>
+            <a 
+                href="https://code.vikunja.io/"
+                class="py-2 hover:underline md:pt-0"
+                rel="noopener"
+            >
+               Code 
+            </a>
+        </div>
     </div>
-    <div class="h-[clamp(14rem,31vw,31.25rem)]">
+    {/* Overlap = 32% of the art's height: the sky and the peak tip slide up behind the links. */}
+    <div class="pointer-events-none mx-auto aspect-3/1 min-h-56 w-full max-w-[100rem] lg:-mt-[calc(min(100vw,100rem)/3*0.32)]">
         {/* Blend modes drop the white/black backgrounds so the art sits on the page bg.
             Lazy + display:none means only the active theme's image is fetched. */}
         <Picture src={footerAndes} {...footerArt} class:list={[footerArtClass, 'mix-blend-multiply dark:hidden']}/>
