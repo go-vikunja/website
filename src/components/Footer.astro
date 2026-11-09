@@ -1,6 +1,7 @@
 ---
 import LogoFull from './LogoFull.astro'
 import {Picture} from 'astro:assets'
+import type {ComponentProps} from 'astro/types'
 import footerAndes from '../assets/images/footer-andes.webp'
 import footerAndesDark from '../assets/images/footer-andes-dark.webp'
 import SubscribeToNewsletter from './partials/SubscribeToNewsletter.astro'
@@ -18,7 +19,7 @@ const footerArt = {
 	fallbackFormat: 'jpg',
 	quality: 95,
 	loading: 'lazy',
-} as const
+} satisfies Partial<ComponentProps<typeof Picture>>
 // Art is capped at 100rem so peak and condors stay aligned with the content columns; fade the cut edges.
 const footerArtClass = 'size-full object-cover object-bottom min-[101rem]:[mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]'
 ---
