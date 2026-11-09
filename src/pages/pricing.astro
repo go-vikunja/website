@@ -22,6 +22,10 @@ const pricingFaqs = [
         answer: 'Pro adds features like an admin panel, audit logs, and time tracking to a Vikunja instance you host yourself. It\'s a separate product from Vikunja Cloud: Cloud plans are on this page, Pro plans are on the [Pro page](/pro). Pro features will come to Cloud eventually, but as a separate offering — the current Pro plans don\'t apply to Cloud accounts.',
     },
     {
+        question: 'Do you offer a data processing agreement (DPA)?',
+        answer: 'Yes. If you use Vikunja Cloud as a business on the Personal or Organization plan, our [data processing agreement](https://vikunja.cloud/legal/dpa) under Art. 28 GDPR is part of the [Terms of Service](https://vikunja.cloud/legal/terms). You accept it when you sign up, no separate signature needed. For self-hosted Pro, a DPA is part of the Enterprise plan.',
+    },
+    {
         question: 'Can I try before I buy?',
         answer: 'Every Cloud plan comes with a free 14-day trial. Cancel anytime. You can also [try the live demo](https://try.vikunja.io/demo-account-create/) right now without signing up.',
     },
@@ -147,7 +151,7 @@ export const meta = {
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">GDPR data processing agreement</td>
                             <td class="py-3 px-4">&mdash;</td>
-                            <td class="py-3 px-4">&mdash;</td>
+                            <td class="py-3 px-4"><a href="https://vikunja.cloud/legal/dpa" class="underline">Business customers</a> (Personal &amp; Organization)</td>
                             <td class="py-3 px-4">Enterprise</td>
                         </tr>
                         <tr>
