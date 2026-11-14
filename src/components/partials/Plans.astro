@@ -12,7 +12,6 @@ interface Plan {
 	title: string
 	priceMonthly: number
 	priceYearly: number
-	priceDifferencePercent: number
 	description: string
 	priceSuffix?: string
 	features: string[]
@@ -23,7 +22,6 @@ const plans: Plan[] = [
 		title: 'Personal',
 		priceMonthly: 4,
 		priceYearly: 40,
-		priceDifferencePercent: 20,
 		description: 'Your own account, completely managed by us.',
 		features: [
 			'Unlimited lists',
@@ -41,7 +39,6 @@ const plans: Plan[] = [
 		title: 'Family',
 		priceMonthly: 10,
 		priceYearly: 99,
-		priceDifferencePercent: 17.5,
 		description: 'One plan for your whole household, managed by us.',
 		priceSuffix: 'for up to 5 users',
 		features: [
@@ -55,7 +52,6 @@ const plans: Plan[] = [
 		title: 'Organization',
 		priceMonthly: 5,
 		priceYearly: 50,
-		priceDifferencePercent: 20,
 		description: 'A plan for all users in your organization.',
 		priceSuffix: 'per user',
 		features: [
@@ -86,7 +82,7 @@ const plans: Plan[] = [
 								{p.priceSuffix ?? ''}
                             </div>
                             <p class="text-sm mb-4 text-gray-500 dark:text-gray-400">
-								{p.priceYearly}€ when billed yearly (-{p.priceDifferencePercent}%)
+								{p.priceYearly}€ when billed yearly (-{Math.floor((1 - p.priceYearly / (p.priceMonthly * 12)) * 100)}%)
                             </p>
                         </div>
 
