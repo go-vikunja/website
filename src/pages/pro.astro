@@ -211,6 +211,15 @@ export const meta = {
 
         <!-- Plan cards -->
         <section class="max-w-(--breakpoint-lg) mx-auto mt-16 px-4">
+            <div class="mb-8 text-center text-gray-600 dark:text-gray-300 text-balance">
+                <p>
+                    Self-hosting Vikunja stays free for any number of users. Pro is optional.
+                </p>
+                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    Pro is in early access and billing hasn't started yet.
+                    These are the prices it will start with.
+                </p>
+            </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {proPlans.map((plan: ProPlan) => (
                     <article class:list={['rounded-sm p-6 bg-white dark:bg-gray-800 flex flex-col', plan.featured ? 'border-2 border-primary' : 'border border-gray-100 dark:border-gray-800']}>
