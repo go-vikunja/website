@@ -60,15 +60,12 @@ export const meta = {
                 Planka is a good Kanban board. It is fast, looks clean, and a lot of homelabs and small
                 teams run it. In August 2026 the project
                 <a href="https://github.com/plankanban/planka/issues/1754" target="_blank" rel="nofollow noreferrer noopener" class="underline">moved OIDC/SSO out of the Community edition</a>
-                and into the closed-source Pro tier. Version 2.2.0 shipped without it, and users who
+                and into the paid Pro edition. Version 2.2.0 shipped without it, and users who
                 only ever logged in via SSO were deactivated on upgrade.
             </p>
             <p class="mt-4">
-                The maintainers have been open about their reasoning: SSO generated a lot of support
-                requests and they see it as an enterprise feature. That's a legitimate business call
-                for them to make. For Vikunja, that line is somewhere else: your requirements (compliance or otherwise)
-                don't care how many users you have, and a login method shouldn't be the thing
-                that decides which tier you're on.
+                Where to draw the paid line is Planka's call to make. I draw it somewhere else:
+                a login method shouldn't decide which tier you're on, whether you have five users or five hundred.
             </p>
             <p class="mt-4">
                 Vikunja is an open-source, self-hosted task manager with Kanban, List, Gantt, and
@@ -84,33 +81,36 @@ export const meta = {
         </section>
 
         <section class="max-w-3xl mx-auto mt-20">
-            <h2 class="font-display text-3xl mb-4">Why people are looking for alternatives</h2>
-            <p class="text-gray-600 dark:text-gray-400 mb-8">
-                From the GitHub thread announcing the SSO change:
-            </p>
-            <div class="space-y-6">
-                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
-                    "Security features, SSO or 2FA or auto-logout are in my opinion basic features and should not be put behind a paywall"
-                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
-                        GitHub user nin0-dev,
-                        <a href="https://github.com/plankanban/planka/issues/1754#issuecomment-5224830049" target="_blank" rel="nofollow noreferrer noopener" class="underline">issue #1754</a>
-                    </footer>
-                </blockquote>
-                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
-                    "I'm not expecting new versions to remove basic features."
-                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
-                        GitHub user Billos,
-                        <a href="https://github.com/plankanban/planka/issues/1754#issuecomment-5225029134" target="_blank" rel="nofollow noreferrer noopener" class="underline">issue #1754</a>
-                    </footer>
-                </blockquote>
-                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
-                    "After updating to 2.2.0, all SSO-based users are deactivated, since they no longer have a password login."
-                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
-                        Planka maintainer announcement,
-                        <a href="https://github.com/plankanban/planka/issues/1754" target="_blank" rel="nofollow noreferrer noopener" class="underline">issue #1754</a>
-                    </footer>
-                </blockquote>
-            </div>
+            <h2 class="font-display text-3xl mb-4">What changed in Planka in 2026</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">As of November 2026. Each point links to Planka's own announcement, release notes, or website.</p>
+            <ul class="list-disc list-outside pl-6 space-y-4 text-gray-700 dark:text-gray-300">
+                <li>
+                    <a href="https://github.com/plankanban/planka/releases/tag/v2.2.0" target="_blank" rel="nofollow noreferrer noopener" class="underline">Planka Community 2.2.0</a>
+                    (August 2026) removed OIDC/SSO. After the update, every user who signed in through SSO
+                    is deactivated until an admin sets a password for them. If the only admin account
+                    was SSO-based, you are locked out and have to
+                    <a href="https://docs.planka.cloud/docs/configuration/admin-user" target="_blank" rel="nofollow noreferrer noopener" class="underline">create a new admin user</a> first.
+                </li>
+                <li>
+                    The same release moved account security the other way: TOTP two-factor
+                    authentication, auto-logout on inactivity, and trusted devices used to be Pro and are
+                    now in Community.
+                </li>
+                <li>
+                    Planka's <a href="https://planka.app/faq/technical" target="_blank" rel="nofollow noreferrer noopener" class="underline">technical FAQ</a>
+                    now says it plainly: "The Community edition has no SSO." A maintainer confirmed the
+                    same to users asking about it in
+                    <a href="https://github.com/plankanban/planka/issues/1791" target="_blank" rel="nofollow noreferrer noopener" class="underline">#1791</a> and
+                    <a href="https://github.com/plankanban/planka/issues/1807" target="_blank" rel="nofollow noreferrer noopener" class="underline">#1807</a>.
+                </li>
+                <li>
+                    Community is still getting features.
+                    <a href="https://github.com/plankanban/planka/releases/tag/v2.3.0" target="_blank" rel="nofollow noreferrer noopener" class="underline">Version 2.3.0</a>
+                    (November 2026) added saved board filters, comment replies, <code>@mentions</code> in
+                    card descriptions, project- and account-scoped webhooks, and a batch of security
+                    hardening. 2.3.1 followed a day later with a crash fix.
+                </li>
+            </ul>
         </section>
 
         <section class="max-w-4xl mx-auto mt-20">
@@ -136,11 +136,14 @@ export const meta = {
                     </p>
                 </div>
                 <div>
-                    <h3 class="font-display text-xl">Kanban and three more views</h3>
+                    <h3 class="font-display text-xl">Kanban plus Gantt and Table</h3>
                     <p class="mt-2">
-                        Planka gives you a Kanban board. Vikunja gives you
-                        <a href="/help/views" class="underline">List, Kanban, Gantt, and Table</a>
-                        on the same data. View all tasks in all different ways, switch between them anytime.
+                        Planka Community has
+                        <a href="https://github.com/plankanban/planka/blob/master/server/api/models/Board.js" target="_blank" rel="nofollow noreferrer noopener" class="underline">three board views</a>:
+                        Kanban, List, and Grid. Timeline and calendar views are
+                        <a href="https://planka.app/features" target="_blank" rel="nofollow noreferrer noopener" class="underline">Pro only</a>.
+                        Vikunja gives you <a href="/help/views" class="underline">List, Kanban, Gantt, and Table</a>
+                        on the same data in the free version, and you can switch between them at any time.
                     </p>
                 </div>
                 <div>
@@ -186,7 +189,7 @@ export const meta = {
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">License</td>
                             <td class="py-3 px-4">AGPL-3, no CLA</td>
-                            <td class="py-3 px-4 text-balance">Source-available "PLANKA Community License"; Pro is closed source; contributors sign a CLA</td>
+                            <td class="py-3 px-4 text-balance">Community: source-available <a href="https://github.com/plankanban/planka/blob/master/LICENSES/PLANKA%20Community%20License%20EN.md" target="_blank" rel="nofollow noreferrer noopener" class="underline">PLANKA Community License</a> (fair-code, <a href="https://github.com/plankanban/planka/blob/master/LICENSES/PLANKA%20License%20Guide%20EN.md" target="_blank" rel="nofollow noreferrer noopener" class="underline">not OSI open source</a>); Pro: commercial license; contributors sign a <a href="https://github.com/plankanban/planka/blob/master/CONTRIBUTOR_LICENSE_AGREEMENT.md" target="_blank" rel="nofollow noreferrer noopener" class="underline">CLA</a></td>
                         </tr>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">Self-hostable</td>
@@ -206,12 +209,12 @@ export const meta = {
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">Views</td>
                             <td class="py-3 px-4">List, Kanban, Gantt, Table</td>
-                            <td class="py-3 px-4">Kanban</td>
+                            <td class="py-3 px-4 text-balance">Community: Kanban, List, Grid. Pro adds timeline, calendar, and map views</td>
                         </tr>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">Data export</td>
                             <td class="py-3 px-4 text-balance">Full export (projects, tasks, attachments)</td>
-                            <td class="py-3 px-4 text-balance">No native export (<a href="https://github.com/plankanban/planka/issues/670" target="_blank" rel="nofollow noreferrer noopener" class="underline">issue #670</a>), REST API only</td>
+                            <td class="py-3 px-4 text-balance">Community: no native export (<a href="https://github.com/plankanban/planka/issues/670" target="_blank" rel="nofollow noreferrer noopener" class="underline">issue #670</a>), REST API only. PDF and HTML export are <a href="https://planka.app/features" target="_blank" rel="nofollow noreferrer noopener" class="underline">Pro only</a></td>
                         </tr>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">Importers</td>
@@ -241,7 +244,7 @@ export const meta = {
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">Mobile</td>
                             <td class="py-3 px-4">Progressive web app</td>
-                            <td class="py-3 px-4">Responsive web UI</td>
+                            <td class="py-3 px-4 text-balance">Web UI; full phone and tablet support is <a href="https://planka.app/features" target="_blank" rel="nofollow noreferrer noopener" class="underline">Pro only</a></td>
                         </tr>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">REST API</td>
@@ -251,7 +254,7 @@ export const meta = {
                         <tr>
                             <td class="py-3 px-4 font-medium">Paid tier</td>
                             <td class="py-3 px-4 text-balance">Pro, same public repo, same license</td>
-                            <td class="py-3 px-4">Pro, closed source</td>
+                            <td class="py-3 px-4 text-balance">Pro, separate edition under a commercial license (<a href="#planka-pro-pricing" class="underline">pricing below</a>)</td>
                         </tr>
                     </tbody>
                 </table>
