@@ -195,15 +195,14 @@ To get up and running quickly, use this command:
 ```sh
 mkdir $PWD/files $PWD/db
 chown 1000 $PWD/files $PWD/db
-docker run -p 3456:3456 -v $PWD/files:/app/vikunja/files -v $PWD/db:/db vikunja/vikunja
+docker run -p 3456:3456 -e VIKUNJA_SERVICE_PUBLICURL=http://localhost:3456/ -v $PWD/files:/app/vikunja/files -v $PWD/db:/db vikunja/vikunja
 ```
 
 This will expose Vikunja on port `3456` on the host running the container and use SQLite as database backend.
+If you're not running it on your own machine, replace `http://localhost:3456/` with the URL you'll open Vikunja at, including the port.
 
-<Callout type="warning">
-The default configuration has CORS enabled, which requires a public URL to be set.
-You must either set the `VIKUNJA_SERVICE_PUBLICURL` environment variable to the URL where Vikunja will be reachable, or disable CORS by setting [`VIKUNJA_CORS_ENABLE`](/docs/config-options#1-cors-enable) to `false`.
-</Callout>
+Vikunja won't start without a public URL, because the default configuration has CORS enabled.
+To run without one, disable CORS by setting [`VIKUNJA_CORS_ENABLE`](/docs/config-options#1-cors-enable) to `false`.
 
 **Note**: The container runs as the user `1000` and no group by default.
 You can use Docker's [`--user`](https://docs.docker.com/engine/reference/run/#user) flag to change that.
