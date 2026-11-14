@@ -5,7 +5,7 @@ import type {ComponentProps} from 'astro/types'
 import footerAndes from '../assets/images/footer-andes.webp'
 import footerAndesDark from '../assets/images/footer-andes-dark.webp'
 import SubscribeToNewsletter from './partials/SubscribeToNewsletter.astro'
-import {VIKUNJA_CLOUD_LINK} from '../helpers/vikunjaCloudLink'
+import {vikunjaCloudSignupLink} from '../helpers/vikunjaCloudLink'
 
 const nowYear = (new Date()).getFullYear()
 
@@ -216,7 +216,7 @@ const footerArtClass = 'size-full object-cover object-bottom min-[101rem]:[mask-
             >Managed Service</a
             >
             <a
-                    href={`${VIKUNJA_CLOUD_LINK}&utm_source=io&utm_medium=io&utm_campaign=footer`}
+                    href={vikunjaCloudSignupLink('footer')}
                     class="py-2 hover:underline md:pt-0"
                     rel="noopener"
             >
