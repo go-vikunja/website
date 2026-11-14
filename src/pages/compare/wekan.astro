@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro'
 import CloudOrSelfHosted from '../../components/partials/CloudOrSelfHosted.astro'
 import FAQSection from '../../components/FAQSection.astro'
-import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
+import {vikunjaCloudSignupLink} from '../../helpers/vikunjaCloudLink'
 
 const faqs = [
     {
@@ -288,7 +288,7 @@ export const meta = {
             <ol class="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300 mt-4">
                 <li>
                     <a href="/docs/installing" class="underline">Set up Vikunja</a> (Docker, binary, or
-                    <a href={VIKUNJA_CLOUD_LINK} class="underline">start a free Cloud trial</a>)
+                    <a href={vikunjaCloudSignupLink('compare-wekan-switch')} class="underline">start a free Cloud trial</a>)
                 </li>
                 <li>In WeKan, export each board as JSON (board menu &gt; Export board &gt; JSON)</li>
                 <li>In Vikunja, go to the import page and upload your JSON files</li>
