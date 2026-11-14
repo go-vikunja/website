@@ -111,7 +111,7 @@ gpg --verify vikunja-<vikunja version>-linux-amd64-full.zip.sig vikunja-<vikunja
 
 ### Set it up
 
-Once you've verified the signature, you need to unzip and make it executable.
+Once you've verified the signature, you need to unzip it, rename the binary to `vikunja` and make it executable.
 You'll also need to create a symlink to the binary, so that you can execute Vikunja by typing `vikunja` on your system.
 We'll install Vikunja to `/opt/vikunja`, change the path where needed if you want to install it elsewhere.
 
@@ -120,7 +120,8 @@ Run these commands to install it:
 ```sh
 mkdir -p /opt/vikunja
 unzip <vikunja-zip-file> -d /opt/vikunja
-chmod +x /opt/vikunja
+mv /opt/vikunja/vikunja-<vikunja version>-linux-<arch> /opt/vikunja/vikunja
+chmod +x /opt/vikunja/vikunja
 sudo ln -s /opt/vikunja/vikunja /usr/bin/vikunja
 ```
 
