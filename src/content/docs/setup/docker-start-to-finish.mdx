@@ -105,8 +105,8 @@ When first started, Vikunja will set up the database and run all migrations etc.
 Once it is ready, you should see a message like this one in your console:
 
 ```
-vikunja_1       | 2024-02-09T14:44:06.990677157+01:00: INFO       ▶ cmd/func29 05d Vikunja version 0.23.0
-vikunja_1       | ⇨ http server started on [::]:3456
+vikunja-1  | time=2026-11-14T07:23:37.283Z level=INFO msg="Vikunja version v2.8.0"
+vikunja-1  | time=2026-11-14T07:23:37.593Z level=INFO msg="HTTP server listening on :3456"
 ```
 
 This indicates all setup has been successful.
@@ -229,31 +229,37 @@ You should see something like this:
 
 ```json
 {
-	"version": "v0.23.0",
-	"frontend_url": "https://try.vikunja.io/",
+	"version": "v2.8.0",
+	"frontend_url": "http://localhost:3456/",
 	"motd": "",
 	"link_sharing_enabled": true,
 	"max_file_size": "20MB",
-	"registration_enabled": true,
+	"max_items_per_page": 50,
 	"available_migrators": [
 		"vikunja-file",
 		"ticktick",
-		"todoist"
+		"wekan",
+		"csv",
+		"planka"
 	],
 	"task_attachments_enabled": true,
 	"enabled_background_providers": [
-		"upload",
-		"unsplash"
+		"upload"
 	],
-	"totp_enabled": false,
+	"totp_enabled": true,
 	"legal": {
 		"imprint_url": "",
-		"privacy_policy_url": ""
+		"privacy_policy_url": "",
+		"links": []
 	},
 	"caldav_enabled": true,
 	"auth": {
 		"local": {
-			"enabled": true
+			"enabled": true,
+			"registration_enabled": true
+		},
+		"ldap": {
+			"enabled": false
 		},
 		"openid_connect": {
 			"enabled": false,
@@ -263,8 +269,12 @@ You should see something like this:
 	"email_reminders_enabled": true,
 	"user_deletion_enabled": true,
 	"task_comments_enabled": true,
-	"demo_mode_enabled": true,
-	"webhooks_enabled": true
+	"demo_mode_enabled": false,
+	"webhooks_enabled": true,
+	"public_teams_enabled": false,
+	"allow_icon_changes": false,
+	"enabled_pro_features": [],
+	"concurrent_writes": false
 }
 ```
 
