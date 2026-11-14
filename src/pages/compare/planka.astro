@@ -7,7 +7,7 @@ import {vikunjaCloudSignupLink} from '../../helpers/vikunjaCloudLink'
 const faqs = [
     {
         question: 'Can I import my Planka boards into Vikunja?',
-        answer: 'Yes. Planka has no native export ([open issue](https://github.com/plankanban/planka/issues/670)), only a REST API, so Vikunja\'s [Planka importer](/help/import-and-export/#importing-from-planka) talks to that API directly. You enter your Planka URL and an API key (or username and password), and it pulls projects, boards, cards, labels, checklists, comments, and attachments across. Credentials are used for the migration only and never stored.',
+        answer: 'Yes. Planka has no native export ([open issue](https://github.com/plankanban/planka/issues/670)), only a REST API, so Vikunja\'s [Planka importer](/help/import-and-export/#importing-from-planka) talks to that API directly. You enter your Planka URL and an API key (or username and password), and it brings over projects, boards, lists, cards, labels, due dates, comments, attachments, and cover images. Checklists and custom fields land in the task description. Credentials are used for the import only and not stored.',
     },
     {
         question: 'Is SSO really free in Vikunja?',
@@ -314,14 +314,15 @@ export const meta = {
                     <a href="/docs/installing" class="underline">Set up Vikunja</a> (Docker, binary, or
                     <a href={vikunjaCloudSignupLink('compare-planka-switch')} class="underline">start a free Cloud trial</a>)
                 </li>
-                <li>In Vikunja, go to Settings &gt; Import from other services and pick Planka</li>
-                <li>Enter your Planka URL and an API key (or your username and password); credentials are used for the migration only and never stored</li>
-                <li>Vikunja pulls your projects, boards, cards, labels, checklists, comments, and attachments. Boards become projects, lists become Kanban buckets, done cards stay done</li>
+                <li>In Vikunja, open the import page and pick Planka</li>
+                <li>Enter your Planka URL and an API key, which a Planka admin has to create for you. Username and password also work, but only for local accounts without two-factor authentication; former SSO accounts need an API key. Credentials are used for the import only and not stored</li>
+                <li>Vikunja brings over your projects, boards, cards, labels, due dates, comments, attachments, and cover images. Boards become projects, lists become Kanban buckets, and cards in closed or archive lists come over as done. Checklists and custom fields are added to the task description</li>
             </ol>
             <p class="text-gray-700 dark:text-gray-300 mt-4 text-balance">
-                What doesn't come across: assignees, memberships, and avatars, since your team's user
-                accounts don't exist in Vikunja yet. The importer works with Planka v2; for v1 instances
-                it fails with a clear message instead of importing something half right.
+                What doesn't come across: assignees and board members, since your team's user
+                accounts don't exist in Vikunja yet. Comments keep the author's name. The importer needs
+                Planka 2 or later and Vikunja 2.6.0 or later. If you are on a Planka Pro trial, run the import
+                while it is active: a locked instance no longer shows boards, cards, or attachments.
                 See the <a href="/help/import-and-export/#importing-from-planka" class="underline">Planka import help page</a> for details.
             </p>
         </section>
