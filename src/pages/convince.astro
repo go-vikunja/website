@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Button from '../components/Button.astro'
-import {VIKUNJA_CLOUD_LINK} from '../helpers/vikunjaCloudLink'
+import {vikunjaCloudSignupLink} from '../helpers/vikunjaCloudLink'
 
 export const meta = {
 	title: 'Convince Your Boss',
@@ -218,7 +218,7 @@ export const meta = {
                     <li>
                         <strong>Set up a test instance</strong>:
                         <a href="/install" class="underline">self-host with Docker</a> in 5 minutes,
-                        or start a <a href={VIKUNJA_CLOUD_LINK} class="underline">free 14-day Cloud trial</a>.
+                        or start a <a href={vikunjaCloudSignupLink('convince-trial')} class="underline">free 14-day Cloud trial</a>.
                     </li>
                     <li>
                         <strong>Import existing tasks</strong>:
