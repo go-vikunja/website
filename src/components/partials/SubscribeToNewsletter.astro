@@ -131,6 +131,10 @@ const {defaultList = 'news'} = Astro.props
 						})
 					}
 
+					window.plausible?.('Newsletter Signup', {
+						props: {list: formData.getAll('list').join(',')},
+					})
+
 					errorMessage.classList.add('hidden')
 					successMessage.classList.toggle('hidden')
 					form.classList.add('hidden')

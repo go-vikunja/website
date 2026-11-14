@@ -29,6 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const linuxMethods = ['docker', 'debian', 'fedora', 'nixos', 'linux-other']
 
+  // Back/forward navigation re-renders the result, count each method once per visit
+  const trackedMethods = new Set()
+
   // URL hash drives the step so browser back/forward and deep links work
   function applyRoute() {
     const [platform, linuxMethod] = location.hash.slice(1).split('/')
@@ -54,6 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSummary()
     syncFormWithState()
     renderOutput()
+
+    if (!trackedMethods.has(state.env)) {
+      trackedMethods.add(state.env)
+      window.plausible?.('Install Wizard Result', { props: { method: state.env } })
+    }
   }
 
   function navigate(hash) {
