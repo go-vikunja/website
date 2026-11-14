@@ -62,7 +62,7 @@ const proFaqs = [
     },
     {
         question: 'Can I try before I buy?',
-        answer: 'Yes. Every Pro plan comes with a free trial.',
+        answer: 'Yes. Homelab, Team, Business, and Scale come with a free 30-day trial. You don\'t need a card to start it.',
     },
     {
         question: 'I\'m on Vikunja Cloud. Can I get Pro features?',
@@ -71,6 +71,10 @@ const proFaqs = [
     {
         question: 'What about SSO and LDAP?',
         answer: 'Already included in the free version of Vikunja. You don\'t need Pro for that. See the setup docs for [OpenID Connect](/docs/openid) and [LDAP](/docs/ldap).',
+    },
+    {
+        question: 'Can I get a quote, an invoice, or pay with a purchase order?',
+        answer: 'Yes. Email [hello@vikunja.io](mailto:hello@vikunja.io) with the number of seats you need and your billing address, and you\'ll get a quote back.',
     },
     {
         question: 'Do you offer a non-profit discount?',
@@ -87,6 +91,7 @@ interface ProPlan {
     description: string
     price: string
     priceSuffix?: string
+    priceNote?: string
     features: string[]
     ctaLabel: string
     ctaHref: string
@@ -100,8 +105,8 @@ const proPlans: ProPlan[] = [
     {
         title: 'Homelab',
         description: 'For homelabbers and their households.',
-        price: 'Flat fee',
-        priceSuffix: ' / up to 5 users',
+        price: '70€',
+        priceSuffix: '/ year for up to 5 users',
         features: [
             'Admin panel',
             'Time tracking',
@@ -110,13 +115,14 @@ const proPlans: ProPlan[] = [
             'Email support',
         ],
         ctaLabel: 'Join the waitlist',
-        ctaHref: 'https://console.vikunja.io/register',
+        ctaHref: 'https://console.vikunja.io/register?plan=homelab&ref=pro-page',
     },
     {
         title: 'Team',
         description: 'For small teams working in one place.',
-        price: 'Per user',
-        priceSuffix: ' / month',
+        price: '2€',
+        priceSuffix: 'per user / month',
+        priceNote: 'or 20€ per user / year',
         features: [
             'Admin panel',
             'Time tracking',
@@ -126,13 +132,14 @@ const proPlans: ProPlan[] = [
             'Email support',
         ],
         ctaLabel: 'Join the waitlist',
-        ctaHref: 'https://console.vikunja.io/register',
+        ctaHref: 'https://console.vikunja.io/register?plan=team&ref=pro-page',
     },
     {
         title: 'Business',
         description: 'For companies that bill their time.',
-        price: 'Per user',
-        priceSuffix: ' / month',
+        price: '3€',
+        priceSuffix: 'per user / month',
+        priceNote: 'or 30€ per user / year',
         features: [
             'Everything in Team',
             'Audit logs',
@@ -144,14 +151,15 @@ const proPlans: ProPlan[] = [
             'Priority email support',
         ],
         ctaLabel: 'Join the waitlist',
-        ctaHref: 'https://console.vikunja.io/register',
+        ctaHref: 'https://console.vikunja.io/register?plan=business&ref=pro-page',
         featured: true,
     },
     {
         title: 'Scale',
         description: 'For companies running Vikunja everywhere.',
-        price: 'Per user',
-        priceSuffix: ' / month',
+        price: '5€',
+        priceSuffix: 'per user / month',
+        priceNote: 'or 50€ per user / year',
         features: [
             'Everything in Business',
             'Unlimited users',
@@ -159,7 +167,7 @@ const proPlans: ProPlan[] = [
             'Priority email support',
         ],
         ctaLabel: 'Join the waitlist',
-        ctaHref: 'https://console.vikunja.io/register',
+        ctaHref: 'https://console.vikunja.io/register?plan=scale&ref=pro-page',
     },
 ]
 
@@ -207,6 +215,15 @@ export const meta = {
 
         <!-- Plan cards -->
         <section class="max-w-(--breakpoint-lg) mx-auto mt-16 px-4">
+            <div class="mb-8 text-center text-gray-600 dark:text-gray-300 text-balance">
+                <p>
+                    Self-hosting Vikunja stays free for any number of users. Pro is optional.
+                </p>
+                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    Pro is in early access and billing hasn't started yet.
+                    These are the prices it will start with.
+                </p>
+            </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {proPlans.map((plan: ProPlan) => (
                     <article class:list={['rounded-sm p-6 bg-white dark:bg-gray-800 flex flex-col', plan.featured ? 'border-2 border-primary' : 'border border-gray-100 dark:border-gray-800']}>
@@ -218,6 +235,7 @@ export const meta = {
                         </div>
                         <div class="font-display text-2xl mb-6">
                             {plan.price}<span class="block text-base font-sans text-gray-500 dark:text-gray-400">{plan.priceSuffix ?? ''}&nbsp;</span>
+                            <span class="block text-sm font-sans text-gray-500 dark:text-gray-400">{plan.priceNote ?? ''}&nbsp;</span>
                         </div>
 
                         <hr class="mb-6"/>
@@ -430,7 +448,7 @@ export const meta = {
                 hosting, <a href="/pricing" class="underline">Vikunja Cloud</a> is available today, no waitlist needed.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Button href="https://console.vikunja.io/register">
+                <Button href="https://console.vikunja.io/register?ref=pro-page">
                     Join the waitlist
                 </Button>
                 <Button href="mailto:hello@vikunja.io" class="bg-gray-200! text-gray-800! dark:bg-gray-700! dark:text-gray-200!">
