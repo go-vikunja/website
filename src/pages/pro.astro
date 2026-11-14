@@ -87,6 +87,7 @@ interface ProPlan {
     description: string
     price: string
     priceSuffix?: string
+    priceNote?: string
     features: string[]
     ctaLabel: string
     ctaHref: string
@@ -100,8 +101,8 @@ const proPlans: ProPlan[] = [
     {
         title: 'Homelab',
         description: 'For homelabbers and their households.',
-        price: 'Flat fee',
-        priceSuffix: ' / up to 5 users',
+        price: '70€',
+        priceSuffix: '/ year for up to 5 users',
         features: [
             'Admin panel',
             'Time tracking',
@@ -115,8 +116,9 @@ const proPlans: ProPlan[] = [
     {
         title: 'Team',
         description: 'For small teams working in one place.',
-        price: 'Per user',
-        priceSuffix: ' / month',
+        price: '2€',
+        priceSuffix: 'per user / month',
+        priceNote: 'or 20€ per user / year',
         features: [
             'Admin panel',
             'Time tracking',
@@ -131,8 +133,9 @@ const proPlans: ProPlan[] = [
     {
         title: 'Business',
         description: 'For companies that bill their time.',
-        price: 'Per user',
-        priceSuffix: ' / month',
+        price: '3€',
+        priceSuffix: 'per user / month',
+        priceNote: 'or 30€ per user / year',
         features: [
             'Everything in Team',
             'Audit logs',
@@ -150,8 +153,9 @@ const proPlans: ProPlan[] = [
     {
         title: 'Scale',
         description: 'For companies running Vikunja everywhere.',
-        price: 'Per user',
-        priceSuffix: ' / month',
+        price: '5€',
+        priceSuffix: 'per user / month',
+        priceNote: 'or 50€ per user / year',
         features: [
             'Everything in Business',
             'Unlimited users',
@@ -218,6 +222,7 @@ export const meta = {
                         </div>
                         <div class="font-display text-2xl mb-6">
                             {plan.price}<span class="block text-base font-sans text-gray-500 dark:text-gray-400">{plan.priceSuffix ?? ''}&nbsp;</span>
+                            <span class="block text-sm font-sans text-gray-500 dark:text-gray-400">{plan.priceNote ?? ''}&nbsp;</span>
                         </div>
 
                         <hr class="mb-6"/>
