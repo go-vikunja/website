@@ -262,12 +262,30 @@ export const meta = {
         </section>
 
         <section class="max-w-3xl mx-auto mt-20">
-            <h2 class="font-display text-3xl mb-6">Pricing</h2>
+            <h2 class="font-display text-3xl mb-6" id="planka-pro-pricing">Pricing</h2>
             <p class="text-gray-700 dark:text-gray-300">
                 Both Vikunja and Planka Community are free to self-host. The difference is where the
-                paid line sits. Planka Pro is a separate closed-source product and, since 2.2.0, it's
-                where SSO lives. Vikunja Pro adds features on top of the free version but leaves
-                authentication where it is.
+                paid line sits. Since 2.2.0, SSO is in Planka Pro, along with calendar and timeline views,
+                recurring cards, board and card templates, PDF export, and full phone support
+                (see Planka's <a href="https://planka.app/features" target="_blank" rel="nofollow noreferrer noopener" class="underline">feature comparison</a>).
+                Vikunja <a href="/pro" class="underline">Pro</a> adds features on top of the free version
+                but leaves authentication where it is: OIDC and LDAP stay free.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                According to <a href="https://planka.app/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">Planka's pricing page</a>,
+                Pro Self-Hosted costs 7.20&nbsp;&euro; per user per month billed yearly, or 7.90&nbsp;&euro;
+                billed monthly, with lower per-user prices from 250 users. Pro Hosted starts at
+                8.50&nbsp;&euro; per user per month billed yearly, with a minimum of five users. Above 1,000 users
+                self-hosted (500 hosted), you talk to their Enterprise team. Prices are net of VAT, and
+                Planka sells Pro to organisations only, not to private individuals.
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                Two things to know before you try Planka Pro on an existing Community install, both from
+                Planka's <a href="https://planka.app/trial" target="_blank" rel="nofollow noreferrer noopener" class="underline">trial page</a>. The upgrade is one-way:
+                it changes the database so Community will no longer start on it, and your pre-upgrade
+                backup is the only way back. And if the 30-day trial ends without a purchase, the instance
+                is locked: you can sign in and enter a key, but boards and cards are no longer shown.
+                Planka recommends testing on a copy, which is good advice.
             </p>
             <p class="text-gray-700 dark:text-gray-300 mt-4">
                 If you'd rather not manage a server, <a href="/pricing" class="underline">Vikunja Cloud</a>
@@ -275,7 +293,8 @@ export const meta = {
                 hosted on EU infrastructure.
             </p>
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
-                See <a href="/pricing" class="underline">Vikunja pricing</a> for details.
+                Planka prices and feature gating as of November 2026. See <a href="/pricing" class="underline">Vikunja pricing</a>
+                and <a href="/pro" class="underline">Vikunja Pro</a> for details on the Vikunja side.
             </p>
         </section>
 
