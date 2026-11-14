@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import {VIKUNJA_CLOUD_LINK} from '../helpers/vikunjaCloudLink'
+import SubscribeToNewsletter from '../components/partials/SubscribeToNewsletter.astro'
 
 let latestVersion = '<version>'
 try {
@@ -199,12 +200,30 @@ export const meta = {
             <!-- What's next -->
             <div class="max-w-3xl mx-auto mt-16 mb-16 border-t border-gray-200 dark:border-gray-700 pt-8">
                 <h3 class="text-xl font-display mb-4">What's next?</h3>
+                <ol class="list-decimal pl-5 space-y-2 text-gray-600 dark:text-gray-400">
+                    <li>Open Vikunja in your browser, at <code>http://localhost:3456</code> or the domain you set up.</li>
+                    <li>Register the first account. Vikunja has no default users.</li>
+                    <li>Add your first task.</li>
+                </ol>
+
+                <h4 class="font-display font-bold mt-8 mb-2">Read more</h4>
                 <ul class="space-y-2 text-gray-600 dark:text-gray-400">
-                    <li><a href="/docs/config-options" class="text-primary hover:underline">Configuration options</a> — Fine-tune your Vikunja instance</li>
-                    <li><a href="/docs/openid" class="text-primary hover:underline">OpenID Connect</a> — Set up SSO authentication</li>
-                    <li><a href="/docs/ldap" class="text-primary hover:underline">LDAP</a> — Connect to your directory service</li>
-                    <li><a href="/docs/what-to-backup" class="text-primary hover:underline">Backups</a> — Keep your data safe</li>
-                    <li><a href="/docs/installing" class="text-primary hover:underline">Full installation docs</a> — All the details</li>
+                    <li><a href="/docs/config-options" class="text-primary hover:underline">Configuration options</a>: fine-tune your Vikunja instance</li>
+                    <li><a href="/docs/openid" class="text-primary hover:underline">OpenID Connect</a>: set up SSO authentication</li>
+                    <li><a href="/docs/ldap" class="text-primary hover:underline">LDAP</a>: connect to your directory service</li>
+                    <li><a href="/docs/what-to-backup" class="text-primary hover:underline">Backups</a>: keep your data safe</li>
+                    <li><a href="/docs/installing" class="text-primary hover:underline">Full installation docs</a>: all the details</li>
+                </ul>
+
+                <h4 class="font-display font-bold mt-8 mb-2">Stay up to date on security fixes</h4>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Releases with security fixes are announced a few days in advance, so you can plan the upgrade.</p>
+                <div class="max-w-md text-sm">
+                    <SubscribeToNewsletter defaultList="security"/>
+                </div>
+
+                <ul class="mt-8 space-y-2 text-gray-600 dark:text-gray-400">
+                    <li>Running Vikunja for a team? The admin panel, audit logs and time tracking are part of <a href="/pro" class="text-primary hover:underline">Vikunja Pro</a>.</li>
+                    <li>Want to bring Vikunja to your workplace? <a href="/convince" class="text-primary hover:underline">Here's what to show your boss</a>.</li>
                 </ul>
             </div>
         </section>
