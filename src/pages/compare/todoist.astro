@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro'
 import CloudOrSelfHosted from '../../components/partials/CloudOrSelfHosted.astro'
 import FAQSection from '../../components/FAQSection.astro'
-import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
+import {vikunjaCloudSignupLink} from '../../helpers/vikunjaCloudLink'
 
 const faqs = [
     {
@@ -64,7 +64,7 @@ export const meta = {
                 And the free self-hosted version has no limits on projects, tasks, or features.
             </p>
             <p class="mt-4">
-                If you don't want to manage a server, <a href={VIKUNJA_CLOUD_LINK} class="underline">Vikunja Cloud</a>
+                If you don't want to manage a server, <a href={vikunjaCloudSignupLink('compare-todoist-intro')} class="underline">Vikunja Cloud</a>
                 runs it for you on EU infrastructure. Either way, your team's project planning
                 doesn't depend on a service you have zero control over.
             </p>
@@ -214,7 +214,7 @@ export const meta = {
             <ol class="list-decimal list-inside space-y-3 text-gray-700 dark:text-gray-300 mt-4">
                 <li>
                     <a href="/install" class="underline">Set up Vikunja</a> (Docker, binary, or
-                    <a href={VIKUNJA_CLOUD_LINK} class="underline">Cloud trial</a>)
+                    <a href={vikunjaCloudSignupLink('compare-todoist-switch')} class="underline">Cloud trial</a>)
                 </li>
                 <li>Go to Settings, connect your Todoist account, and pick the projects you want</li>
                 <li>Your tasks, labels, and due dates come over automatically</li>
