@@ -1,14 +1,16 @@
 ---
 import Button from '../Button.astro'
-import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
+import {pageRef, vikunjaCloudSignupLink, type VikunjaCloudPlan} from '../../helpers/vikunjaCloudLink'
 
 interface Props {
 	showTitle?: boolean
 }
 
 const {showTitle = true} = Astro.props
+const ref = pageRef(Astro.url)
 
 interface Plan {
+	id: VikunjaCloudPlan
 	title: string
 	priceMonthly: number
 	priceYearly: number
@@ -20,6 +22,7 @@ interface Plan {
 
 const plans: Plan[] = [
 	{
+		id: 'personal',
 		title: 'Personal',
 		priceMonthly: 4,
 		priceYearly: 40,
@@ -38,6 +41,7 @@ const plans: Plan[] = [
 		],
 	},
 	{
+		id: 'family',
 		title: 'Family',
 		priceMonthly: 10,
 		priceYearly: 99,
@@ -52,6 +56,7 @@ const plans: Plan[] = [
 		],
 	},
 	{
+		id: 'organization',
 		title: 'Organization',
 		priceMonthly: 5,
 		priceYearly: 50,
@@ -106,8 +111,8 @@ const plans: Plan[] = [
                         </ul>
 
                         <div>
-                            <Button href={VIKUNJA_CLOUD_LINK}>
-                                Buy
+                            <Button href={vikunjaCloudSignupLink(`${ref}-${p.id}`, p.id)}>
+                                Start free trial
                             </Button>
                             <p class="text-sm text-gray-500 dark:text-gray-400 block mt-2">
                                 Free 14 day trial. Cancel anytime.
