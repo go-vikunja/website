@@ -1,6 +1,8 @@
 ---
 import Button from '../Button.astro'
-import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
+import {pageRef, vikunjaCloudSignupLink} from '../../helpers/vikunjaCloudLink'
+
+const signupLink = vikunjaCloudSignupLink(`${pageRef(Astro.url)}-cta`)
 ---
 <div class="flex flex-col lg:flex-row items-center justify-center gap-8 mb-28">
     <div class="lg:w-1/3">
@@ -22,7 +24,7 @@ import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
             Don't have a server or don't want to deal with it?
         </p>
 
-        <Button href={VIKUNJA_CLOUD_LINK} class="mt-4!">
+        <Button href={signupLink} class="mt-4!">
             Meet Vikunja Cloud
         </Button>
     </div>
