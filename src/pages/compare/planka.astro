@@ -57,7 +57,7 @@ export const meta = {
 
         <section class="max-w-3xl mx-auto mt-16 text-lg text-gray-700 dark:text-gray-300">
             <p>
-                Planka is a good Kanban board. It is fast, looks clean, and a lot of homelabs and small
+                Planka is a good Kanban board. It's fast, looks clean, and a lot of homelabs and small
                 teams run it. In August 2026 the project
                 <a href="https://github.com/plankanban/planka/issues/1754" target="_blank" rel="nofollow noreferrer noopener" class="underline">moved OIDC/SSO out of the Community edition</a>
                 and into the paid Pro edition. Version 2.2.0 shipped without it, and users who
@@ -70,7 +70,7 @@ export const meta = {
             <p class="mt-4">
                 Vikunja is an open-source, self-hosted task manager with Kanban, List, Gantt, and
                 Table views. <a href="/docs/openid" class="underline">OpenID Connect</a> and
-                <a href="/docs/ldap" class="underline">LDAP</a> are freely available, documented,
+                <a href="/docs/ldap" class="underline">LDAP</a> are in the free version, documented,
                 and have been for years. There is a paid <a href="/pro" class="underline">Pro tier</a>, but it ships in the same public
                 repository under the same AGPL-3 license, and authentication isn't part of it.
             </p>
@@ -87,18 +87,17 @@ export const meta = {
                     <a href="https://github.com/plankanban/planka/releases/tag/v2.2.0" target="_blank" rel="nofollow noreferrer noopener" class="underline">Planka Community 2.2.0</a>
                     (August 2026) removed OIDC/SSO. After the update, every user who signed in through SSO
                     is deactivated until an admin sets a password for them. If the only admin account
-                    was SSO-based, you are locked out and have to
+                    was SSO-based, you're locked out and have to
                     <a href="https://docs.planka.cloud/docs/configuration/admin-user" target="_blank" rel="nofollow noreferrer noopener" class="underline">create a new admin user</a> first.
                 </li>
                 <li>
-                    The same release moved account security the other way: TOTP two-factor
-                    authentication, auto-logout on inactivity, and trusted devices used to be Pro and are
-                    now in Community.
+                    The same release went the other way for account security: TOTP two-factor
+                    authentication, auto-logout on inactivity, and trusted devices moved from Pro into
+                    Community.
                 </li>
                 <li>
                     Planka's <a href="https://planka.app/faq/technical" target="_blank" rel="nofollow noreferrer noopener" class="underline">technical FAQ</a>
-                    now says it plainly: "The Community edition has no SSO." A maintainer confirmed the
-                    same to users asking about it in
+                    now says: "The Community edition has no SSO." A maintainer confirmed it when users asked in
                     <a href="https://github.com/plankanban/planka/issues/1791" target="_blank" rel="nofollow noreferrer noopener" class="underline">#1791</a> and
                     <a href="https://github.com/plankanban/planka/issues/1807" target="_blank" rel="nofollow noreferrer noopener" class="underline">#1807</a>.
                 </li>
@@ -131,10 +130,10 @@ export const meta = {
                 <div>
                     <h3 class="font-display text-xl">A license that keeps it that way</h3>
                     <p class="mt-2">
-                        Vikunja is AGPL-3 with no contributor license agreement. That means it's a constraint:
-                        I don't hold the rights I would need to move contributed code into a closed tier.
-                        Vikunja Pro exists and ships in the same public repo under the same license.
-                        <a href="/changelog/vikunja-stays-open" class="underline">Longer explanation of how that works is here</a>.
+                        Vikunja is AGPL-3 with no contributor license agreement, so I don't hold the rights
+                        I'd need to move contributed code into a closed tier. Vikunja Pro ships in the
+                        same public repo under the same license. I wrote more about how that works in
+                        <a href="/changelog/vikunja-stays-open" class="underline">Vikunja stays open</a>.
                     </p>
                 </div>
                 <div>
@@ -144,8 +143,8 @@ export const meta = {
                         <a href="https://github.com/plankanban/planka/blob/master/server/api/models/Board.js" target="_blank" rel="nofollow noreferrer noopener" class="underline">three board views</a>:
                         Kanban, List, and Grid. Timeline and calendar views are
                         <a href="https://planka.app/features" target="_blank" rel="nofollow noreferrer noopener" class="underline">Pro only</a>.
-                        Vikunja gives you <a href="/help/views" class="underline">List, Kanban, Gantt, and Table</a>
-                        on the same data in the free version, and you can switch between them at any time.
+                        Vikunja has <a href="/help/views" class="underline">List, Kanban, Gantt, and Table</a>
+                        views on the same data, all in the free version. Switch between them whenever you like.
                     </p>
                 </div>
                 <div>
@@ -266,8 +265,8 @@ export const meta = {
         <section class="max-w-3xl mx-auto mt-20">
             <h2 class="font-display text-3xl mb-6" id="planka-pro-pricing">Pricing</h2>
             <p class="text-gray-700 dark:text-gray-300">
-                Both Vikunja and Planka Community are free to self-host. The difference is where the
-                paid line sits. Since 2.2.0, SSO is in Planka Pro, along with calendar and timeline views,
+                Both Vikunja and Planka Community are free to self-host. The difference is what you
+                pay for. Since 2.2.0, SSO is in Planka Pro, along with calendar and timeline views,
                 recurring cards, board and card templates, PDF export, and full phone support
                 (see Planka's <a href="https://planka.app/features" target="_blank" rel="nofollow noreferrer noopener" class="underline">feature comparison</a>).
                 Vikunja <a href="/pro" class="underline">Pro</a> adds features on top of the free version
@@ -279,11 +278,11 @@ export const meta = {
                 billed monthly, with lower per-user prices from 250 users. Pro Hosted starts at
                 8.50&nbsp;&euro; per user per month billed yearly, with a minimum of five users. Above 1,000 users
                 self-hosted (500 hosted), you talk to their Enterprise team. Prices are net of VAT, and
-                Planka sells Pro to organisations only, not to private individuals.
+                Planka sells Pro to organizations only, not to private individuals.
             </p>
             <p class="text-gray-700 dark:text-gray-300 mt-4">
-                Two things to know before you try Planka Pro on an existing Community install, both from
-                Planka's <a href="https://planka.app/trial" target="_blank" rel="nofollow noreferrer noopener" class="underline">trial page</a>. The upgrade is one-way:
+                Planning to try Planka Pro on an existing Community install? Planka's
+                <a href="https://planka.app/trial" target="_blank" rel="nofollow noreferrer noopener" class="underline">trial page</a> mentions two catches. The upgrade is one-way:
                 it changes the database so Community will no longer start on it, and your pre-upgrade
                 backup is the only way back. And if the 30-day trial ends without a purchase, the instance
                 is locked: you can sign in and enter a key, but boards and cards are no longer shown.
@@ -333,7 +332,7 @@ export const meta = {
             <p class="text-gray-700 dark:text-gray-300 mt-4 text-balance">
                 What doesn't come across: assignees and board members, since your team's user
                 accounts don't exist in Vikunja yet. Comments keep the author's name. The importer needs
-                Planka 2 or later and Vikunja 2.6.0 or later. If you are on a Planka Pro trial, run the import
+                Planka 2 or later and Vikunja 2.6.0 or later. If you're on a Planka Pro trial, run the import
                 while it is active: a locked instance no longer shows boards, cards, or attachments.
                 See the <a href="/help/import-and-export/#importing-from-planka" class="underline">Planka import help page</a> for details.
             </p>
