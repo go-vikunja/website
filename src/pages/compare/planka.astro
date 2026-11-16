@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro'
 import CloudOrSelfHosted from '../../components/partials/CloudOrSelfHosted.astro'
 import FAQSection from '../../components/FAQSection.astro'
-import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
+import {vikunjaCloudSignupLink} from '../../helpers/vikunjaCloudLink'
 
 const faqs = [
     {
@@ -290,7 +290,7 @@ export const meta = {
                 </li>
                 <li>
                     <a href="/docs/installing" class="underline">Set up Vikunja</a> (Docker, binary, or
-                    <a href={VIKUNJA_CLOUD_LINK} class="underline">start a free Cloud trial</a>)
+                    <a href={vikunjaCloudSignupLink('compare-planka-switch')} class="underline">start a free Cloud trial</a>)
                 </li>
                 <li>In Vikunja, go to Settings &gt; Import from other services and pick Planka</li>
                 <li>Enter your Planka URL and an API key (or your username and password); credentials are used for the migration only and never stored</li>
