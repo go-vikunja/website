@@ -1,7 +1,7 @@
 # Disposable Vikunja instance for screenshot runs. Specs truncate tables, never point them at real data.
 services:
   db:
-    image: postgres:18
+    image: postgres:19
     environment:
       POSTGRES_USER: vikunja
       POSTGRES_PASSWORD: vikunja
