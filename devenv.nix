@@ -11,19 +11,13 @@ in {
     git lfs install --local --skip-repo
     git lfs pull
     pnpm install --frozen-lockfile
+  '';
 
-    if [[ ! -e devenv.local.nix ]]; then
-      cat > devenv.local.nix <<'EOF'
-    {
-      processes.website.exec = "
-        if test -n \"$ZWEIG_PREVIEW_URL_TEMPLATE\"; then
-          export __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=$(zweig-preview-url 4321 | cut -d/ -f3)
-        fi
-        exec pnpm dev --ignore-lock --host 127.0.0.1 --port 4321
-      ";
-    }
-    EOF
+  processes.website.exec = ''
+    if [[ -n "''${ZWEIG_PREVIEW_URL_TEMPLATE:-}" ]]; then
+      export __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=$(zweig-preview-url 4321 | cut -d/ -f3)
     fi
+    exec pnpm dev --ignore-lock --host 127.0.0.1 --port 4321
   '';
 
   scripts.patch-workerd.exec = ''
