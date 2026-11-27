@@ -50,15 +50,17 @@ Für relative Erinnerungen muss das entsprechende Datumsfeld der Aufgabe gesetzt
 
 <Screenshot src="dates-repeating-task" alt="Einstellungen für eine wiederkehrende Aufgabe" />
 
-Aufgaben können sich regelmäßig wiederholen. Vikunja unterstützt die gleiche Art von Wiederholungsregeln, die du aus Kalender-Apps kennst. Ein paar Beispiele:
+Aufgaben können sich regelmäßig wiederholen. Nutze die Schnellauswahl (**Jeden Tag**, **Jede Woche**, **Alle 30 Tage**) oder gib dein eigenes Intervall in Stunden, Tagen oder Wochen ein. Der **Wiederholungsmodus** legt fest, wie die nächsten Daten berechnet werden:
 
-- Jeden Tag
-- Jede Woche
-- Jeden Monat
-- Alle 2 Wochen am Dienstag
-- Erster Dienstag im Monat
+- **Standard**: Wiederholt sich nach einem festen Intervall, gerechnet ab den aktuellen Daten der Aufgabe. Eine Aufgabe, die am Montag fällig ist und sich wöchentlich wiederholt, ist zum Beispiel am darauffolgenden Montag wieder fällig.
+- **Monatlich**: Wiederholt sich jeden Monat am selben Tag. Das Intervall wird ignoriert. Ist ein Monat kürzer, rückt das Datum auf den letzten Tag dieses Monats.
+- **Ab Fertigstellungsdatum**: Wiederholt sich nach einem festen Intervall, gerechnet ab dem Zeitpunkt, an dem du die Aufgabe als erledigt markierst. Das passt zu Aufgaben wie „alle 3 Tage die Pflanzen gießen“, bei denen das nächste Mal davon abhängt, wann du es zuletzt erledigt hast.
 
-Wenn du eine wiederkehrende Aufgabe als erledigt markierst, erstellt Vikunja automatisch die nächste Wiederholung anhand der Regel.
+Wenn du eine wiederkehrende Aufgabe als erledigt markierst, erstellt Vikunja keine neue Aufgabe. Stattdessen bleibt dieselbe Aufgabe offen, und Vikunja verschiebt ihr Fälligkeits-, Start- und Enddatum sowie ihre Erinnerungen auf die nächste Wiederholung. Checklisten in der Beschreibung werden zurückgesetzt, damit du von vorn anfangen kannst.
+
+<Callout type="info">
+Flexiblere Regeln wie „alle 2 Wochen am Dienstag“ oder „am ersten Dienstag im Monat“ werden noch nicht unterstützt. Sie stehen auf der [Roadmap](/roadmap).
+</Callout>
 
 ## Quick Add Magic
 
