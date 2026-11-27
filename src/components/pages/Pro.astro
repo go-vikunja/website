@@ -23,7 +23,7 @@ const links = {
 const proFaqs = ([
     'familyCloud', 'openCore', 'stopPaying', 'planDifference', 'perUserBilling', 'guestUsers', 'clientInvoicing',
     'selfHost', 'alreadySelfHosting', 'licenseKey', 'everyFeaturePro', 'sellOut', 'vsCloud', 'privateBeta', 'trial',
-    'cloudUser', 'sso', 'nonProfit', 'ppp',
+    'cloudUser', 'sso', 'quote', 'nonProfit', 'ppp',
 ] as const).map(id => ({
     question: t(`pro.faq.${id}.question`),
     answer: t(`pro.faq.${id}.answer`, links),
@@ -34,6 +34,7 @@ interface ProPlan {
     description: string
     price: string
     priceSuffix?: string
+    priceNote?: string
     features: string[]
     ctaLabel: string
     ctaHref: string
@@ -43,14 +44,14 @@ interface ProPlan {
 // Label stays unbroken so the badge wraps as a unit instead of splitting the phrase.
 const comingSoon = (label: string) => `<span class="whitespace-nowrap">${label}</span> <span class="align-middle whitespace-nowrap rounded-sm bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 text-xs text-gray-600 dark:text-gray-300">${t('pro.comingSoon')}</span>`
 
-const waitlist = {ctaLabel: t('pro.joinWaitlist'), ctaHref: 'https://console.vikunja.io/register'}
+const waitlist = (plan: string) => ({ctaLabel: t('pro.joinWaitlist'), ctaHref: `https://console.vikunja.io/register?plan=${plan}&ref=pro-page`})
 
 const proPlans: ProPlan[] = [
     {
         title: 'Homelab',
         description: t('pro.plan.homelab.description'),
-        price: t('pro.plan.flatFee'),
-        priceSuffix: ' ' + t('pro.plan.upTo5Users'),
+        price: '70€',
+        priceSuffix: t('pro.plan.perYearUpTo5Users'),
         features: [
             t('pro.feature.adminPanel'),
             t('pro.feature.timeTracking'),
@@ -58,13 +59,14 @@ const proPlans: ProPlan[] = [
             t('pro.feature.supportProject'),
             t('pro.feature.emailSupport'),
         ],
-        ...waitlist,
+        ...waitlist('homelab'),
     },
     {
         title: 'Team',
         description: t('pro.plan.team.description'),
-        price: t('pro.plan.perUser'),
-        priceSuffix: ' ' + t('pro.plan.perMonth'),
+        price: '2€',
+        priceSuffix: t('pro.plan.perUserPerMonth'),
+        priceNote: t('pro.plan.perUserPerYear', {price: '20€'}),
         features: [
             t('pro.feature.adminPanel'),
             t('pro.feature.timeTracking'),
@@ -73,13 +75,14 @@ const proPlans: ProPlan[] = [
             comingSoon(t('pro.feature.guests', {count: '5'})),
             t('pro.feature.emailSupport'),
         ],
-        ...waitlist,
+        ...waitlist('team'),
     },
     {
         title: 'Business',
         description: t('pro.plan.business.description'),
-        price: t('pro.plan.perUser'),
-        priceSuffix: ' ' + t('pro.plan.perMonth'),
+        price: '3€',
+        priceSuffix: t('pro.plan.perUserPerMonth'),
+        priceNote: t('pro.plan.perUserPerYear', {price: '30€'}),
         features: [
             t('pro.feature.everythingIn', {plan: 'Team'}),
             t('pro.feature.auditLogs'),
@@ -90,21 +93,22 @@ const proPlans: ProPlan[] = [
             t('pro.feature.payPerSeat'),
             t('pro.feature.priorityEmailSupport'),
         ],
-        ...waitlist,
+        ...waitlist('business'),
         featured: true,
     },
     {
         title: 'Scale',
         description: t('pro.plan.scale.description'),
-        price: t('pro.plan.perUser'),
-        priceSuffix: ' ' + t('pro.plan.perMonth'),
+        price: '5€',
+        priceSuffix: t('pro.plan.perUserPerMonth'),
+        priceNote: t('pro.plan.perUserPerYear', {price: '50€'}),
         features: [
             t('pro.feature.everythingIn', {plan: 'Business'}),
             t('pro.feature.unlimitedUsers'),
             t('pro.feature.unlimitedInstances'),
             t('pro.feature.priorityEmailSupport'),
         ],
-        ...waitlist,
+        ...waitlist('scale'),
     },
 ]
 
@@ -147,6 +151,17 @@ const enterprisePlan: ProPlan = {
 
         <!-- Plan cards -->
         <section class="max-w-(--breakpoint-lg) mx-auto mt-16 px-4">
+            <div class="mb-8 text-center text-gray-600 dark:text-gray-300 text-balance">
+                <p>
+                    {t('plans.pro.selfHostingFree')}
+                </p>
+                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    {t('pro.plans.earlyAccess')}
+                </p>
+                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    {t('pro.plans.vat')}
+                </p>
+            </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {proPlans.map((plan: ProPlan) => (
                     <article class:list={['rounded-sm p-6 bg-white dark:bg-gray-800 flex flex-col', plan.featured ? 'border-2 border-primary' : 'border border-gray-100 dark:border-gray-800']}>
@@ -158,6 +173,7 @@ const enterprisePlan: ProPlan = {
                         </div>
                         <div class="font-display text-2xl mb-6">
                             {plan.price}<span class="block text-base font-sans text-gray-500 dark:text-gray-400">{plan.priceSuffix ?? ''}&nbsp;</span>
+                            <span class="block text-sm font-sans text-gray-500 dark:text-gray-400">{plan.priceNote ?? ''}&nbsp;</span>
                         </div>
 
                         <hr class="mb-6"/>
@@ -364,7 +380,7 @@ const enterprisePlan: ProPlan = {
                 </Trans>
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Button href="https://console.vikunja.io/register">
+                <Button href="https://console.vikunja.io/register?ref=pro-page">
                     {t('pro.joinWaitlist')}
                 </Button>
                 <Button href="mailto:hello@vikunja.io" class="bg-gray-200! text-gray-800! dark:bg-gray-700! dark:text-gray-200!">
