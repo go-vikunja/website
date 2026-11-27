@@ -3,7 +3,7 @@ import Layout from '../../../layouts/Layout.astro'
 import CloudOrSelfHosted from '../../partials/CloudOrSelfHosted.astro'
 import FAQSection from '../../FAQSection.astro'
 import Trans from '../../Trans.astro'
-import {VIKUNJA_CLOUD_LINK} from '../../../helpers/vikunjaCloudLink'
+import {vikunjaCloudSignupLink} from '../../../helpers/vikunjaCloudLink'
 import {useTranslations} from '../../../i18n'
 import {localizedHref, parsePathname} from '../../../i18n/routes'
 
@@ -22,6 +22,8 @@ const installHref = localizedHref(locale, '/docs/installing')
 const exportIssueHref = 'https://github.com/plankanban/planka/issues/670'
 const ssoIssueHref = 'https://github.com/plankanban/planka/issues/1754'
 const adminUserHref = 'https://docs.planka.cloud/docs/configuration/admin-user'
+const featuresHref = 'https://planka.app/features'
+const proHref = localizedHref(locale, '/pro')
 
 const faqLinks = {
     issueUrl: exportIssueHref,
@@ -29,7 +31,7 @@ const faqLinks = {
     pricingUrl: pricingHref,
     openidUrl: openidHref,
     ldapUrl: ldapHref,
-    proUrl: localizedHref(locale, '/pro'),
+    proUrl: proHref,
     viewsUrl: localizedHref(locale, '/help/views'),
     installUrl: installHref,
     blogUrl: localizedHref(locale, '/changelog/vikunja-stays-open'),
@@ -72,7 +74,7 @@ const faqs = (['import', 'sso', 'kanban', 'server', 'future', 'lockedOut'] as co
                 <Trans message="compare.planka.intro3">
                     <a slot="openid" href={openidHref} class="underline">OpenID Connect</a>
                     <a slot="ldap" href={ldapHref} class="underline">LDAP</a>
-                    <a slot="pro" href={localizedHref(locale, '/pro')}>{t('compare.planka.intro3Pro')}</a>
+                    <a slot="pro" href={proHref} class="underline">{t('compare.planka.intro3Pro')}</a>
                 </Trans>
             </p>
             <p class="mt-4">
@@ -83,33 +85,33 @@ const faqs = (['import', 'sso', 'kanban', 'server', 'future', 'lockedOut'] as co
         </section>
 
         <section class="max-w-3xl mx-auto mt-20">
-            <h2 class="font-display text-3xl mb-4">{t('compare.common.whyAlternatives')}</h2>
-            <p class="text-gray-600 dark:text-gray-400 mb-8">
-                {t('compare.planka.why.intro')}
+            <h2 class="font-display text-3xl mb-4">{t('compare.planka.changed.title')}</h2>
+            <ul class="list-disc list-outside pl-6 space-y-4 text-gray-700 dark:text-gray-300">
+                <li>
+                    <Trans message="compare.planka.changed.release">
+                        <a slot="release" href="https://github.com/plankanban/planka/releases/tag/v2.2.0" target="_blank" rel="nofollow noreferrer noopener" class="underline">Planka Community 2.2.0</a>
+                        <a slot="adminUser" href={adminUserHref} target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.planka.changed.adminUser')}</a>
+                    </Trans>
+                </li>
+                <li>
+                    {t('compare.planka.changed.security')}
+                </li>
+                <li>
+                    <Trans message="compare.planka.changed.faq">
+                        <a slot="faq" href="https://planka.app/faq/technical" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.planka.changed.faqLink')}</a>
+                        <a slot="issue1" href="https://github.com/plankanban/planka/issues/1791" target="_blank" rel="nofollow noreferrer noopener" class="underline">#1791</a>
+                        <a slot="issue2" href="https://github.com/plankanban/planka/issues/1807" target="_blank" rel="nofollow noreferrer noopener" class="underline">#1807</a>
+                    </Trans>
+                </li>
+                <li>
+                    <Trans message="compare.planka.changed.features">
+                        <a slot="release" href="https://github.com/plankanban/planka/releases/tag/v2.3.0" target="_blank" rel="nofollow noreferrer noopener" class="underline">Version 2.3.0</a>
+                    </Trans>
+                </li>
+            </ul>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                {t('compare.planka.changed.asOf')}
             </p>
-            <div class="space-y-6">
-                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
-                    {t('compare.planka.why.quote1')}
-                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
-                        {t('compare.common.githubUser', {name: 'nin0-dev'})}
-                        <a href="https://github.com/plankanban/planka/issues/1754#issuecomment-5224830049" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.common.issue', {number: '1754'})}</a>
-                    </footer>
-                </blockquote>
-                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
-                    {t('compare.planka.why.quote2')}
-                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
-                        {t('compare.common.githubUser', {name: 'Billos'})}
-                        <a href="https://github.com/plankanban/planka/issues/1754#issuecomment-5225029134" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.common.issue', {number: '1754'})}</a>
-                    </footer>
-                </blockquote>
-                <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
-                    {t('compare.planka.why.quote3')}
-                    <footer class="mt-2 not-italic text-sm text-gray-500 dark:text-gray-500">&mdash;
-                        {t('compare.planka.why.maintainerAnnouncement')}
-                        <a href={ssoIssueHref} target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.common.issue', {number: '1754'})}</a>
-                    </footer>
-                </blockquote>
-            </div>
         </section>
 
         <section class="max-w-4xl mx-auto mt-20">
@@ -128,7 +130,7 @@ const faqs = (['import', 'sso', 'kanban', 'server', 'future', 'lockedOut'] as co
                     <h3 class="font-display text-xl">{t('compare.planka.changes.license.title')}</h3>
                     <p class="mt-2">
                         <Trans message="compare.planka.changes.license.text">
-                            <a slot="link" href={localizedHref(locale, '/changelog/vikunja-stays-open')} class="underline">{t('compare.planka.changes.license.link')}</a>
+                            <a slot="link" href={localizedHref(locale, '/changelog/vikunja-stays-open')} class="underline">Vikunja stays open</a>
                         </Trans>
                     </p>
                 </div>
@@ -136,6 +138,8 @@ const faqs = (['import', 'sso', 'kanban', 'server', 'future', 'lockedOut'] as co
                     <h3 class="font-display text-xl">{t('compare.planka.changes.views.title')}</h3>
                     <p class="mt-2">
                         <Trans message="compare.planka.changes.views.text">
+                            <a slot="boardViews" href="https://github.com/plankanban/planka/blob/master/server/api/models/Board.js" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.planka.changes.views.boardViews')}</a>
+                            <a slot="proOnly" href={featuresHref} target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.planka.proOnly')}</a>
                             <a slot="views" href={localizedHref(locale, '/help/views')} class="underline">{t('compare.common.fourViewsAnd')}</a>
                         </Trans>
                     </p>
@@ -182,7 +186,13 @@ const faqs = (['import', 'sso', 'kanban', 'server', 'future', 'lockedOut'] as co
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">{t('compare.planka.table.license')}</td>
                             <td class="py-3 px-4">{t('compare.planka.table.licenseVikunja')}</td>
-                            <td class="py-3 px-4 text-balance">{t('compare.planka.table.licensePlanka')}</td>
+                            <td class="py-3 px-4 text-balance">
+                                <Trans message="compare.planka.table.licensePlanka">
+                                    <a slot="license" href="https://github.com/plankanban/planka/blob/master/LICENSES/PLANKA%20Community%20License%20EN.md" target="_blank" rel="nofollow noreferrer noopener" class="underline">PLANKA Community License</a>
+                                    <a slot="notOsi" href="https://github.com/plankanban/planka/blob/master/LICENSES/PLANKA%20License%20Guide%20EN.md" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.planka.table.licensePlankaNotOsi')}</a>
+                                    <a slot="cla" href="https://github.com/plankanban/planka/blob/master/CONTRIBUTOR_LICENSE_AGREEMENT.md" target="_blank" rel="nofollow noreferrer noopener" class="underline">CLA</a>
+                                </Trans>
+                            </td>
                         </tr>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">{t('compare.common.row.selfHostable')}</td>
@@ -211,7 +221,7 @@ const faqs = (['import', 'sso', 'kanban', 'server', 'future', 'lockedOut'] as co
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">{t('compare.common.row.views')}</td>
                             <td class="py-3 px-4">{t('compare.common.fourViews')}</td>
-                            <td class="py-3 px-4">Kanban</td>
+                            <td class="py-3 px-4 text-balance">{t('compare.planka.table.viewsPlanka')}</td>
                         </tr>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">{t('compare.planka.table.dataExport')}</td>
@@ -219,6 +229,7 @@ const faqs = (['import', 'sso', 'kanban', 'server', 'future', 'lockedOut'] as co
                             <td class="py-3 px-4 text-balance">
                                 <Trans message="compare.planka.table.dataExportPlanka">
                                     <a slot="issue" href={exportIssueHref} target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.common.issue', {number: '670'})}</a>
+                                    <a slot="proOnly" href={featuresHref} target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.planka.proOnly')}</a>
                                 </Trans>
                             </td>
                         </tr>
@@ -250,7 +261,11 @@ const faqs = (['import', 'sso', 'kanban', 'server', 'future', 'lockedOut'] as co
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">{t('compare.planka.table.mobile')}</td>
                             <td class="py-3 px-4">{t('compare.planka.table.mobileVikunja')}</td>
-                            <td class="py-3 px-4">{t('compare.planka.table.mobilePlanka')}</td>
+                            <td class="py-3 px-4 text-balance">
+                                <Trans message="compare.planka.table.mobilePlanka">
+                                    <a slot="proOnly" href={featuresHref} target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.planka.proOnly')}</a>
+                                </Trans>
+                            </td>
                         </tr>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
                             <td class="py-3 px-4 font-medium">{t('compare.common.restApi')}</td>
@@ -260,7 +275,11 @@ const faqs = (['import', 'sso', 'kanban', 'server', 'future', 'lockedOut'] as co
                         <tr>
                             <td class="py-3 px-4 font-medium">{t('compare.planka.table.paidTier')}</td>
                             <td class="py-3 px-4 text-balance">{t('compare.planka.table.paidTierVikunja')}</td>
-                            <td class="py-3 px-4">{t('compare.planka.table.paidTierPlanka')}</td>
+                            <td class="py-3 px-4 text-balance">
+                                <Trans message="compare.planka.table.paidTierPlanka">
+                                    <a slot="pricing" href="#planka-pro-pricing" class="underline">{t('compare.planka.table.paidTierPlankaPricing')}</a>
+                                </Trans>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -268,9 +287,16 @@ const faqs = (['import', 'sso', 'kanban', 'server', 'future', 'lockedOut'] as co
         </section>
 
         <section class="max-w-3xl mx-auto mt-20">
-            <h2 class="font-display text-3xl mb-6">{t('compare.common.pricing')}</h2>
+            <h2 class="font-display text-3xl mb-6" id="planka-pro-pricing">{t('compare.common.pricing')}</h2>
             <p class="text-gray-700 dark:text-gray-300">
-                {t('compare.planka.pricing.text1')}
+                <Trans message="compare.planka.pricing.text1">
+                    <a slot="pro" href={proHref} class="underline">Pro</a>
+                </Trans>
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                <Trans message="compare.planka.pricing.trial">
+                    <a slot="trial" href="https://planka.app/trial" target="_blank" rel="nofollow noreferrer noopener" class="underline">{t('compare.planka.pricing.trialLink')}</a>
+                </Trans>
             </p>
             <p class="text-gray-700 dark:text-gray-300 mt-4">
                 <Trans message="compare.common.cloudPricing">
@@ -278,6 +304,9 @@ const faqs = (['import', 'sso', 'kanban', 'server', 'future', 'lockedOut'] as co
                 </Trans>
             </p>
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                <Trans message="compare.planka.pricing.pricesAsOf">
+                    <a slot="site" href="https://planka.app/pricing" target="_blank" rel="nofollow noreferrer noopener" class="underline">planka.app</a>
+                </Trans>
                 <Trans message="compare.common.seePricing">
                     <a slot="link" href={pricingHref} class="underline">{t('compare.common.vikunjaPricing')}</a>
                 </Trans>
@@ -298,7 +327,7 @@ const faqs = (['import', 'sso', 'kanban', 'server', 'future', 'lockedOut'] as co
                 <li>
                     <Trans message="compare.common.setUp">
                         <a slot="setUp" href={installHref} class="underline">{t('compare.common.setUpVikunja')}</a>
-                        <a slot="cloud" href={VIKUNJA_CLOUD_LINK} class="underline">{t('compare.common.freeCloudTrial')}</a>
+                        <a slot="cloud" href={vikunjaCloudSignupLink('compare-planka-switch')} class="underline">{t('compare.common.freeCloudTrial')}</a>
                     </Trans>
                 </li>
                 <li>{t('compare.planka.switch.step3')}</li>
@@ -320,6 +349,12 @@ const faqs = (['import', 'sso', 'kanban', 'server', 'future', 'lockedOut'] as co
                 {t('compare.planka.cta.text')}
             </p>
             <CloudOrSelfHosted />
+            <p class="-mt-20 text-gray-600 dark:text-gray-400 max-w-lg mx-auto text-balance">
+                <Trans message="compare.planka.cta.more">
+                    <a slot="pro" href={proHref} class="underline">Vikunja Pro</a>
+                    <a slot="convince" href={localizedHref(locale, '/convince')} class="underline">{t('compare.planka.cta.convince')}</a>
+                </Trans>
+            </p>
         </div>
     </main>
 </Layout>
