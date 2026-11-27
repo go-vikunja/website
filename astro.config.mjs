@@ -40,7 +40,12 @@ export default defineConfig({
 	},
 	integrations: [
 		mdx(),
-		sitemap(),
+		sitemap({
+			i18n: {
+				defaultLocale,
+				locales: Object.fromEntries(locales.map(l => [l, l])),
+			},
+		}),
 	],
 	// astro-og-canvas reads its wasm via fs, unavailable in workerd.
 	adapter: cloudflare({prerenderEnvironment: 'node'}),
