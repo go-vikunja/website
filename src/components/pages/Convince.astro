@@ -148,7 +148,9 @@ const t = useTranslations(locale)
                 <div>
                     <h3 class="font-display text-lg mb-2">{t('convince.security.gdpr.title')}</h3>
                     <p>
-                        {t('convince.security.gdpr.text')}
+                        <Trans message="convince.security.gdpr.text">
+                            <a slot="dpaLink" href="https://vikunja.cloud/legal/dpa" class="underline">{t('convince.security.gdpr.dpaLink')}</a>
+                        </Trans>
                     </p>
                 </div>
                 <div>
