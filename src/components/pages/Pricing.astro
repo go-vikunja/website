@@ -19,9 +19,11 @@ const links = {
     proUrl: localizedHref(locale, '/pro'),
     demoUrl: 'https://try.vikunja.io/demo-account-create/',
     contactUrl: 'mailto:hello@vikunja.io',
+    dpaUrl: 'https://vikunja.cloud/legal/dpa',
+    termsUrl: 'https://vikunja.cloud/legal/terms',
     convinceUrl: localizedHref(locale, '/convince'),
 }
-const pricingFaqs = (['free', 'cloudVsSelfHosted', 'family', 'whatIsPro', 'trial', 'switch', 'atWork'] as const).map(id => ({
+const pricingFaqs = (['free', 'cloudVsSelfHosted', 'family', 'whatIsPro', 'dpa', 'trial', 'switch', 'atWork'] as const).map(id => ({
     question: t(`pricing.faq.${id}.question`),
     answer: t(`pricing.faq.${id}.answer`, links),
 }))
@@ -42,7 +44,7 @@ const comparison: [feature: string, selfHosted: string, cloud: string, pro: stri
     [t('pro.feature.auditLogs'), no, no, t('pricing.comparison.businessAndUp')],
     [t('pro.feature.timeTracking'), no, no, t('pricing.comparison.allProPlans')],
     [t('pricing.comparison.dedicatedInstance'), no, no, t('pricing.comparison.paidAddOn')],
-    [t('pricing.comparison.gdpr'), no, no, 'Enterprise'],
+    [t('pricing.comparison.gdpr'), no, t('pricing.comparison.gdprCloud', {businessCustomers: `<a href="https://vikunja.cloud/legal/dpa" class="underline">${t('pricing.comparison.businessCustomers')}</a>`}), 'Enterprise'],
     [t('pricing.comparison.training'), no, no, 'Enterprise'],
 ]
 ---
@@ -75,7 +77,7 @@ const comparison: [feature: string, selfHosted: string, cloud: string, pro: stri
                         {comparison.map(([feature, ...cells], i) => (
                             <tr class={i < comparison.length - 1 ? 'border-b border-gray-100 dark:border-gray-800' : undefined}>
                                 <td class="py-3 px-4 font-medium">{feature}</td>
-                                {cells.map(cell => <td class="py-3 px-4">{cell}</td>)}
+                                {cells.map(cell => <td class="py-3 px-4" set:html={cell}/>)}
                             </tr>
                         ))}
                     </tbody>
