@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import Trans from '../Trans.astro'
-import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
+import {vikunjaCloudSignupLink} from '../../helpers/vikunjaCloudLink'
 import {useTranslations} from '../../i18n'
 import {localizedHref, parsePathname} from '../../i18n/routes'
 
@@ -56,7 +56,7 @@ const messages = {
         <div class="pt-24 pb-8 text-center">
             <h1 class="text-4xl font-display">{t('install.title')}</h1>
             <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">{t('install.subtitle')}</p>
-            <p class="mt-2 text-sm text-gray-500 dark:text-gray-500"><Trans message="install.noServer"><a slot="cloudLink" href={VIKUNJA_CLOUD_LINK} class="text-primary hover:underline">{t('install.tryCloud')}</a></Trans></p>
+            <p class="mt-2 text-sm text-gray-500 dark:text-gray-500"><Trans message="install.noServer"><a slot="cloudLink" href={vikunjaCloudSignupLink('install-wizard')} class="text-primary hover:underline">{t('install.tryCloud')}</a></Trans></p>
         </div>
 
         <!-- Step 1: Pick platform -->

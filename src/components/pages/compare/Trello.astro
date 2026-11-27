@@ -3,7 +3,7 @@ import Layout from '../../../layouts/Layout.astro'
 import CloudOrSelfHosted from '../../partials/CloudOrSelfHosted.astro'
 import FAQSection from '../../FAQSection.astro'
 import Trans from '../../Trans.astro'
-import {VIKUNJA_CLOUD_LINK} from '../../../helpers/vikunjaCloudLink'
+import {vikunjaCloudSignupLink} from '../../../helpers/vikunjaCloudLink'
 import {useTranslations} from '../../../i18n'
 import {localizedHref, parsePathname} from '../../../i18n/routes'
 
@@ -20,7 +20,7 @@ const viewsHref = localizedHref(locale, '/help/views')
 const faqLinks = {
     importUrl: localizedHref(locale, '/help/import-and-export/#import'),
     webhooksUrl: localizedHref(locale, '/help/webhooks'),
-    cloudLink: VIKUNJA_CLOUD_LINK,
+    cloudLink: vikunjaCloudSignupLink('compare-trello-faq'),
 }
 const faqs = (['import', 'automations', 'free'] as const).map(id => ({
     question: t(`compare.trello.faq.${id}.question`),
@@ -189,7 +189,7 @@ const faqs = (['import', 'automations', 'free'] as const).map(id => ({
                 <li>
                     <Trans message="compare.common.setUp">
                         <a slot="setUp" href={localizedHref(locale, '/install')} class="underline">{t('compare.common.setUpVikunja')}</a>
-                        <a slot="cloud" href={VIKUNJA_CLOUD_LINK} class="underline">{t('compare.common.cloudTrial')}</a>
+                        <a slot="cloud" href={vikunjaCloudSignupLink('compare-trello-switch')} class="underline">{t('compare.common.cloudTrial')}</a>
                     </Trans>
                 </li>
                 <li>{t('compare.trello.switch.step2')}</li>

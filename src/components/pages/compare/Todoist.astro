@@ -3,7 +3,7 @@ import Layout from '../../../layouts/Layout.astro'
 import CloudOrSelfHosted from '../../partials/CloudOrSelfHosted.astro'
 import FAQSection from '../../FAQSection.astro'
 import Trans from '../../Trans.astro'
-import {VIKUNJA_CLOUD_LINK} from '../../../helpers/vikunjaCloudLink'
+import {vikunjaCloudSignupLink} from '../../../helpers/vikunjaCloudLink'
 import {useTranslations} from '../../../i18n'
 import {localizedHref, parsePathname} from '../../../i18n/routes'
 
@@ -59,7 +59,7 @@ const faqs = (['import', 'quickAdd', 'reminders', 'mobile'] as const).map(id => 
             </p>
             <p class="mt-4">
                 <Trans message="compare.todoist.intro4">
-                    <a slot="cloud" href={VIKUNJA_CLOUD_LINK} class="underline">Vikunja Cloud</a>
+                    <a slot="cloud" href={vikunjaCloudSignupLink('compare-todoist-intro')} class="underline">Vikunja Cloud</a>
                 </Trans>
             </p>
         </section>
@@ -210,7 +210,7 @@ const faqs = (['import', 'quickAdd', 'reminders', 'mobile'] as const).map(id => 
                 <li>
                     <Trans message="compare.common.setUp">
                         <a slot="setUp" href={localizedHref(locale, '/install')} class="underline">{t('compare.common.setUpVikunja')}</a>
-                        <a slot="cloud" href={VIKUNJA_CLOUD_LINK} class="underline">{t('compare.common.cloudTrial')}</a>
+                        <a slot="cloud" href={vikunjaCloudSignupLink('compare-todoist-switch')} class="underline">{t('compare.common.cloudTrial')}</a>
                     </Trans>
                 </li>
                 <li>{t('compare.todoist.switch.step2')}</li>

@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro'
 import Button from '../Button.astro'
 import Trans from '../Trans.astro'
-import {VIKUNJA_CLOUD_LINK} from '../../helpers/vikunjaCloudLink'
+import {vikunjaCloudSignupLink} from '../../helpers/vikunjaCloudLink'
 import {useTranslations} from '../../i18n'
 import {localizedHref, parsePathname} from '../../i18n/routes'
 
@@ -204,7 +204,7 @@ const t = useTranslations(locale)
                         <strong>{t('convince.pilot.setup.title')}</strong>:
                         <Trans message="convince.pilot.setup.text">
                             <a slot="selfHostLink" href={localizedHref(locale, '/install')} class="underline">{t('convince.pilot.setup.selfHostLink')}</a>
-                            <a slot="trialLink" href={VIKUNJA_CLOUD_LINK} class="underline">{t('convince.pilot.setup.trialLink')}</a>
+                            <a slot="trialLink" href={vikunjaCloudSignupLink('convince-trial')} class="underline">{t('convince.pilot.setup.trialLink')}</a>
                         </Trans>
                     </li>
                     <li>

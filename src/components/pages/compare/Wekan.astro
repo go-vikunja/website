@@ -3,7 +3,7 @@ import Layout from '../../../layouts/Layout.astro'
 import CloudOrSelfHosted from '../../partials/CloudOrSelfHosted.astro'
 import FAQSection from '../../FAQSection.astro'
 import Trans from '../../Trans.astro'
-import {VIKUNJA_CLOUD_LINK} from '../../../helpers/vikunjaCloudLink'
+import {vikunjaCloudSignupLink} from '../../../helpers/vikunjaCloudLink'
 import {useTranslations} from '../../../i18n'
 import {localizedHref, parsePathname} from '../../../i18n/routes'
 
@@ -270,7 +270,7 @@ const faqs = (['import', 'kanban', 'swimlanes', 'server', 'mobile', 'data'] as c
                 <li>
                     <Trans message="compare.common.setUp">
                         <a slot="setUp" href={localizedHref(locale, '/docs/installing')} class="underline">{t('compare.common.setUpVikunja')}</a>
-                        <a slot="cloud" href={VIKUNJA_CLOUD_LINK} class="underline">{t('compare.common.freeCloudTrial')}</a>
+                        <a slot="cloud" href={vikunjaCloudSignupLink('compare-wekan-switch')} class="underline">{t('compare.common.freeCloudTrial')}</a>
                     </Trans>
                 </li>
                 <li>{t('compare.wekan.switch.step2')}</li>
