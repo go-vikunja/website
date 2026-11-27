@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro'
 import Trans from '../Trans.astro'
 import {vikunjaCloudSignupLink} from '../../helpers/vikunjaCloudLink'
+import SubscribeToNewsletter from '../partials/SubscribeToNewsletter.astro'
 import {useTranslations} from '../../i18n'
 import {localizedHref, parsePathname} from '../../i18n/routes'
 
@@ -224,12 +225,30 @@ const messages = {
             <!-- What's next -->
             <div class="max-w-3xl mx-auto mt-16 mb-16 border-t border-gray-200 dark:border-gray-700 pt-8">
                 <h3 class="text-xl font-display mb-4">{t('install.next.title')}</h3>
+                <ol class="list-decimal pl-5 space-y-2 text-gray-600 dark:text-gray-400">
+                    <li><Trans message="install.next.steps.open"><code slot="url">http://localhost:3456</code></Trans></li>
+                    <li>{t('install.next.steps.register')}</li>
+                    <li>{t('install.next.steps.task')}</li>
+                </ol>
+
+                <h4 class="font-display font-bold mt-8 mb-2">{t('install.next.readMore')}</h4>
                 <ul class="space-y-2 text-gray-600 dark:text-gray-400">
                     <li><Trans message="install.next.config"><a slot="link" href={localizedHref(locale, '/docs/config-options')} class="text-primary hover:underline">{t('install.next.config.link')}</a></Trans></li>
                     <li><Trans message="install.next.openid"><a slot="link" href={localizedHref(locale, '/docs/openid')} class="text-primary hover:underline">{t('install.next.openid.link')}</a></Trans></li>
                     <li><Trans message="install.next.ldap"><a slot="link" href={localizedHref(locale, '/docs/ldap')} class="text-primary hover:underline">{t('install.next.ldap.link')}</a></Trans></li>
                     <li><Trans message="install.next.backups"><a slot="link" href={localizedHref(locale, '/docs/what-to-backup')} class="text-primary hover:underline">{t('install.next.backups.link')}</a></Trans></li>
                     <li><Trans message="install.next.docs"><a slot="link" href={localizedHref(locale, '/docs/installing')} class="text-primary hover:underline">{t('install.next.docs.link')}</a></Trans></li>
+                </ul>
+
+                <h4 class="font-display font-bold mt-8 mb-2">{t('install.next.security.title')}</h4>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">{t('install.next.security.text')}</p>
+                <div class="max-w-md text-sm">
+                    <SubscribeToNewsletter defaultList="security"/>
+                </div>
+
+                <ul class="mt-8 space-y-2 text-gray-600 dark:text-gray-400">
+                    <li><Trans message="install.next.pro"><a slot="link" href={localizedHref(locale, '/pro')} class="text-primary hover:underline">Vikunja Pro</a></Trans></li>
+                    <li><Trans message="install.next.convince"><a slot="link" href={localizedHref(locale, '/convince')} class="text-primary hover:underline">{t('install.next.convince.link')}</a></Trans></li>
                 </ul>
             </div>
         </section>
