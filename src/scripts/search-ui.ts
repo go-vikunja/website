@@ -1,5 +1,6 @@
 import { initializeSearch, search } from './search-client'
 import type { SearchResult } from './search-client'
+import { parsePathname } from '../i18n/paths'
 
 // DOM elements
 let modal: HTMLElement | null = null
@@ -22,10 +23,10 @@ let searchTimeout: ReturnType<typeof setTimeout> | null = null
 const SEARCH_DEBOUNCE_MS = 150
 
 // Determine search scope from current URL path
-function getSearchPathPrefix(): string | undefined {
-  const path = window.location.pathname
-  if (path.startsWith('/help')) return '/help/'
-  if (path.startsWith('/docs')) return '/docs/'
+function getSearchSection(): string | undefined {
+  const { path } = parsePathname(window.location.pathname)
+  if (path.startsWith('/help')) return '/help'
+  if (path.startsWith('/docs')) return '/docs'
   return undefined
 }
 
@@ -178,17 +179,17 @@ function handleSearchInput(e: Event): void {
 
   // Debounce search
   searchTimeout = setTimeout(() => {
-    currentResults = search(query, getSearchPathPrefix())
+    currentResults = search(query, getSearchSection())
     selectedIndex = -1
     renderResults()
 
     if (currentResults.length === 0) {
       showNoResultsState()
-      announceToScreenReader('No results found')
+      announceToScreenReader(modal?.dataset.messageNoResults ?? '')
     } else {
       hideAllStates()
-      const resultText = currentResults.length === 1 ? '1 result' : `${currentResults.length} results`
-      announceToScreenReader(`${resultText} found`)
+      const message = currentResults.length === 1 ? modal?.dataset.messageOneResult : modal?.dataset.messageResults
+      announceToScreenReader((message ?? '').replace('{count}', String(currentResults.length)))
     }
   }, SEARCH_DEBOUNCE_MS)
 }
