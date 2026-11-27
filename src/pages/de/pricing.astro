@@ -1,0 +1,7 @@
+---
+import Pricing from '../../components/pages/Pricing.astro'
+import {translateMeta} from '../../i18n'
+
+export const meta = translateMeta('de', {title: 'nav.pricing', description: 'pricing.description'})
+---
+<Pricing {...meta}/>

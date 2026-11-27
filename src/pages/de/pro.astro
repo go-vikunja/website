@@ -1,0 +1,7 @@
+---
+import Pro from '../../components/pages/Pro.astro'
+import {translateMeta} from '../../i18n'
+
+export const meta = translateMeta('de', {title: 'pro.title', description: 'pro.description'})
+---
+<Pro {...meta}/>

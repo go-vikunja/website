@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const messages = JSON.parse(document.getElementById('install-wizard-messages').textContent)
+
   const serviceSecret = Array.from(crypto.getRandomValues(new Uint8Array(32)))
     .map(b => b.toString(16).padStart(2, '0')).join('')
 
@@ -93,12 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const methodNames = {
       docker: 'Docker Compose',
-      native: state.env === 'freebsd' ? 'build from source' :
-              state.env === 'kubernetes' ? 'Helm chart' :
-              state.env === 'nixos' ? 'a declarative module' : 'native packages',
+      native: messages.methods[state.env] ?? messages.methods.native,
     }
     const el = document.getElementById('setup-summary')
-    el.textContent = `${envNames[state.env]} with ${methodNames[state.method]}`
+    el.textContent = messages.summary
+      .replace('{env}', envNames[state.env])
+      .replace('{method}', methodNames[state.method])
   }
 
   // Accordion toggles
@@ -198,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const copyBtn = document.createElement('button')
         copyBtn.className = 'copy-btn text-xs text-gray-500 hover:text-primary transition px-2 py-1 rounded border border-gray-200 dark:border-gray-700'
-        copyBtn.textContent = 'Copy'
+        copyBtn.textContent = messages.copy
         header.appendChild(copyBtn)
 
         const pre = document.createElement('pre')
@@ -212,8 +214,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         copyBtn.addEventListener('click', () => {
           navigator.clipboard.writeText(code.textContent).then(() => {
-            copyBtn.textContent = 'Copied!'
-            setTimeout(() => { copyBtn.textContent = 'Copy' }, 2000)
+            copyBtn.textContent = messages.copied
+            setTimeout(() => { copyBtn.textContent = messages.copy }, 2000)
           })
         })
       }
@@ -362,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Shell commands
     let shell = 'mkdir files db\nchown 1000 files db\ndocker compose up -d'
-    blocks.push({ filename: 'Run these commands', content: shell })
+    blocks.push({ filename: messages.runCommands, content: shell })
 
     // Reverse proxy config
     const proxyBlock = generateProxyConfig(s)
@@ -460,7 +462,7 @@ sudo apt install -y ${proxyPkg[s.proxy]}`
 # Start Vikunja
 sudo systemctl enable --now vikunja`
 
-    blocks.push({ filename: 'Install commands', content: cmds })
+    blocks.push({ filename: messages.installCommands, content: cmds })
     blocks.push({ filename: '/etc/vikunja/config.yml', content: generateNativeConfig(s) })
 
     const proxyBlock = generateProxyConfig(s)
@@ -513,7 +515,7 @@ sudo dnf install -y ${proxyPkg[s.proxy]}`
 # Start Vikunja
 sudo systemctl enable --now vikunja`
 
-    blocks.push({ filename: 'Install commands', content: cmds })
+    blocks.push({ filename: messages.installCommands, content: cmds })
     blocks.push({ filename: '/etc/vikunja/config.yml', content: generateNativeConfig(s) })
 
     const proxyBlock = generateProxyConfig(s)
@@ -663,7 +665,7 @@ sudo systemctl enable --now vikunja`
 
 # Then build and switch to the new configuration:
 sudo nixos-rebuild switch`
-    blocks.push({ filename: 'Apply the configuration', content: rebuild })
+    blocks.push({ filename: messages.applyConfig, content: rebuild })
 
     // Apache/Traefik aren't wired into the Nix module above — offer a raw config.
     if (s.proxy === 'apache' || s.proxy === 'traefik') {
@@ -693,7 +695,7 @@ sudo ln -s /opt/vikunja/vikunja /usr/bin/vikunja`
 # Start Vikunja
 sudo systemctl enable --now vikunja`
 
-    blocks.push({ filename: 'Install commands', content: cmds })
+    blocks.push({ filename: messages.installCommands, content: cmds })
 
     // Systemd unit file
     const unit = `[Unit]
@@ -750,7 +752,7 @@ mkdir -p /mnt/vikunja
 cp /mnt/GO/code.vikunja.io/vikunja/vikunja /mnt/vikunja/
 chmod +x /mnt/vikunja/vikunja`
 
-    blocks.push({ filename: 'Build & install commands', content: cmds })
+    blocks.push({ filename: messages.buildCommands, content: cmds })
 
     // rc.d script
     const rcd = `#!/bin/sh
@@ -773,7 +775,7 @@ vikunja_enable="YES"
 # Then start:
 service vikunja start`
 
-    blocks.push({ filename: 'Enable on boot', content: rcConf })
+    blocks.push({ filename: messages.enableOnBoot, content: rcConf })
     blocks.push({ filename: '/mnt/vikunja/config.yml', content: generateNativeConfig(s) })
 
     const proxyBlock = generateProxyConfig(s)
@@ -795,7 +797,7 @@ helm install vikunja oci://ghcr.io/go-vikunja/helm-chart/vikunja`
   -f values.yaml`
     }
 
-    blocks.push({ filename: 'Helm install commands', content: cmds })
+    blocks.push({ filename: messages.helmCommands, content: cmds })
 
     // values.yaml if customizations exist
     if (s.db !== 'sqlite' || hasSmtp(s) || s.proxy !== 'none') {
@@ -833,7 +835,7 @@ mailer:
       blocks.push({ filename: 'values.yaml', content: values })
     }
 
-    blocks.push({ type: 'link', label: 'Helm chart documentation', url: 'https://github.com/go-vikunja/helm-chart' })
+    blocks.push({ type: 'link', label: messages.helmDocs, url: 'https://github.com/go-vikunja/helm-chart' })
 
     return blocks
   }
