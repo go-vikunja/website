@@ -1,4 +1,5 @@
-import { getCollection } from 'astro:content'
+import { type CollectionEntry, getCollection } from 'astro:content'
+import { getEntries } from '../../i18n/content'
 import { mdxToPlainText } from '../../helpers/mdx-to-text'
 import { extractHeadings } from '../../helpers/extract-headings'
 
@@ -10,16 +11,17 @@ export interface SearchIndexItem {
   body: string
 }
 
-async function buildIndex(collection: 'docs' | 'help', prefix: string): Promise<SearchIndexItem[]> {
-  const entries = await getCollection(collection)
-
+async function buildIndex(
+  entries: { slug: string, entry: CollectionEntry<'docs' | 'help'> }[],
+  prefix: string,
+): Promise<SearchIndexItem[]> {
   return Promise.all(
-    entries.map(async (entry) => {
+    entries.map(async ({ slug, entry }) => {
       const { text, ast } = await mdxToPlainText(entry.body || '')
       const headings = extractHeadings(ast)
 
       return {
-        slug: `${prefix}${entry.id}`,
+        slug: `${prefix}${slug}`,
         title: entry.data.title,
         description: entry.data.description || '',
         headings,
@@ -31,8 +33,8 @@ async function buildIndex(collection: 'docs' | 'help', prefix: string): Promise<
 
 export async function GET() {
   const [docsIndex, helpIndex] = await Promise.all([
-    buildIndex('docs', '/docs/'),
-    buildIndex('help', '/help/'),
+    getCollection('docs').then(docs => buildIndex(docs.map(entry => ({ slug: entry.id, entry })), '/docs/')),
+    getEntries('help', 'en').then(help => buildIndex(help, '/help/')),
   ])
 
   const index = [...docsIndex, ...helpIndex]
